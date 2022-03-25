@@ -1,5 +1,6 @@
 <template>
   <div class="tasks">
+    <h2 class="table-title">Мои задачи</h2>
     <div class="scroll-table">
       <table>
         <thead>
@@ -45,7 +46,15 @@ export default {
 </script>
 
 <style lang="scss">
-  .tasks {
+.table-title {
+  background: #618580;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+
+}
+.tasks {
   height: 100%;
   border-bottom: 1px solid #fff;
   border-left: 1px solid #fff;

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @click="closeUser($event)">
     <header>
       <div class="project__name">
         <div class="project__wrapper">
@@ -15,6 +15,7 @@
             <!-- <img src="@/assets/logo.png" /> -->
           </div>
           <div class="header__item">
+            <router-link to="/about">About</router-link>
             <!-- <a href="./pages/manual.html">Руководства пользователя</a> -->
           </div>
           <div class="header__item">
@@ -22,17 +23,54 @@
           </div>
           <div class="header__item">
             <!-- <a href="./pages/help.html">Помощь</a> -->
-            </div>
+          </div>
         </div>
         <div class="header__user">
+          <div class="user-box" v-show="showUser">
+            <div class="user-box-auth">Авторизация</div>
+            <div class="user-box-line"></div>
+            <div class="user-box-form">
+              <form>
+                <div class="user-box-input">
+                  <input type="login" placeholder="логин" />
+                  <i class="fa fa-sign-in" aria-hidden="true"></i>
+                </div>
+                <div class="user-box-input">
+                  <input type="password" placeholder="пароль" />
+                  <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+                <a href="./index.html" class="user-box-button"><p>Войти</p></a>
+                <a
+                  href="./pages/registration.html"
+                  class="user-box-button-registr"
+                  >Регистрация</a
+                >
+              </form>
+            </div>
+          </div>
+
+          <div class="search-box" v-show="showSearch">
+            <div class="search-box-title">Введите запрос</div>
+            <div class="user-box-line"></div>
+            <div class="user-box-input">
+              <input type="text" placeholder="поиск" />
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+          </div>
           <div class="user__item">Добро пожаловать!</div>
           <div class="user__item">
             <i
+              @click="showSearch = !showSearch"
               id="search-box__click"
-              class="fa fa-search"
+              class="fa fa-search search-box__click"
               aria-hidden="true"
             ></i>
-            <i id="user-box__click" class="fa fa-user" aria-hidden="true"></i>
+            <i
+              @click="showUser = !showUser"
+              id="user-box__click"
+              class="fa fa-user user-box__click"
+              aria-hidden="true"
+            ></i>
           </div>
         </div>
       </div>
@@ -45,7 +83,39 @@
 </template>
 
 <script>
-
+export default {
+  data() {
+    return {
+      showUser: false,
+      showSearch: false,
+    };
+  },
+  methods: {
+    closeUser($event) {
+      let el = document.querySelector(".user-box");
+      if ($event.target.classList.contains("user-box__click")) {
+        return;
+      }
+      if (this.showUser) {
+        if (!el.contains($event.target)) {
+          this.showUser = false;
+        }
+      }
+      this.closeSearch($event); 
+    },
+    closeSearch($event) {
+      let el = document.querySelector(".search-box");
+      if ($event.target.classList.contains("search-box__click")) {
+        return;
+      }
+      if (this.showSearch) {
+        if (!el.contains($event.target)) {
+          this.showSearch = false;
+        }
+      }
+    },
+  }, 
+};
 </script>
 
 <style lang="scss">
@@ -67,9 +137,6 @@ body {
   overflow: visible;
 }
 
-body {
-  background: #dfdfdf;
-}
 
 header,
 nav,
@@ -241,6 +308,7 @@ img {
 /* _____________________index.html__________________ */
 
 header {
+  z-index: 1;
   box-shadow: 0 0 16px 0 #384342;
   -webkit-box-shadow: 0 0 16px 0 #384342;
   -moz-box-shadow: 0 0 16px 0 #384342;
@@ -270,9 +338,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  padding: 4px 20px;
+  padding: 0px 20px;
   background-color: #384342;
   border-top: 1px solid #fff;
+  
+
 }
 
 .links__wrapper {
@@ -285,6 +355,7 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 }
 
 .user__item i:hover {
@@ -309,13 +380,13 @@ header {
 /* ______________________user-box____________________ */
 
 .user-box {
-  display: none;
+  display: block;
   position: absolute;
   background-color: #fff;
   width: 300px;
   height: 330px;
   z-index: 30;
-  top: -20px;
+  top: 100%;
   right: 0px;
   border-left: 2px solid #618580;
   border-bottom: 2px solid #618580;
@@ -418,13 +489,12 @@ header {
 /* ______________________search-box_________________ */
 
 .search-box {
-  display: none;
   position: absolute;
   background-color: #fff;
   width: 300px;
   height: 132px;
   z-index: 30;
-  top: -20px;
+  top: 100%;
   right: 0px;
   border-left: 2px solid #618580;
   border-bottom: 2px solid #618580;
@@ -444,15 +514,15 @@ header {
 }
 
 .search-box-line {
-  border-top: 2px solid #618580;
+  // border-top: 2px solid #618580;
   width: 140px;
   margin: 0 auto;
 }
 
 .user-box-button-registr:hover {
-  box-shadow: 0 0 8px 0 #618580;
-  -webkit-box-shadow: 0 0 8px 0 #618580;
-  -moz-box-shadow: 0 0 8px 0 #618580;
+  // box-shadow: 0 0 8px 0 #618580;
+  // -webkit-box-shadow: 0 0 8px 0 #618580;
+  // -moz-box-shadow: 0 0 8px 0 #618580;
   transition: all 0.4s ease-out;
 }
 
@@ -466,7 +536,7 @@ header a {
 }
 
 header a:hover {
-  background: #618580;
+  // background: #618580;
   border-radius: 4px;
   transition: background-color 0.6s ease-out;
 }
@@ -482,7 +552,6 @@ header a:hover {
 content {
   width: 100%;
 }
-
 
 .menu {
   height: 100%;

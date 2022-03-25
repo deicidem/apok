@@ -1,48 +1,71 @@
 <template>
   <div class="sidebar_wrap" :class="collapsed ? '' : 'active'">
     <div class="sidebar" :class="collapsed ? '' : 'active'">
-      <div class="sidebar__wrapper">
+      <!-- <div class="sidebar__wrapper">
         <div class="sidebar__box">
-          <div class="sidebar__item"><router-link to="/main/tasks">Мои задачи</router-link></div>
+          <div class="sidebar__item">
+            <router-link to="/main/tasks">Мои задачи</router-link>
+          </div>
           <div class="sidebar__item">
             <router-link to="/main/plan">Запланированные задачи</router-link>
           </div>
-          <div class="sidebar__item"><router-link to="/main/search">Поиск снимков</router-link></div>
-          <div class="sidebar__item"><router-link to="/main/alerts">Мои уведомления</router-link></div>
+          <div class="sidebar__item">
+            <router-link to="/main/search">Поиск снимков</router-link>
+          </div>
+          <div class="sidebar__item">
+            <router-link to="/main/alerts">Мои уведомления</router-link>
+          </div>
           <div class="sidebar__item sidebar-close" @click="close()">
             <i class="fa fa-times" aria-hidden="true"></i>
           </div>
         </div>
+      </div> -->
+
+      <div class="sidebar-content">
+        <router-view></router-view>
       </div>
-
-      <router-view></router-view>
-
     </div>
 
     <div class="sidebar-collapsed">
-      <div class="sidebar__item open sidebar-open" id="collapsed" @click="open()">
+      <div
+        class="sidebar__item open sidebar-open"
+        id="collapsed"
+        @click="toggleSidebar()"
+      >
         <i class="fa fa-arrows-alt" aria-hidden="true"></i>
       </div>
 
-      <div class="sidebar-collapsed__item">
-        <i class="fa fa-folder-open" aria-hidden="true"></i>
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/tasks">
+          <i class="fa fa-folder-open" aria-hidden="true"></i>
+        </router-link>
+
         <div class="sidebar-collapsed__item__hidden">Мои задачи</div>
       </div>
 
-      <div class="sidebar-collapsed__item">
-        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/plan">
+          <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+        </router-link>
+
         <div class="sidebar-collapsed__item__hidden">
           Запланированные задачи
         </div>
       </div>
 
-      <div class="sidebar-collapsed__item">
-        <i class="fa fa-search" aria-hidden="true"></i>
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </router-link>
+
         <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
       </div>
 
-      <div class="sidebar-collapsed__item">
-        <i class="fa fa-commenting" aria-hidden="true"></i>
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/alerts">
+          <i class="fa fa-commenting" aria-hidden="true"></i>
+        </router-link>
+
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
       </div>
     </div>
@@ -50,24 +73,30 @@
 </template>
 
 <script>
-
 export default {
   name: "AppSidebar",
   data() {
     return {
-      collapsed: true
-    }
+      collapsed: true,
+    };
   },
   methods: {
     open() {
-      this.$emit('open');
+      this.$emit("open");
       this.collapsed = false;
     },
     close() {
-      this.$emit('close');
+      this.$emit("close");
       this.collapsed = true;
-    }
-  }
+    },
+    toggleSidebar() {
+      if (this.collapsed) {
+        this.open();
+      } else {
+        this.close();
+      }
+    },
+  },
 };
 </script>
 
@@ -86,23 +115,16 @@ export default {
 
 <style lang="scss">
 .sidebar {
+  position: absolute;
+  left: 50px;
   z-index: 5;
-  overflow: hidden;
   height: 100%;
-  width: 40%;
+  width: calc(100% - 50px);
   background: #fff;
-  transition: width 0.3s ease-in-out;
-  &_wrap {
-    height: 100%;
-    &.active {
-    width: 40%;
-  }
-  }
-  &__wrapper {
-    width: 100%;
-    height: 40px;
-    background: #618580;
-    border-bottom: 1px solid #fff;
+  transition: all 0.3s ease-out;
+  transform: translateX(-100%);
+  &.active {
+    transform: translateX(0%);
   }
   &__box {
     display: flex;
@@ -148,6 +170,10 @@ export default {
   }
 
   &-collapsed {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
     background: #ffffff;
     height: 100%;
     width: 50px;
@@ -201,5 +227,4 @@ export default {
     }
   }
 }
-
 </style>

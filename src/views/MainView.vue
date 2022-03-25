@@ -1,32 +1,6 @@
 <template>
   <section class="hero">
-    <!-- <div class="user-box">
-            <div class="user-box-auth">Авторизация</div>
-            <div class="user-box-line"></div>
-            <div class="user-box-form">
-                <form>
-                    <div class="user-box-input">
-                        <input type="login" placeholder="логин">
-                        <i class="fa fa-sign-in" aria-hidden="true"></i>
-                    </div>
-                    <div class="user-box-input">
-                        <input type="password" placeholder="пароль">
-                        <i class="fa fa-key" aria-hidden="true"></i>
-                    </div>
-                    <a href="./index.html" class="user-box-button"><p>Войти</p></a>
-                    <a href="./pages/registration.html" class="user-box-button-registr">Регистрация</a>
-                </form>
-            </div>
-        </div>
-
-        <div class="search-box">
-            <div class="search-box-title">Введите запрос</div>
-            <div class="user-box-line"></div>
-            <div class="user-box-input">
-                <input type="text" placeholder="поиск">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </div>
-        </div> -->
+    
     <div class="sidebar-block">
       <app-sidebar
         @close="sidebarCollapsed = true"
@@ -69,16 +43,25 @@ export default {
 <style lang="scss">
 .hero {
   width: 100%;
-  margin: 20px;
+  padding: 20px;
   position: relative;
+  background: #dfdfdf;
 }
 .map {
   height: 100%;
   position: relative;
   margin-left: auto;
+  display: none;
   &.collapsed {
     max-width: 60%;
   }
+}
+.sidebar-block {
+  display: flex;
+  height: 100%;
+  max-width: 40%;
+  position: relative;
+  overflow: hidden;
 }
 
 </style>

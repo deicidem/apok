@@ -20,27 +20,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-* {
-  box-sizing: border-box;
-}
-
-.container {
-  height: 80vh;
-  display: flex;
-}
-body {
-  margin: 0;
-  padding: 0;
-}
-.sidebar {
-  padding: 50px;
-  width: 50%;
-  max-width: 50%;
-  background: #ccc;
-}
-.map {
-  width: 50%;
-  height: 100%;
-}
-</style>

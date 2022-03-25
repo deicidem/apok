@@ -50,7 +50,7 @@
           </div>
 
           <div class="search-box" v-show="showSearch">
-            <div class="search-box-title">Введите запрос</div>
+            <div class="search-box-title">запрос</div>
             <div class="user-box-line"></div>
             <div class="user-box-input">
               <input type="text" placeholder="поиск" />

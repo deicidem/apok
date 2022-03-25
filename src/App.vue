@@ -27,7 +27,7 @@
         </div>
         <div class="header__user">
           <div class="user-box" v-show="showUser">
-            <div class="user-box-auth">Авторизация</div>
+            <div class="user-box-auth">Авторизация 1</div>
             <div class="user-box-line"></div>
             <div class="user-box-form">
               <form>

@@ -50,8 +50,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 * {
   margin: 0;
   padding: 0;
@@ -62,7 +60,7 @@ html,
 body {
   color: #868686;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   font-family: Helvetica, sans-serif;
   min-width: 1024px;
@@ -92,14 +90,58 @@ img {
 }
 
 .wrapper {
-  min-height: 100vh;
-  background: #DFDFDF;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-
+.content {
+  flex: 1 1 auto;
+}
 
 /* _____________________index.html__________________ */
 
+
+
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 0px 20px;
+  background-color: #384342;
+}
+
+.links__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header__user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.user__item i:hover {
+  color: #618580;
+  text-shadow: 0 0 16px 0 #618580;
+  -webkit-text-shadow: 0 0 16px 0 #618580;
+  -moz-text-shadow: 0 0 16px 0 #618580;
+}
+
+.user__item {
+  text-align: right;
+  color: #fff;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.user__item i {
+  margin: 10px;
+  font-size: 24px;
+}
 
 /* ______________________user-box____________________ */
 
@@ -250,7 +292,28 @@ img {
   transition: all 0.4s ease-out;
 }
 
+header a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 18px;
+  padding: 6px 15px;
+  box-sizing: border-box;
+}
 
+header a:hover {
+  // background: #618580;
+  border-radius: 4px;
+  transition: background-color 0.6s ease-out;
+}
+
+.header__item {
+  margin-right: 40px;
+}
+
+.logo {
+  max-width: 120px;
+}
 
 content {
   width: 100%;

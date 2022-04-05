@@ -22,7 +22,7 @@ function setTasks() {
       id: 1,
       title: 'Формирование температурных карт',
       date: '2017-03-06 16:17:35',
-      status: 'completed',
+      status: 'Завершено',
       result: 'https://gptl.ru/',
       delete: true
     },
@@ -30,7 +30,7 @@ function setTasks() {
       id: 2,
       title: 'Формирование температурных карт',
       date: '2017-03-06 16:17:35',
-      status: 'completed',
+      status: 'Завершено',
       result: 'https://gptl.ru/',
       delete: false
     },
@@ -38,7 +38,7 @@ function setTasks() {
       id: 3,
       title: 'Формирование температурных карт',
       date: '2017-03-06 16:17:35',
-      status: 'completed',
+      status: 'Завершено',
       result: 'https://gptl.ru/',
       delete: true
     },
@@ -46,7 +46,7 @@ function setTasks() {
       id: 4,
       title: 'Формирование температурных карт',
       date: '2017-03-06 16:17:35',
-      status: 'completed',
+      status: 'Завершено',
       result: 'https://gptl.ru/',
       delete: false
     },
@@ -54,9 +54,25 @@ function setTasks() {
       id: 5,
       title: 'Формирование температурных карт',
       date: '2017-03-06 16:17:35',
-      status: 'completed',
+      status: 'Завершено',
       result: 'https://gptl.ru/',
       delete: true
-    }
+    },
+    {
+      id: 6,
+      title: 'Формирование температурных карт',
+      date: '2017-03-06 16:17:35',
+      status: 'Завершено',
+      result: 'https://gptl.ru/',
+      delete: true
+    },
+    {
+      id: 7,
+      title: 'Формирование температурных карт',
+      date: '2017-03-06 16:17:35',
+      status: 'Завершено',
+      result: 'https://gptl.ru/',
+      delete: true
+    },
   ]
 }

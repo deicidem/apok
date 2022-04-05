@@ -76,7 +76,6 @@
 .title {
   position: relative;
   font-size: 1.5rem;
-  font-weight: 400;
   padding: 10px;
   text-align: center;
   background: $gradient;

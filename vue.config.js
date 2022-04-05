@@ -12,5 +12,12 @@ module.exports = defineConfig({
     plugins: [
       new NodePolyfillPlugin()
     ]
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: `@import "@/assets/styles/variables.scss";`
+      }
+    }
   }
 })

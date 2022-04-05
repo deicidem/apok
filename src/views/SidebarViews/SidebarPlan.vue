@@ -10,6 +10,8 @@
           <h2 class="plan__info-title">Название</h2>
           <p class="plan__info-text">Построение карты температур по тепловым каналам КА Landsat-8 производится с целью</p>
           <div class="plan__info-buttons">
+            <app-button type="white-g">Подробнее</app-button>
+            <app-button>Запланировать</app-button>
           </div>
         </div>
       </div>
@@ -19,11 +21,11 @@
 
 <script>
 import AppButton from "@/components/controls/AppButton.vue"
-import AppInput from "@/components/controls/AppInput.vue"
+// import AppInput from "@/components/controls/AppInput.vue"
 export default {
   components: {
     AppButton,
-    AppInput
+    // AppInput
   },
   data() {
     return {
@@ -57,6 +59,23 @@ export default {
   &__info{
     margin-left: 20px;
     margin-top: 10px;
+    &-title{
+      font-size: 18px;
+      font-weight: 400;
+      color: #000;
+    }
+    &-text{
+      margin-top: 10px;
+      font-weight: 400;
+      font-size: 14px;
+      color: #616161;
+      line-height: 130%;
+    }
+    &-buttons{
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-evenly;
+    }
   }
 }
 </style>

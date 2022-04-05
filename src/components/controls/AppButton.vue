@@ -22,7 +22,7 @@ export default {
   border: none;
   box-shadow: $shadow_small;
   height: 30px;
-  padding: 0 15px;
+  padding: 0 24px;
   text-align: center;
   font-size: 0.875rem;
 }

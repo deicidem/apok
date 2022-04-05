@@ -59,13 +59,13 @@ export default {
 html,
 body {
   color: #868686;
-  font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
-  font-family: Helvetica, sans-serif;
+  font-family: 'Montserrat';
   min-width: 1024px;
   width: 100%;
   overflow: visible;
+  font-weight: 400;
 }
 
 

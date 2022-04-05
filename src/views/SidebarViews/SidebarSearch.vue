@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>Search</h2>
+  <div class="search">
+    <h2 class="search-title">Поиск снимков</h2>
   </div>
 </template>
 
@@ -9,3 +9,18 @@ export default {
   
 }
 </script>
+
+<style lang="scss" scoped>
+
+.search{
+  &-title {
+    background: $gradient;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+
+</style>

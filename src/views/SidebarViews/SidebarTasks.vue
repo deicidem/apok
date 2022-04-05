@@ -1,33 +1,35 @@
 <template>
   <div class="tasks">
-    <h2 class="table-title">Мои задачи</h2>
-    <div class="scroll-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Номер</th>
-            <th>Задача</th>
-            <th>Добавлена</th>
-            <th>Статус</th>
-            <th>Результат</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
-
-      <div class="scroll-table-body">
+    <h2 class="tasks-title">Мои задачи</h2>
+    <div class="tasks__wrapper">
+      <div class="tasks__wrapper-table">
         <table>
-          <tbody>
-            <tr v-for="task in tasks" :key="task.id">
-              <td>{{ task.id }}</td>
-              <td>{{ task.title }}</td>
-              <td>{{ task.date }}</td>
-              <td>{{ task.status }}</td>
-              <td>{{ task.result }}</td>
-              <td><input type="checkbox" :checked="task.delete" /></td>
+          <thead>
+            <tr>
+              <th class="col-checkbox center"><input type="checkbox" /></th>
+              <th class="col-id center">Номер</th>
+              <th>Задача</th>
+              <th>Добавлена</th>
+              <th>Статус</th>
+              <th>Результат</th>
             </tr>
-          </tbody>
+          </thead>
         </table>
+
+        <div class="scroll-table-body">
+          <table>
+            <tbody>
+              <tr v-for="task in tasks" :key="task.id">
+                <td class="col-checkbox  center"><input type="checkbox" :checked="task.delete" /></td>
+                <td class="col-id center">{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.date }}</td>
+                <td class="green">{{ task.status }}</td>
+                <td class="green">{{ task.result }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -45,76 +47,104 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.table-title {
-  background: #618580;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  font-size: 18px;
+<style lang="scss" scoped>
 
-}
-.tasks {
-  height: 100%;
-  border-bottom: 1px solid #fff;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
-}
+.tasks{
 
-table {
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.scroll-table {
-  &-body {
-    height: inherit;
-    overflow-x: auto;
-    margin-top: 0px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  table {
-    width: 100%;
-    border: none;
-  }
-  thead {
-    th {
-      text-align: center;
-      border: none;
-      padding: 0 5px;
-      background: #384342;
-      font-size: 14px;
-      color: #fff;
-    }
-  }
-  tbody {
+  &-title {
+    background: $gradient;
+    color: #fff;
     text-align: center;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    padding: 8px;
-    font-size: 14px;
-    color: #384342;
-    vertical-align: top;
-    line-height: 150%;
-    tr:nth-child(even) {
-      background: #f3f3f3;
-    }
-    td:hover {
-      background-color: #e5e5e5;
-      color: #384342;
-      transition: background-color 0.5s, color 0.5s;
-    }
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  &__wrapper{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px; 
+    overflow: hidden;
+    margin: 30px;
+      &-table{
+        height: inherit;
+        overflow-x: auto;
+        margin-top: 0px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        table{
+          width: 100%;
+          table-layout: fixed;
+          border-collapse: collapse;
+          .col-checkbox{
+            width: 40px;
+          }
+          .col-id{
+            width: 70px;
+          }
+          .center{
+            text-align: center;
+          }
+          thead{
+            background: $gradient-w;
+            box-shadow: $shadow-big;
+            tr{
+              th{
+                text-align: left;
+                border: none;
+                font-size: 12px;
+                color: $color-main-dark;
+                padding: 10px;
+                box-sizing: border-box;
+              }
+              input{
+                width: 20px;
+                height: 20px;
+                background: #EFF2F2;
+                box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+                border-radius: 50%;
+                border:none;
+              }
+            }
+          }
+          tbody {
+            text-align: left;
+            font-size: 12px;
+            color: #384342;
+            vertical-align: top;
+            line-height: 150%;
+            tr{
+              td{
+                padding: 10px;   
+                border-bottom: 1px solid rgba(71, 109, 112, 0.3);    
+              }
+              .green{
+                color: $color-main;
+              }
+            }
+            input{
+              width: 16px;
+              height: 16px;
+              background: #EFF2F2;
+              box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+              border-radius: 50%;
+              border:none;
+            }
+          }
+        }
+      }
   }
 }
 
-// ::-webkit-scrollbar {
-//     width: 20px;
-// }
-// ::-webkit-scrollbar-track {
-//     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-// }
-// ::-webkit-scrollbar-thumb {
-//     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-// }
+
+
+
+
+
+.tasks__wrapper-table {
+
+
+
+}
+
+
 </style>

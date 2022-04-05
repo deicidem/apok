@@ -1,0 +1,70 @@
+<template>
+  <button class="button" :class="type">
+    <span class="button-content">
+      <slot></slot>
+    </span>
+  </button>
+</template>
+
+<script>
+export default {
+  props: {
+    type: String,
+    textGradient: String,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.button {
+  background: $gradient;
+  border-radius: 10px;
+  border: none;
+  box-shadow: $shadow_small;
+  height: 30px;
+  padding: 0 15px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+.button-content {
+  color: #fff;
+}
+.white {
+  .button-content {
+    color: $color-main-dark;
+  }
+  background: $gradient_w;
+
+  &-g {
+    background: $gradient_w;
+    .button-content {
+      color: $color-main-dark;
+    }
+    @supports (background-clip: text) {
+      .button-content {
+        background: $gradient;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+  &-r {
+    background: $gradient_w;
+    .button-content {
+      color: $color-red;
+    }
+    @supports (background-clip: text) {
+      .button-content {
+        background: $gradient-r;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}
+
+.red {
+  color: #fff;
+  background: $gradient_r;
+}
+</style>

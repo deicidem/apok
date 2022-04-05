@@ -10,7 +10,6 @@
           <h2 class="plan__info-title">Название</h2>
           <p class="plan__info-text">Построение карты температур по тепловым каналам КА Landsat-8 производится с целью</p>
           <div class="plan__info-buttons">
-
           </div>
         </div>
       </div>
@@ -19,13 +18,22 @@
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton.vue"
+import AppInput from "@/components/controls/AppInput.vue"
 export default {
-  
+  components: {
+    AppButton,
+    AppInput
+  },
+  data() {
+    return {
+      val: "инпут"
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-
 .plan{
   &-title {
     background: $gradient;

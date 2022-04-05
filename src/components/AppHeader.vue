@@ -10,9 +10,6 @@
           <li class="header-nav__item">
             <router-link to="/about">Руководства пользователя</router-link>
           </li>
-          <li class="header-nav__item">
-            <router-link to="/about">Помощь</router-link>
-          </li>
         </ul>
       </nav>
       <div class="header-menu">

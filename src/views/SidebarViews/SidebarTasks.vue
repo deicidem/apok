@@ -1,6 +1,6 @@
 <template>
   <div class="tasks">
-    <h2 class="tasks-title">Мои задачи</h2>
+    <h2 class="title">Мои задачи</h2>
     <div class="tasks__wrapper">
       <div class="tasks__wrapper-table">
         <table>
@@ -16,7 +16,7 @@
           </thead>
         </table>
 
-        <div class="scroll-table-body">
+        <div>
           <table>
             <tbody>
               <tr v-for="task in tasks" :key="task.id">
@@ -48,17 +48,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title {
+  background: $gradient;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 400;
+}
 
 .tasks{
-
-  &-title {
-    background: $gradient;
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    font-size: 18px;
-    font-weight: 400;
-  }
   &__wrapper{
     background: #FFFFFF;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);

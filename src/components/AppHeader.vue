@@ -55,7 +55,6 @@
           <button class="button button-o header-menu__button">
             <i class="fa fa-user" aria-hidden="true"></i>
           </button>
-          
         </div>
       </div>
     </div>

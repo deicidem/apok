@@ -77,7 +77,7 @@ export default {
   name: "AppSidebar",
   data() {
     return {
-      collapsed: true,
+      collapsed: false,
     };
   },
   methods: {

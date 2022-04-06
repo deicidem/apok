@@ -1,11 +1,15 @@
 export default {
   namespaced: true,
   state: {
-    tasks: setTasks()
+    tasks: setTasks(),
+    headers: ["Номер", "Задача", "Дата добавления", "Статус", "Результат"]
   },
   getters: {
     getTasks(state) {
       return state.tasks;
+    },
+    getHeaders(state) {
+      return state.headers;
     }
   },
   mutations: {

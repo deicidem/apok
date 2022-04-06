@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import tasks from './modules/tasks'
 import users from './modules/users'
 import plans from './modules/plans'
+import alerts from './modules/alerts'
 
 export default new Vuex.Store({
   state: {
@@ -20,7 +21,8 @@ export default new Vuex.Store({
   modules: {
     tasks,
     users,
-    plans
+    plans,
+    alerts
   },
   strict: process.env.NODE_ENV !== 'production'
 })

@@ -17,6 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .button {
+  font-family: inherit;
   background: $gradient;
   border-radius: 10px;
   border: none;

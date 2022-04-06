@@ -87,9 +87,8 @@ export default {
     // AppInput
   },
   data() {
-    // return {
-    //   val: "инпут"
-    // }
+    return {
+    }
   },
 }
 </script>

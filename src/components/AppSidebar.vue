@@ -120,7 +120,7 @@ export default {
   z-index: 5;
   height: 100%;
   width: calc(100% - 50px);
-  background: #fff;
+  background: #cecece;
   transition: all 0.3s ease-out;
   transform: translateX(-100%);
   &.active {

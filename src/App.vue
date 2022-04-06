@@ -58,10 +58,10 @@ export default {
 
 html,
 body {
-  color: #868686;
-  font-size: 14px;
+  color: #c7c7c7;
+  font-size: 16px;
   line-height: 1.5;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   min-width: 1024px;
   width: 100%;
   overflow: visible;

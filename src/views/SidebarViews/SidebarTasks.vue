@@ -78,20 +78,18 @@ export default {
         width: 20px;
         height: 20px;
         background: #eff2f2;
-        box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
         border-radius: 50%;
         border: none;
       }
   }
   tbody {
-input {
-  width: 16px;
-  height: 16px;
-  background: #eff2f2;
-  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 50%;
-  border: none;
-}
+    input {
+      width: 16px;
+      height: 16px;
+      background: #eff2f2;
+      border-radius: 50%;
+      border: none;
+    }
   }
   
 }

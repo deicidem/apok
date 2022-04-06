@@ -114,15 +114,29 @@ export default {
 
 
 <style lang="scss">
+
+.sidebar-title {
+  background: $gradient;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  box-shadow: $shadow-small;
+}
+
 .sidebar {
   position: absolute;
   left: 50px;
   z-index: 5;
   height: 100%;
   width: calc(100% - 50px);
-  background: #cecece;
+  background: #EDECEC;
   transition: all 0.3s ease-out;
   transform: translateX(-100%);
+  &-block {
+    box-shadow: $shadow-big;
+  }
   &.active {
     transform: translateX(0%);
   }
@@ -177,6 +191,7 @@ export default {
     background: #ffffff;
     height: 100%;
     width: 50px;
+    box-shadow: $shadow-small;
     &__item {
       position: relative;
       display: flex;

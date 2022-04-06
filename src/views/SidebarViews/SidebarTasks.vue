@@ -136,14 +136,4 @@ export default {
 
 
 
-
-
-
-.tasks__wrapper-table {
-
-
-
-}
-
-
 </style>

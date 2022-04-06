@@ -102,17 +102,6 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <style lang="scss">
 .sidebar {
   position: absolute;
@@ -120,7 +109,7 @@ export default {
   z-index: 5;
   height: 100%;
   width: calc(100% - 50px);
-  background: #cecece;
+  background: rgb(0,0,0,0.02);
   transition: all 0.3s ease-out;
   transform: translateX(-100%);
   &.active {

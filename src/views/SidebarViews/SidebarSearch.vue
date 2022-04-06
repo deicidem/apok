@@ -67,10 +67,10 @@
             </table>
           </div>
 
-          <div class="search-zone__button">
-            <app-button>Использовать карту</app-button>
-            <app-button type="white-g">Прописать координаты</app-button>
-            <app-button type="red">Очистить координаты</app-button>
+          <div class="search-zone__buttons">
+            <app-button class="search-zone__button">Использовать карту</app-button>
+            <app-button class="search-zone__button" type="white-g">Прописать координаты</app-button>
+            <app-button class="search-zone__button" type="red">Очистить координаты</app-button>
           </div>
         </div>
       </div>
@@ -221,9 +221,13 @@ export default {
         }
       }
     }
-    &__button{
+    &__buttons{
       display: flex;
       flex-direction: column;
+      margin: 20px;
+    }
+    &__button{
+      margin: 10px;
     }
   }
 }

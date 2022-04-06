@@ -78,6 +78,7 @@
   background: $gradient;
   box-shadow: $shadow-big;
   color: #fff;
+  font-weight: 400;
 }
 
 .header-user {
@@ -102,7 +103,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 100px;
+    padding: 20px 100px;
     box-shadow: $shadow-big;
   }
 

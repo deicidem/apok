@@ -1,9 +1,9 @@
 <template>
   <div class="plan">
-    <h2 class="title">Запланировать задачу</h2>
+    <h2 class="sidebar-title">Запланировать задачу</h2>
     
     <div class="plan-wrapper">
-      <app-card class="plan-card" v-for="(plan, i) in plans" :key="i" :img="plan.image" :text="plan.shortText" :title="plan.title"></app-card>
+      <app-plan-card class="plan-card" v-for="(plan, i) in plans" :key="i" :img="plan.image" :text="plan.shortText" :title="plan.title"></app-plan-card>
     </div>
   
   </div>
@@ -11,10 +11,10 @@
 
 <script>
 import {mapGetters} from "vuex";
-import AppCard from "@/components/AppCard.vue"
+import AppPlanCard from "@/components/cards/AppPlanCard.vue"
 export default {
   components: {
-    AppCard
+    AppPlanCard
   },
   data() {
     return {
@@ -29,14 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  background: $gradient;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 400;
-}
+
 
 .plan{
   &-wrapper{

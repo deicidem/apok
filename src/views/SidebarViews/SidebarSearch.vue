@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <h2 class="title">Поиск снимков</h2>
+    <h2 class="sidebar-title">Поиск снимков</h2>
 
     <div class="search-wrapper">
       <div class="search-zone">
@@ -94,14 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  background: $gradient;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 400;
-}
 
 .search{
   &-wrapper{

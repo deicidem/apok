@@ -109,16 +109,90 @@
 
         <div class="search-cloud">
           <h2 class="search__title">Облачность</h2>
-
-          <div class="scrollbar">
-
-          </div>
-
         </div>
 
         <div class="search-spacecraft">
           <h2 class="search__title">Космический аппарат</h2>
-            <div class="search-spacecraft"></div>
+
+              <div class="accordion">
+
+                <div class="accordion-item">
+                  <input class="accordion-item__input" type="checkbox" id="accordion-1">
+                  <label class="accordion-item__trigger" for="accordion-1">
+                    <div class="accordion-item__img"></div>
+                    <input type="checkbox" class="accordion-item__checkbox">
+                    <p>Канопус</p>
+                  </label>
+
+                  <div class="accordion-item__content">
+                    <input class="accordion-item__input" type="checkbox" id="accordion-2">
+
+                    <label class="accordion-item__trigger" for="accordion-2">
+                      <div class="accordion-item__img"></div>
+                      <input type="checkbox" class="accordion-item__checkbox">
+                      <p>Канопус-В</p>
+                    </label>
+
+                    <div class="accordion-item__content">
+                        <input class="accordion-item__input" type="checkbox">
+                        <label class="accordion-item__trigger">
+                          <input type="checkbox" class="accordion-item__checkbox">
+                          <div>
+                            <img src="@/assets/img/spektr.png">
+                          </div>
+                          <p>Многоспектральная съемка</p>
+                        </label>
+                        <input class="accordion-item__input" type="checkbox">
+                        <label class="accordion-item__trigger">
+                          <input type="checkbox" class="accordion-item__checkbox">
+                          <div>
+                            <img src="@/assets/img/panhrom.png">
+                          </div>
+                          <p>Панхроматическая съемка</p>
+                        </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <input class="accordion-item__input" type="checkbox" id="accordion-3">
+                  <label class="accordion-item__trigger" for="accordion-3">
+                    <div class="accordion-item__img"></div>
+                    <input type="checkbox" class="accordion-item__checkbox">
+                    <p>Ресурс</p>
+                  </label>
+
+                  <div class="accordion-item__content">
+                    <input class="accordion-item__input" type="checkbox" id="accordion-4">
+
+                    <label class="accordion-item__trigger" for="accordion-4">
+                      <div class="accordion-item__img"></div>
+                      <input type="checkbox" class="accordion-item__checkbox">
+                      <p>Ресурс-П1</p>
+                    </label>
+
+                    <div class="accordion-item__content">
+                        <input class="accordion-item__input" type="checkbox">
+                        <label class="accordion-item__trigger">
+                          <input type="checkbox" class="accordion-item__checkbox">
+                          <div>
+                            <img src="@/assets/img/spektr.png">
+                          </div>
+                          <p>Многоспектральная съемка</p>
+                        </label>
+                        <input class="accordion-item__input" type="checkbox">
+                        <label class="accordion-item__trigger">
+                          <input type="checkbox" class="accordion-item__checkbox">
+                          <div>
+                            <img src="@/assets/img/panhrom.png">
+                          </div>
+                          <p>Панхроматическая съемка</p>
+                        </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
         </div>
 
         <div class="search-buttons">
@@ -147,35 +221,64 @@ export default {
 
 <style lang="scss" scoped>
 
+.accordion{
+  padding: 10px;
+  box-shadow: $shadow-small;;
+  border-radius: 10px;
+  overflow: hidden;
+  background: $gradient-w;
+  overflow-y: scroll;
+  max-height: 200px;
+  &-item{
+    position: relative;
+    p{
+      margin-left: 4px;
+      color: #000;
+      font-size: 0.875rem;
+    }
+
+    &__input{
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      &:checked ~ .accordion-item__trigger{
+      }
+      &:checked ~ .accordion-item__content{
+        display:inline-block;
+      }
+    }
+    &__trigger{
+      display: flex;
+      align-items: center;
+      padding: 6px 0 0 6px;
+    }
+    &__checkbox{
+      margin-right: 6px;
+    }
+    &__img{
+      background: url("@/assets/img/arrow-close.png");
+      height: 24px;
+      width: 24px;
+    }
+    &__content{
+      padding: 6px 0 0 24px;
+      border-top: none;
+      display: none;
+    }
+  }
+}
+
+
 .input-date{
-  margin-top: 2px;
   width: 160px;
   padding: 5px 10px;
-  border-radius: 15px;
   border: none;
   box-shadow: $shadow-small;
   line-height: 30px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: $color-main-dark;
   background: #fff;
-}
-
-.scrollbar{
-  margin: 20px auto;
-  overflow-x: scroll;
-  width: 350px;
-  height: 12px;
-}
-
-.scrollbar::-webkit-scrollbar {
-  scrollbar-color: $color-main-dark #FFF; 
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background-color: $color-main-dark;
-  width: 50px;
-  height: 12px;
-  border-radius: 3px;
 }
 
 .search{
@@ -184,7 +287,7 @@ export default {
   }
   &__title{
     font-weight: 400;
-    font-size: 20px;
+    font-size: 1.25rem;
     color: #000;
   }
   &-zone{
@@ -327,12 +430,14 @@ export default {
       border-radius: 10px;
       box-shadow: $shadow-small;
       align-items: center;
-      margin-right: 20px;
-      &:hover{
-        outline: 1px solid $color-main;
-      }
+      margin-right: 20px;  
       input{
         height: 30px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        &:hover{
+          border: 1px solid $color-main;
+        }
       }
       i{
         position: absolute;
@@ -340,6 +445,7 @@ export default {
         padding: 8px;
         background: $gradient;
         color: #fff;
+        font-size: 15px;
       }
     }
     &__arrow{
@@ -381,6 +487,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
+    overflow-y: scroll;
   }
   &-buttons{
     margin: 10px;

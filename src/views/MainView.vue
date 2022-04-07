@@ -44,15 +44,15 @@ export default {
 .hero {
   width: 100%;
   height: 100%;
-  padding: 20px;
   position: relative;
-  background: #dfdfdf;
 }
 .map {
   height: 100%;
-  position: relative;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
   margin-left: auto;
-  display: none;
   &.collapsed {
     max-width: 60%;
   }

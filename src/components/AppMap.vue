@@ -9,20 +9,17 @@
     <l-marker
       :draggable="true"
       @drag="handleMarkerDrag($event, id)"
-      v-for="(marker, id) in markers"
+      v-for="(marker, id) in polygon"
       :key="id"
       :lat-lng="marker"
     ></l-marker>
-    <l-polygon
-      :fill="true"
-      :lat-lngs="markers"
-      color="#ff00ff"
-    ></l-polygon>
+    <l-polygon :fill="true" :lat-lngs="polygon" color="#476D70"></l-polygon>
     <!-- <l-geo-json :geojson="geojson"></l-geo-json> -->
   </l-map>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import * as SHP from "shp-write";
 import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
@@ -59,21 +56,31 @@ export default {
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 15,
       center: [51.505, -0.159],
-      markerLatLng: [51.504, -0.159],
       showParagraph: false,
-      markers: [],
     };
   },
+  computed: {
+    ...mapGetters("map", {
+      polygon: "getPolygonArea",
+      drawable: "getDrawable",
+    }),
+  },
   methods: {
+    ...mapActions("map", {
+      addCoordinate: "addCoordinate",
+      changeCoordinate: "changeCoordinate",
+    }),
     // Добавление маркеров
     onClick($event) {
-      this.markers.push($event.latlng);
-      console.log(this.markers);
+      if (this.drawable) {
+        this.addCoordinate($event.latlng);
+      }
     },
     // Изменение размеров полигона
     handleMarkerDrag($event, id) {
-      this.$set(this.markers, id, $event.latlng);
-      this.markers[id] = $event.latlng;
+      if (this.drawable) {
+        this.changeCoordinate({ latlng: $event.latlng, id });
+      }
     },
     // Сохранение файла
     save() {
@@ -100,6 +107,6 @@ export default {
         )
       );
     },
-  },  
+  },
 };
 </script>

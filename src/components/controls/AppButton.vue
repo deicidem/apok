@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="type">
+  <button class="button" @click="$emit('click')" :class="type">
     <span class="button-content">
       <slot></slot>
     </span>
@@ -26,6 +26,7 @@ export default {
   padding: 0 24px;
   text-align: center;
   font-size: 0.875rem;
+  cursor: pointer;
 }
 .button-content {
   color: #fff;

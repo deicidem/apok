@@ -196,11 +196,13 @@ export default {
           color: #384342;
         }
       }
-      i:hover + &__hidden {
+      a:hover + &__hidden {
+        visibility: inherit;
         z-index: 1;
         opacity: 1;
       }
       &__hidden {
+        visibility: hidden;
         opacity: 0;
         z-index: -1;
         position: absolute;

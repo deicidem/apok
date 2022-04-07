@@ -6,11 +6,11 @@
         <div class="search-zone">
           <h2 class="search__title">Зона интереса</h2>
 
-          <div class="search-zone__unput">
+          <div class="search-zone__input">
             <input type="radio">
             <label>Видимая область экрана</label>
           </div>
-          <div class="search-zone__unput">
+          <div class="search-zone__input">
             <input type="radio">
             <label>Задать вручную</label>
           </div>
@@ -77,9 +77,9 @@
 
         <div class="search-date">
           <h2 class="search__title">Интервал дат съемки</h2>
-          <div class="search-date__unputs">
+          <div class="search-date__inputs">
 
-            <div class="search-date__unput">
+            <div class="search-date__input">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <input class="input-date" type="date">
             </div>
@@ -88,7 +88,7 @@
               <img src="@/assets/img/arrow.png">
             </div>
 
-            <div class="search-date__unput">
+            <div class="search-date__input">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               <input class="input-date" type="date">
             </div>
@@ -118,21 +118,7 @@
 
         <div class="search-spacecraft">
           <h2 class="search__title">Космический аппарат</h2>
-            <div class="search-spacecraft">
-              <div class="accordion">
-
-                <div class="accordion-item">
-                  <input class="accordion-item__input" type="checkbox" id="accordion-1">
-                  <label class="accordion-item__trigger" for="accordion-1">
-                    Канопус
-                  </label>
-                  <div class="accordion-item__content">
-                    Канопус-В1
-                  </div>
-                </div>
-
-              </div>
-            </div>
+            <div class="search-spacecraft"></div>
         </div>
 
         <div class="search-buttons">
@@ -174,6 +160,24 @@ export default {
   background: #fff;
 }
 
+.scrollbar{
+  margin: 20px auto;
+  overflow-x: scroll;
+  width: 350px;
+  height: 12px;
+}
+
+.scrollbar::-webkit-scrollbar {
+  scrollbar-color: $color-main-dark #FFF; 
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: $color-main-dark;
+  width: 50px;
+  height: 12px;
+  border-radius: 3px;
+}
+
 .search{
   &-wrapper{
     margin: 30px;
@@ -189,7 +193,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    &__unput{
+    &__input{
       margin-top: 10px;
       input{
         width: 14px;
@@ -236,11 +240,11 @@ export default {
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;
+      background: #FFF;
     }
     &__table{
       table{
         width: 100%;
-        table-layout: fixed;
         border-collapse: collapse; 
         tr{
         border-bottom: 1px solid rgba(71, 109, 112, 0.3); 
@@ -260,6 +264,7 @@ export default {
             }
           }
           td{
+            max-width: 110px;
             text-align: left;
             border: none;
             font-size: 12px;
@@ -311,20 +316,20 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    &__unputs{
+    &__inputs{
       display: flex;
-      justify-content: space-evenly;
       align-items: center;
-      padding: 20px;
+      margin: 20px 0;
     }
-    &__unput{
+    &__input{
       position: relative;
       overflow: hidden;
       border-radius: 10px;
       box-shadow: $shadow-small;
       align-items: center;
+      margin-right: 20px;
       &:hover{
-        border: 1px solid $color-main;
+        outline: 1px solid $color-main;
       }
       input{
         height: 30px;
@@ -339,6 +344,7 @@ export default {
     }
     &__arrow{
       max-height: 20px;
+      margin-right: 20px;
       img{
         width: 100%;
         height: 100%;
@@ -379,35 +385,6 @@ export default {
   &-buttons{
     margin: 10px;
     text-align: center;
-  }
-}
-
-.accordion{
-  &-item{
-    margin-bottom: 20px;
-    position: relative;
-    &__input{
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      &:checked ~ .accordion-item__trigger{
-      }
-      &:checked ~ .accordion-item__content{
-        display: block;
-      }
-    }
-    &__trigger{
-      display: block;
-      padding: 20px;
-      border: 1px solid #000;
-    }
-    &__content{
-      padding: 20px;
-      border: 1px solid #000;
-      border-top: none;
-      display: none;
-    }
   }
 }
 

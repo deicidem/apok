@@ -34,8 +34,7 @@
         <div class="search-zone__main">
           <div class="search-zone__table">
             <table>
-              <tbody>
-                <!--Вынеси в thead -->
+              <thead>
                 <tr>
                   <th class="col"><input type="checkbox" /></th>
                   <th>Широта</th>
@@ -43,25 +42,19 @@
                   <th class="col"></th>
                   <th class="col"></th>
                 </tr>
-                <!-- Вынеси в thead -->
+              </thead>
+              <tbody>
                 <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
                   <td class="col"><input type="checkbox" /></td>
                   <td>{{ coord.lat }}</td>
                   <td>{{ coord.lng }}</td>
                   <td class="col delete" @click="deleteCoordinate(i)">
-                    <!-- Сделай через компонент -->
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <app-button class="col-item__trash" type="white-r">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </app-button>
                   </td>
                 </tr>
-                <!-- <tr>
-                  <td class="col"><input type="checkbox" /></td>
-                  <td><input class="search-zone__add" v-model="newLat"></td>
-                  <td><input class="search-zone__add" v-model="newLng"></td>
-                  <td class="col delete" @click="deleteCoordinate(i)">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </td>
-                </tr> -->
-              </tbody>
+            </tbody>
             </table>
           </div>
 
@@ -87,8 +80,8 @@
 
       <div class="search-date">
         <h2 class="search__title">Интервал дат съемки</h2>
-        <div class="search-date__unputs">
-          <div class="search-date__unput">
+        <div class="search-date__inputs">
+          <div class="search-date__input">
             <i class="fa fa-calendar" aria-hidden="true"></i>
             <input class="input-date" type="date" />
           </div>
@@ -97,7 +90,7 @@
             <img src="@/assets/img/arrow.png" />
           </div>
 
-          <div class="search-date__unput">
+          <div class="search-date__input">
             <i class="fa fa-calendar" aria-hidden="true"></i>
             <input class="input-date" type="date" />
           </div>
@@ -360,7 +353,7 @@ export default {
     &__main {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;
@@ -405,21 +398,17 @@ export default {
             }
           }
           .col {
-            width: 40px;
+            max-width: 40px;
             text-align: center;
-            i {
-              background: $gradient-w;
-              border-radius: 8px;
-              box-shadow: $shadow-small;
-              padding: 8px;
-              font-size: 14px;
+            &-item{
+              &__trash{
+                width: 30px;
+                height: 30px;
+                padding: 0;
+                font-size: 1rem;
+                border-radius: 10px;
+              }
             }
-          }
-          .edit {
-            color: $color-main;
-          }
-          .delete {
-            color: $color-red;
           }
         }
       }

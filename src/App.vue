@@ -95,6 +95,9 @@ img {
 
 .content {
   flex: 1 1 auto;
+  padding: 20px;
+  background: #dfdfdf;
+
 }
 
 /* _____________________index.html__________________ */

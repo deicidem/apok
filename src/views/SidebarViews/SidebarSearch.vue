@@ -233,6 +233,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .accordion{
   padding: 10px;
   box-shadow: $shadow-small;;
@@ -240,7 +241,7 @@ export default {
   overflow: hidden;
   background: $gradient-w;
   overflow-y: scroll;
-  max-height: 200px;
+  max-height: 160px;
   &-item{
     position: relative;
     p{
@@ -450,10 +451,8 @@ export default {
       border-radius: 10px;
       box-shadow: $shadow-small;
       align-items: center;
-
       margin-right: 20px;  
       input{
-
         height: 30px;
         border: 1px solid transparent;
         border-radius: 10px;
@@ -467,7 +466,7 @@ export default {
         padding: 8px;
         background: $gradient;
         color: #fff;
-        font-size: 15px;
+        font-size: 0.875rem;
       }
     }
     &__arrow {

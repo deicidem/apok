@@ -6,11 +6,11 @@
       <div class="search-zone">
         <h2 class="search__title">Зона интереса</h2>
 
-        <div class="search-zone__unput">
+        <div class="search-zone__input">
           <input type="radio" />
           <label>Видимая область экрана</label>
         </div>
-        <div class="search-zone__unput">
+        <div class="search-zone__input">
           <input type="radio" />
           <label>Задать вручную</label>
         </div>
@@ -65,7 +65,6 @@
             </table>
           </div>
 
-
           <div class="search-zone__buttons">
             <app-button
               class="search-zone__button"
@@ -75,9 +74,10 @@
             <app-button class="search-zone__button" type="white-g"
               >Прописать координаты</app-button
             >
-            <app-button 
-            @click="clearCoordinates()"
-            class="search-zone__button" type="red"
+            <app-button
+              @click="clearCoordinates()"
+              class="search-zone__button"
+              type="red"
               >Очистить координаты</app-button
             >
           </div>
@@ -124,13 +124,12 @@
       </div>
 
       <div class="search-spacecraft">
-     
-
-      <div class="search-buttons">
-        <app-button class="search-zone__button" type="white-g"
-          >Очистить</app-button
-        >
-        <app-button class="search-zone__button">Запросить данные</app-button>
+        <div class="search-buttons">
+          <app-button class="search-zone__button" type="white-g"
+            >Очистить</app-button
+          >
+          <app-button class="search-zone__button">Запросить данные</app-button>
+        </div>
       </div>
     </div>
   </div>
@@ -157,7 +156,7 @@ export default {
       "changeCoordinate",
       "deleteCoordinate",
       "setPolygonDrawable",
-      "clearCoordinates"
+      "clearCoordinates",
     ]),
   },
 };
@@ -177,9 +176,8 @@ export default {
   background: #fff;
 }
 
-
-.search{
-  &-wrapper{
+.search {
+  &-wrapper {
     margin: 30px;
   }
   &__title {
@@ -193,7 +191,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    &__input{
+    &__input {
       margin-top: 10px;
       input {
         width: 14px;
@@ -245,10 +243,10 @@ export default {
     &__table {
       table {
         width: 100%;
-        border-collapse: collapse; 
-        tr{
-        border-bottom: 1px solid rgba(71, 109, 112, 0.3); 
-          th{
+        border-collapse: collapse;
+        tr {
+          border-bottom: 1px solid rgba(71, 109, 112, 0.3);
+          th {
             text-align: left;
             border: none;
             font-size: 12px;
@@ -264,7 +262,7 @@ export default {
               border: none;
             }
           }
-          td{
+          td {
             max-width: 110px;
             text-align: left;
             border: none;
@@ -326,19 +324,19 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    &__inputs{
+    &__inputs {
       display: flex;
       align-items: center;
       margin: 20px 0;
     }
-    &__input{
+    &__input {
       position: relative;
       overflow: hidden;
       border-radius: 10px;
       box-shadow: $shadow-small;
       align-items: center;
       margin-right: 20px;
-      &:hover{
+      &:hover {
         outline: 1px solid $color-main;
       }
       input {
@@ -355,7 +353,7 @@ export default {
     &__arrow {
       max-height: 20px;
       margin-right: 20px;
-      img{
+      img {
         width: 100%;
         height: 100%;
       }
@@ -397,5 +395,4 @@ export default {
     text-align: center;
   }
 }
-
 </style>

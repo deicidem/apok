@@ -6,7 +6,12 @@
         <app-table>
           <thead>
             <tr>
-              <th class="col-checkbox center"><input type="checkbox" /></th>
+              <th class="col-checkbox center">
+                <label class="checkbox__label">
+                  <input class="checkbox__input" type="checkbox" />
+                  <span class="checkbox-fake"></span>
+                </label>
+              </th>
               <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
             </tr>
           </thead>
@@ -14,7 +19,10 @@
           <tbody>
             <tr v-for="item in tasks" :key="item.id">
               <td class="col-checkbox center">
-                <input type="checkbox" :checked="item.delete" />
+                <label class="checkbox__label">
+                  <input class="checkbox__input" :checked="item.delete" type="checkbox" />
+                  <span class="checkbox-fake" id="mini"></span>
+                </label>
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -47,6 +55,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.checkbox__input{
+  display: none;
+}
+.checkbox-fake{
+  display: inline-block;
+  width: 20px;
+  height:20px;
+  border: none;
+  border-radius: 5px;
+  background: $gradient-w;
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.checkbox-fake::before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: .2s;
+  &:checked + .checkbox-fake::before{
+      opacity: 1;
+  }
+}
+
+#mini{
+  width: 16px;
+  height: 16px;
+  &::before{
+    width: 16px;
+    height: 16px;
+  }
+}
+
 
 .tasks {
   &__wrapper {

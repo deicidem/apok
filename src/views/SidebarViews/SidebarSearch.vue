@@ -118,7 +118,21 @@
 
         <div class="search-spacecraft">
           <h2 class="search__title">Космический аппарат</h2>
-            <div class="search-spacecraft"></div>
+            <div class="search-spacecraft">
+              <div class="accordion">
+
+                <div class="accordion-item">
+                  <input class="accordion-item__input" type="checkbox" id="accordion-1">
+                  <label class="accordion-item__trigger" for="accordion-1">
+                    Канопус
+                  </label>
+                  <div class="accordion-item__content">
+                    Канопус-В1
+                  </div>
+                </div>
+
+              </div>
+            </div>
         </div>
 
         <div class="search-buttons">
@@ -158,24 +172,6 @@ export default {
   font-size: 14px;
   color: $color-main-dark;
   background: #fff;
-}
-
-.scrollbar{
-  margin: 20px auto;
-  overflow-x: scroll;
-  width: 350px;
-  height: 12px;
-}
-
-.scrollbar::-webkit-scrollbar {
-  scrollbar-color: $color-main-dark #FFF; 
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background-color: $color-main-dark;
-  width: 50px;
-  height: 12px;
-  border-radius: 3px;
 }
 
 .search{
@@ -328,7 +324,7 @@ export default {
       box-shadow: $shadow-small;
       align-items: center;
       &:hover{
-        outline: 1px solid $color-main;
+        border: 1px solid $color-main;
       }
       input{
         height: 30px;
@@ -383,6 +379,35 @@ export default {
   &-buttons{
     margin: 10px;
     text-align: center;
+  }
+}
+
+.accordion{
+  &-item{
+    margin-bottom: 20px;
+    position: relative;
+    &__input{
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      &:checked ~ .accordion-item__trigger{
+      }
+      &:checked ~ .accordion-item__content{
+        display: block;
+      }
+    }
+    &__trigger{
+      display: block;
+      padding: 20px;
+      border: 1px solid #000;
+    }
+    &__content{
+      padding: 20px;
+      border: 1px solid #000;
+      border-top: none;
+      display: none;
+    }
   }
 }
 

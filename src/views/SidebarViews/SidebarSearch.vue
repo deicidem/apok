@@ -40,7 +40,6 @@
                   <th>Широта</th>
                   <th>Долгота</th>
                   <th class="col"></th>
-                  <th class="col"></th>
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +114,7 @@
       <div class="search-cloud">
         <h2 class="search__title">Облачность</h2>
 
-        <div class="scrollbar"></div>
+        <no-ui-slider :config="your_config" :values="your_value"/>
       </div>
 
       <div class="search-spacecraft">
@@ -206,16 +205,30 @@
 </template>
 
 <script>
+import 'vue-nouislider/dist/vue-nouislider.css'
+  // import the styling, css or scss
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
+import NoUiSlider from 'vue-nouislider/src/components/noUiSlider.vue';
 // import AppInput from "@/components/controls/AppInput.vue"
 export default {
   components: {
     AppButton,
     // AppInput
+    NoUiSlider
   },
   data() {
-    return {};
+    return {
+      your_config: {
+        step: 10,
+        connect: true,
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      },
+      your_value: [0, 100]
+    };
   },
   computed: {
     ...mapGetters("map", ["getPolygonArea", "getFormattedCoordinates"]),

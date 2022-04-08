@@ -13,9 +13,14 @@
     "node-polyfill-webpack-plugin": "^1.1.4",
     "path-browserify": "^1.0.1",
     "shp-write": "^0.3.2",
+    "v-select2-component": "^0.4.7",
     "vue": "^2.6.14",
+    "vue-custom-range-slider": "^0.2.3",
+    "vue-nouislider": "^1.0.1",
     "vue-router": "^3.5.1",
+    "vue2-datepicker": "^3.10.4",
     "vue2-leaflet": "^2.7.1",
+    "vuescroll": "^4.17.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

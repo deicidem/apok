@@ -7,12 +7,18 @@
   >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker
+      data-number="id"
       :draggable="true"
-      @drag="handleMarkerDrag($event, id)"
+      @dragend="handleMarkerDragEnd($event, id)"
       v-for="(marker, id) in polygon"
       :key="id"
       :lat-lng="marker"
-    ></l-marker>
+    >
+      <l-icon :icon-size="[40, 40]" :icon-anchor="[20, 40]" :icon-url="icon">
+        <div class="marker-text">{{ id + 1 }}</div>
+        <img style="pointer-events: none" :src="icon" alt="" />
+      </l-icon>
+    </l-marker>
     <l-polygon :fill="true" :lat-lngs="polygon" color="#476D70"></l-polygon>
     <!-- <l-geo-json :geojson="geojson"></l-geo-json> -->
   </l-map>
@@ -28,23 +34,32 @@ import {
   LTileLayer,
   LMarker,
   LPolygon,
+  LIcon,
+  // LTooltip
   // LGeoJson,
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  iconRetinaUrl: require("@/assets/img/geo_marker.svg"),
+  iconUrl: require("@/assets/img/geo_marker.svg"),
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: null,
+  shadowUrl: null,
+  shadowSize: null,
+  shadowAnchor: null,
 });
-
+L.Icon.Default;
 export default {
   name: "AppMap",
   components: {
     LMap,
     LTileLayer,
     LMarker,
+    LIcon,
+    // LTooltip,
     // LPopup,
     LPolygon,
     // LGeoJson,
@@ -64,6 +79,9 @@ export default {
       polygon: "getPolygonArea",
       drawable: "getDrawable",
     }),
+    icon() {
+      return require("@/assets/img/geo_marker.svg");
+    },
   },
   methods: {
     ...mapActions("map", {
@@ -72,14 +90,21 @@ export default {
     }),
     // Добавление маркеров
     onClick($event) {
-      if (this.drawable) {
+      console.log($event);
+      if (this.drawable && $event.originalEvent.target.classList.contains('vue2leaflet-map')) {
         this.addCoordinate($event.latlng);
       }
     },
     // Изменение размеров полигона
-    handleMarkerDrag($event, id) {
+    handleMarkerDragEnd($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({ latlng: $event.latlng, id });
+        this.changeCoordinate({ latlng: $event.target._latlng, id});
+      }
+    },
+     handleMarkerDrag($event, id) {
+       console.log(1);
+      if (this.drawable) {
+        this.changeCoordinate({ latlng: $event.latlng, id});
       }
     },
     // Сохранение файла
@@ -110,3 +135,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.marker-text {
+  color: $color-main-dark;
+  font-size: 16px;
+  position: absolute;
+  top: 45%;
+  font-weight: 700;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

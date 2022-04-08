@@ -552,7 +552,7 @@ export default {
     &__buttons {
       display: flex;
       flex-direction: column;
-      margin: 0 20px;
+      margin: 30px 20px 0 20px;
     }
     &__button {
       margin: 10px;

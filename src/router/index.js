@@ -47,11 +47,11 @@ const routes = [
     name: 'tutorial',
     component: () => import('../views/TutorialView.vue')
   },
-  {
-    path: '/help',
-    name: 'help',
-    component: () => import('../views/HelpView.vue')
-  },
+  // {
+  //   path: '/help',
+  //   name: 'help',
+  //   component: () => import('../views/HelpView.vue')
+  // },
   {
     path: '/plan/:id',
     component: () => import('../views/PlanView.vue')

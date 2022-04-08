@@ -442,8 +442,9 @@ export default {
     background: $gradient-w;
     &__inputs {
       display: flex;
+      justify-content: space-evenly;
       align-items: center;
-      margin: 20px 0;
+      padding: 20px;
     }
     &__input {
       position: relative;

@@ -268,8 +268,7 @@ export default {
       top: 0;
       left: 0;
       opacity: 0;
-      &:checked ~ .accordion-item__trigger{
-      }
+
       &:checked ~ .accordion-item__content{
         display:inline-block;
       }

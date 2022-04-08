@@ -3,7 +3,7 @@
     <h2 class="sidebar-title">Запланировать задачу</h2>
     
     <div class="plan-wrapper">
-      <app-plan-card class="plan-card" v-for="(plan, i) in plans" :key="i" :img="plan.image" :text="plan.shortText" :title="plan.title"></app-plan-card>
+      <app-plan-card class="plan-card" v-for="(plan, i) in plans" :key="i" :planid="plan.id" :img="plan.image" :text="plan.shortText" :title="plan.title"></app-plan-card>
     </div>
   
   </div>

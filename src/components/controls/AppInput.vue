@@ -18,9 +18,6 @@ export default {
   },
 
   mounted() {
-    if (this.time) {
-      this.options.format += " HH:mm";
-    }
     this.localValue = this.value;
   },
 

@@ -6,11 +6,8 @@
         <app-table>
           <thead>
             <tr>
-              <th class="col-checkbox center">
-                <label class="checkbox__label">
-                  <input class="checkbox__input" type="checkbox" />
-                  <span class="checkbox-fake"></span>
-                </label>
+              <th class="col-checkbox center ">
+                <app-checkbox class="checkbox-big" @input="onCheck($event)"/>
               </th>
               <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
             </tr>
@@ -19,10 +16,7 @@
           <tbody>
             <tr v-for="item in tasks" :key="item.id">
               <td class="col-checkbox center">
-                <label class="checkbox__label">
-                  <input class="checkbox__input" :checked="item.delete" type="checkbox" />
-                  <span class="checkbox-fake" id="mini"></span>
-                </label>
+                <app-checkbox :mini="true" @input="onCheck($event)"/>
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -40,10 +34,12 @@
 <script>
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
+import AppCheckbox from "@/components/controls/AppCheckbox";
 export default {
   name: "SidebarTasks",
   components: {
     AppTable,
+    AppCheckbox
   },
   computed: {
     ...mapGetters("tasks", {
@@ -51,50 +47,15 @@ export default {
       headers: "getHeaders",
     }),
   },
+  methods: {
+    onCheck(val) {
+      console.log(val);
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-
-.checkbox__input{
-  display: none;
-}
-.checkbox-fake{
-  display: inline-block;
-  width: 20px;
-  height:20px;
-  border: none;
-  border-radius: 5px;
-  background: $gradient-w;
-  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-
-.checkbox-fake::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: block;
-  border-radius: 5px;
-  width: 20px;
-  height: 20px;
-  opacity: 0;
-  transition: .2s;
-  &:checked + .checkbox-fake::before{
-      opacity: 1;
-  }
-}
-
-#mini{
-  width: 16px;
-  height: 16px;
-  &::before{
-    width: 16px;
-    height: 16px;
-  }
-}
 
 
 .tasks {
@@ -136,6 +97,14 @@ export default {
       width: 16px;
       height: 16px;
       background: #eff2f2;
+      border-radius: 50%;
+      border: none;
+    }
+    input {
+      width: 16px;
+      height: 16px;
+      background: #eff2f2;
+      box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
       border-radius: 50%;
       border: none;
     }

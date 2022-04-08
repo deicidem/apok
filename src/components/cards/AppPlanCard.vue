@@ -1,17 +1,20 @@
 <template>
   <div class="plan-item">
     <div class="plan-item__img">
-      <img  :src="itemImage"/>
+      <img :src="itemImage" />
     </div>
 
     <div class="plan-item__info">
-      <h2>{{title}}</h2>
+      <h2>{{ title }}</h2>
       <p>
-        {{text}}
+        {{ text }}
       </p>
 
       <div class="plan-item__buttons">
-        <app-button type="white-g">Подробнее</app-button>
+        <router-link :to="'/plan/'+planid">
+          <app-button type="white-g">Подробнее</app-button>
+        </router-link>
+
         <app-button>Запланировать</app-button>
       </div>
     </div>
@@ -19,23 +22,25 @@
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton"
+import AppButton from "@/components/controls/AppButton";
 
 export default {
   components: {
-    AppButton
+    AppButton,
   },
   props: {
     img: String,
     title: String,
-    text: String
+    text: String,
+    planid: Number
+
   },
   computed: {
     itemImage() {
       const fileName = this.img.toLowerCase();
       return require(`@/assets/img/${fileName}`);
-    }
-  }
+    },
+  },
 };
 </script>
 

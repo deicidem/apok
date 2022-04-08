@@ -1,10 +1,10 @@
 <template>
   <section class="hero">
     
-    <div class="sidebar-block">
+    <div class="sidebar-block" :class="sidebarBlock">
       <app-sidebar
-        @close="sidebarCollapsed = true"
-        @open="sidebarCollapsed = false"
+        @close="sidebarCollapsed = true; sidebarBlockClass()"
+        @open="sidebarCollapsed = false; sidebarBlockClass()"
       ></app-sidebar>
     </div>
 
@@ -26,17 +26,27 @@ export default {
   },
   data() {
     return {
-      sidebarCollapsed: false,
+      sidebarCollapsed: true,
+      sidebarBlock: 'collapsed'
     };
   },
   methods: {
+    sidebarBlockClass() {
+      if (this.sidebarCollapsed) {
+        setTimeout(() => {
+          this.sidebarBlock = 'collapsed'
+        }, 300)
+      } else {
+        this.sidebarBlock = ''
+      }
+    },
     onSidebarOpen() {
       this.sidebarCollapsed = false;
     },
     onSidebarClose() {
       this.sidebarCollapsed = true;
     }
-  },
+  }
 };
 </script>
 
@@ -45,6 +55,7 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
 }
 .map {
   height: 100%;
@@ -53,16 +64,19 @@ export default {
   top: 0;
   width: 100%;
   margin-left: auto;
-  &.collapsed {
-    max-width: 60%;
-  }
+  z-index: 1;
+  // &.collapsed {
+  //   max-width: 60%;
+  // }
 }
 .sidebar-block {
-  display: flex;
-  height: 100%;
-  max-width: 40%;
   position: relative;
-  overflow: hidden;
+  height: 100%;
+  z-index: 5;
+  max-width: 40%;
+  &.collapsed {
+    max-width: 50px;
+  }
 }
 
 </style>

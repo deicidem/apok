@@ -1,31 +1,12 @@
 <template>
   <div class="sidebar_wrap" :class="collapsed ? '' : 'active'">
-    <div class="sidebar" :class="collapsed ? '' : 'active'">
-      <!-- <div class="sidebar__wrapper">
-        <div class="sidebar__box">
-          <div class="sidebar__item">
-            <router-link to="/main/tasks">Мои задачи</router-link>
-          </div>
-          <div class="sidebar__item">
-            <router-link to="/main/plan">Запланированные задачи</router-link>
-          </div>
-          <div class="sidebar__item">
-            <router-link to="/main/search">Поиск снимков</router-link>
-          </div>
-          <div class="sidebar__item">
-            <router-link to="/main/alerts">Мои уведомления</router-link>
-          </div>
-          <div class="sidebar__item sidebar-close" @click="close()">
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </div>
+    <transition name="slide">
+      <div class="sidebar" v-show="!collapsed">
+        <div class="sidebar-content">
+          <router-view></router-view>
         </div>
-      </div> -->
-
-      <div class="sidebar-content">
-        <router-view></router-view>
       </div>
-    </div>
-
+    </transition>
     <div class="sidebar-collapsed">
       <div
         class="sidebar__item open sidebar-open"
@@ -77,7 +58,7 @@ export default {
   name: "AppSidebar",
   data() {
     return {
-      collapsed: false,
+      collapsed: true,
     };
   },
   methods: {
@@ -103,7 +84,24 @@ export default {
 
 
 <style lang="scss">
-
+.slide-enter {
+  transform: translateX(-100%);
+}
+.slide-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-enter-to {
+  transform: translateX(0);
+}
+.slide-leave {
+  transform: translateX(0);
+}
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-leave-to {
+  transform: translateX(-100%);
+}
 .sidebar-title {
   background: $gradient;
   color: #fff;
@@ -115,19 +113,21 @@ export default {
 }
 
 .sidebar {
+  display: block;
   position: absolute;
   left: 50px;
   z-index: 5;
   height: 100%;
   width: calc(100% - 50px);
-  background: #EDECEC;
-  transition: all 0.3s ease-out;
-  transform: translateX(-100%);
-  &-block {
-    box-shadow: $shadow-big;
+  box-shadow: none;
+  overflow: hidden;
+  &-content {
+    background: #edecec;
+    transition: all 0.3s ease-out;
+    height: 100%;
   }
-  &.active {
-    transform: translateX(0%);
+  &-block {
+    // box-shadow: $shadow-big;
   }
   &__box {
     display: flex;

@@ -8,7 +8,10 @@
             <router-link to="/">Главная</router-link>
           </li>
           <li class="header-nav__item">
-            <router-link to="/about">Руководства пользователя</router-link>
+            <router-link to="/tutorial">Руководства пользователя</router-link>
+          </li>
+          <li class="header-nav__item">
+            <router-link to="/help">Помощь</router-link>
           </li>
         </ul>
       </nav>

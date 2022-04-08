@@ -9,10 +9,14 @@ export default {
     },
   },
   mutations: {
-
+    deleteAlert(state, i) {
+      state.alerts.splice(i, 1);
+    }
   },
   actions: {
-
+    deleteAlert(store, i) {
+      store.commit('deleteAlert', i)
+    }
   }
 }
 

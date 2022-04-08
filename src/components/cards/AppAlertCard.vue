@@ -8,7 +8,7 @@
       <h2>{{text}}</h2>
       <p>Посмотреть результат</p>
     </div>
-    <app-button class="alert-item__trash" type="white-r">
+    <app-button @click="$emit('delete')" class="alert-item__trash" type="white-r">
        <i class="fa fa-trash-o" aria-hidden="true"></i>
     </app-button>
   </div>
@@ -24,7 +24,7 @@ export default {
     text: String,
     icon: String,
     seen: Boolean,
-    result: String
+    result: String,
   },
 }
 </script>

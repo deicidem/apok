@@ -4,11 +4,12 @@
 
     <div class="alert-wrapper">
       <app-alert-card
-        v-for="alert in alerts"
+        v-for="(alert, i) in alerts"
         :key="alert.id"
         :seen="alert.seen"
         :result="alert.result"
         :text="alert.text"
+        @delete="deleteAlert(i)"
       ></app-alert-card>
     </div>
   </div>
@@ -16,13 +17,16 @@
 
 <script>
 import AppAlertCard from "@/components/cards/AppAlertCard.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapGetters("alerts", {
       alerts: "getAlerts",
     }),
+  },
+  methods: {
+    ...mapActions('alerts', ['deleteAlert'])
   },
   components: {
     AppAlertCard,

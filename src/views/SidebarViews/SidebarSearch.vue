@@ -74,6 +74,28 @@
               >
             </div>
           </div>
+
+          <div class="search-zone__coordinates">
+            <div class="coordinates-wrapper">
+                <app-input label="Ширина" class="coordinates-wrapper__input"></app-input>
+                <app-input label="Искать с" class="coordinates-wrapper__input"></app-input>
+                <app-input label="Радиус" class="coordinates-wrapper__input"></app-input>
+                <div class="coordinates-wrapper__select">
+                  <Select2 v-model="myValue" :options="myOptions" :settings="{ settingOption: value, settingOption: value }" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                </div>
+            </div>
+
+            <app-button  class="coordinates-wrapper__button">Загрузить на карту</app-button>
+          </div> 
+
+          <div class="search-zone__load">
+            <div class="load-wrapper">
+              <app-button type="white-g">Загрузить файл</app-button>
+              <span class="load-wrapper__name">POLYGON.shp</span>
+            </div>
+            <app-button>Показать на карте</app-button>
+          </div>
+
         </div>
 
         <div class="search-date">
@@ -212,10 +234,11 @@ import 'vue2-datepicker/index.css';
 
 import Select2 from 'v-select2-component';
 
-// import AppInput from "@/components/controls/AppInput.vue"
+import AppInput from "@/components/controls/AppInput.vue"
 export default {
   components: {
     AppButton,
+    AppInput,
     vuescroll,
     DatePicker,
     NoUiSlider,
@@ -418,8 +441,6 @@ export default {
       border: none;
     }
   }
-  &-wrapper{
-  }
   &-icon-calendar{
     background: $gradient;
     color:#FFF;
@@ -487,13 +508,50 @@ export default {
       }
     }
     &__main {
-      display: flex;
+      // display: flex;
+      display: none;
       justify-content: space-between;
       align-items: flex-start;
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;
       background: #fff;
+    }
+    &__coordinates{
+      display: none;
+      padding: 10px;
+      box-shadow: $shadow-big;
+      border-radius: 10px;
+      background: #fff;
+      flex-direction: column;
+
+      .coordinates-wrapper{
+        display: flex;
+        margin: 20px 0;
+        justify-content: space-between;
+        &__input{
+          margin-right: 20px;
+        }
+        &__button{
+          margin-left: auto;
+        }
+      }
+    }
+    &__load{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      box-shadow: $shadow-big;
+      border-radius: 10px;
+      background: #fff;
+      .load-wrapper{
+        &__name{
+          font-size: 12px;
+          color: #000;
+          margin-left: 20px;
+        }
+      }
     }
     &__table {
       table {

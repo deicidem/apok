@@ -640,7 +640,12 @@ export default {
       border-radius: 10px;
       background: #fff;
     }
+<<<<<<< HEAD
     &__coordinates {
+=======
+    &__coordinates{
+      display: flex;
+>>>>>>> cf7cb0fe29a9909679bb6f930c474792ea58e541
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;
@@ -651,16 +656,18 @@ export default {
         display: flex;
         margin: 20px 0;
         justify-content: space-between;
-        &__input {
+        align-items: flex-end;
+        &__input{
           margin-right: 20px;
+          width: 120px;
         }
         &__button {
           margin-left: auto;
         }
       }
     }
-    &__load {
-      display: flex;
+    &__load{
+      display: none;
       justify-content: space-between;
       align-items: center;
       padding: 20px;

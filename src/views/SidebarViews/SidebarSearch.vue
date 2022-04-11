@@ -81,7 +81,7 @@
                 <app-input label="Искать с" class="coordinates-wrapper__input"></app-input>
                 <app-input label="Радиус" class="coordinates-wrapper__input"></app-input>
                 <div class="coordinates-wrapper__select">
-                  <Select2 v-model="myValue" :options="myOptions" :settings="{ settingOption: value, settingOption: value }" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                  <Select2 v-model="myValue" :options="myOptions" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
                 </div>
             </div>
 
@@ -122,7 +122,7 @@
           
             <div>
               <label class="select2-label">Выбрать месяцы:</label>
-              <Select2 v-model="myValue" :options="myOptions" :settings="{ settingOption: value, settingOption: value }" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+              <Select2 v-model="myValue" :options="myOptions"  @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
             </div>
 
           </div>
@@ -256,6 +256,8 @@ export default {
   },
   data() {
     return {
+      time: '',
+      myValue: '',
       myOptions: ['май', 'май', 'май', 'май', 'май', 'май'],
       your_config: {
         step: 10,
@@ -735,7 +737,6 @@ export default {
     padding: 20px;
     box-shadow: $shadow-small;
     border-radius: 10px;
-    overflow: hidden;
     background: $gradient-w;
   }
   &-buttons {

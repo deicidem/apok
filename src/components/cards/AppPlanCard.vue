@@ -48,18 +48,14 @@ export default {
 .plan {
   &-item {
     display: flex;
-    // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    align-items: center;
+    align-items: stretch;
     background: #fff;
-    &__img {
-      height: 200px;
-      min-width: 200px;
-    }
     &__info {
-      margin: 10px 20px;
+      padding: 10px 20px 10px 20px;
       h2 {
         font-size: 18px;
         font-weight: 400;
@@ -74,7 +70,7 @@ export default {
       }
     }
     &__buttons {
-      margin-top: 18px;
+      margin-top: 30px;
       display: flex;
       align-items: center;
       justify-content: space-evenly;

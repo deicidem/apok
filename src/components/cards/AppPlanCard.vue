@@ -76,6 +76,7 @@ export default {
     &__buttons {
       margin-top: 18px;
       display: flex;
+      align-items: center;
       justify-content: space-evenly;
     }
   }

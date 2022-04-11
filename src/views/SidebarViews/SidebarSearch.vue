@@ -561,7 +561,7 @@ export default {
       background: #fff;
     }
     &__coordinates{
-      display: none;
+      display: flex;
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;
@@ -572,8 +572,10 @@ export default {
         display: flex;
         margin: 20px 0;
         justify-content: space-between;
+        align-items: flex-end;
         &__input{
           margin-right: 20px;
+          width: 120px;
         }
         &__button{
           margin-left: auto;
@@ -581,7 +583,7 @@ export default {
       }
     }
     &__load{
-      display: flex;
+      display: none;
       justify-content: space-between;
       align-items: center;
       padding: 20px;

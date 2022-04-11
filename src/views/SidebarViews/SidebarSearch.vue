@@ -100,9 +100,9 @@
 
         <div class="search-date">
           <h2 class="search__title">Интервал дат съемки</h2>
+          <div class="search-date__wrapper">
+
           <div class="search-date__inputs">
-
-
             <div class="search-date__input">
               <label class="datepicker-label" for="datepicker-start">Искать с:</label>
               <date-picker id="datepicker-start" class="input-date" v-model="time" valueType="format">
@@ -118,8 +118,10 @@
               <label class="datepicker-label" for="datepicker-end">До:</label>
               <date-picker id="datepicker-end" class="input-date" v-model="time" valueType="format"></date-picker>
             </div>
-
+          </div>
+          
             <div>
+              <label class="select2-label">Выбрать месяцы:</label>
               <Select2 v-model="myValue" :options="myOptions" :settings="{ settingOption: value, settingOption: value }" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
             </div>
 
@@ -146,7 +148,7 @@
                   <input class="accordion-item__input" type="checkbox" id="accordion-1">
                   <label class="accordion-item__trigger" for="accordion-1">
                     <div class="accordion-item__img"></div>
-                    <input type="checkbox" class="accordion-item__checkbox">
+                    <app-checkbox :mini="true" @input="onCheck($event)"/>
                     <p>Канопус</p>
                   </label>
 
@@ -155,14 +157,14 @@
 
                     <label class="accordion-item__trigger" for="accordion-2">
                       <div class="accordion-item__img"></div>
-                      <input type="checkbox" class="accordion-item__checkbox">
+                      <app-checkbox :mini="true" @input="onCheck($event)"/>
                       <p>Канопус-В</p>
                     </label>
 
                     <div class="accordion-item__content">
                         <input class="accordion-item__input" type="checkbox">
                         <label class="accordion-item__trigger">
-                          <input type="checkbox" class="accordion-item__checkbox">
+                          <app-checkbox :mini="true" @input="onCheck($event)"/>
                           <div>
                             <img src="@/assets/img/spektr.png">
                           </div>
@@ -170,7 +172,7 @@
                         </label>
                         <input class="accordion-item__input" type="checkbox">
                         <label class="accordion-item__trigger">
-                          <input type="checkbox" class="accordion-item__checkbox">
+                          <app-checkbox :mini="true" @input="onCheck($event)"/>
                           <div>
                             <img src="@/assets/img/panhrom.png">
                           </div>
@@ -183,7 +185,7 @@
                   <input class="accordion-item__input" type="checkbox" id="accordion-3">
                   <label class="accordion-item__trigger" for="accordion-3">
                     <div class="accordion-item__img"></div>
-                    <input type="checkbox" class="accordion-item__checkbox">
+                    <app-checkbox :mini="true" @input="onCheck($event)"/>
                     <p>Ресурс</p>
                   </label>
 
@@ -192,14 +194,14 @@
 
                     <label class="accordion-item__trigger" for="accordion-4">
                       <div class="accordion-item__img"></div>
-                      <input type="checkbox" class="accordion-item__checkbox">
+                      <app-checkbox :mini="true" @input="onCheck($event)"/>
                       <p>Ресурс-П1</p>
                     </label>
 
                     <div class="accordion-item__content">
                         <input class="accordion-item__input" type="checkbox">
                         <label class="accordion-item__trigger">
-                          <input type="checkbox" class="accordion-item__checkbox">
+                          <app-checkbox :mini="true" @input="onCheck($event)"/>
                           <div>
                             <img src="@/assets/img/spektr.png">
                           </div>
@@ -207,7 +209,7 @@
                         </label>
                         <input class="accordion-item__input" type="checkbox">
                         <label class="accordion-item__trigger">
-                          <input type="checkbox" class="accordion-item__checkbox">
+                          <app-checkbox :mini="true" @input="onCheck($event)"/>
                           <div>
                             <img src="@/assets/img/panhrom.png">
                           </div>
@@ -240,6 +242,8 @@ import 'vue2-datepicker/index.css';
 import Select2 from 'v-select2-component';
 
 import AppInput from "@/components/controls/AppInput.vue"
+import AppCheckbox from "@/components/controls/AppCheckbox";
+
 export default {
   components: {
     AppButton,
@@ -247,6 +251,7 @@ export default {
     vuescroll,
     DatePicker,
     NoUiSlider,
+    AppCheckbox,
     Select2
   },
   data() {
@@ -301,18 +306,50 @@ export default {
 <style lang="scss">
 
 .select2{
-  margin-left: 30px;
+
+  width: 150px !important;
+  &-label{
+    font-size: 12px;
+  }
   &-selection{
-    margin-left: 30px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: $shadow-small;
     align-items: center;
     color: $color-main-dark;
-    height: 100%;
-    height: 30px;
+    margin-bottom: 6px;
+    &--single{
+      height: 34px !important;
+      border-radius: 10px !important;
+      border: none !important;
+    }
+    &__arrow{
+      height: 34px  !important;
+      b{
+        border-color: $color-main transparent transparent transparent !important;
+      }
+    }
+    
+  }
+  &-dropdown{
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: $shadow-big;
+  }
+  &-search__field{
+    border: 1px solid $color-main !important;
+    border-radius: 6px;
+  }
+  &-results__option{
+    padding: 10px;
+    font-size: 0.875rem !important;
+    color: #000;
+    &--highlighted[aria-selected]{
+      background-color: $color-main !important;  
+    }
   }
 }
+
 
 .vue-nouislider{
   background: #FFF;
@@ -639,11 +676,15 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    &__inputs {
+    &__wrapper {
       display: flex;
       align-items: flex-end;
-      padding: 20px;
-      margin-right: 40px;
+      justify-content: space-between;
+      padding: 20px 0 20px 0;
+
+    }
+    &__inputs{
+      display: flex;
     }
     &__input{
       display: flex;
@@ -653,7 +694,7 @@ export default {
     
     &__arrow {
       max-height: 20px;
-      margin-right: 20px;
+      margin:  30px 20px 8px 20px;;
       img {
         width: 100%;
         height: 100%;

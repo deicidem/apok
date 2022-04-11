@@ -8,6 +8,7 @@ import users from './modules/users'
 import plans from './modules/plans'
 import alerts from './modules/alerts'
 import map from './modules/map'
+import search from './modules/search'
 
 export default new Vuex.Store({
   state: {
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     users,
     plans,
     alerts,
-    map
+    map,
+    search
   },
   strict: process.env.NODE_ENV !== 'production'
 })

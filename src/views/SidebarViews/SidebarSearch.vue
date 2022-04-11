@@ -92,7 +92,7 @@
                 ></app-input>
                 <div class="coordinates-wrapper__select">
                   <Select2
-                    v-model="myValue"
+                    v-model="months"
                     :options="myOptions"
                     @change="myChangeEvent($event)"
                     @select="mySelectEvent($event)"
@@ -114,6 +114,54 @@
             </div>
           </div>
 
+          <div class="search-date">
+            <h2 class="search__title">Интервал дат съемки</h2>
+            <div class="search-date__wrapper">
+              <div class="search-date__inputs">
+                <div class="search-date__input">
+                  <label class="datepicker-label" for="datepicker-start"
+                    >Искать с:</label
+                  >
+                  <date-picker
+                    id="datepicker-start"
+                    class="input-date"
+                    v-model="timeFrom"
+                    valueType="format"
+                    @change="setTimeInterval({from: $event, to: timeTo, months: months})"
+                  >
+                    <div class="datepicker__back"></div>
+                  </date-picker>
+                </div>
+
+                <div class="search-date__arrow">
+                  <img src="@/assets/img/arrow.png" />
+                </div>
+
+                <div class="search-date__input">
+                  <label class="datepicker-label" for="datepicker-end"
+                    >До:</label
+                  >
+                  <date-picker
+                    id="datepicker-end"
+                    class="input-date"
+                    v-model="timeTo"
+                    valueType="format"
+                    @change="setTimeInterval({from: timeFrom, to: $event, months: months})"
+                  ></date-picker>
+                </div>
+              </div>
+
+              <div>
+                <label class="select2-label">Выбрать месяцы:</label>
+                <Select2
+                  v-model="months"
+                  :options="myOptions"
+                  @change="myChangeEvent($event)"
+                  @select="mySelectEvent($event)"
+                />
+              </div>
+            </div>
+          </div>
         <search-date></search-date>
 
           <div class="search-cloud">
@@ -260,6 +308,20 @@ export default {
   },
   data() {
     return {
+      searchZoneType: 1,
+      timeFrom: "",
+      timeTo: "",
+      months: [],
+      myOptions: ["май", "май", "май", "май", "май", "май"],
+      your_config: {
+        step: 10,
+        connect: true,
+        behaviour: "drag",
+        range: {
+          min: 0,
+          max: 100,
+        },
+      },
       ops: {
         vuescroll: {
           mode: "native",
@@ -292,7 +354,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["getPolygonArea", "getFormattedCoordinates"]),
+    ...mapGetters("map", [
+      "getPolygonArea", 
+      "getFormattedCoordinates",
+      ]),
+    ...mapGetters("search", [
+      "getTimeInterval",
+      "getSpacecrafts",
+      "getCloudiness"
+    ])
   },
   methods: {
     ...mapActions("map", [
@@ -302,6 +372,11 @@ export default {
       "setPolygonDrawable",
       "clearCoordinates",
     ]),
+    ...mapActions("search", [
+      "setTimeInterval",
+      "setSpacecrafts",
+      "setCloudiness"
+    ])
   },
 };
 </script>

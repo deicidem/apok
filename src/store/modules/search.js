@@ -4,8 +4,8 @@ export default {
     areaPolygon: [],
     polygonDrawable: false,
     timeInterval: {
-      dateFrom: '',
-      dateTo: '',
+      from: '',
+      to: '',
       months: []
     },
     cloudiness: {
@@ -36,6 +36,15 @@ export default {
     },
     getDrawable(state) {
       return state.polygonDrawable;
+    },
+    getTimeInterval(state) {
+      return state.timeInterval;
+    },
+    getSpacecrafts(state) {
+      return state.spacecrafts;
+    },
+    getCloudiness(state) {
+      return state.cloudiness;
     }
   },
   mutations: {
@@ -55,6 +64,20 @@ export default {
     },
     clearCoordinates(state) {
       state.areaPolygon = [];
+    },
+    setCloudiness(state, from, to) {
+      state.cloudiness.from = from;
+      state.cloudiness.to = to;
+    },
+    setTimeInterval(state, {from, to, months}) {
+      console.log(from, to, months);
+
+      state.timeInterval.from = from;
+      state.timeInterval.to = to;
+      state.timeInterval.months = months;
+    },
+    setSpacecrafts(state, newSpaceCrafts) {
+      state.spacecrafts = newSpaceCrafts;
     }
   },
   actions: {
@@ -72,6 +95,15 @@ export default {
     },
     clearCoordinates(store) {
       store.commit('clearCoordinates');
+    },
+    setCloudiness(store, {from, to}) {
+      store.commit('setCloudiness', from, to);
+    },
+    setTimeInterval(store, {from, to, months}) {
+      store.commit('setTimeInterval', {from, to, months});
+    },
+    setSpacecrafts(store, newSpaceCrafts) {
+      store.commit('setSpacecrafts', newSpaceCrafts);
     }
   }
 }

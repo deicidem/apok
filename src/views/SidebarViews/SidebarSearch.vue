@@ -1,247 +1,299 @@
 <template>
   <div class="search">
     <h2 class="sidebar-title">Поиск снимков</h2>
-    <div class="search-wrapper">
-      <vuescroll :ops="ops">
-        <div class="search-zone">
-          <h2 class="search__title">Зона интереса</h2>
+    <vuescroll :ops="ops">
+      <div class="search-wrapper">
+        <div class="search-content">
+          <div class="search-zone">
+            <h2 class="search__title">Зона интереса</h2>
 
-          <div class="search-zone__input">
-            <input type="radio" />
-            <label>Видимая область экрана</label>
-          </div>
-          <div class="search-zone__input">
-            <input type="radio" />
-            <label>Задать вручную</label>
-          </div>
-
-          <nav class="search-zone__nav">
-            <ul>
-              <li>
-                <a href="#">Задать полигон</a>
-              </li>
-              <li class="line"></li>
-              <li>
-                <a href="#">Вывести координаты</a>
-              </li>
-              <li class="line"></li>
-              <li>
-                <a href="#">Загрузить файл</a>
-              </li>
-            </ul>
-          </nav>
-
-          <div class="search-zone__main">
-            <div class="search-zone__table">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="col"><input type="checkbox" /></th>
-                    <th>Широта</th>
-                    <th>Долгота</th>
-                    <th class="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-                    <td class="col"><input type="checkbox" /></td>
-                    <td>{{ coord.lat }}</td>
-                    <td>{{ coord.lng }}</td>
-                    <td class="col delete" @click="deleteCoordinate(i)">
-                      <app-button class="col-item__trash" type="white-r">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                      </app-button>
-                    </td>
-                  </tr>
-              </tbody>
-              </table>
+            <div class="search-zone__input">
+              <input type="radio" />
+              <label>Видимая область экрана</label>
+            </div>
+            <div class="search-zone__input">
+              <input type="radio" />
+              <label>Задать вручную</label>
             </div>
 
-            <div class="search-zone__buttons">
-              <app-button
-                class="search-zone__button"
-                @click="setPolygonDrawable(true)"
-                >Использовать карту</app-button
-              >
-              <app-button class="search-zone__button" type="white-g"
-                >Прописать координаты</app-button
-              >
-              <app-button
-                @click="clearCoordinates()"
-                class="search-zone__button"
-                type="red"
-                >Очистить координаты</app-button
-              >
-            </div>
-          </div>
+            <nav class="search-zone__nav">
+              <ul>
+                <li>
+                  <a href="#">Задать полигон</a>
+                </li>
+                <li class="line"></li>
+                <li>
+                  <a href="#">Вывести координаты</a>
+                </li>
+                <li class="line"></li>
+                <li>
+                  <a href="#">Загрузить файл</a>
+                </li>
+              </ul>
+            </nav>
 
-          <div class="search-zone__coordinates">
-            <div class="coordinates-wrapper">
-                <app-input label="Ширина" class="coordinates-wrapper__input"></app-input>
-                <app-input label="Искать с" class="coordinates-wrapper__input"></app-input>
-                <app-input label="Радиус" class="coordinates-wrapper__input"></app-input>
+            <div class="search-zone__main">
+              <div class="search-zone__table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="col"><input type="checkbox" /></th>
+                      <th>Широта</th>
+                      <th>Долгота</th>
+                      <th class="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
+                      <td class="col"><input type="checkbox" /></td>
+                      <td>{{ coord.lat }}</td>
+                      <td>{{ coord.lng }}</td>
+                      <td class="col delete" @click="deleteCoordinate(i)">
+                        <app-button class="col-item__trash" type="white-r">
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </app-button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="search-zone__buttons">
+                <app-button
+                  class="search-zone__button"
+                  @click="setPolygonDrawable(true)"
+                  >Использовать карту</app-button
+                >
+                <app-button class="search-zone__button" type="white-g"
+                  >Прописать координаты</app-button
+                >
+                <app-button
+                  @click="clearCoordinates()"
+                  class="search-zone__button"
+                  type="red"
+                  >Очистить координаты</app-button
+                >
+              </div>
+            </div>
+
+            <div class="search-zone__coordinates">
+              <div class="coordinates-wrapper">
+                <app-input
+                  label="Ширина"
+                  class="coordinates-wrapper__input"
+                ></app-input>
+                <app-input
+                  label="Искать с"
+                  class="coordinates-wrapper__input"
+                ></app-input>
+                <app-input
+                  label="Радиус"
+                  class="coordinates-wrapper__input"
+                ></app-input>
                 <div class="coordinates-wrapper__select">
-                  <Select2 v-model="myValue" :options="myOptions" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                  <Select2
+                    v-model="myValue"
+                    :options="myOptions"
+                    @change="myChangeEvent($event)"
+                    @select="mySelectEvent($event)"
+                  />
                 </div>
+              </div>
+
+              <app-button class="coordinates-wrapper__button"
+                >Загрузить на карту</app-button
+              >
             </div>
 
-            <app-button  class="coordinates-wrapper__button">Загрузить на карту</app-button>
-          </div> 
-
-          <div class="search-zone__load">
-            <div class="load-wrapper">
-              <app-button type="white-g">Загрузить файл</app-button>
-              <span class="load-wrapper__name">POLYGON.shp</span>
-            </div>
-            <app-button>Показать на карте</app-button>
-          </div>
-
-        </div>
-
-        <div class="search-date">
-          <h2 class="search__title">Интервал дат съемки</h2>
-          <div class="search-date__wrapper">
-
-          <div class="search-date__inputs">
-            <div class="search-date__input">
-              <label class="datepicker-label" for="datepicker-start">Искать с:</label>
-              <date-picker id="datepicker-start" class="input-date" v-model="time" valueType="format">
-                <div class="datepicker__back"></div>
-              </date-picker>
-            </div>
-
-            <div class="search-date__arrow">
-              <img src="@/assets/img/arrow.png" />
-            </div>
-
-            <div class="search-date__input">
-              <label class="datepicker-label" for="datepicker-end">До:</label>
-              <date-picker id="datepicker-end" class="input-date" v-model="time" valueType="format"></date-picker>
+            <div class="search-zone__load">
+              <div class="load-wrapper">
+                <app-button type="white-g">Загрузить файл</app-button>
+                <span class="load-wrapper__name">POLYGON.shp</span>
+              </div>
+              <app-button>Показать на карте</app-button>
             </div>
           </div>
-          
-            <div>
-              <label class="select2-label">Выбрать месяцы:</label>
-              <Select2 v-model="myValue" :options="myOptions"  @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+
+          <div class="search-date">
+            <h2 class="search__title">Интервал дат съемки</h2>
+            <div class="search-date__wrapper">
+              <div class="search-date__inputs">
+                <div class="search-date__input">
+                  <label class="datepicker-label" for="datepicker-start"
+                    >Искать с:</label
+                  >
+                  <date-picker
+                    id="datepicker-start"
+                    class="input-date"
+                    v-model="time"
+                    valueType="format"
+                  >
+                    <div class="datepicker__back"></div>
+                  </date-picker>
+                </div>
+
+                <div class="search-date__arrow">
+                  <img src="@/assets/img/arrow.png" />
+                </div>
+
+                <div class="search-date__input">
+                  <label class="datepicker-label" for="datepicker-end"
+                    >До:</label
+                  >
+                  <date-picker
+                    id="datepicker-end"
+                    class="input-date"
+                    v-model="time"
+                    valueType="format"
+                  ></date-picker>
+                </div>
+              </div>
+
+              <div>
+                <label class="select2-label">Выбрать месяцы:</label>
+                <Select2
+                  v-model="myValue"
+                  :options="myOptions"
+                  @change="myChangeEvent($event)"
+                  @select="mySelectEvent($event)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="search-cloud">
+            <h2 class="search__title">Облачность</h2>
+            <div class="search-cloud__subtitle">
+              Процент облачности:
+              <p>{{ your_value[0] }}% - {{ your_value[1] }}%</p>
             </div>
 
-          </div>
-        </div>
-
-        <div class="search-cloud">
-          <h2 class="search__title">Облачность</h2>
-            <div class="search-cloud__subtitle">Процент облачности: <p>{{your_value[0]}}% - {{your_value[1]}}%</p></div>
-
-            <no-ui-slider :config="your_config" :values="your_value"/>
+            <no-ui-slider :config="your_config" :values="your_value" />
 
             <div class="search-cloud__wrapper">
               <p>0%</p>
               <p>100%</p>
             </div>
-        </div>
+          </div>
 
-        <div class="search-spacecraft">
+          <div class="search-spacecraft">
             <h2 class="search__title">Космический аппарат</h2>
 
-              <div class="accordion">
-                <div class="accordion-item">
-                  <input class="accordion-item__input" type="checkbox" id="accordion-1">
-                  <label class="accordion-item__trigger" for="accordion-1">
+            <div class="accordion">
+              <div class="accordion-item">
+                <input
+                  class="accordion-item__input"
+                  type="checkbox"
+                  id="accordion-1"
+                />
+                <label class="accordion-item__trigger" for="accordion-1">
+                  <div class="accordion-item__img"></div>
+                  <app-checkbox :mini="true" @input="onCheck($event)" />
+                  <p>Канопус</p>
+                </label>
+
+                <div class="accordion-item__content">
+                  <input
+                    class="accordion-item__input"
+                    type="checkbox"
+                    id="accordion-2"
+                  />
+
+                  <label class="accordion-item__trigger" for="accordion-2">
                     <div class="accordion-item__img"></div>
-                    <app-checkbox :mini="true" @input="onCheck($event)"/>
-                    <p>Канопус</p>
+                    <app-checkbox :mini="true" @input="onCheck($event)" />
+                    <p>Канопус-В</p>
                   </label>
 
                   <div class="accordion-item__content">
-                    <input class="accordion-item__input" type="checkbox" id="accordion-2">
-
-                    <label class="accordion-item__trigger" for="accordion-2">
-                      <div class="accordion-item__img"></div>
-                      <app-checkbox :mini="true" @input="onCheck($event)"/>
-                      <p>Канопус-В</p>
+                    <input class="accordion-item__input" type="checkbox" />
+                    <label class="accordion-item__trigger">
+                      <app-checkbox :mini="true" @input="onCheck($event)" />
+                      <div>
+                        <img src="@/assets/img/spektr.png" />
+                      </div>
+                      <p>Многоспектральная съемка</p>
                     </label>
-
-                    <div class="accordion-item__content">
-                        <input class="accordion-item__input" type="checkbox">
-                        <label class="accordion-item__trigger">
-                          <app-checkbox :mini="true" @input="onCheck($event)"/>
-                          <div>
-                            <img src="@/assets/img/spektr.png">
-                          </div>
-                          <p>Многоспектральная съемка</p>
-                        </label>
-                        <input class="accordion-item__input" type="checkbox">
-                        <label class="accordion-item__trigger">
-                          <app-checkbox :mini="true" @input="onCheck($event)"/>
-                          <div>
-                            <img src="@/assets/img/panhrom.png">
-                          </div>
-                          <p>Панхроматическая съемка</p>
-                        </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <input class="accordion-item__input" type="checkbox" id="accordion-3">
-                  <label class="accordion-item__trigger" for="accordion-3">
-                    <div class="accordion-item__img"></div>
-                    <app-checkbox :mini="true" @input="onCheck($event)"/>
-                    <p>Ресурс</p>
-                  </label>
-
-                  <div class="accordion-item__content">
-                    <input class="accordion-item__input" type="checkbox" id="accordion-4">
-
-                    <label class="accordion-item__trigger" for="accordion-4">
-                      <div class="accordion-item__img"></div>
-                      <app-checkbox :mini="true" @input="onCheck($event)"/>
-                      <p>Ресурс-П1</p>
+                    <input class="accordion-item__input" type="checkbox" />
+                    <label class="accordion-item__trigger">
+                      <app-checkbox :mini="true" @input="onCheck($event)" />
+                      <div>
+                        <img src="@/assets/img/panhrom.png" />
+                      </div>
+                      <p>Панхроматическая съемка</p>
                     </label>
-
-                    <div class="accordion-item__content">
-                        <input class="accordion-item__input" type="checkbox">
-                        <label class="accordion-item__trigger">
-                          <app-checkbox :mini="true" @input="onCheck($event)"/>
-                          <div>
-                            <img src="@/assets/img/spektr.png">
-                          </div>
-                          <p>Многоспектральная съемка</p>
-                        </label>
-                        <input class="accordion-item__input" type="checkbox">
-                        <label class="accordion-item__trigger">
-                          <app-checkbox :mini="true" @input="onCheck($event)"/>
-                          <div>
-                            <img src="@/assets/img/panhrom.png">
-                          </div>
-                          <p>Панхроматическая съемка</p>
-                        </label>
-                    </div>
                   </div>
                 </div>
               </div>
+              <div class="accordion-item">
+                <input
+                  class="accordion-item__input"
+                  type="checkbox"
+                  id="accordion-3"
+                />
+                <label class="accordion-item__trigger" for="accordion-3">
+                  <div class="accordion-item__img"></div>
+                  <app-checkbox :mini="true" @input="onCheck($event)" />
+                  <p>Ресурс</p>
+                </label>
+
+                <div class="accordion-item__content">
+                  <input
+                    class="accordion-item__input"
+                    type="checkbox"
+                    id="accordion-4"
+                  />
+
+                  <label class="accordion-item__trigger" for="accordion-4">
+                    <div class="accordion-item__img"></div>
+                    <app-checkbox :mini="true" @input="onCheck($event)" />
+                    <p>Ресурс-П1</p>
+                  </label>
+
+                  <div class="accordion-item__content">
+                    <input class="accordion-item__input" type="checkbox" />
+                    <label class="accordion-item__trigger">
+                      <app-checkbox :mini="true" @input="onCheck($event)" />
+                      <div>
+                        <img src="@/assets/img/spektr.png" />
+                      </div>
+                      <p>Многоспектральная съемка</p>
+                    </label>
+                    <input class="accordion-item__input" type="checkbox" />
+                    <label class="accordion-item__trigger">
+                      <app-checkbox :mini="true" @input="onCheck($event)" />
+                      <div>
+                        <img src="@/assets/img/panhrom.png" />
+                      </div>
+                      <p>Панхроматическая съемка</p>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </vuescroll>
-      
-    </div>
+      </div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
-import NoUiSlider from 'vue-nouislider/src/components/noUiSlider.vue';
-import 'vue-nouislider/dist/vue-nouislider.css';
+import NoUiSlider from "vue-nouislider/src/components/noUiSlider.vue";
+import "vue-nouislider/dist/vue-nouislider.css";
 
-import vuescroll from 'vuescroll';
+import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 
-import Select2 from 'v-select2-component';
+import Select2 from "v-select2-component";
 
-import AppInput from "@/components/controls/AppInput.vue"
+import AppInput from "@/components/controls/AppInput.vue";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
 export default {
@@ -252,42 +304,51 @@ export default {
     DatePicker,
     NoUiSlider,
     AppCheckbox,
-    Select2
+    Select2,
   },
   data() {
     return {
-      time: '',
-      myValue: '',
-      myOptions: ['май', 'май', 'май', 'май', 'май', 'май'],
+      time: "",
+      myValue: "",
+      myOptions: ["май", "май", "май", "май", "май", "май"],
       your_config: {
         step: 10,
         connect: true,
         behaviour: "drag",
         range: {
-          'min': 0,
-          'max': 100
-        }
+          min: 0,
+          max: 100,
+        },
       },
       ops: {
-        vuescroll: {},
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500
+        },
         scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: 'easeOutQuad',
         },
         rail: {
-          background: '#000',
-          opacity: .1,
-          size: '6px',
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
           specifyBorderRadius: false,
           gutterOfEnds: null,
-          gutterOfSide: '2px',
-          keepShow: false
+          gutterOfSide: "2px",
+          keepShow: false,
         },
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: '#000',
-        }
+          background: "#476D70",
+        },
+
       },
-      your_value: [20, 80]
+      your_value: [20, 80],
     };
   },
   computed: {
@@ -301,60 +362,65 @@ export default {
       "setPolygonDrawable",
       "clearCoordinates",
     ]),
-  }
+  },
 };
 </script>
 
 <style lang="scss">
+.__vuescroll {
+  display: flex;
+  flex-direction: column;
+}
 
-.select2{
+.__panel {
+  width: 100%;
+}
 
+.select2 {
   width: 150px !important;
-  &-label{
+  &-label {
     font-size: 12px;
   }
-  &-selection{
+  &-selection {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: $shadow-small;
     align-items: center;
     color: $color-main-dark;
     margin-bottom: 6px;
-    &--single{
+    &--single {
       height: 34px !important;
       border-radius: 10px !important;
       border: none !important;
     }
-    &__arrow{
-      height: 34px  !important;
-      b{
+    &__arrow {
+      height: 34px !important;
+      b {
         border-color: $color-main transparent transparent transparent !important;
       }
     }
-    
   }
-  &-dropdown{
+  &-dropdown {
     border-radius: 10px !important;
     border: none !important;
     box-shadow: $shadow-big;
   }
-  &-search__field{
+  &-search__field {
     border: 1px solid $color-main !important;
     border-radius: 6px;
   }
-  &-results__option{
+  &-results__option {
     padding: 10px;
     font-size: 0.875rem !important;
     color: #000;
-    &--highlighted[aria-selected]{
-      background-color: $color-main !important;  
+    &--highlighted[aria-selected] {
+      background-color: $color-main !important;
     }
   }
 }
 
-
-.vue-nouislider{
-  background: #FFF;
+.vue-nouislider {
+  background: #fff;
   margin: 30px 0 0 0;
   width: 450px;
   height: 14px;
@@ -363,66 +429,66 @@ export default {
   box-shadow: $shadow-big;
 }
 
-.noUi{
-  &-connect{
+.noUi {
+  &-connect {
     background: $color-main-dark;
   }
-  &-horizontal &-handle{
+  &-horizontal &-handle {
     width: 24px;
     height: 24px;
   }
-  &-handle{
+  &-handle {
     border-radius: 6px;
     background: $gradient;
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-    &::before{
+    &::before {
       background: none;
     }
-    &::after{
+    &::after {
       background: none;
     }
   }
 }
 
-.accordion{
+.accordion {
   padding: 10px;
   box-shadow: $shadow-small;
   border-radius: 10px;
   overflow: hidden;
   background: $gradient-w;
-  &-item{
+  &-item {
     position: relative;
-    p{
+    p {
       margin-left: 4px;
       color: #000;
       font-size: 0.875rem;
     }
 
-    &__input{
+    &__input {
       position: absolute;
       top: 0;
       left: 0;
       opacity: 0;
 
-      &:checked ~ .accordion-item__content{
-        display:inline-block;
+      &:checked ~ .accordion-item__content {
+        display: inline-block;
       }
     }
-    &__trigger{
+    &__trigger {
       display: flex;
       align-items: center;
       padding: 6px 0 0 6px;
     }
-    &__checkbox{
+    &__checkbox {
       margin-right: 6px;
     }
-    &__img{
+    &__img {
       background: url("@/assets/img/arrow-close.png");
       height: 24px;
       width: 24px;
     }
-    &__content{
+    &__content {
       padding: 6px 0 0 24px;
       border-top: none;
       display: none;
@@ -430,76 +496,82 @@ export default {
   }
 }
 
-.mx{
-  .datepicker-label{
+.mx {
+  .datepicker-label {
     font-size: 14px;
     margin-left: 4px;
   }
-  &-table{
+  &-table {
     padding: 6px;
-    .today{
+    .today {
       color: #000;
     }
   }
-  &-btn{
-    color: #FFF;
-    &:hover{
-      color: #FFF;
+  &-btn {
+    color: #fff;
+    &:hover {
+      color: #fff;
     }
   }
-  &-input{
+  &-input {
     border: 1px solid $color-main;
     border-radius: 10px;
     box-shadow: $shadow-small;
     overflow: hidden;
-    &:hover{
+    &:hover {
       border: 1px solid $color-main-dark;
     }
   }
-  &-calendar{
+  &-calendar {
     padding: 0;
     overflow: hidden;
     height: auto;
-    &-content{
+    &-content {
       height: 100%;
     }
-    &-header{
+    &-header {
       line-height: 26px;
       box-shadow: $shadow-big;
       background: $gradient;
       overflow: hidden;
-      border-radius: 10px 10px 0 0 ;
+      border-radius: 10px 10px 0 0;
       padding: 4px;
     }
   }
-  &-datepicker{
+  &-datepicker {
     width: 150px;
     position: relative;
     overflow: hidden;
-    &-main{
+    &-main {
       color: $color-main-dark;
       font-family: "Montserrat";
-      border-radius: 10px; 
+      border-radius: 10px;
       border: none;
     }
-    &-label{
+    &-label {
       font-size: 12px;
     }
   }
-  &-icon-calendar{
+  &-icon-calendar {
     background: $gradient;
-    color:#FFF;
+    color: #fff;
     padding: 8px;
     right: 0px;
     font-size: 18px;
-    border-radius: 0 10px 10px 0 ;
+    border-radius: 0 10px 10px 0;
   }
 }
 
 .search {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
   &-wrapper {
-    // max-height: 100%;
-    margin: 30px;
+    padding: 30px;
+  }
+  &-content {
+    width: 100%;
+    height: 100%;
   }
   &__title {
     font-weight: 400;
@@ -570,7 +642,7 @@ export default {
       background: #fff;
       flex-direction: column;
 
-      .coordinates-wrapper{
+      .coordinates-wrapper {
         display: flex;
         margin: 20px 0;
         justify-content: space-between;
@@ -579,7 +651,7 @@ export default {
           margin-right: 20px;
           width: 120px;
         }
-        &__button{
+        &__button {
           margin-left: auto;
         }
       }
@@ -592,8 +664,8 @@ export default {
       box-shadow: $shadow-big;
       border-radius: 10px;
       background: #fff;
-      .load-wrapper{
-        &__name{
+      .load-wrapper {
+        &__name {
           font-size: 12px;
           color: #000;
           margin-left: 20px;
@@ -641,8 +713,8 @@ export default {
           .col {
             max-width: 40px;
             text-align: center;
-            &-item{
-              &__trash{
+            &-item {
+              &__trash {
                 width: 30px;
                 height: 30px;
                 padding: 0;
@@ -685,44 +757,42 @@ export default {
       align-items: flex-end;
       justify-content: space-between;
       padding: 20px 0 20px 0;
-
     }
-    &__inputs{
+    &__inputs {
       display: flex;
     }
-    &__input{
+    &__input {
       display: flex;
       flex-direction: column;
       font-size: 12px;
     }
-    
+
     &__arrow {
       max-height: 20px;
-      margin:  30px 20px 8px 20px;;
+      margin: 30px 20px 8px 20px;
       img {
         width: 100%;
         height: 100%;
       }
     }
-
   }
   &-cloud {
-    &__subtitle{
+    &__subtitle {
       display: flex;
       font-size: 12px;
       color: $text-grey;
       margin-top: 10px;
-      p{
+      p {
         color: #000000;
         margin-left: 8px;
       }
     }
-    &__wrapper{
+    &__wrapper {
       width: 450px;
       display: flex;
       justify-content: space-between;
-      p{
-        margin: 10px 4px; 
+      p {
+        margin: 10px 4px;
         font-size: 12px;
         color: #000;
       }
@@ -746,7 +816,4 @@ export default {
     text-align: center;
   }
 }
-
-
-
 </style>

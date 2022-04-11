@@ -128,9 +128,14 @@
 
         <div class="search-cloud">
           <h2 class="search__title">Облачность</h2>
+            <div class="search-cloud__subtitle">Процент облачности: <p>{{your_value[0]}}% - {{your_value[1]}}%</p></div>
 
             <no-ui-slider :config="your_config" :values="your_value"/>
-            {{your_value}}
+
+            <div class="search-cloud__wrapper">
+              <p>0%</p>
+              <p>100%</p>
+            </div>
         </div>
 
         <div class="search-spacecraft">
@@ -307,13 +312,11 @@ export default {
     height: 100%;
     height: 30px;
   }
-  &-container--default{
-  }
 }
 
 .vue-nouislider{
   background: #FFF;
-  margin: 30px 0;
+  margin: 30px 0 0 0;
   width: 450px;
   height: 14px;
   border-radius: 10px;
@@ -439,6 +442,9 @@ export default {
       font-family: "Montserrat";
       border-radius: 10px; 
       border: none;
+    }
+    &-label{
+      font-size: 12px;
     }
   }
   &-icon-calendar{
@@ -642,6 +648,7 @@ export default {
     &__input{
       display: flex;
       flex-direction: column;
+      font-size: 12px;
     }
     
     &__arrow {
@@ -655,6 +662,26 @@ export default {
 
   }
   &-cloud {
+    &__subtitle{
+      display: flex;
+      font-size: 12px;
+      color: $text-grey;
+      margin-top: 10px;
+      p{
+        color: #000000;
+        margin-left: 8px;
+      }
+    }
+    &__wrapper{
+      width: 450px;
+      display: flex;
+      justify-content: space-between;
+      p{
+        margin: 10px 4px; 
+        font-size: 12px;
+        color: #000;
+      }
+    }
     margin-top: 20px;
     padding: 20px;
     box-shadow: $shadow-small;

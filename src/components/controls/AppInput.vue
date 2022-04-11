@@ -35,7 +35,7 @@ export default {
 <style lang="scss" scoped>
 .input {
   margin-top: 2px;
-  width: 130px;
+  // width: 130px;
   padding: 5px 10px;
   border-radius: 15px;
   border: none;

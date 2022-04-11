@@ -11,17 +11,15 @@ export default {
     getFormattedCoordinates(state) {
       let res = [];
       state.areaPolygon.forEach(el => {
-        let latDeg = Math.trunc(Math.abs(el.lat));
-        let latMin = Math.trunc(Math.abs(el.lat) % 1 * 60);
-        let latSec = Math.round((Math.abs(el.lat) % 1 * 60) % 1 * 60);
-        let latSide = el.lat > 0 ? "N" : "S";
-        let lngDeg = Math.trunc(Math.abs(el.lng));
-        let lngMin = Math.trunc(Math.abs(el.lng) % 1 * 60);
-        let lngSec = Math.round((Math.abs(el.lng) % 1 * 60) % 1 * 60);
-        let lngSide = el.lng > 0 ? "E" : "W";
         res.push({
-          lat: `${latDeg}°${latMin}'${latSec}" ${latSide}`,
-          lng: `${lngDeg}°${lngMin}'${lngSec}" ${lngSide}`,
+          lat: `${Math.trunc(Math.abs(el.lat))}
+               °${Math.trunc(Math.abs(el.lat) % 1 * 60)}
+               '${Math.round((Math.abs(el.lat) % 1 * 60) % 1 * 60)}" 
+                ${el.lat > 0 ? "N" : "S"}`,
+          lng: `${Math.trunc(Math.abs(el.lng))}°
+                ${Math.trunc(Math.abs(el.lng) % 1 * 60)}'
+                ${Math.round((Math.abs(el.lng) % 1 * 60) % 1 * 60)}" 
+                ${el.lng > 0 ? "E" : "W"}`,
         })
       });
       return res;

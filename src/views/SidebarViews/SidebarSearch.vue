@@ -92,7 +92,7 @@
                 ></app-input>
                 <div class="coordinates-wrapper__select">
                   <Select2
-                    v-model="myValue"
+                    v-model="months"
                     :options="myOptions"
                     @change="myChangeEvent($event)"
                     @select="mySelectEvent($event)"
@@ -125,8 +125,9 @@
                   <date-picker
                     id="datepicker-start"
                     class="input-date"
-                    v-model="time"
+                    v-model="timeFrom"
                     valueType="format"
+                    @change="setTimeInterval({from: $event, to: timeTo, months: months})"
                   >
                     <div class="datepicker__back"></div>
                   </date-picker>
@@ -143,8 +144,9 @@
                   <date-picker
                     id="datepicker-end"
                     class="input-date"
-                    v-model="time"
+                    v-model="timeTo"
                     valueType="format"
+                    @change="setTimeInterval({from: timeFrom, to: $event, months: months})"
                   ></date-picker>
                 </div>
               </div>
@@ -152,7 +154,7 @@
               <div>
                 <label class="select2-label">Выбрать месяцы:</label>
                 <Select2
-                  v-model="myValue"
+                  v-model="months"
                   :options="myOptions"
                   @change="myChangeEvent($event)"
                   @select="mySelectEvent($event)"
@@ -309,8 +311,9 @@ export default {
   data() {
     return {
       searchZoneType: 1,
-      time: "",
-      myValue: "",
+      timeFrom: "",
+      timeTo: "",
+      months: [],
       myOptions: ["май", "май", "май", "май", "май", "май"],
       your_config: {
         step: 10,
@@ -353,7 +356,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["getPolygonArea", "getFormattedCoordinates"]),
+    ...mapGetters("map", [
+      "getPolygonArea", 
+      "getFormattedCoordinates",
+      ]),
+    ...mapGetters("search", [
+      "getTimeInterval",
+      "getSpacecrafts",
+      "getCloudiness"
+    ])
   },
   methods: {
     ...mapActions("map", [
@@ -363,6 +374,11 @@ export default {
       "setPolygonDrawable",
       "clearCoordinates",
     ]),
+    ...mapActions("search", [
+      "setTimeInterval",
+      "setSpacecrafts",
+      "setCloudiness"
+    ])
   },
 };
 </script>
@@ -640,12 +656,8 @@ export default {
       border-radius: 10px;
       background: #fff;
     }
-<<<<<<< HEAD
-    &__coordinates {
-=======
     &__coordinates{
       display: flex;
->>>>>>> cf7cb0fe29a9909679bb6f930c474792ea58e541
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;

@@ -41,11 +41,17 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .authorize {
     position: absolute;
     top: 0;
     z-index: 1;
     left: 0;
+    background: url("@/assets/img/authorize__background.png");
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
+
 </style>

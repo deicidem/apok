@@ -19,20 +19,20 @@
             <nav class="search-zone__nav">
               <ul>
                 <li>
-                  <a href="#">Задать полигон</a>
+                  <button @click="searchZoneType = 1">Задать полигон</button>
                 </li>
                 <li class="line"></li>
                 <li>
-                  <a href="#">Вывести координаты</a>
+                  <button @click="searchZoneType = 2">Вывести координаты</button>
                 </li>
                 <li class="line"></li>
                 <li>
-                  <a href="#">Загрузить файл</a>
+                  <button @click="searchZoneType = 3">Загрузить файл</button>
                 </li>
               </ul>
             </nav>
 
-            <div class="search-zone__main">
+            <div class="search-zone__main" v-show="searchZoneType == 1">
               <div class="search-zone__table">
                 <table>
                   <thead>
@@ -76,7 +76,7 @@
               </div>
             </div>
 
-            <div class="search-zone__coordinates">
+            <div class="search-zone__coordinates" v-show="searchZoneType == 2">
               <div class="coordinates-wrapper">
                 <app-input
                   label="Ширина"
@@ -105,7 +105,7 @@
               >
             </div>
 
-            <div class="search-zone__load">
+            <div class="search-zone__load" v-show="searchZoneType == 3">
               <div class="load-wrapper">
                 <app-button type="white-g">Загрузить файл</app-button>
                 <span class="load-wrapper__name">POLYGON.shp</span>
@@ -308,6 +308,7 @@ export default {
   },
   data() {
     return {
+      searchZoneType: 1,
       time: "",
       myValue: "",
       myOptions: ["май", "май", "май", "май", "май", "май"],
@@ -613,8 +614,14 @@ export default {
       li {
         margin: 4px;
         list-style-type: none;
-        a {
+        button {
+          background: none;
           color: #000;
+          font-family: inherit;
+          border: none;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
           &:hover {
             color: $color-main;
           }
@@ -625,8 +632,7 @@ export default {
       }
     }
     &__main {
-      // display: flex;
-      display: none;
+      display: flex;
       justify-content: space-between;
       align-items: flex-start;
       padding: 10px;
@@ -634,8 +640,12 @@ export default {
       border-radius: 10px;
       background: #fff;
     }
+<<<<<<< HEAD
+    &__coordinates {
+=======
     &__coordinates{
       display: flex;
+>>>>>>> cf7cb0fe29a9909679bb6f930c474792ea58e541
       padding: 10px;
       box-shadow: $shadow-big;
       border-radius: 10px;

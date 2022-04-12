@@ -12,7 +12,7 @@
 
           <search-cloud></search-cloud>
 
-          <search-spacecraft></search-spacecraft>
+        <search-spacecraft></search-spacecraft>
 
         </div>
 
@@ -24,6 +24,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
+
 import 'vue-slider-component/theme/default.css'
 import { mapGetters, mapActions } from "vuex";
 import SearchDate from "@/components/search/SearchDate";

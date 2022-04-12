@@ -11,13 +11,15 @@
           <date-picker
             :language="ru"
             class="input-date"
+            calendar-class="input-calendar"
+            :monday-first="true"
             v-model="from"
             valueType="format"
             @input="setTimeInterval({ from: $event, to, months })"
           >
           </date-picker>
           <div class="search-date__back">
-            <img src="@/assets/img/calendar.svg">
+            <img src="@/assets/img/calendar.svg" />
           </div>
         </div>
 
@@ -29,21 +31,37 @@
           <label class="datepicker-label" for="datepicker-end">До:</label>
           <date-picker
             :language="ru"
+            calendar-class="input-calendar"
             class="input-date"
             v-model="to"
             valueType="format"
             @input="setTimeInterval({ from, to: $event, months })"
           >
           </date-picker>
-           <div class="search-date__back">
-            <img src="@/assets/img/calendar.svg">
+          <div class="search-date__back">
+            <img src="@/assets/img/calendar.svg" />
           </div>
         </div>
       </div>
 
       <div>
         <label class="select2-label">Выбрать месяцы:</label>
-        <multi-select
+        <div class="select">
+          <div class="select-data" @click="selectActive = !selectActive">
+            <span v-for="month in months" :key="month.cnt">{{month.name}}, </span>
+          </div>
+          <div class="select-options" v-show="selectActive">
+            <label class="select-option" >
+                <app-checkbox :mini="true" :modelValue="allMonths" @change="onAllCheck($event)"></app-checkbox>
+                <span>Все</span>
+            </label>
+            <label class="select-option" v-for="(option, i) in monthsOptions" :key="i" >
+                <app-checkbox :mini="true" v-model="option.active"></app-checkbox>
+                <span>{{option.name}}</span>
+            </label>
+          </div>
+        </div>
+        <!-- <multi-select
           v-model="months"
           :multiple="true"
           :close-on-select="false"
@@ -51,16 +69,20 @@
           :searchable="false"
           :show-labels="false"
           :taggable="false"
-          tagPosition="bottom"
+          :option-height="15"
         >
-          <template slot="selection" slot-scope="{ values, isOpen }"
-            ><span
-              class="multiselect__single"
-              v-if="values.length && !isOpen"
-              >Месяцев выбрано: {{ values.length }}</span
-            ></template
+          <template slot="singleLabel" slot-scope="props">
+            <span class="option__desc">
+              <span class="option__title">{{ props.option }}</span>
+            </span>
+            </template
           >
-        </multi-select>
+          <template slot="option" slot-scope="props">
+            <div class="option__desc">
+              <span class="option__title">{{ props.option }}</span>
+            </div>
+          </template>
+        </multi-select> -->
       </div>
     </div>
   </div>
@@ -68,57 +90,184 @@
 
 <script>
 import DatePicker from "vuejs-datepicker";
-import {ru} from 'vuejs-datepicker/dist/locale'
-import MultiSelect from "vue-multiselect";
+import { ru } from "vuejs-datepicker/dist/locale";
+// import MultiSelect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     DatePicker,
-    MultiSelect,
+    AppCheckbox
+    // MultiSelect,
   },
   data() {
     return {
       ru: ru,
       from: "",
       to: "",
-      months: [],
+      selectActive: false,
+      allMonths: false,
       monthsOptions: [
-        "январь",
-        "февраль",
-        "март",
-        "апрель",
-        "май",
-        "июнь",
-        "июль",
-        "август",
-        "сентябрь",
-        "октябрь",
-        "ноябрь",
-        "декабрь",
+        {
+          cnt: 1,
+          name: "январь",
+          active: false
+        },
+        {
+          cnt: 2,
+          name: "февраль",
+          active: false
+        },
+        {
+          cnt: 3,
+          name: "март",
+          active: false
+        },
+        {
+          cnt: 4,
+          name: "апрель",
+          active: false
+        },
+        {
+          cnt: 5,
+          name: "май",
+          active: false
+        },
+        {
+          cnt: 6,
+          name: "июнь",
+          active: false
+        },
+        {
+          cnt: 7,
+          name: "июль",
+          active: false
+        },
+        {
+          cnt: 8,
+          name: "август",
+          active: false
+        },
+        {
+          cnt: 9,
+          name: "сентябрь",
+          active: false
+        },
+        {
+          cnt: 10,
+          name: "октябрь",
+          active: false
+        },
+        {
+          cnt: 11,
+          name: "ноябрь",
+          active: false
+        },
+        {
+          cnt: 12,
+          name: "декабрь",
+          active: false
+        },
       ],
     };
   },
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
+    onAllCheck($event) {
+      this.allMonths = $event;
+      if ($event) {
+        this.monthsOptions.forEach(el => {
+          el.active = true;
+        });
+      } else {
+        this.monthsOptions.forEach(el => {
+          el.active = false;
+        });
+      }
+    }
   },
   computed: {
     ...mapGetters("search", ["getTimeInterval"]),
+    months() {
+      let res = [];
+      this.monthsOptions.forEach(el => {
+        if (el.active) {
+          res.push({...el})
+        }
+      });
+      return res;
+    }
   },
 };
 </script>
 
 <style lang="scss">
-.multiselect{
-  color: $color-main-dark;
-  &__placeholder{
-    margin: 0;
+
+.select {
+  position: relative;
+  &-data {
+    background: #fff;
+    box-shadow: $shadow-big;
+    border-radius: 10px;
+    width: 150px;
+    height: 34px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  &-options {
+    z-index: 10;
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 150px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: $shadow-big;
+    border-radius: 10px;
+  }
+  &-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: $text-grey;
+    padding: 4px 7px;
+    border-radius: 0;
+    font-size: 12px;
+    span {
+      margin-left: 8px;
+    }
+    &.active {
+      background: $color-main;
+      color: #fff;
+    }
   }
 }
 
+.input-calendar {
+  color: #585858 !important;
+  .next::after {
+    border-left: 10px solid $color-main !important;
+  }
+  .prev::after {
+    border-right: 10px solid $color-main !important;
+  }
+  .cell.selected {
+    background: $color-main;
+  }
+}
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border: 1px solid $color-main !important;
+}
 .vdp-datepicker {
-  input{
+  input {
     padding-right: 26px;
     width: 130px;
     height: 34px;
@@ -126,19 +275,19 @@ export default {
     border-radius: 10px;
     box-shadow: $shadow-big;
     outline: none;
-    &:focus-visible{
-      border: 1px solid $color-main-dark; 
+    &:focus-visible {
+      border: 1px solid $color-main-dark;
     }
   }
-  &__calendar{
+  &__calendar {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: $shadow-big;
-    header{
+    header {
       box-shadow: $shadow-big;
-      span{
-        .prev{
-          &::after{
+      span {
+        .prev {
+          &::after {
             color: #000 !important;
           }
         }
@@ -147,15 +296,15 @@ export default {
   }
 }
 
-.cell{
+.cell {
   color: $text-grey !important;
-  &:hover{
+  &:hover {
     border: 1px solid $color-main;
   }
 }
-.selected{
+.selected {
   background: $color-main !important;
-  color: #FFF  !important;
+  color: #fff !important;
 }
 
 .search {
@@ -189,7 +338,7 @@ export default {
         height: 100%;
       }
     }
-    &__back{
+    &__back {
       background: $gradient;
       position: absolute;
       right: 0;

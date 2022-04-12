@@ -114,54 +114,6 @@
             </div>
           </div>
 
-          <div class="search-date">
-            <h2 class="search__title">Интервал дат съемки</h2>
-            <div class="search-date__wrapper">
-              <div class="search-date__inputs">
-                <div class="search-date__input">
-                  <label class="datepicker-label" for="datepicker-start"
-                    >Искать с:</label
-                  >
-                  <date-picker
-                    id="datepicker-start"
-                    class="input-date"
-                    v-model="timeFrom"
-                    valueType="format"
-                    @change="setTimeInterval({from: $event, to: timeTo, months: months})"
-                  >
-                    <div class="datepicker__back"></div>
-                  </date-picker>
-                </div>
-
-                <div class="search-date__arrow">
-                  <img src="@/assets/img/arrow.png" />
-                </div>
-
-                <div class="search-date__input">
-                  <label class="datepicker-label" for="datepicker-end"
-                    >До:</label
-                  >
-                  <date-picker
-                    id="datepicker-end"
-                    class="input-date"
-                    v-model="timeTo"
-                    valueType="format"
-                    @change="setTimeInterval({from: timeFrom, to: $event, months: months})"
-                  ></date-picker>
-                </div>
-              </div>
-
-              <div>
-                <label class="select2-label">Выбрать месяцы:</label>
-                <Select2
-                  v-model="months"
-                  :options="myOptions"
-                  @change="myChangeEvent($event)"
-                  @select="mySelectEvent($event)"
-                />
-              </div>
-            </div>
-          </div>
         <search-date></search-date>
 
           <div class="search-cloud">
@@ -171,8 +123,8 @@
               <p>{{ your_value[0] }}% - {{ your_value[1] }}%</p>
             </div>
 
-            <no-ui-slider :config="your_config" :values="your_value" />
-
+            <!-- <no-ui-slider :config="your_config" :values="your_value" /> -->
+            <vue-slider v-model="your_value" :adsorb="true" :interval="10"></vue-slider>
             <div class="search-cloud__wrapper">
               <p>0%</p>
               <p>100%</p>
@@ -282,7 +234,7 @@
 </template>
 
 <script>
-import NoUiSlider from "vue-nouislider/src/components/noUiSlider.vue";
+// import NoUiSlider from "vue-nouislider/src/components/noUiSlider.vue";
 import "vue-nouislider/dist/vue-nouislider.css";
 
 import vuescroll from "vuescroll";
@@ -291,20 +243,26 @@ import "vuescroll/dist/vuescroll.css";
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 
+import Select2 from "v-select2-component";
 
 import AppInput from "@/components/controls/AppInput.vue";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
 import SearchDate from "@/components/search/SearchDate";
 
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
+
 export default {
   components: {
     AppButton,
     AppInput,
     vuescroll,
-    NoUiSlider,
+    Select2,
+    // NoUiSlider,
     SearchDate,
-    AppCheckbox
+    AppCheckbox,
+    VueSlider
   },
   data() {
     return {

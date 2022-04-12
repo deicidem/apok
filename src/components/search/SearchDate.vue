@@ -9,10 +9,11 @@
             >Искать с:</label
           >
           <date-picker
-            id="datepicker-start"
+            :language="ru"
             class="input-date"
-            v-model="time"
+            v-model="from"
             valueType="format"
+            @input="setTimeInterval({ from: $event, to, months })"
           >
             <div class="datepicker__back"></div>
           </date-picker>
@@ -25,52 +26,79 @@
         <div class="search-date__input">
           <label class="datepicker-label" for="datepicker-end">До:</label>
           <date-picker
-            id="datepicker-end"
+            :language="ru"
             class="input-date"
-            v-model="time"
+            v-model="to"
             valueType="format"
+            @input="setTimeInterval({ from, to: $event, months })"
           ></date-picker>
         </div>
       </div>
 
       <div>
         <label class="select2-label">Выбрать месяцы:</label>
-        <Select2
-          v-model="myValue"
-          :options="myOptions"
-          @change="myChangeEvent($event)"
-          @select="mySelectEvent($event)"
-        />
+        <multi-select
+          v-model="months"
+          :multiple="true"
+          :close-on-select="false"
+          :options="monthsOptions"
+          :searchable="false"
+          :show-labels="false"
+          :taggable="false"
+          tagPosition="bottom"
+        >
+          <template slot="selection" slot-scope="{ values, isOpen }"
+            ><span
+              class="multiselect__single"
+              v-if="values.length && !isOpen"
+              >Месяцев выбрано: {{ values.length }}</span
+            ></template
+          >
+        </multi-select>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/index.css";
+import DatePicker from "vuejs-datepicker";
+import {ru} from 'vuejs-datepicker/dist/locale'
+import MultiSelect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.min.css";
+import { mapActions, mapGetters } from "vuex";
 
-import Select2 from "v-select2-component";
 export default {
   components: {
     DatePicker,
-    Select2,
+    MultiSelect,
   },
   data() {
     return {
-      time: "",
-      myValue: "",
-      myOptions: ["май", "май", "май", "май", "май", "май"],
-      your_config: {
-        step: 10,
-        connect: true,
-        behaviour: "drag",
-        range: {
-          min: 0,
-          max: 100,
-        },
-      },
+      ru: ru,
+      from: "",
+      to: "",
+      months: [],
+      monthsOptions: [
+        "январь",
+        "февраль",
+        "март",
+        "апрель",
+        "май",
+        "июнь",
+        "июль",
+        "август",
+        "сентябрь",
+        "октябрь",
+        "ноябрь",
+        "декабрь",
+      ],
     };
+  },
+  methods: {
+    ...mapActions("search", ["setTimeInterval"]),
+  },
+  computed: {
+    ...mapGetters("search", ["getTimeInterval"]),
   },
 };
 </script>
@@ -148,7 +176,6 @@ export default {
     padding: 20px;
     box-shadow: $shadow-small;
     border-radius: 10px;
-    overflow: hidden;
     background: $gradient-w;
     &__wrapper {
       display: flex;

@@ -112,102 +112,7 @@
 
         <search-cloud></search-cloud>
 
-          <div class="search-spacecraft">
-            <h2 class="search__title">Космический аппарат</h2>
-
-            <div class="accordion">
-              <div class="accordion-item">
-                <input
-                  class="accordion-item__input"
-                  type="checkbox"
-                  id="accordion-1"
-                />
-                <label class="accordion-item__trigger" for="accordion-1">
-                  <div class="accordion-item__img"></div>
-                  <app-checkbox :mini="true" @input="onCheck($event)" />
-                  <p>Канопус</p>
-                </label>
-
-                <div class="accordion-item__content">
-                  <input
-                    class="accordion-item__input"
-                    type="checkbox"
-                    id="accordion-2"
-                  />
-
-                  <label class="accordion-item__trigger" for="accordion-2">
-                    <div class="accordion-item__img"></div>
-                    <app-checkbox :mini="true" @input="onCheck($event)" />
-                    <p>Канопус-В</p>
-                  </label>
-
-                  <div class="accordion-item__content">
-                    <input class="accordion-item__input" type="checkbox" />
-                    <label class="accordion-item__trigger">
-                      <app-checkbox :mini="true" @input="onCheck($event)" />
-                      <div>
-                        <img src="@/assets/img/spektr.png" />
-                      </div>
-                      <p>Многоспектральная съемка</p>
-                    </label>
-                    <input class="accordion-item__input" type="checkbox" />
-                    <label class="accordion-item__trigger">
-                      <app-checkbox :mini="true" @input="onCheck($event)" />
-                      <div>
-                        <img src="@/assets/img/panhrom.png" />
-                      </div>
-                      <p>Панхроматическая съемка</p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <input
-                  class="accordion-item__input"
-                  type="checkbox"
-                  id="accordion-3"
-                />
-                <label class="accordion-item__trigger" for="accordion-3">
-                  <div class="accordion-item__img"></div>
-                  <app-checkbox :mini="true" @input="onCheck($event)" />
-                  <p>Ресурс</p>
-                </label>
-
-                <div class="accordion-item__content">
-                  <input
-                    class="accordion-item__input"
-                    type="checkbox"
-                    id="accordion-4"
-                  />
-
-                  <label class="accordion-item__trigger" for="accordion-4">
-                    <div class="accordion-item__img"></div>
-                    <app-checkbox :mini="true" @input="onCheck($event)" />
-                    <p>Ресурс-П1</p>
-                  </label>
-
-                  <div class="accordion-item__content">
-                    <input class="accordion-item__input" type="checkbox" />
-                    <label class="accordion-item__trigger">
-                      <app-checkbox :mini="true" @input="onCheck($event)" />
-                      <div>
-                        <img src="@/assets/img/spektr.png" />
-                      </div>
-                      <p>Многоспектральная съемка</p>
-                    </label>
-                    <input class="accordion-item__input" type="checkbox" />
-                    <label class="accordion-item__trigger">
-                      <app-checkbox :mini="true" @input="onCheck($event)" />
-                      <div>
-                        <img src="@/assets/img/panhrom.png" />
-                      </div>
-                      <p>Панхроматическая съемка</p>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <search-spacecraft></search-spacecraft>
 
         </div>
       </div>
@@ -217,22 +122,21 @@
 
 <script>
 // import NoUiSlider from "vue-nouislider/src/components/noUiSlider.vue";
-import "vue-nouislider/dist/vue-nouislider.css";
 
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 
 
 import AppInput from "@/components/controls/AppInput.vue";
-import AppCheckbox from "@/components/controls/AppCheckbox";
 
 import SearchDate from "@/components/search/SearchDate";
+import SearchSpacecraft from "@/components/search/SearchSpacecraft"
 import SearchCloud from "@/components/search/SearchCloud";
-
-
 
 export default {
   components: {
@@ -240,6 +144,8 @@ export default {
     AppInput,
     vuescroll,
     SearchDate,
+    SearchSpacecraft,
+    VueSlider
     SearchCloud,
     AppCheckbox
   },
@@ -362,50 +268,7 @@ export default {
 }
 
 
-.accordion {
-  padding: 10px;
-  box-shadow: $shadow-small;
-  border-radius: 10px;
-  overflow: hidden;
-  background: $gradient-w;
-  &-item {
-    position: relative;
-    p {
-      margin-left: 4px;
-      color: #000;
-      font-size: 0.875rem;
-    }
 
-    &__input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-
-      &:checked ~ .accordion-item__content {
-        display: inline-block;
-      }
-    }
-    &__trigger {
-      display: flex;
-      align-items: center;
-      padding: 6px 0 0 6px;
-    }
-    &__checkbox {
-      margin-right: 6px;
-    }
-    &__img {
-      background: url("@/assets/img/arrow-close.png");
-      height: 24px;
-      width: 24px;
-    }
-    &__content {
-      padding: 6px 0 0 24px;
-      border-top: none;
-      display: none;
-    }
-  }
-}
 
 
 .search {

@@ -12,7 +12,8 @@ export default {
       from: 0,
       to: 100
     },
-    spacecrafts: []
+    spacecrafts: setupSpacecrafts(),
+    spacecragtsSelected: []
   },
   getters: {
     getPolygonArea(state) {
@@ -45,7 +46,12 @@ export default {
     },
     getCloudiness(state) {
       return state.cloudiness;
-    }
+    },
+    // isSelected(state) {
+    //   return ({seriesInd, scInd}) => {
+    //     return state.spacecrafts[seriesInd].models[scInd].checked;
+    //   }
+    // }
   },
   mutations: {
     addСoordinate(state, coord) {
@@ -78,7 +84,28 @@ export default {
     },
     setSpacecrafts(state, newSpaceCrafts) {
       state.spacecrafts = newSpaceCrafts;
-    }
+    },
+    addSpacecraft(state, {seriesInd, scInd, pss, mss}) {
+      let spacecraft = {...state.spacecrafts[seriesInd].models[scInd]}
+      spacecraft.pss = pss;
+      spacecraft.mss = mss;
+      state.spacecragtsSelected.push(spacecraft);
+    },
+    // removeSpacecraft(state, {seriesInd, scInd, pss, mss} ){},
+    selectSeries(state, {seriesInd, val}) {
+      state.spacecrafts[seriesInd].checked = val;
+      state.spacecrafts[seriesInd].models.forEach(m => {
+          m.checked = val;
+          m.pss = val;
+          m.mss = val;
+      });
+    },
+    selectSpacecraft(state, {seriesInd, scInd, checked, pss, mss}) {
+      state.spacecrafts[seriesInd].models[scInd].pss = pss;
+      state.spacecrafts[seriesInd].models[scInd].mss = mss;
+      state.spacecrafts[seriesInd].models[scInd].checked = checked;
+    },
+    
   },
   actions: {
     addCoordinate(store, i) {
@@ -96,14 +123,82 @@ export default {
     clearCoordinates(store) {
       store.commit('clearCoordinates');
     },
-    setCloudiness(store, {from, to}) {
-      store.commit('setCloudiness', from, to);
+    setCloudiness(store, data) {
+      store.commit('setCloudiness', data);
     },
-    setTimeInterval(store, {from, to, months}) {
-      store.commit('setTimeInterval', {from, to, months});
+    setTimeInterval(store, data) {
+      store.commit('setTimeInterval', data);
     },
     setSpacecrafts(store, newSpaceCrafts) {
       store.commit('setSpacecrafts', newSpaceCrafts);
+    },
+    selectSpacecraft(store, data) {
+      store.commit('selectSpacecraft', data);
+    },
+    selectSeries(store, data) {
+      store.commit('selectSeries', data);
     }
   }
+}
+
+
+function setupSpacecrafts() {
+  return [
+    {
+      id: 0,
+      name: "Канопус В",
+      checked: false,
+      models: [
+        {
+          id: 0,
+          name: "Канопус В 1",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+        {
+          id: 1,
+          name: "Канопус В 2",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+        {
+          id: 2,
+          name: "Канопус В 3",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+      ]
+    },
+    {
+      id: 1,
+      name: "Ресурс П",
+      checked: false,
+      models: [
+        {
+          id: 0,
+          name: "Ресурс П 1",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+        {
+          id: 1,
+          name: "Ресурс П 2",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+        {
+          id: 2,
+          name: "Ресурс П 3",
+          checked: false,
+          mss: false,
+          pss: false
+        },
+      ]
+    }
+  ]
 }

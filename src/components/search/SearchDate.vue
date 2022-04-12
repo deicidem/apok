@@ -15,8 +15,10 @@
             valueType="format"
             @input="setTimeInterval({ from: $event, to, months })"
           >
-            <div class="datepicker__back"></div>
           </date-picker>
+          <div class="search-date__back">
+            <img src="@/assets/img/calendar.svg">
+          </div>
         </div>
 
         <div class="search-date__arrow">
@@ -31,7 +33,11 @@
             v-model="to"
             valueType="format"
             @input="setTimeInterval({ from, to: $event, months })"
-          ></date-picker>
+          >
+          </date-picker>
+           <div class="search-date__back">
+            <img src="@/assets/img/calendar.svg">
+          </div>
         </div>
       </div>
 
@@ -104,70 +110,53 @@ export default {
 </script>
 
 <style lang="scss">
-.mx {
-  .datepicker-label {
-    font-size: 14px;
-    margin-left: 4px;
+.multiselect{
+  color: $color-main-dark;
+  &__placeholder{
+    margin: 0;
   }
-  &-table {
-    padding: 6px;
-    .today {
-      color: #000;
-    }
-  }
-  &-btn {
-    color: #fff;
-    &:hover {
-      color: #fff;
-    }
-  }
-  &-input {
+}
+
+.vdp-datepicker {
+  input{
+    padding-right: 26px;
+    width: 130px;
+    height: 34px;
     border: 1px solid $color-main;
     border-radius: 10px;
-    box-shadow: $shadow-small;
-    overflow: hidden;
-    &:hover {
-      border: 1px solid $color-main-dark;
+    box-shadow: $shadow-big;
+    outline: none;
+    &:focus-visible{
+      border: 1px solid $color-main-dark; 
     }
   }
-  &-calendar {
-    padding: 0;
+  &__calendar{
+    border-radius: 10px;
     overflow: hidden;
-    height: auto;
-    &-content {
-      height: 100%;
-    }
-    &-header {
-      line-height: 26px;
+    box-shadow: $shadow-big;
+    header{
       box-shadow: $shadow-big;
-      background: $gradient;
-      overflow: hidden;
-      border-radius: 10px 10px 0 0;
-      padding: 4px;
+      span{
+        .prev{
+          &::after{
+            color: #000 !important;
+          }
+        }
+      }
+
     }
   }
-  &-datepicker {
-    width: 150px;
-    position: relative;
-    overflow: hidden;
-    &-main {
-      color: $color-main-dark;
-      font-family: "Montserrat";
-      border-radius: 10px;
-      border: none;
-    }
-    &-label {
-      font-size: 12px;
-    }
+}
+
+.cell{
+  color: $text-grey !important;
+  &:hover{
+    border: 1px solid $color-main;
   }
-  &-icon-calendar {
-    background: $gradient;
-    color: #fff;
-    padding: 8px;
-    right: 0px;
-    font-size: 18px;
-    border-radius: 0 10px 10px 0;
-  }
+}
+.selected{
+  background: $color-main !important;
+  color: #FFF  !important;
 }
 
 .search {
@@ -190,15 +179,24 @@ export default {
       display: flex;
       flex-direction: column;
       font-size: 12px;
+      position: relative;
+      outline: none;
     }
-
     &__arrow {
       max-height: 20px;
-      margin: 30px 20px 8px 20px;
+      margin: 24px 20px 8px 20px;
       img {
         width: 100%;
         height: 100%;
       }
+    }
+    &__back{
+      background: $gradient;
+      position: absolute;
+      right: 0;
+      top: 18px;
+      padding: 7px;
+      border-radius: 0 10px 10px 0;
     }
   }
 }

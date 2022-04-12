@@ -91,12 +91,6 @@
                   class="coordinates-wrapper__input"
                 ></app-input>
                 <div class="coordinates-wrapper__select">
-                  <Select2
-                    v-model="months"
-                    :options="myOptions"
-                    @change="myChangeEvent($event)"
-                    @select="mySelectEvent($event)"
-                  />
                 </div>
               </div>
 
@@ -116,22 +110,10 @@
 
         <search-date></search-date>
 
-          <div class="search-cloud">
-            <h2 class="search__title">Облачность</h2>
-            <div class="search-cloud__subtitle">
-              Процент облачности:
-              <p>{{ your_value[0] }}% - {{ your_value[1] }}%</p>
-            </div>
-
-            <!-- <no-ui-slider :config="your_config" :values="your_value" /> -->
-            <vue-slider v-model="your_value" :adsorb="true" :interval="10"></vue-slider>
-            <div class="search-cloud__wrapper">
-              <p>0%</p>
-              <p>100%</p>
-            </div>
-          </div>
+        <search-cloud></search-cloud>
 
           <search-spacecraft></search-spacecraft>
+
         </div>
       </div>
     </vuescroll>
@@ -149,23 +131,23 @@ import 'vue-slider-component/theme/default.css'
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 
-import Select2 from "v-select2-component";
 
 import AppInput from "@/components/controls/AppInput.vue";
 
 import SearchDate from "@/components/search/SearchDate";
 import SearchSpacecraft from "@/components/search/SearchSpacecraft"
+import SearchCloud from "@/components/search/SearchCloud";
 
 export default {
   components: {
     AppButton,
     AppInput,
     vuescroll,
-    Select2,
-    // NoUiSlider,
     SearchDate,
     SearchSpacecraft,
     VueSlider
+    SearchCloud,
+    AppCheckbox
   },
   data() {
     return {
@@ -173,16 +155,6 @@ export default {
       timeFrom: "",
       timeTo: "",
       months: [],
-      myOptions: ["май", "май", "май", "май", "май", "май"],
-      your_config: {
-        step: 10,
-        connect: true,
-        behaviour: "drag",
-        range: {
-          min: 0,
-          max: 100,
-        },
-      },
       ops: {
         vuescroll: {
           mode: "native",
@@ -211,7 +183,6 @@ export default {
         },
 
       },
-      your_value: [20, 80],
     };
   },
   computed: {
@@ -296,37 +267,6 @@ export default {
   }
 }
 
-.vue-nouislider {
-  background: #fff;
-  margin: 30px 0 0 0;
-  width: 450px;
-  height: 14px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: $shadow-big;
-}
-
-.noUi {
-  &-connect {
-    background: $color-main-dark;
-  }
-  &-horizontal &-handle {
-    width: 24px;
-    height: 24px;
-  }
-  &-handle {
-    border-radius: 6px;
-    background: $gradient;
-    border: none;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-    &::before {
-      background: none;
-    }
-    &::after {
-      background: none;
-    }
-  }
-}
 
 
 
@@ -519,34 +459,7 @@ export default {
       border-radius: 0 !important;
     }
   }
-  &-cloud {
-    &__subtitle {
-      display: flex;
-      font-size: 12px;
-      color: $text-grey;
-      margin-top: 10px;
-      p {
-        color: #000000;
-        margin-left: 8px;
-      }
-    }
-    &__wrapper {
-      width: 450px;
-      display: flex;
-      justify-content: space-between;
-      p {
-        margin: 10px 4px;
-        font-size: 12px;
-        color: #000;
-      }
-    }
-    margin-top: 20px;
-    padding: 20px;
-    box-shadow: $shadow-small;
-    border-radius: 10px;
-    overflow: hidden;
-    background: $gradient-w;
-  }
+
   &-spacecraft {
     margin-top: 20px;
     padding: 20px;

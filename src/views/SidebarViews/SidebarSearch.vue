@@ -112,7 +112,7 @@
 
         <search-cloud></search-cloud>
 
-          <search-spacecraft></search-spacecraft>
+        <search-spacecraft></search-spacecraft>
 
         </div>
       </div>
@@ -126,7 +126,6 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
-import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
@@ -145,9 +144,7 @@ export default {
     vuescroll,
     SearchDate,
     SearchSpacecraft,
-    VueSlider
     SearchCloud,
-    AppCheckbox
   },
   data() {
     return {

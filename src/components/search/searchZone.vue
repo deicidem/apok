@@ -85,7 +85,6 @@
           label="Радиус"
           class="coordinates-wrapper__input"
         ></app-input>
-
       </div>
 
       <app-button class="coordinates-wrapper__button"
@@ -109,19 +108,17 @@ import AppInput from "@/components/controls/AppInput.vue";
 export default {
   components: {
     AppInput,
-    AppButton
+    AppButton,
   },
   data() {
     return {
       searchZoneType: 1,
-    }
-  }
-}
-
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 .search-zone {
   padding: 20px;
   box-shadow: $shadow-small;
@@ -236,7 +233,7 @@ export default {
       }
     }
   }
-  &__coordinates{
+  &__coordinates {
     display: flex;
     padding: 10px;
     box-shadow: $shadow-big;
@@ -248,7 +245,7 @@ export default {
       margin: 20px 0;
       justify-content: space-between;
       align-items: flex-end;
-      &__input{
+      &__input {
         margin-right: 20px;
         width: 130px;
       }
@@ -257,7 +254,7 @@ export default {
       }
     }
   }
-  &__load{
+  &__load {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -292,5 +289,4 @@ export default {
     border-radius: 0 !important;
   }
 }
-
 </style>

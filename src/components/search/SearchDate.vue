@@ -48,16 +48,26 @@
         <label class="select2-label">Выбрать месяцы:</label>
         <div class="select">
           <div class="select-data" @click="selectActive = !selectActive">
-            <span v-for="month in months" :key="month.cnt">{{month.name}}, </span>
+            <span v-for="month in months" :key="month.cnt"
+              >{{ month.name }},
+            </span>
           </div>
           <div class="select-options" v-show="selectActive">
-            <label class="select-option" >
-                <app-checkbox :mini="true" :modelValue="allMonths" @change="onAllCheck($event)"></app-checkbox>
-                <span>Все</span>
+            <label class="select-option">
+              <app-checkbox
+                :mini="true"
+                :modelValue="allMonths"
+                @change="onAllCheck($event)"
+              ></app-checkbox>
+              <span>Все</span>
             </label>
-            <label class="select-option" v-for="(option, i) in monthsOptions" :key="i" >
-                <app-checkbox :mini="true" v-model="option.active"></app-checkbox>
-                <span>{{option.name}}</span>
+            <label
+              class="select-option"
+              v-for="(option, i) in monthsOptions"
+              :key="i"
+            >
+              <app-checkbox :mini="true" v-model="option.active"></app-checkbox>
+              <span>{{ option.name }}</span>
             </label>
           </div>
         </div>
@@ -99,7 +109,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     DatePicker,
-    AppCheckbox
+    AppCheckbox,
     // MultiSelect,
   },
   data() {
@@ -113,62 +123,62 @@ export default {
         {
           cnt: 1,
           name: "январь",
-          active: false
+          active: false,
         },
         {
           cnt: 2,
           name: "февраль",
-          active: false
+          active: false,
         },
         {
           cnt: 3,
           name: "март",
-          active: false
+          active: false,
         },
         {
           cnt: 4,
           name: "апрель",
-          active: false
+          active: false,
         },
         {
           cnt: 5,
           name: "май",
-          active: false
+          active: false,
         },
         {
           cnt: 6,
           name: "июнь",
-          active: false
+          active: false,
         },
         {
           cnt: 7,
           name: "июль",
-          active: false
+          active: false,
         },
         {
           cnt: 8,
           name: "август",
-          active: false
+          active: false,
         },
         {
           cnt: 9,
           name: "сентябрь",
-          active: false
+          active: false,
         },
         {
           cnt: 10,
           name: "октябрь",
-          active: false
+          active: false,
         },
         {
           cnt: 11,
           name: "ноябрь",
-          active: false
+          active: false,
         },
         {
           cnt: 12,
           name: "декабрь",
-          active: false
+          active: false,
         },
       ],
     };
@@ -178,33 +188,32 @@ export default {
     onAllCheck($event) {
       this.allMonths = $event;
       if ($event) {
-        this.monthsOptions.forEach(el => {
+        this.monthsOptions.forEach((el) => {
           el.active = true;
         });
       } else {
-        this.monthsOptions.forEach(el => {
+        this.monthsOptions.forEach((el) => {
           el.active = false;
         });
       }
-    }
+    },
   },
   computed: {
     ...mapGetters("search", ["getTimeInterval"]),
     months() {
       let res = [];
-      this.monthsOptions.forEach(el => {
+      this.monthsOptions.forEach((el) => {
         if (el.active) {
-          res.push({...el})
+          res.push({ ...el });
         }
       });
       return res;
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss">
-
 .select {
   position: relative;
   &-data {

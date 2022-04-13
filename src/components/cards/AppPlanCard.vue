@@ -54,6 +54,11 @@ export default {
     overflow: hidden;
     align-items: stretch;
     background: #fff;
+    &__img{
+      img{
+        height: 100%;
+      }
+    }
     &__info {
       padding: 10px 20px 10px 20px;
       h2 {

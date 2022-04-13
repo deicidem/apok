@@ -3,7 +3,7 @@
     <div class="plan-wrapper__header">
       <div class="back">
         <div class="back-arrow">
-          <img src="@/assets/img/arrow.png" />
+          <img src="@/assets/img/arrow.svg" />
         </div>
         <p class="back-subtitle">Назад</p>
       </div>
@@ -16,23 +16,62 @@
     </div>
 
     <div class="plan-wrapper">
-
       <div class="plan-wrapper__cards">
         <div class="plan-wrapper__card">
           <div class="plan-wrapper__title">Описание</div>
-          <p class="plan-wrapper__text">Построение карты температур по тепловым каналам КА Landsat-8 производится с целью вычисления значений температур поверхности в градусах Цельсия, выявления тепловых аномалий. Для определения температуры поверхности производятся вычисления спектральной интенсивности излучения, поверхностной яркостной температуры, спектрального коэффициента излучения, значений температур поверхности в градусах Цельсия. Результатом обработки является векторная карта температур и отчетная форма с информацией об используемом изображении. Для более наглядного представления результата используется универсальная температурная шкала [-100; +100]. Красным отображаются области высоких температур (очаги пожаров), синим – области низких температур. </p>
-          </div>
+          <p class="plan-wrapper__text">
+            Построение карты температур по тепловым каналам КА Landsat-8
+            производится с целью вычисления значений температур поверхности в
+            градусах Цельсия, выявления тепловых аномалий. Для определения
+            температуры поверхности производятся вычисления спектральной
+            интенсивности излучения, поверхностной яркостной температуры,
+            спектрального коэффициента излучения, значений температур
+            поверхности в градусах Цельсия. Результатом обработки является
+            векторная карта температур и отчетная форма с информацией об
+            используемом изображении. Для более наглядного представления
+            результата используется универсальная температурная шкала [-100;
+            +100]. Красным отображаются области высоких температур (очаги
+            пожаров), синим – области низких температур.
+          </p>
+        </div>
         <div class="plan-wrapper__card">
           <div class="plan-wrapper__title">Требования к данным</div>
+          <div class="plan-table">
+            <div class="plan-table__item">
+              <div class="plan-table__img">
+                <img src="@/assets/img/plan__data.svg" />
+              </div>
+              <p class="plan-table__subtitle">Данные:</p>
+              <p class="plan-table__text">
+                мультиспектральные оптические материалы с космического аппарата
+                (КА) Landsat 8.
+              </p>
+            </div>
+            <div class="plan-table__line"></div>
+            <div class="plan-table__item">
+              <div class="plan-table__img">
+                <img src="@/assets/img/plan__season.svg" />
+              </div>
+              <p class="plan-table__subtitle">Сезон съемки:</p>
+              <p class="plan-table__text">с мая по сентябрь включительно.</p>
+            </div>
+            <div class="plan-table__line"></div>
+            <div class="plan-table__item">
+              <div class="plan-table__img">
+                <img src="@/assets/img/plan__cloud.svg" />
+              </div>
+              <p class="plan-table__subtitle">Облачность:</p>
+              <p class="plan-table__text">не более 20%.</p>
+            </div>
+            <div class="plan-table__line"></div>
+          </div>
         </div>
       </div>
 
       <div class="plan-wrapper__img">
-        <img src="@/assets/img/img.jpg">
+        <img src="@/assets/img/img.jpg" />
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -52,7 +91,9 @@ export default {
 
 <style lang="scss" scoped>
 .plan {
+  max-width: 1600px;
   padding: 30px;
+  margin: 0 auto;
   box-shadow: $shadow-small;
   border-radius: 10px;
   overflow: hidden;
@@ -85,31 +126,57 @@ export default {
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
-      background: #FFF;
+      background: #fff;
     }
-    &__title{
+    &__title {
       font-size: 1.25rem;
       color: #000;
     }
-    &__text{
+    &__text {
       margin-top: 20px;
       color: #000;
     }
-    &__img{
+    &__img {
       border-radius: 15px;
       overflow: hidden;
       box-shadow: $shadow-big;
       margin-left: 30px;
     }
+    .plan-table {
+      margin-top: 20px;
+      &__item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin: 6px 0;
+      }
+      &__line {
+        border-top: 1px solid #ebf0f0;
+        width: 100%;
+      }
+      &__img {
+        margin-right: 6px;
+      }
+      &__subtitle {
+        font-size: 18px;
+        color: $color-main-dark;
+      }
+      &__text {
+        font-size: 14px;
+        position: absolute;
+        left: 180px;
+      }
+    }
   }
 }
-
+img {
+  height: 100%;
+}
 .back {
   display: flex;
   align-items: center;
   &-arrow {
     width: 40px;
-    transform: scale(-1, 1);
   }
   p {
     margin-left: 10px;

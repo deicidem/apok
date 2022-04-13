@@ -32,7 +32,8 @@
         <table>
           <thead>
             <tr>
-              <th class="col"><input type="checkbox" /></th>
+              <!-- <th class="col"><input type="checkbox" /></th> -->
+              <th>Номер</th>
               <th>Широта</th>
               <th>Долгота</th>
               <th class="col"></th>
@@ -40,7 +41,8 @@
           </thead>
           <tbody>
             <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-              <td class="col"><input type="checkbox" /></td>
+              <!-- <td class="col"><input type="checkbox" /></td> -->
+              <td>{{ i+1 }}</td>
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate(i)">

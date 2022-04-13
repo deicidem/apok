@@ -351,6 +351,7 @@ export default {
     &__arrow {
       max-height: 20px;
       margin: 24px 20px 8px 20px;
+      transform: rotate(180deg);
       img {
         width: 100%;
         height: 100%;

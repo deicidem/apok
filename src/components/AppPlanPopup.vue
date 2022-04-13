@@ -1,0 +1,228 @@
+<template>
+  <div class="plan-popup">
+    <div class="popup-card">
+      <div class="popup-card__header">
+        <div class="back">
+          <div class="back-arrow">
+            <img src="@/assets/img/arrow.svg" />
+          </div>
+          <p class="back-subtitle">Назад</p>
+        </div>
+
+        <h2 class="popup-card__title">Запланировать задачу</h2>
+      </div>
+      <div class="popup-card__subtitle">Формирование температурных карт</div>
+
+      <div class="popup-card__wrapper">
+        <div class="popup-card__item">
+          <div class="popup-card__loading">
+            <div class="popup-card__buttons">
+              <app-button>Загрузить файл</app-button>
+              <p>POLYGON.shp</p>
+            </div>
+            <div class="popup-card__line"></div>
+            <div class="popup-card__link">
+              <div class="card-link">
+                <p>ftp://uic@imccloud.novacenter.ru:2021/Work_id_453</p>
+                <div class="card-link__img">
+                  <img src="@/assets/img/link.svg" />
+                </div>
+              </div>
+              <p class="popup-card__text">
+                Вы можете использовать удобный вам менеджер файлов для загрузки.
+              </p>
+            </div>
+          </div>
+          <app-button class="popup-card__button">Начать</app-button>
+        </div>
+
+        <div class="popup-card__info">
+          <div class="info-title">
+            Описание директорий, автоматически создаваемых программой
+          </div>
+          <div class="info-table">
+            <div class="info-table__item">
+              <p class="info-table__title">Корневой каталог</p>
+              <div class="info-table__wrapper">
+                <div class="info-table__vertical"></div>
+                <p class="info-table__text">
+                  Необходимо загрузить исходные материалы, полученные с КА
+                  Landsat-8: каналы B1- B7 и B10,B11, и паспорт снимка в формате
+                  TXT.
+                </p>
+              </div>
+            </div>
+            <div class="popup-card__line"></div>
+            <div class="info-table__item">
+              <p class="info-table__title">«shp»</p>
+              <div class="info-table__wrapper">
+                <div class="info-table__vertical"></div>
+                <p class="info-table__text">
+                  Используется для автомотического сохранения результатов в
+                  векторном формате SHP. Изначально пустая
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import AppButton from "@/components/controls/AppButton.vue";
+export default {
+  components: {
+    AppButton,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.plan-popup {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(#000, 0.5);
+  z-index: 100;
+  .popup-card {
+    padding: 20px;
+    position: absolute;
+    box-shadow: $shadow-small;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $gradient-w;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &__header {
+      position: relative;
+    }
+    &__title {
+      font-size: 22px;
+      text-align: center;
+      color: $text-grey;
+    }
+    &__subtitle {
+      font-size: 20px;
+      text-align: center;
+      color: $text-grey;
+    }
+    &__wrapper {
+      display: flex;
+      margin-top: 20px;
+    }
+    &__item {
+    }
+    &__loading {
+      width: 500px;
+      padding: 20px;
+      box-shadow: $shadow-small;
+      border-radius: 10px;
+      overflow: hidden;
+      background: $gradient-w;
+    }
+    &__buttons {
+      display: flex;
+      align-items: center;
+      p {
+        color: $text-grey;
+        font-size: 12px;
+        margin-left: 40px;
+      }
+    }
+    &__button {
+      margin-top: 20px;
+      float: right;
+    }
+    &__info {
+      width: 700px;
+      padding: 20px;
+      box-shadow: $shadow-small;
+      border-radius: 10px;
+      overflow: hidden;
+      background: $gradient-w;
+    }
+    &__line {
+      margin: 10px 0;
+      border-top: 1px solid #ebf0f0;
+      width: 100%;
+    }
+    &__text {
+      color: $text-grey;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    &__link {
+    }
+    .card-link {
+      display: flex;
+      text-align: center;
+      justify-content: space-between;
+      p {
+        font-size: 12px;
+        line-height: 26px;
+        color: $color-main-dark;
+      }
+      &__img {
+        background: $gradient-w;
+        padding: 6px;
+        box-shadow: $shadow-small;
+        border-radius: 10px;
+      }
+    }
+    &__info {
+      margin-left: 20px;
+      .info {
+        &-title {
+          color: $text-grey;
+          text-align: center;
+        }
+        &-table {
+          &__item {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-top: 20px;
+          }
+          &__title {
+            color: $color-main-dark;
+            margin-right: 10px;
+            width: 160px;
+          }
+          &__wrapper {
+            display: flex;
+          }
+          &__vertical {
+            border-left: 1px solid #ebf0f0;
+            height: 100%;
+            margin-right: 10px;
+          }
+          &__text {
+            font-size: 12px;
+            max-width: 460px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  &-arrow {
+    width: 40px;
+  }
+  p {
+    margin-left: 10px;
+    color: $text-grey;
+  }
+}
+</style>

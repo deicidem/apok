@@ -24,7 +24,7 @@
         </div>
 
         <div class="search-date__arrow">
-          <img src="@/assets/img/arrow.png" />
+          <img src="@/assets/img/arrow.svg" />
         </div>
 
         <div class="search-date__input">
@@ -45,7 +45,7 @@
       </div>
 
       <div>
-        <label class="select2-label">Выбрать месяцы:</label>
+        <label class="select-label">Выбрать месяцы:</label>
         <div class="select" v-on-clickaway="away">
           <div class="select-data" @click="selectActive = !selectActive">
             <span v-for="month in months" :key="month.cnt"
@@ -222,6 +222,9 @@ export default {
 <style lang="scss">
 .select {
   position: relative;
+  &-label{
+    font-size: 12px;
+  }
   &-data {
     background: #fff;
     box-shadow: $shadow-big;

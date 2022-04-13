@@ -1,5 +1,6 @@
 <template>
   <div class="plan-item">
+    <app-plan-popup></app-plan-popup>
     <div class="plan-item__img">
       <img :src="itemImage" />
     </div>
@@ -23,10 +24,12 @@
 
 <script>
 import AppButton from "@/components/controls/AppButton";
+import AppPlanPopup from "@/components/AppPlanPopup";
 
 export default {
   components: {
     AppButton,
+    AppPlanPopup
   },
   props: {
     img: String,

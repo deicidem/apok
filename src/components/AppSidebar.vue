@@ -137,7 +137,7 @@ export default {
   display: block;
   position: absolute;
   left: 50px;
-  z-index: 5;
+  z-index: 11;
   height: 100%;
   width: calc(100% - 50px);
   box-shadow: none;

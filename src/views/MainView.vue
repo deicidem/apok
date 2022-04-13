@@ -73,8 +73,8 @@ export default {
 .sidebar-block {
   position: relative;
   height: 100%;
-  z-index: 5;
   max-width: 800px;
+  z-index: 11;
   &.collapsed {
     max-width: 50px;
   }

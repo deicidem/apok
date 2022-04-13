@@ -14,15 +14,15 @@
     <nav class="search-zone__nav">
       <ul>
         <li>
-          <button @click="searchZoneType = 1">Задать полигон</button>
+          <button @click="searchZoneType = 1" :class="searchZoneType == 1 ? 'active' : ''">Задать полигон</button>
         </li>
         <li class="line"></li>
         <li>
-          <button @click="searchZoneType = 2">Вывести координаты</button>
+          <button @click="searchZoneType = 2" :class="searchZoneType == 2 ? 'active' : ''">Круглая зона</button>
         </li>
         <li class="line"></li>
         <li>
-          <button @click="searchZoneType = 3">Загрузить файл</button>
+          <button @click="searchZoneType = 3" :class="searchZoneType == 3 ? 'active' : ''">Загрузить файл</button>
         </li>
       </ul>
     </nav>
@@ -59,6 +59,11 @@
           @click="setPolygonDrawable(true)"
           >Использовать карту</app-button
         >
+        <!-- <app-button
+          class="search-zone__button"
+          @click="setPolygonDrawable(false)"
+          >Сохранить полигон</app-button
+        > -->
         <app-button class="search-zone__button" type="white-g"
           >Прописать координаты</app-button
         >
@@ -74,15 +79,15 @@
     <div class="search-zone__coordinates" v-show="searchZoneType == 2">
       <div class="coordinates-wrapper">
         <app-input
-          label="Ширина"
+          label="Широта"
           class="coordinates-wrapper__input"
         ></app-input>
         <app-input
-          label="Искать с"
+          label="Долгота"
           class="coordinates-wrapper__input"
         ></app-input>
         <app-input
-          label="Радиус"
+          label="Радиус (км)"
           class="coordinates-wrapper__input"
         ></app-input>
       </div>
@@ -103,6 +108,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 export default {
@@ -114,6 +120,32 @@ export default {
     return {
       searchZoneType: 1,
     };
+  },
+  computed: {
+    ...mapGetters("map", [
+      "getPolygonArea",
+      "getDrawable", 
+      "getFormattedCoordinates",
+      ]),
+    ...mapGetters("search", [
+      "getTimeInterval",
+      "getSpacecrafts",
+      "getCloudiness"
+    ])
+  },
+  methods: {
+    ...mapActions("map", [
+      "addCoordinate",
+      "changeCoordinate",
+      "deleteCoordinate",
+      "setPolygonDrawable",
+      "clearCoordinates",
+    ]),
+    ...mapActions("search", [
+      "setTimeInterval",
+      "setSpacecrafts",
+      "setCloudiness"
+    ])
   },
 };
 </script>
@@ -165,7 +197,7 @@ export default {
         &:hover {
           color: $color-main;
         }
-        &:active {
+        &.active {
           color: $color-main;
         }
       }

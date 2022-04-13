@@ -46,7 +46,7 @@
 
       <div>
         <label class="select2-label">Выбрать месяцы:</label>
-        <div class="select">
+        <div class="select" v-on-clickaway="away">
           <div class="select-data" @click="selectActive = !selectActive">
             <span v-for="month in months" :key="month.cnt"
               >{{ month.name }},
@@ -99,6 +99,7 @@
 </template>
 
 <script>
+import {mixin as clickaway} from "vue-clickaway";
 import DatePicker from "vuejs-datepicker";
 import { ru } from "vuejs-datepicker/dist/locale";
 // import MultiSelect from "vue-multiselect";
@@ -107,6 +108,7 @@ import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  mixins: [clickaway],
   components: {
     DatePicker,
     AppCheckbox,
@@ -196,7 +198,11 @@ export default {
           el.active = false;
         });
       }
+      this.setTimeInterval({from: this.from, to: this.to, months: this.months})
     },
+    away() {
+      this.selectActive = false;
+    }
   },
   computed: {
     ...mapGetters("search", ["getTimeInterval"]),

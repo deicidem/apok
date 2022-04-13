@@ -3,19 +3,12 @@
     <h2 class="sidebar-title">Поиск снимков</h2>
     <vuescroll :ops="ops">
       <div class="search-wrapper">
-
         <div class="search-content">
-
           <search-zone></search-zone>
-
           <search-date></search-date>
-
           <search-cloud></search-cloud>
-
-        <search-spacecraft></search-spacecraft>
-
+          <search-spacecraft></search-spacecraft>
         </div>
-
       </div>
     </vuescroll>
   </div>
@@ -25,10 +18,9 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
-import 'vue-slider-component/theme/default.css'
-import { mapGetters, mapActions } from "vuex";
+import "vue-slider-component/theme/default.css";
 import SearchDate from "@/components/search/SearchDate";
-import SearchSpacecraft from "@/components/search/SearchSpacecraft"
+import SearchSpacecraft from "@/components/search/SearchSpacecraft";
 import SearchCloud from "@/components/search/SearchCloud";
 import SearchZone from "@/components/search/SearchZone";
 
@@ -38,24 +30,21 @@ export default {
     SearchDate,
     SearchSpacecraft,
     SearchCloud,
-    SearchZone
+    SearchZone,
   },
   data() {
     return {
-      timeFrom: "",
-      timeTo: "",
-      months: [],
       ops: {
         vuescroll: {
           mode: "native",
           sizeStrategy: "percent",
           detectResize: true,
-          wheelScrollDuration: 500
+          wheelScrollDuration: 500,
         },
         scrollPanel: {
           scrollingX: false,
           speed: 300,
-          easing: 'easeOutQuad',
+          easing: "easeOutQuad",
         },
         rail: {
           background: "#000",
@@ -71,34 +60,8 @@ export default {
           keepShow: true,
           background: "#476D70",
         },
-
       },
     };
-  },
-  computed: {
-    ...mapGetters("map", [
-      "getPolygonArea", 
-      "getFormattedCoordinates",
-      ]),
-    ...mapGetters("search", [
-      "getTimeInterval",
-      "getSpacecrafts",
-      "getCloudiness"
-    ])
-  },
-  methods: {
-    ...mapActions("map", [
-      "addCoordinate",
-      "changeCoordinate",
-      "deleteCoordinate",
-      "setPolygonDrawable",
-      "clearCoordinates",
-    ]),
-    ...mapActions("search", [
-      "setTimeInterval",
-      "setSpacecrafts",
-      "setCloudiness"
-    ])
   },
 };
 </script>

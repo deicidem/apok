@@ -1,5 +1,7 @@
 <template>
   <l-map
+    @update:zoom="setZoom($event)"
+    @update:center="setCenter($event)"
     @click="onClick($event)"
     style="height: 100%"
     :zoom="zoom"
@@ -69,25 +71,21 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      zoom: 15,
-      center: [51.505, -0.159],
-      showParagraph: false,
     };
   },
   computed: {
     ...mapGetters("map", {
       polygon: "getPolygonArea",
       drawable: "getDrawable",
+      center: "getCenter",
+      zoom: "getZoom"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
     },
   },
   methods: {
-    ...mapActions("map", {
-      addCoordinate: "addCoordinate",
-      changeCoordinate: "changeCoordinate",
-    }),
+    ...mapActions("map", ['addCoordinate', 'setCoordiante', 'setCenter', 'setZoom']),
     // Добавление маркеров
     onClick($event) {
       console.log($event);

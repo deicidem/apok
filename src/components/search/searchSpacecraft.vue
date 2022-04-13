@@ -157,7 +157,7 @@ export default {
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
-      background: $gradient-w;
+      background: #fff;
       &-item {
         position: relative;
         p {

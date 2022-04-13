@@ -73,7 +73,7 @@ export default {
   position: relative;
   height: 100%;
   z-index: 5;
-  max-width: 40%;
+  max-width: 760px;
   &.collapsed {
     max-width: 50px;
   }

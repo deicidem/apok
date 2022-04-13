@@ -2,7 +2,9 @@ export default {
   namespaced: true,
   state: {
     areaPolygon: [],
-    polygonDrawable: false
+    polygonDrawable: false,
+    zoom: 15,
+    center: [51.505, -0.159],
   },
   getters: {
     getPolygonArea(state) {
@@ -26,6 +28,12 @@ export default {
     },
     getDrawable(state) {
       return state.polygonDrawable;
+    },
+    getZoom(state) {
+      return state.zoom;
+    },
+    getCenter(state) {
+      return state.center;
     }
   },
   mutations: {
@@ -45,6 +53,12 @@ export default {
     },
     clearCoordinates(state) {
       state.areaPolygon = [];
+    },
+    setZoom(state, value) {
+      state.zoom = value;
+    },
+    setCenter(state, value) {
+      state.center = value;
     }
   },
   actions: {
@@ -62,6 +76,12 @@ export default {
     },
     clearCoordinates(store) {
       store.commit('clearCoordinates');
+    },
+    setZoom(store, value) {
+      store.commit('setZoom', value);
+    },
+    setCenter(store, value) {
+      store.commit('setCenter', value);
     }
   }
 }

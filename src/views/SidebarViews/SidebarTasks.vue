@@ -64,7 +64,7 @@ export default {
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    margin: 30px;
+    margin: 20px;
     &-table {
       height: inherit;
       overflow-x: auto;

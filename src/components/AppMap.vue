@@ -10,7 +10,7 @@
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker
       data-number="id"
-      :draggable="true"
+      :draggable="drawable"
       @dragend="handleMarkerDragEnd($event, id)"
       v-for="(marker, id) in polygon"
       :key="id"
@@ -22,7 +22,7 @@
       </l-icon>
     </l-marker>
     <l-polygon :fill="true" :lat-lngs="polygon" color="#476D70"></l-polygon>
-    <!-- <l-geo-json :geojson="geojson"></l-geo-json> -->
+    <l-geo-json :geojson="circle"></l-geo-json>
   </l-map>
 </template>
 
@@ -38,7 +38,7 @@ import {
   LPolygon,
   LIcon,
   // LTooltip
-  // LGeoJson,
+  LGeoJson,
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -64,7 +64,7 @@ export default {
     // LTooltip,
     // LPopup,
     LPolygon,
-    // LGeoJson,
+    LGeoJson,
   },
   data() {
     return {
@@ -78,14 +78,15 @@ export default {
       polygon: "getPolygonArea",
       drawable: "getDrawable",
       center: "getCenter",
-      zoom: "getZoom"
+      zoom: "getZoom",
+      circle: "getCirclePolygon"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
     },
   },
   methods: {
-    ...mapActions("map", ['addCoordinate', 'setCoordiante', 'setCenter', 'setZoom']),
+    ...mapActions("map", ['addCoordinate', 'changeCoordinate', 'setCenter', 'setZoom']),
     // Добавление маркеров
     onClick($event) {
       console.log($event);

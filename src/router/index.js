@@ -15,6 +15,10 @@ const routes = [
     component: () => import('../views/MainView.vue'),
     children: [
       {
+        path: '',
+        component: () => import('../views/SidebarViews/SidebarTasks')
+      },
+      {
         path: 'tasks',
         component: () => import('../views/SidebarViews/SidebarTasks')
       },

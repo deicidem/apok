@@ -27,7 +27,7 @@
       </ul>
     </nav>
 
-    <div class="search-zone__main" v-show="searchZoneType == 1">
+    <div class="search-zone__card search-zone__main" v-show="searchZoneType == 1">
       <div class="search-zone__table">
         <table>
           <thead>
@@ -55,16 +55,19 @@
 
       <div class="search-zone__buttons">
         <app-button
+          v-if="!getDrawable"
           class="search-zone__button"
           @click="setPolygonDrawable(true)"
           >Использовать карту</app-button
         >
-        <!-- <app-button
+        <app-button
+          v-else
           class="search-zone__button"
+          type="white"
           @click="setPolygonDrawable(false)"
           >Сохранить полигон</app-button
-        > -->
-        <app-button class="search-zone__button" type="white-g"
+        >
+        <app-button class="search-zone__button" type="white"
           >Прописать координаты</app-button
         >
         <app-button
@@ -76,28 +79,31 @@
       </div>
     </div>
 
-    <div class="search-zone__coordinates" v-show="searchZoneType == 2">
+    <div class="search-zone__card search-zone__coordinates" v-show="searchZoneType == 2">
       <div class="coordinates-wrapper">
         <app-input
+          v-model="lat"
           label="Широта"
           class="coordinates-wrapper__input"
         ></app-input>
         <app-input
+          v-model="lng"
           label="Долгота"
           class="coordinates-wrapper__input"
         ></app-input>
         <app-input
+          v-model="rad"
           label="Радиус (км)"
           class="coordinates-wrapper__input"
         ></app-input>
       </div>
 
-      <app-button class="coordinates-wrapper__button"
+      <app-button @click="createCircle" class="coordinates-wrapper__button"
         >Загрузить на карту</app-button
       >
     </div>
 
-    <div class="search-zone__load" v-show="searchZoneType == 3">
+    <div class="search-zone__card search-zone__load" v-show="searchZoneType == 3">
       <div class="load-wrapper">
         <app-button type="white-g">Загрузить файл</app-button>
         <span class="load-wrapper__name">POLYGON.shp</span>
@@ -111,6 +117,7 @@
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+const circleToPolygon = require("circle-to-polygon");
 export default {
   components: {
     AppInput,
@@ -118,6 +125,9 @@ export default {
   },
   data() {
     return {
+      lng: '',
+      lat: '',
+      rad: '',
       searchZoneType: 1,
     };
   },
@@ -127,11 +137,6 @@ export default {
       "getDrawable", 
       "getFormattedCoordinates",
       ]),
-    ...mapGetters("search", [
-      "getTimeInterval",
-      "getSpacecrafts",
-      "getCloudiness"
-    ])
   },
   methods: {
     ...mapActions("map", [
@@ -140,12 +145,12 @@ export default {
       "deleteCoordinate",
       "setPolygonDrawable",
       "clearCoordinates",
+      "setCirclePolygon"
     ]),
-    ...mapActions("search", [
-      "setTimeInterval",
-      "setSpacecrafts",
-      "setCloudiness"
-    ])
+    createCircle() {
+      let polygon = circleToPolygon([+this.lng, +this.lat], +this.rad * 1000);
+      this.setCirclePolygon(polygon);
+    }
   },
 };
 </script>
@@ -155,7 +160,6 @@ export default {
   padding: 20px;
   box-shadow: $shadow-small;
   border-radius: 10px;
-  overflow: hidden;
   background: $gradient-w;
   &__input {
     margin-top: 10px;
@@ -207,23 +211,37 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 10px;
+    padding: 15px;
+    box-shadow: $shadow-big;
+    border-radius: 10px;
+    background: #fff;
+  }
+  &__card {
+    padding: 20px;
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
   }
   &__table {
+    flex: 1;
     table {
       width: 100%;
       border-collapse: collapse;
+      thead {
+        border-bottom: 1px solid rgba(71, 109, 112, 0.3);
+      }
       tr {
         border-bottom: 1px solid rgba(71, 109, 112, 0.3);
+        &:last-child {
+          border-bottom: none;
+        }
         th {
+          width: 110px;
           text-align: left;
           border: none;
           font-size: 12px;
           color: #000000;
-          padding: 6px;
+          padding: 0 6px 6px;
           box-sizing: border-box;
           input {
             width: 20px;
@@ -234,7 +252,6 @@ export default {
           }
         }
         td {
-          max-width: 110px;
           text-align: left;
           border: none;
           font-size: 12px;
@@ -267,14 +284,9 @@ export default {
   }
   &__coordinates {
     display: flex;
-    padding: 10px;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    background: #fff;
     flex-direction: column;
     .coordinates-wrapper {
       display: flex;
-      margin: 20px 0;
       justify-content: space-between;
       align-items: flex-end;
       &__input {
@@ -282,6 +294,7 @@ export default {
         width: 130px;
       }
       &__button {
+        margin-top: 20px;
         margin-left: auto;
       }
     }
@@ -290,10 +303,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    background: #fff;
     .load-wrapper {
       &__name {
         font-size: 12px;
@@ -305,10 +314,10 @@ export default {
   &__buttons {
     display: flex;
     flex-direction: column;
-    margin: 30px 20px 0 20px;
+    margin: 30px 0 0 20px;
   }
   &__button {
-    margin: 10px;
+    margin: 10px 0;
     height: 40px;
   }
   &__edit__input {

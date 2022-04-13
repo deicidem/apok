@@ -2,15 +2,27 @@
   <button class="button" @click="$emit('click')" :class="type">
     <span class="button-content">
       <slot></slot>
+      <img  v-show="icon != undefined" :src="image"  alt="" />
     </span>
   </button>
 </template>
 
 <script>
 export default {
+  
   props: {
     type: String,
     textGradient: String,
+    icon: String,
+  },
+  computed: {
+    image() {
+      if (this.icon != undefined) {
+        const icon = this.icon.toLowerCase();
+        return require(`@/assets/img/${icon}`);
+      }
+      return "";
+    },
   },
 };
 </script>

@@ -2,31 +2,29 @@
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <div class="tasks__wrapper">
-      <div class="tasks__wrapper-table">
-        <app-table>
-          <thead>
-            <tr>
-              <th class="col-checkbox center ">
-                <app-checkbox class="checkbox-big" @input="onCheck($event)"/>
-              </th>
-              <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
-            </tr>
-          </thead>
+      <app-table>
+        <thead>
+          <tr>
+            <th class="col-checkbox center ">
+              <app-checkbox class="checkbox-big" @input="onCheck($event)"/>
+            </th>
+            <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            <tr v-for="item in tasks" :key="item.id">
-              <td class="col-checkbox center">
-                <app-checkbox :mini="true" @input="onCheck($event)"/>
-              </td>
-              <td class="col-id center">{{ item.id }}</td>
-              <td>{{ item.title }}</td>
-              <td>{{ item.date }}</td>
-              <td class="green">{{ item.status }}</td>
-              <td class="green">{{ item.result }}</td>
-            </tr>
-          </tbody>
-        </app-table>
-      </div>
+        <tbody>
+          <tr v-for="item in tasks" :key="item.id">
+            <td class="col-checkbox center">
+              <app-checkbox :mini="true" @input="onCheck($event)"/>
+            </td>
+            <td class="col-id center">{{ item.id }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.date }}</td>
+            <td class="green">{{ item.status }}</td>
+            <td class="green">{{ item.result }}</td>
+          </tr>
+        </tbody>
+      </app-table>
     </div>
   </div>
 </template>

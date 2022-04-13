@@ -13,7 +13,8 @@ export default {
       to: 100
     },
     spacecrafts: setupSpacecrafts(),
-    spacecragtsSelected: []
+    spacecragtsSelected: [],
+    results: setupResults()
   },
   getters: {
     getPolygonArea(state) {
@@ -52,6 +53,9 @@ export default {
     //     return state.spacecrafts[seriesInd].models[scInd].checked;
     //   }
     // }
+    getResults(state) {
+      return state.results;
+    }
   },
   mutations: {
     addСoordinate(state, coord) {
@@ -71,11 +75,18 @@ export default {
     clearCoordinates(state) {
       state.areaPolygon = [];
     },
-    setCloudiness(state, {from, to}) {
+    setCloudiness(state, {
+      from,
+      to
+    }) {
       state.cloudiness.from = from;
       state.cloudiness.to = to;
     },
-    setTimeInterval(state, {from, to, months}) {
+    setTimeInterval(state, {
+      from,
+      to,
+      months
+    }) {
       console.log(from, to, months);
 
       state.timeInterval.from = from;
@@ -85,34 +96,52 @@ export default {
     setSpacecrafts(state, newSpaceCrafts) {
       state.spacecrafts = newSpaceCrafts;
     },
-    addSpacecraft(state, {seriesInd, scInd, pss, mss}) {
-      let spacecraft = {...state.spacecrafts[seriesInd].models[scInd]}
+    addSpacecraft(state, {
+      seriesInd,
+      scInd,
+      pss,
+      mss
+    }) {
+      let spacecraft = {
+        ...state.spacecrafts[seriesInd].models[scInd]
+      }
       spacecraft.pss = pss;
       spacecraft.mss = mss;
       state.spacecragtsSelected.push(spacecraft);
     },
     // removeSpacecraft(state, {seriesInd, scInd, pss, mss} ){},
-    selectSeries(state, {seriesInd, val}) {
+    selectSeries(state, {
+      seriesInd,
+      val
+    }) {
       state.spacecrafts[seriesInd].checked = val;
       state.spacecrafts[seriesInd].models.forEach(m => {
-          m.checked = val;
-          m.pss = val;
-          m.mss = val;
+        m.checked = val;
+        m.pss = val;
+        m.mss = val;
       });
     },
-    selectSpacecraft(state, {seriesInd, scInd, checked, pss, mss}) {
+    selectSpacecraft(state, {
+      seriesInd,
+      scInd,
+      checked,
+      pss,
+      mss
+    }) {
       state.spacecrafts[seriesInd].models[scInd].pss = pss;
       state.spacecrafts[seriesInd].models[scInd].mss = mss;
       state.spacecrafts[seriesInd].models[scInd].checked = checked;
     },
-    
+
   },
   actions: {
     addCoordinate(store, i) {
       store.commit('addСoordinate', i)
     },
     changeCoordinate(store, data) {
-      store.commit('changeCoordinate', {...data})
+      store.commit('changeCoordinate', {
+        ...data
+      })
     },
     deleteCoordinate(store, i) {
       store.commit('deleteCoordinate', i);
@@ -143,13 +172,11 @@ export default {
 
 
 function setupSpacecrafts() {
-  return [
-    {
+  return [{
       id: 0,
       name: "Канопус В",
       checked: false,
-      models: [
-        {
+      models: [{
           id: 0,
           name: "Канопус В 1",
           checked: false,
@@ -176,8 +203,7 @@ function setupSpacecrafts() {
       id: 1,
       name: "Ресурс П",
       checked: false,
-      models: [
-        {
+      models: [{
           id: 0,
           name: "Ресурс П 1",
           checked: false,
@@ -201,4 +227,139 @@ function setupSpacecrafts() {
       ]
     }
   ]
+}
+
+function setupResults() {
+  return [{
+    id: 0,
+    idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+    round: "23121",
+    route: "1",
+    scName: "Канопус-В-3",
+    date: "04.04.2022",
+    cloudiness: "80%",
+    GeoJSON: {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    36.95827938552311,
+                    45.66351373527003
+                ],
+                [
+                    36.382933900683454,
+                    43.95279779154811
+                ],
+                [
+                    38.62953946820189,
+                    43.539726516356005
+                ],
+                [
+                    39.27154542776307,
+                    45.246411064541334
+                ],
+                [
+                    36.95827938552311,
+                    45.66351373527003
+                ]
+            ]
+        ]
+    },
+    },
+    bounds: [
+      [43.539726516356005, 36.382933900683454],
+      [45.66351373527003,  39.27154542776307],
+    ],
+    img: "img.jpg"
+  }, {
+    id: 1,
+    idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+    round: "23121",
+    route: "1",
+    scName: "Канопус-В-3",
+    date: "04.04.2022",
+    cloudiness: "80%",
+    GeoJSON: {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.184708,
+              51.513977
+            ],
+            [
+              -0.184665,
+              51.50332
+            ],
+            [
+              -0.158315,
+              51.505136
+            ],
+            [
+              -0.165482,
+              51.515099
+            ],
+            [
+              -0.184708,
+              51.513977
+            ]
+          ]
+        ]
+      }
+    }
+  }, {
+    id: 2,
+    idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+    round: "23121",
+    route: "1",
+    scName: "Канопус-В-3",
+    date: "04.04.2022",
+    cloudiness: "80%",
+    GeoJSON: {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-0.184708, 51.513977],
+            [-0.184665, 51.50332],
+            [-0.158315, 51.505136],
+            [-0.165482, 51.515099],
+            [-0.184708, 51.513977]
+          ]
+        ]
+      }
+    }
+  }, {
+    id: 3,
+    idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+    round: "23121",
+    route: "1",
+    scName: "Канопус-В-3",
+    date: "04.04.2022",
+    cloudiness: "80%",
+    GeoJSON: {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-0.184708, 51.513977],
+            [-0.184665, 51.50332],
+            [-0.158315, 51.505136],
+            [-0.165482, 51.515099],
+            [-0.184708, 51.513977]
+          ]
+        ]
+      }
+    }
+  }]
 }

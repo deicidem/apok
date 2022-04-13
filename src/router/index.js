@@ -33,6 +33,10 @@ const routes = [
       {
         path: 'alerts',
         component: () => import('../views/SidebarViews/SidebarAlerts')
+      },
+      {
+        path: 'results',
+        component: () => import('../views/SidebarViews/SidebarResults')
       }
     ]
   },

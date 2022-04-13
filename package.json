@@ -10,6 +10,7 @@
   "dependencies": {
     "circle-to-polygon": "^2.2.0",
     "core-js": "^3.8.3",
+    "html-loader": "^3.1.0",
     "leaflet": "^1.7.1",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "path-browserify": "^1.0.1",
@@ -22,8 +23,10 @@
     "vue-nouislider": "^1.0.1",
     "vue-router": "^3.5.1",
     "vue-slider-component": "^3.2.15",
+    "vue-svg-inline-plugin": "^2.2.0",
     "vue2-datepicker": "^3.10.4",
     "vue2-leaflet": "^2.7.1",
+    "vue2-leaflet-polygonfillpattern": "^2.0.2",
     "vuejs-datepicker": "^1.6.2",
     "vuescroll": "^4.17.3",
     "vuex": "^3.6.2"
@@ -40,6 +43,8 @@
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
+    "vue-svg-inline-loader": "^2.1.2",
+    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {

@@ -4,8 +4,9 @@ export default {
     areaPolygon: [],
     polygonDrawable: false,
     circlePolygon: {"type":"Polygon","coordinates":[]},
-    zoom: 15,
-    center: [51.505, -0.159],
+    geoJsonPolygons: [],
+    zoom: 5,
+    center: [45, 35],
   },
   getters: {
     getPolygonArea(state) {
@@ -38,6 +39,9 @@ export default {
     },
     getCirclePolygon(state) {
       return state.circlePolygon;
+    },
+    getGeoJsonPolygons(state) {
+      return state.geoJsonPolygons;
     }
   },
   mutations: {
@@ -66,6 +70,9 @@ export default {
     },
     setCirclePolygon(state, polygon) {
       state.circlePolygon = polygon;
+    },
+    addGeoJsonPolygon(state, polygon) {
+      state.geoJsonPolygons.push(polygon);
     }
   },
   actions: {
@@ -92,6 +99,9 @@ export default {
     },
     setCirclePolygon(store, polygon) {
       store.commit('setCirclePolygon', polygon)
+    },
+    addGeoJsonPolygon(store, polygon) {
+      store.commit('addGeoJsonPolygon', polygon)
     }
   }
 }

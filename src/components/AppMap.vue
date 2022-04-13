@@ -21,14 +21,24 @@
         <img style="pointer-events: none" :src="icon" alt="" />
       </l-icon>
     </l-marker>
-    <l-polygon :fill="true" :lat-lngs="polygon" color="#476D70"></l-polygon>
+    <l-polygon
+      @click="save"
+      :fill="true"
+      :lat-lngs="polygon"
+      color="#476D70"
+    ></l-polygon>
     <l-geo-json :geojson="circle"></l-geo-json>
+    <l-geo-json v-for="(gj, i) in geoJsons" :key="i" :geojson="gj.json"></l-geo-json>
+    <l-image-overlay v-for="(gj, i) in geoJsons" :key="i"
+      :url="require(`@/assets/img/${gj.img}`)"
+      :bounds="gj.bounds"
+    ></l-image-overlay>
   </l-map>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import * as SHP from "shp-write";
+// import * as SHP from "shp-write";
 import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import {
@@ -37,6 +47,7 @@ import {
   LMarker,
   LPolygon,
   LIcon,
+  LImageOverlay,
   // LTooltip
   LGeoJson,
 } from "vue2-leaflet";
@@ -61,6 +72,7 @@ export default {
     LTileLayer,
     LMarker,
     LIcon,
+    LImageOverlay,
     // LTooltip,
     // LPopup,
     LPolygon,
@@ -79,57 +91,67 @@ export default {
       drawable: "getDrawable",
       center: "getCenter",
       zoom: "getZoom",
-      circle: "getCirclePolygon"
+      circle: "getCirclePolygon",
+      geoJsons: "getGeoJsonPolygons",
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
     },
   },
   methods: {
-    ...mapActions("map", ['addCoordinate', 'changeCoordinate', 'setCenter', 'setZoom']),
+    ...mapActions("map", [
+      "addCoordinate",
+      "changeCoordinate",
+      "setCenter",
+      "setZoom",
+    ]),
     // Добавление маркеров
     onClick($event) {
       console.log($event);
-      if (this.drawable && $event.originalEvent.target.classList.contains('vue2leaflet-map')) {
+      if (
+        this.drawable &&
+        $event.originalEvent.target.classList.contains("vue2leaflet-map")
+      ) {
         this.addCoordinate($event.latlng);
       }
     },
     // Изменение размеров полигона
     handleMarkerDragEnd($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({ latlng: $event.target._latlng, id});
+        this.changeCoordinate({ latlng: $event.target._latlng, id });
       }
     },
-     handleMarkerDrag($event, id) {
-       console.log(1);
+    handleMarkerDrag($event, id) {
+      console.log(1);
       if (this.drawable) {
-        this.changeCoordinate({ latlng: $event.latlng, id});
+        this.changeCoordinate({ latlng: $event.latlng, id });
       }
     },
     // Сохранение файла
     save() {
-      let polygon = L.polygon(this.markers);
+      let polygon = L.polygon(this.polygon);
       let json = polygon.toGeoJSON();
       let string = JSON.stringify(json);
-      // console.log(json);
-      L.extend(json.properties, polygon.properties);
       console.log(string);
 
-      let options = {
-        folder: "myshapes",
-        types: {
-          polygon: "POLYGON",
-        },
-      };
-      console.log(
-        SHP.download(
-          {
-            type: "FeatureCollection",
-            features: [json],
-          },
-          options
-        )
-      );
+      // L.extend(json.properties, polygon.properties);
+      // console.log(string);
+
+      // let options = {
+      //   folder: "myshapes",
+      //   types: {
+      //     polygon: "POLYGON",
+      //   },
+      // };
+      // console.log(
+      //   SHP.download(
+      //     {
+      //       type: "FeatureCollection",
+      //       features: [json],
+      //     },
+      //     options
+      //   )
+      // );
     },
   },
 };

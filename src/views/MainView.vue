@@ -67,14 +67,14 @@ export default {
   margin-left: auto;
   z-index: 1;
   &.collapsed {
-    max-width: calc(100% - 760px);
+    max-width: calc(100% - 800px);
   }
 }
 .sidebar-block {
   position: relative;
   height: 100%;
   z-index: 5;
-  max-width: 760px;
+  max-width: 800px;
   &.collapsed {
     max-width: 50px;
   }

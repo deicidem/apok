@@ -9,7 +9,7 @@
       </div>
 
       <div class="form">
-        <div class="form-title">Авторизация</div>
+        <div class="form-title">Регистрация</div>
 
         <form class="form-wrapper">
           <app-input
@@ -17,7 +17,6 @@
             label="почтовый адрес"
             v-model="user.mail"
           >
-            <i class="fa fa-solid fa-envelope"></i>
           </app-input>
 
           <app-input
@@ -25,7 +24,6 @@
             label="логин"
             v-model="user.login"
           >
-            <i class="fa fa-sign-in" aria-hidden="true"></i>
           </app-input>
 
           <app-input
@@ -33,7 +31,6 @@
             label="пароль"
             v-model="user.password"
           >
-            <i class="fa fa-key" aria-hidden="true"></i>
           </app-input>
 
           <app-input
@@ -41,15 +38,16 @@
             label="повторите пароль"
             v-model="user.passwordSecond"
           >
-            <i class="fa fa-key" aria-hidden="true"></i>
           </app-input>
 
           <app-button @click="submit" class="form-wrapper__item button"
             >Зарегистироваться</app-button
           >
-          <app-button type="white" class="form-wrapper__item button"
-            >Авторизоваться</app-button
-          >
+          <router-link class="form-wrapper__item" to="/login">
+            <app-button type="white" class="form-wrapper__item button"
+              >Авторизоваться</app-button
+            >
+          </router-link>
         </form>
       </div>
     </div>

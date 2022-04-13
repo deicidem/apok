@@ -14,26 +14,44 @@
     <nav class="search-zone__nav">
       <ul>
         <li>
-          <button @click="searchZoneType = 1" :class="searchZoneType == 1 ? 'active' : ''">Задать полигон</button>
+          <button
+            @click="searchZoneType = 1"
+            :class="searchZoneType == 1 ? 'active' : ''"
+          >
+            Задать полигон
+          </button>
         </li>
         <li class="line"></li>
         <li>
-          <button @click="searchZoneType = 2" :class="searchZoneType == 2 ? 'active' : ''">Круглая зона</button>
+          <button
+            @click="searchZoneType = 2"
+            :class="searchZoneType == 2 ? 'active' : ''"
+          >
+            Круглая зона
+          </button>
         </li>
         <li class="line"></li>
         <li>
-          <button @click="searchZoneType = 3" :class="searchZoneType == 3 ? 'active' : ''">Загрузить файл</button>
+          <button
+            @click="searchZoneType = 3"
+            :class="searchZoneType == 3 ? 'active' : ''"
+          >
+            Загрузить файл
+          </button>
         </li>
       </ul>
     </nav>
 
-    <div class="search-zone__card search-zone__main" v-show="searchZoneType == 1">
+    <div
+      class="search-zone__card search-zone__main"
+      v-show="searchZoneType == 1"
+    >
       <div class="search-zone__table">
         <table>
           <thead>
             <tr>
               <!-- <th class="col"><input type="checkbox" /></th> -->
-              <th>Номер</th>
+              <th class="number">№</th>
               <th>Широта</th>
               <th>Долгота</th>
               <th class="col"></th>
@@ -42,7 +60,7 @@
           <tbody>
             <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
               <!-- <td class="col"><input type="checkbox" /></td> -->
-              <td>{{ i+1 }}</td>
+              <td class="number">{{ i + 1 }}</td>
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate(i)">
@@ -81,7 +99,10 @@
       </div>
     </div>
 
-    <div class="search-zone__card search-zone__coordinates" v-show="searchZoneType == 2">
+    <div
+      class="search-zone__card search-zone__coordinates"
+      v-show="searchZoneType == 2"
+    >
       <div class="coordinates-wrapper">
         <app-input
           v-model="lat"
@@ -105,12 +126,16 @@
       >
     </div>
 
-    <div class="search-zone__card search-zone__load" v-show="searchZoneType == 3">
+    <div
+      class="search-zone__card search-zone__load"
+      v-show="searchZoneType == 3"
+    >
       <div class="load-wrapper">
         <app-button type="white-g">Загрузить файл</app-button>
         <span class="load-wrapper__name">POLYGON.shp</span>
+        <app-button>Показать на карте</app-button>
       </div>
-      <app-button>Показать на карте</app-button>
+      <app-button type="red">Удалить</app-button>
     </div>
   </div>
 </template>
@@ -127,18 +152,18 @@ export default {
   },
   data() {
     return {
-      lng: '',
-      lat: '',
-      rad: '',
+      lng: "",
+      lat: "",
+      rad: "",
       searchZoneType: 1,
     };
   },
   computed: {
     ...mapGetters("map", [
       "getPolygonArea",
-      "getDrawable", 
+      "getDrawable",
       "getFormattedCoordinates",
-      ]),
+    ]),
   },
   methods: {
     ...mapActions("map", [
@@ -147,17 +172,21 @@ export default {
       "deleteCoordinate",
       "setPolygonDrawable",
       "clearCoordinates",
-      "setCirclePolygon"
+      "setCirclePolygon",
     ]),
     createCircle() {
       let polygon = circleToPolygon([+this.lng, +this.lat], +this.rad * 1000);
       this.setCirclePolygon(polygon);
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.number {
+  max-width: 40px;
+  text-align: center !important;
+}
 .search-zone {
   padding: 20px;
   box-shadow: $shadow-small;
@@ -177,6 +206,7 @@ export default {
     }
   }
   &__nav {
+    margin-top: 10px;
     display: flex;
     ul {
       display: flex;
@@ -219,6 +249,7 @@ export default {
     background: #fff;
   }
   &__card {
+    margin-top: 14px;
     padding: 20px;
     box-shadow: $shadow-big;
     border-radius: 10px;
@@ -293,7 +324,7 @@ export default {
       align-items: flex-end;
       &__input {
         margin-right: 20px;
-        width: 130px;
+        width: 150px;
       }
       &__button {
         margin-top: 20px;
@@ -303,9 +334,14 @@ export default {
   }
   &__load {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     .load-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
       &__name {
         font-size: 12px;
         color: #000;

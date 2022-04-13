@@ -3,11 +3,12 @@
   <h2 class="search__title">Облачность</h2>
   <div class="search-cloud__subtitle">
     Процент облачности:
-    <p>{{ your_value[0] }}% - {{ your_value[1] }}%</p>
+    <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
   </div>
 
-  <!-- <no-ui-slider :config="your_config" :values="your_value" /> -->
-  <vue-slider v-model="your_value" :adsorb="true" :interval="10"></vue-slider>
+  <!-- <no-ui-slider :config="rangeConfig" :values="cloudValue" /> -->
+  <vue-slider :value="getCloudiness" 
+  @change="setCloudiness({from:$event[0], to: $event[1]})" :adsorb="true" :interval="10"></vue-slider>
   <div class="search-cloud__wrapper">
     <p>0%</p>
     <p>100%</p>
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from "vuex";
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 
@@ -23,19 +25,11 @@ export default {
   components: {
     VueSlider
   },
-  data() {
-    return {
-      your_config: {
-        step: 10,
-        connect: true,
-        behaviour: "drag",
-        range: {
-          min: 0,
-          max: 100,
-        },
-      },
-      your_value: [20, 80],
-    }
+  computed: {
+    ...mapGetters('search', ['getCloudiness'])
+  },
+  methods: {
+    ...mapActions('search', ['setCloudiness'])
   }
 }
 </script>

@@ -45,7 +45,7 @@ export default {
       return state.spacecrafts;
     },
     getCloudiness(state) {
-      return state.cloudiness;
+      return [state.cloudiness.from, state.cloudiness.to];
     },
     // isSelected(state) {
     //   return ({seriesInd, scInd}) => {
@@ -71,7 +71,7 @@ export default {
     clearCoordinates(state) {
       state.areaPolygon = [];
     },
-    setCloudiness(state, from, to) {
+    setCloudiness(state, {from, to}) {
       state.cloudiness.from = from;
       state.cloudiness.to = to;
     },

@@ -3,7 +3,7 @@
     <transition name="slide">
       <div class="sidebar" v-show="!collapsed">
         <div class="sidebar-content">
-          <router-view></router-view>
+          <router-view> </router-view>
         </div>
       </div>
     </transition>
@@ -112,6 +112,27 @@ export default {
   box-shadow: $shadow-small;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+.sidebar-title {
+  background: $gradient;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  box-shadow: $shadow-small;
+}
+
 .sidebar {
   display: block;
   position: absolute;
@@ -125,9 +146,6 @@ export default {
     background: #edecec;
     transition: all 0.3s ease-out;
     height: 100%;
-  }
-  &-block {
-    // box-shadow: $shadow-big;
   }
   &__box {
     display: flex;

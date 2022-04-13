@@ -3,6 +3,7 @@ export default {
   state: {
     areaPolygon: [],
     polygonDrawable: false,
+    circlePolygon: {"type":"Polygon","coordinates":[]},
     zoom: 15,
     center: [51.505, -0.159],
   },
@@ -34,6 +35,9 @@ export default {
     },
     getCenter(state) {
       return state.center;
+    },
+    getCirclePolygon(state) {
+      return state.circlePolygon;
     }
   },
   mutations: {
@@ -59,6 +63,9 @@ export default {
     },
     setCenter(state, value) {
       state.center = value;
+    },
+    setCirclePolygon(state, polygon) {
+      state.circlePolygon = polygon;
     }
   },
   actions: {
@@ -82,6 +89,9 @@ export default {
     },
     setCenter(store, value) {
       store.commit('setCenter', value);
+    },
+    setCirclePolygon(store, polygon) {
+      store.commit('setCirclePolygon', polygon)
     }
   }
 }

@@ -63,11 +63,12 @@ export default {
   right: 0;
   top: 0;
   width: 100%;
+  max-width: calc(100% - 50px);
   margin-left: auto;
   z-index: 1;
-  // &.collapsed {
-  //   max-width: 60%;
-  // }
+  &.collapsed {
+    max-width: calc(100% - 760px);
+  }
 }
 .sidebar-block {
   position: relative;

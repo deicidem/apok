@@ -14,7 +14,7 @@
       </p>
 
       <div class="plan-item__buttons">
-        <router-link :to="'/plan/'+planid">
+        <router-link :to="'/plan/' + planid">
           <app-button type="white-g">Подробнее</app-button>
         </router-link>
 
@@ -31,14 +31,13 @@ import AppPlanPopup from "@/components/AppPlanPopup";
 export default {
   components: {
     AppButton,
-    AppPlanPopup
+    AppPlanPopup,
   },
   props: {
     img: String,
     title: String,
     text: String,
-    planid: Number
-
+    planid: Number,
   },
   computed: {
     itemImage() {
@@ -59,8 +58,8 @@ export default {
     overflow: hidden;
     align-items: stretch;
     background: #fff;
-    &__img{
-      img{
+    &__img {
+      img {
         height: 100%;
       }
     }

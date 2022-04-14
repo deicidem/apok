@@ -2,6 +2,7 @@
   <header class="header">
     <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
     <div class="header-items">
+      <app-auth-popup class="auth-wrapper"></app-auth-popup>
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -53,18 +54,33 @@
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
 
-          <router-link class="form-wrapper__item" to="/login">
             <button class="button button-o header-menu__button">
               <i class="fa fa-user" aria-hidden="true"></i>
             </button>
-          </router-link>
         </div>
       </div>
     </div>
   </header>
 </template>
 
+<script>
+import AppAuthPopup from "@/components/AppAuthPopup";
+
+export default {
+  components: {
+    AppAuthPopup
+  },
+}
+</script>
+
 <style lang="scss" scoped>
+
+.auth-wrapper{
+  position:absolute;
+  right: 100px;
+  top: 140px;
+    z-index: 30;
+}
 .button {
   background: $gradient;
   border-radius: 5px;

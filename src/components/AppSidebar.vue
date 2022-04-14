@@ -13,12 +13,16 @@
         id="collapsed"
         @click="toggleSidebar()"
       >
-        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+        <div class="sidebar-collapsed__img">
+          <img src="@/assets/img/sidebar-collapse.svg" />
+        </div>
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/tasks">
-          <i class="fa fa-folder-open" aria-hidden="true"></i>
+          <div class="sidebar-collapsed__img">
+            <img src="@/assets/img/sidebar-task.svg" />
+          </div>
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">Мои задачи</div>
@@ -26,7 +30,9 @@
 
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/plan">
-          <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+          <div class="sidebar-collapsed__img">
+            <img src="@/assets/img/sidebar-plan.svg" />
+          </div>
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">
@@ -36,7 +42,9 @@
 
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/search">
-          <i class="fa fa-search" aria-hidden="true"></i>
+          <div class="sidebar-collapsed__img">
+            <img src="@/assets/img/sidebar-search.svg" />
+          </div>
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
@@ -44,7 +52,9 @@
 
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/alerts">
-          <i class="fa fa-commenting" aria-hidden="true"></i>
+          <div class="sidebar-collapsed__img">
+            <img src="@/assets/img/sidebar-notification.svg" />
+          </div>
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
@@ -238,6 +248,10 @@ export default {
         width: 180px;
         transition: all 0.3s ease-out;
       }
+    }
+    &__img{
+      width: 32px; 
+      cursor: pointer;
     }
   }
   &-open {

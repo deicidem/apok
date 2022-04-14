@@ -28,11 +28,16 @@
       color="#476D70"
     ></l-polygon>
     <l-geo-json :geojson="circle"></l-geo-json>
-    <l-geo-json v-for="(gj, i) in geoJsons" :key="i" :geojson="gj.json"></l-geo-json>
-    <l-image-overlay v-for="(gj, i) in geoJsons" :key="i"
+    <template>
+      <l-geo-json v-for="(gj, i) in geoJsons" :key="'gj' + i" :geojson="gj.json"></l-geo-json>
+    </template>
+    <template>
+      <l-image-overlay v-for="(gj, i) in geoJsons" :key="'img'+i"
       :url="require(`@/assets/img/${gj.img}`)"
       :bounds="gj.bounds"
     ></l-image-overlay>
+    </template>
+    
   </l-map>
 </template>
 

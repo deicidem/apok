@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import PolygonFillpattern from "vue2-leaflet-polygonfillpattern";
-Vue.use(PolygonFillpattern);
+import PortalVue from 'portal-vue'
+Vue.use(PortalVue)
 
 Vue.config.productionTip = false
 

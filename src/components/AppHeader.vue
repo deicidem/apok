@@ -52,9 +52,12 @@
           <button class="button button-o header-menu__button">
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
-          <button class="button button-o header-menu__button">
-            <i class="fa fa-user" aria-hidden="true"></i>
-          </button>
+
+          <router-link class="form-wrapper__item" to="/login">
+            <button class="button button-o header-menu__button">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>

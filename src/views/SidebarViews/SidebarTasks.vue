@@ -61,7 +61,13 @@ export default {
     background: #ffffff;
     box-shadow: $shadow-big;
     border-radius: 10px;
-    margin: 30px;
+    overflow: hidden;
+    margin: 20px;
+    &-table {
+      height: inherit;
+      overflow-x: auto;
+      margin-top: 0px;
+    }
   }
   .green {
     color: $color-main;

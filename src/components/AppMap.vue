@@ -29,12 +29,12 @@
     ></l-polygon>
     <l-geo-json :geojson="circle"></l-geo-json>
     <template>
-      <l-geo-json v-for="(gj, i) in geoJsons" :key="'gj' + i" :geojson="gj.json"></l-geo-json>
+      <l-geo-json :options="{fill: false}" v-for="(gj, i) in geoJsons" :key="'gj' + i" :geojson="gj.json"></l-geo-json>
     </template>
     <template>
-      <l-image-overlay v-for="(gj, i) in geoJsons" :key="'img'+i"
-      :url="require(`@/assets/img/${gj.img}`)"
-      :bounds="gj.bounds"
+      <l-image-overlay v-for="(img, i) in images" :key="'img'+i"
+      :url="require(`@/assets/img/${img.img}`)"
+      :bounds="img.bounds"
     ></l-image-overlay>
     </template>
     
@@ -98,6 +98,7 @@ export default {
       zoom: "getZoom",
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
+      images: "getImages"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");

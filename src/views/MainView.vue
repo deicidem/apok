@@ -1,6 +1,11 @@
 <template>
   <section class="hero">
-    
+    <portal-target name="popup">
+
+    </portal-target>
+    <portal-target name="popup-card">
+      
+    </portal-target>
     <div class="sidebar-block" :class="sidebarBlock">
       <app-sidebar
         @close="sidebarCollapsed = true; sidebarBlockClass()"
@@ -74,7 +79,7 @@ export default {
   position: relative;
   height: 100%;
   max-width: 800px;
-  z-index: 11;
+  z-index: 5;
   &.collapsed {
     max-width: 50px;
   }

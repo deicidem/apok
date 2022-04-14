@@ -1,6 +1,8 @@
 <template>
   <div class="plan-item">
+    <portal to="popup">
     <app-plan-popup></app-plan-popup>
+    </portal>
     <div class="plan-item__img">
       <img :src="itemImage" />
     </div>

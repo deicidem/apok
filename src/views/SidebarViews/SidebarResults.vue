@@ -5,113 +5,136 @@
     </h2>
     <div class="results-content">
       <router-link to="/main/search">
-      <div class="back">
-        <div class="back-arrow">
-          <img src="@/assets/img/arrow.svg" />
+        <div class="back">
+          <div class="back-arrow">
+            <img src="@/assets/img/arrow.svg" />
+          </div>
+          <p class="back-subtitle">Назад</p>
         </div>
-        <p class="back-subtitle">Назад</p>
+      </router-link>
+      <portal to="popup-card">
+        <div class="card" v-show="card.active">
+          <div class="card-close" @click="onCardClose()">
+            <img svg-inline src="@/assets/img/cross.svg" alt="" />
+          </div>
+          <div class="card-title">Информация по объекту</div>
+          <div class="card-img">
+            <img :src="require('@/assets/img/' + cardData.img)" alt="" />
+          </div>
+          <div class="card-table__wrapper">
+            <table class="card-table">
+              <thead>
+                <tr>
+                  <th>Характеристика</th>
+                  <th>Значение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Идентификатор</td>
+                  <td>{{ cardData.info.idBig }}</td>
+                </tr>
+                <tr>
+                  <td>Виток</td>
+                  <td>{{ cardData.info.round }}</td>
+                </tr>
+                <tr>
+                  <td>Маршрут</td>
+                  <td>{{ cardData.info.route }}</td>
+                </tr>
+                <tr>
+                  <td>Аппарат</td>
+                  <td>{{ cardData.info.scName }}</td>
+                </tr>
+                <tr>
+                  <td>Дата съемки</td>
+                  <td>{{ cardData.info.date }}</td>
+                </tr>
+                <tr>
+                  <td>Облачность</td>
+                  <td>{{ cardData.info.cloudiness }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-buttons">
+            <app-button class="card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)">Скрыть контур</app-button>
+            <app-button class="card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.img, cardData.bounds)"
+              >Показать изображение</app-button
+            >
+          </div>
+        </div>
+      </portal>
+
+      <div class="results-wrapper">
+        <app-table class="results-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Идентификатор</th>
+              <th>Виток</th>
+              <th>Маршрут</th>
+              <th>Аппарат</th>
+              <th>Дата съемки</th>
+              <th>Облачность</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, i) in results" :key="i">
+              <td class="results-table__buttons">
+                <button
+                  class="button-small"
+                  type="white-r"
+                  :class="buttons[i].polygonActive ? 'active' : ''"
+                  @click="onPolygonButtonClick(i, item.id, item.GeoJSON)"
+                >
+                  <img
+                    svg-inline
+                    class="icon icon-vector-o"
+                    src="@/assets/img/vector-o.svg"
+                    alt=""
+                  />
+                </button>
+                <button
+                  class="button-small"
+                  type="white-r"
+                  :class="buttons[i].imageActive ? 'active' : ''"
+                  @click="onImageButtonClick(i, item.id, item.img, item.bounds)"
+                >
+                  <img
+                    svg-inline
+                    class="icon icon-img"
+                    src="@/assets/img/img.svg"
+                    alt=""
+                  />
+                </button>
+              </td>
+              <td>{{ item.info.idBig }}</td>
+              <td>{{ item.info.round }}</td>
+              <td>{{ item.info.route }}</td>
+              <td>{{ item.info.scName }}</td>
+              <td>{{ item.info.date }}</td>
+              <td>{{ item.info.cloudiness }}</td>
+              <td class="results-table__buttons">
+                <button
+                  class="button-small"
+                  type="white-r"
+                  :class="buttons[i].cardActive ? 'active' : ''"
+                  @click="onCardButtonClick(i)"
+                >
+                  <img
+                    svg-inline
+                    class="icon icon-open"
+                    src="@/assets/img/open.svg"
+                    alt=""
+                  />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </app-table>
       </div>
-    </router-link>
-    <div class="card">
-      <div class="card-title">Информация по объекту</div>
-      <div class="card-img"><img src="@/assets/img/img.jpg" alt=""></div>
-      <div class="card-table__wrapper">
-        <table class="card-table">
-        <thead>
-          <tr>
-            <th>Характеристика</th>
-            <th>Значение</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Уровень доступа</td>
-            <td>Доступны для заказа</td>
-          </tr>
-          <tr>
-            <td>Уровень доступа</td>
-            <td>Доступны для заказа</td>
-          </tr>
-          <tr>
-            <td>Уровень доступа</td>
-            <td>Доступны для заказа</td>
-          </tr>
-          <tr>
-            <td>Уровень доступа</td>
-            <td>Доступны для заказа</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="card-buttons">
-        <app-button>Скрыть контур</app-button>
-        <app-button>Показать обзорное изображение</app-button>
-      </div>
-    </div>
-    <div class="results-wrapper">
-      <app-table class="results-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Идентификатор</th>
-            <th>Виток</th>
-            <th>Маршрут</th>
-            <th>Аппарат</th>
-            <th>Дата съемки</th>
-            <th>Облачность</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, i) in results" :key="i">
-            <td class="results-table__buttons">
-              <button
-                class="button-small"
-                type="white-r"
-                @click="
-                  addGeoJsonPolygon({
-                    json: item.GeoJSON,
-                    bounds: item.bounds,
-                    img: item.img,
-                  })
-                "
-              >
-                <img
-                  svg-inline
-                  class="icon icon-vector-o"
-                  src="@/assets/img/vector-o.svg"
-                  alt=""
-                />
-              </button>
-              <button class="button-small active" type="white-r">
-                <img
-                  svg-inline
-                  class="icon icon-img"
-                  src="@/assets/img/img.svg"
-                  alt=""
-                />
-              </button>
-            </td>
-            <td>{{ item.idBig }}</td>
-            <td>{{ item.round }}</td>
-            <td>{{ item.route }}</td>
-            <td>{{ item.scName }}</td>
-            <td>{{ item.date }}</td>
-            <td>{{ item.cloudiness }}</td>
-            <td class="results-table__buttons">
-              <button class="button-small" type="white-r">
-                <img
-                  svg-inline
-                  class="icon icon-open"
-                  src="@/assets/img/open.svg"
-                  alt=""
-                />
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </app-table>
-    </div>
     </div>
   </div>
 </template>
@@ -119,73 +142,164 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-import AppButton from "@/components/controls/AppButton"
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     AppTable,
-    AppButton
+    AppButton,
   },
   data() {
-    return {};
+    return {
+      buttons: [],
+      card: {
+        active: false,
+        ind: 0,
+      },
+    };
   },
   computed: {
     ...mapGetters("search", {
       results: "getResults",
     }),
+    cardData() {
+      return this.results[this.card.ind];
+    }
   },
   methods: {
-    ...mapActions("map", ["addGeoJsonPolygon"]),
+    ...mapActions("map", [
+      "addGeoJsonPolygon",
+      "removeGeoJsonPolygon",
+      "addImage",
+      "removeImage",
+    ]),
+    onPolygonButtonClick(ind, id, json) {
+      if (this.buttons[ind].polygonActive) {
+        this.removeGeoJsonPolygon(id);
+        this.buttons[ind].polygonActive = false;
+      } else {
+        this.addGeoJsonPolygon({ id, json });
+        this.buttons[ind].polygonActive = true;
+      }
+    },
+    onImageButtonClick(ind, id, img, bounds) {
+      if (this.buttons[ind].imageActive) {
+        this.removeImage(id);
+        this.buttons[ind].imageActive = false;
+      } else {
+        this.addImage({ id, img, bounds });
+        this.buttons[ind].imageActive = true;
+      }
+    },
+    onCardButtonClick(ind) {
+      if (this.buttons[ind].cardActive) {
+        this.card.active = false;
+        this.buttons[ind].cardActive = false;
+      } else {
+        this.card.ind = ind;
+        this.buttons.forEach(el => {
+          el.cardActive = false;
+        })
+        this.buttons[ind].cardActive = true;
+        this.card.active = true;
+        this.card.data = {...this.results[ind]}
+      }
+    },
+    onCardClose() {
+      this.buttons.forEach(el => {
+        el.cardActive = false;
+      })
+      this.card.active = false;
+    }
+  },
+  beforeMount() {
+    this.results.forEach((element) => {
+      this.buttons.push({
+        id: element.id,
+        polygonActive: false,
+        imageActive: false,
+        cardActive: false,
+      });
+    });
   },
 };
 </script>
 
 <style lang="scss">
-.results {
-  .card {
-    position: fixed;
-    width: 300px;
-    height: 600px;
-    background: #000;
-    top: 200px;
-    right: 100px;
-    background: $gradient-w;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
+.card {
+  z-index: 11;
+  position: absolute;
+  width: 300px;
+  background: #000;
+  top: 20px;
+  right: 20px;
+  background: $gradient-w;
+  box-shadow: $shadow-big;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 20px;
+  &-close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 25px;
+    height: 25px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 15px;
-    &-title {
-      font-size: 16px;
-      color: #000;
-      margin-bottom: 15px;
+    cursor: pointer;
+    svg path {
+      transition: all 0.1s ease-out;
     }
-    &-img {
-      width: 200px;
-      margin-bottom: 20px;
-    }
-    &-table {
-      &__wrapper {
-        flex: 1;
+    &:hover {
+      svg path {
+        fill: $color-main;
       }
-      color: #000;
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      th {
-        color: $color-main-dark;
-        text-align: left;
-        font-size: 12px;
-      }
-      td {
-        padding: 10px 10px 10px 0;
-        font-size: 10px;
-      }
-        tr {
-          border-bottom: 1px solid rgba($color-main, 0.2);
-        }
     }
   }
+  &-title {
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 15px;
+  }
+  &-img {
+    width: 200px;
+    margin-bottom: 20px;
+    border: 1px solid #000;
+  }
+  &-table {
+    &__wrapper {
+      flex: 1;
+    }
+    color: #000;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    th {
+      color: $color-main-dark;
+      text-align: left;
+      font-size: 12px;
+    }
+    td {
+      word-break: break-all;
+      padding: 10px 10px 10px 0;
+      font-size: 10px;
+    }
+    tr {
+      border-bottom: 1px solid rgba($color-main, 0.2);
+    }
+  }
+  &-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  &-button {
+    margin-top: 15px;
+  }
+}
+.results {
   &-content {
     padding: 10px 30px;
   }
@@ -240,6 +354,12 @@ export default {
       svg * {
         stroke: #fff;
       }
+      .icon-open {
+        path {
+          fill: #fff;
+          stroke: none;
+        }
+      }
     }
     &:first-child {
       margin-left: 0;
@@ -247,6 +367,7 @@ export default {
     &:last-child {
       margin-right: 0;
     }
+
   }
   .icon {
     width: 15px;

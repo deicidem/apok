@@ -5,6 +5,7 @@ export default {
     polygonDrawable: false,
     circlePolygon: {"type":"Polygon","coordinates":[]},
     geoJsonPolygons: [],
+    images: [],
     zoom: 5,
     center: [45, 35],
   },
@@ -42,6 +43,9 @@ export default {
     },
     getGeoJsonPolygons(state) {
       return state.geoJsonPolygons;
+    },
+    getImages(state) {
+      return state.images;
     }
   },
   mutations: {
@@ -73,6 +77,23 @@ export default {
     },
     addGeoJsonPolygon(state, polygon) {
       state.geoJsonPolygons.push(polygon);
+    },
+    addImage(state, image) {
+      state.images.push(image);
+    },
+    removeGeoJsonPolygon(state, id) {
+      state.geoJsonPolygons.forEach((el, i) => {
+        if (el.id === id) {
+          state.geoJsonPolygons.splice(i, 1);
+        }
+      })
+    },
+    removeImage(state, id) {
+      state.images.forEach((el, i) => {
+        if (el.id === id) {
+          state.images.splice(i, 1);
+        }
+      })
     }
   },
   actions: {
@@ -102,6 +123,15 @@ export default {
     },
     addGeoJsonPolygon(store, polygon) {
       store.commit('addGeoJsonPolygon', polygon)
+    },
+    removeGeoJsonPolygon(store, id) {
+      store.commit('removeGeoJsonPolygon', id)
+    },
+    addImage(store, image) {
+      store.commit('addImage', image)
+    },
+    removeImage(store, id) {
+      store.commit('removeImage', id)
     }
   }
 }

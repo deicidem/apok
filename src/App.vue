@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper" @click="closeUser($event)">
     <app-header></app-header>
-
     <div class="content">
       <router-view></router-view>
     </div>

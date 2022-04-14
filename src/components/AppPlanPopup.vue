@@ -140,7 +140,7 @@ export default {
       float: right;
     }
     &__info {
-      width: 700px;
+      width: 500px;
       padding: 20px;
       box-shadow: $shadow-small;
       border-radius: 10px;

@@ -1,58 +1,59 @@
 <template>
-    <label class="checkbox__label" >
-      <input
-        class="checkbox__input"
-        type="checkbox"
-        :checked="isChecked"
-        :value="value"
-        @change="updateInput"
-      />
-      <span  class="checkbox-fake" :class="mini ? 'mini' : ''"></span>
-    </label>
+  <label class="checkbox__label">
+    <input
+      class="checkbox__input"
+      type="checkbox"
+      :checked="isChecked"
+      :value="value"
+      @change="updateInput"
+    />
+    <span class="checkbox-fake" :class="mini ? 'mini' : ''"></span>
+  </label>
 </template>
 
 <script>
 export default {
   model: {
-    prop: 'modelValue',
-    event: 'change'
+    prop: "modelValue",
+    event: "change",
   },
   props: {
-    "value": { type: String },
-    "modelValue": { default: "" },
-    "trueValue": { default: true },
-    "falseValue": { default: false },
-    mini: Boolean
+    value: { type: String },
+    modelValue: { default: "" },
+    trueValue: { default: true },
+    falseValue: { default: false },
+    mini: Boolean,
   },
   computed: {
     isChecked() {
       if (this.modelValue instanceof Array) {
-        return this.modelValue.includes(this.value)
+        return this.modelValue.includes(this.value);
       }
-      return this.modelValue === this.trueValue
-    }
+      return this.modelValue === this.trueValue;
+    },
   },
   methods: {
     updateInput(event) {
-      let isChecked = event.target.checked
+      let isChecked = event.target.checked;
       if (this.modelValue instanceof Array) {
-        let newValue = [...this.modelValue]
+        let newValue = [...this.modelValue];
         if (isChecked) {
-          newValue.push(this.value)
+          newValue.push(this.value);
         } else {
-          newValue.splice(newValue.indexOf(this.value), 1)
+          newValue.splice(newValue.indexOf(this.value), 1);
         }
-        this.$emit('change', newValue)
+        this.$emit("change", newValue);
       } else {
-        this.$emit('change', isChecked ? this.trueValue : this.falseValue)
+        this.$emit("change", isChecked ? this.trueValue : this.falseValue);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .checkbox__label {
+  margin-right: 4px;
   display: flex;
   align-items: center;
 }

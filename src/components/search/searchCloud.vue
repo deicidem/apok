@@ -1,41 +1,44 @@
 <template>
   <div class="search-cloud">
-  <h2 class="search__title">Облачность</h2>
-  <div class="search-cloud__subtitle">
-    Процент облачности:
-    <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
-  </div>
+    <h2 class="search__title">Облачность</h2>
+    <div class="search-cloud__subtitle">
+      Процент облачности:
+      <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
+    </div>
 
-  <!-- <no-ui-slider :config="rangeConfig" :values="cloudValue" /> -->
-  <vue-slider :value="getCloudiness" 
-  @change="setCloudiness({from:$event[0], to: $event[1]})" :adsorb="true" :interval="10"></vue-slider>
-  <div class="search-cloud__wrapper">
-    <p>0%</p>
-    <p>100%</p>
+    <!-- <no-ui-slider :config="rangeConfig" :values="cloudValue" /> -->
+    <vue-slider
+      :value="getCloudiness"
+      @change="setCloudiness({ from: $event[0], to: $event[1] })"
+      :adsorb="true"
+      :interval="10"
+    ></vue-slider>
+    <div class="search-cloud__wrapper">
+      <p>0%</p>
+      <p>100%</p>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
+import { mapGetters, mapActions } from "vuex";
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
 
 export default {
   components: {
-    VueSlider
+    VueSlider,
   },
   computed: {
-    ...mapGetters('search', ['getCloudiness'])
+    ...mapGetters("search", ["getCloudiness"]),
   },
   methods: {
-    ...mapActions('search', ['setCloudiness'])
-  }
-}
+    ...mapActions("search", ["setCloudiness"]),
+  },
+};
 </script>
 
 <style lang="scss">
-
 .search {
   &-cloud {
     &__subtitle {
@@ -65,35 +68,33 @@ export default {
   }
 }
 
-.vue-slider{
+.vue-slider {
   margin-top: 30px;
   box-shadow: $shadow-big;
   height: 12px !important;
   border-radius: 10px !important;
   padding: 0 !important;
-  &-rail{
+  &-rail {
     background: #fff;
   }
-  &-process{
+  &-process {
     background: $color-main-dark;
   }
-  &-dot{
+  &-dot {
     top: 40% !important;
-    &-handle{
+    &-handle {
       border-radius: 4px !important;
       height: 18px !important;
       width: 18px !important;
       background: $gradient;
-      &-focus{
+      &-focus {
         box-shadow: $shadow-big !important;
       }
     }
-    &-tooltip-inner{
+    &-tooltip-inner {
       background: $gradient;
       border-color: $color-main-dark;
     }
   }
 }
-
-
 </style>

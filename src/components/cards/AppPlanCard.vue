@@ -1,7 +1,7 @@
 <template>
   <div class="plan-item">
     <portal to="popup">
-    <app-plan-popup></app-plan-popup>
+      <app-plan-popup v-show="planPopup == true"></app-plan-popup>
     </portal>
     <div class="plan-item__img">
       <img :src="itemImage" />
@@ -18,7 +18,7 @@
           <app-button type="white-g">Подробнее</app-button>
         </router-link>
 
-        <app-button>Запланировать</app-button>
+        <app-button @click="planPopup = true">Запланировать</app-button>
       </div>
     </div>
   </div>
@@ -38,6 +38,11 @@ export default {
     title: String,
     text: String,
     planid: Number,
+  },
+  data() {
+    return {
+      planPopup: false,
+    };
   },
   computed: {
     itemImage() {

@@ -1,35 +1,40 @@
 <template>
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
-    <div class="tasks__wrapper">
-      <app-table>
-        <thead>
-          <tr>
-            <th class="col-checkbox center ">
-              <app-checkbox class="checkbox-big" @input="onCheck($event)"/>
-            </th>
-            <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
-          </tr>
-        </thead>
+    <vuescroll :ops="ops">
+      <div class="tasks__wrapper">
+        <app-table>
+          <thead>
+            <tr>
+              <th class="col-checkbox center">
+                <app-checkbox class="checkbox-big" @input="onCheck($event)" />
+              </th>
+              <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr v-for="item in tasks" :key="item.id">
-            <td class="col-checkbox center">
-              <app-checkbox :mini="true" @input="onCheck($event)"/>
-            </td>
-            <td class="col-id center">{{ item.id }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.date }}</td>
-            <td class="green">{{ item.status }}</td>
-            <td class="green">{{ item.result }}</td>
-          </tr>
-        </tbody>
-      </app-table>
-    </div>
+          <tbody>
+            <tr v-for="item in tasks" :key="item.id">
+              <td class="col-checkbox center">
+                <app-checkbox :mini="true" @input="onCheck($event)" />
+              </td>
+              <td class="col-id center">{{ item.id }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.date }}</td>
+              <td class="green">{{ item.status }}</td>
+              <td class="green">{{ item.result }}</td>
+            </tr>
+          </tbody>
+        </app-table>
+      </div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
+import vuescroll from "vuescroll";
+import "vuescroll/dist/vuescroll.css";
+
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
@@ -37,7 +42,39 @@ export default {
   name: "SidebarTasks",
   components: {
     AppTable,
-    AppCheckbox
+    AppCheckbox,
+    vuescroll,
+  },
+  data() {
+    return {
+      ops: {
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500,
+        },
+        scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: "easeOutQuad",
+        },
+        rail: {
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
+          specifyBorderRadius: false,
+          gutterOfEnds: null,
+          gutterOfSide: "2px",
+          keepShow: false,
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          background: "#476D70",
+        },
+      },
+    };
   },
   computed: {
     ...mapGetters("tasks", {
@@ -48,15 +85,23 @@ export default {
   methods: {
     onCheck(val) {
       console.log(val);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
-
+.__vuescroll {
+  display: flex;
+  flex-direction: column;
+}
+.__panel {
+  width: 100%;
+}
 .tasks {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
   &__wrapper {
     background: #ffffff;
     box-shadow: $shadow-big;
@@ -83,12 +128,12 @@ export default {
   }
   thead {
     input {
-        width: 20px;
-        height: 20px;
-        background: #eff2f2;
-        border-radius: 50%;
-        border: none;
-      }
+      width: 20px;
+      height: 20px;
+      background: #eff2f2;
+      border-radius: 50%;
+      border: none;
+    }
   }
   tbody {
     input {
@@ -107,6 +152,5 @@ export default {
       border: none;
     }
   }
-  
 }
 </style>

@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {mixin as clickaway} from "vue-clickaway";
+import { mixin as clickaway } from "vue-clickaway";
 import DatePicker from "vuejs-datepicker";
 import { ru } from "vuejs-datepicker/dist/locale";
 // import MultiSelect from "vue-multiselect";
@@ -198,11 +198,15 @@ export default {
           el.active = false;
         });
       }
-      this.setTimeInterval({from: this.from, to: this.to, months: this.months})
+      this.setTimeInterval({
+        from: this.from,
+        to: this.to,
+        months: this.months,
+      });
     },
     away() {
       this.selectActive = false;
-    }
+    },
   },
   computed: {
     ...mapGetters("search", ["getTimeInterval"]),
@@ -222,7 +226,7 @@ export default {
 <style lang="scss">
 .select {
   position: relative;
-  &-label{
+  &-label {
     font-size: 12px;
   }
   &-data {

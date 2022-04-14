@@ -157,6 +157,10 @@ export default {
     transition: all 0.3s ease-out;
     height: 100%;
   }
+  &-open {
+    margin-top: 6px;
+  }
+
   &__box {
     display: flex;
   }
@@ -249,8 +253,8 @@ export default {
         transition: all 0.3s ease-out;
       }
     }
-    &__img{
-      width: 32px; 
+    &__img {
+      width: 32px;
       cursor: pointer;
     }
   }

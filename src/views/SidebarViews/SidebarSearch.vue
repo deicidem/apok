@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .__vuescroll {
   display: flex;
   flex-direction: column;

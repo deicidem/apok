@@ -2,14 +2,13 @@
   <button class="button" @click="$emit('click')" :class="type">
     <span class="button-content">
       <slot></slot>
-      <img  v-show="icon != undefined" :src="image"  alt="" />
+      <img v-show="icon != undefined" :src="image" alt="" />
     </span>
   </button>
 </template>
 
 <script>
 export default {
-  
   props: {
     type: String,
     textGradient: String,

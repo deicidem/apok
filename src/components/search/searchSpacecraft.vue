@@ -137,11 +137,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.fade-enter-active, .fade-leave-active {
-  transition: all .5s ease-in-out;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease-in-out;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 

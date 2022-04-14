@@ -2,7 +2,8 @@
   <header class="header">
     <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
     <div class="header-items">
-      <app-auth-popup class="auth-wrapper"></app-auth-popup>
+      <app-auth-popup class="auth-wrapper" v-show="authPopup == true">
+      </app-auth-popup>
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -17,46 +18,18 @@
         </ul>
       </nav>
       <div class="header-menu">
-        <!-- <div class="user-box">
-            <div class="user-box-auth">Авторизация</div>
-            <div class="user-box-line"></div>
-            <div class="user-box-form">
-              <form>
-                <div class="user-box-input">
-                  <input type="login" placeholder="логин" />
-                  <i class="fa fa-sign-in" aria-hidden="true"></i>
-                </div>
-                <div class="user-box-input">
-                  <input type="password" placeholder="пароль" />
-                  <i class="fa fa-key" aria-hidden="true"></i>
-                </div>
-                <a href="./index.html" class="user-box-button"><p>Войти</p></a>
-                <a
-                  href="./pages/registration.html"
-                  class="user-box-button-registr"
-                  >Регистрация</a
-                >
-              </form>
-            </div>
-          </div>
-
-          <div class="search-box" >
-            <div class="search-box-title">ВВедите запрос</div>
-            <div class="user-box-line"></div>
-            <div class="user-box-input">
-              <input type="text" placeholder="поиск" />
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </div>
-          </div> -->
         <div class="header-menu__text">Добро пожаловать!</div>
         <div class="header-menu__buttons">
           <button class="button button-o header-menu__button">
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
 
-            <button class="button button-o header-menu__button">
-              <i class="fa fa-user" aria-hidden="true"></i>
-            </button>
+          <button
+            class="button button-o header-menu__button"
+            @click="toggle"
+          >
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -68,18 +41,27 @@ import AppAuthPopup from "@/components/AppAuthPopup";
 
 export default {
   components: {
-    AppAuthPopup
+    AppAuthPopup,
   },
-}
+  data() {
+    return {
+      authPopup: false,
+    };
+  },
+  methods: {
+    toggle() {
+      this.authPopup = !this.authPopup
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
-.auth-wrapper{
-  position:absolute;
+.auth-wrapper {
+  position: absolute;
   right: 100px;
   top: 140px;
-    z-index: 30;
+  z-index: 30;
 }
 .button {
   background: $gradient;
@@ -91,6 +73,7 @@ export default {
 .button-o {
   background: $gradient-w;
   color: $color-main-dark;
+  cursor: pointer;
 }
 .title {
   position: relative;
@@ -101,10 +84,6 @@ export default {
   box-shadow: $shadow-big;
   color: #fff;
   font-weight: 400;
-}
-
-.header-user {
-  display: none;
 }
 
 .user-box {
@@ -118,8 +97,11 @@ export default {
   display: flex;
 }
 .header {
-  z-index: 1;
+  z-index: 10;
   position: relative;
+  &-user {
+    display: none;
+  }
   &-items {
     background: #fff;
     display: flex;
@@ -172,7 +154,7 @@ export default {
         i {
           background: $gradient;
           background-clip: text;
-          color: rgba(0, 0, 0, 0)
+          color: rgba(0, 0, 0, 0);
         }
       }
     }

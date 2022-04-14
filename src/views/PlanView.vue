@@ -1,12 +1,15 @@
 <template>
   <div class="plan">
     <div class="plan-wrapper__header">
-      <div class="back">
-        <div class="back-arrow">
-          <img src="@/assets/img/arrow.svg" />
+
+      <router-link to='/main/plan'>
+        <div class="back">
+          <div class="back-arrow">
+            <img src="@/assets/img/arrow.svg" />
+          </div>
+          <p class="back-subtitle">Назад</p>
         </div>
-        <p class="back-subtitle">Назад</p>
-      </div>
+      </router-link>
 
       <h2 class="plan-title">
         Подготовка к запуску задачи 452: Формирование температурных карт

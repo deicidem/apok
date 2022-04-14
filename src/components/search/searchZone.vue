@@ -69,6 +69,20 @@
                 </app-button>
               </td>
             </tr>
+            <tr>
+              <td class="number"></td>
+              <td>
+                <app-input class="zone-table__input"></app-input>
+              </td>
+              <td>
+                <app-input class="zone-table__input"></app-input>
+              </td>
+              <td>
+                <app-button class="col-item__plus" type="white-g">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </app-button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -257,6 +271,12 @@ export default {
   }
   &__table {
     flex: 1;
+    .zone-table__input {
+      max-width: 120px;
+    }
+    .input-label {
+      font-size: 8px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -269,7 +289,7 @@ export default {
           border-bottom: none;
         }
         th {
-          width: 110px;
+          width: 130px;
           text-align: left;
           border: none;
           font-size: 12px;
@@ -304,6 +324,13 @@ export default {
           text-align: center;
           &-item {
             &__trash {
+              width: 30px;
+              height: 30px;
+              padding: 0;
+              font-size: 1rem;
+              border-radius: 10px;
+            }
+            &__plus {
               width: 30px;
               height: 30px;
               padding: 0;

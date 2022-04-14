@@ -124,7 +124,7 @@ export default {
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
-      background: $gradient-w;
+      background: #fff;
     }
     &__buttons {
       display: flex;
@@ -145,7 +145,7 @@ export default {
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
-      background: $gradient-w;
+      background: #fff;
     }
     &__line {
       margin: 10px 0;

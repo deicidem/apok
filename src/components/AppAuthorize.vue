@@ -38,7 +38,7 @@ export default {
           this.showUser = false;
         }
       }
-      this.closeSearch($event); 
+      this.closeSearch($event);
     },
   },
 };

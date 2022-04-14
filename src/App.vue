@@ -292,38 +292,6 @@ img {
   transition: all 0.4s ease-out;
 }
 
-header a {
-  text-decoration: none;
-  color: #fff;
-  font-weight: 400;
-  font-size: 18px;
-  padding: 6px 15px;
-  box-sizing: border-box;
-}
 
-header a:hover {
-  // background: #618580;
-  border-radius: 4px;
-  transition: background-color 0.6s ease-out;
-}
 
-.header__item {
-  margin-right: 40px;
-}
-
-.logo {
-  max-width: 120px;
-}
-
-content {
-  width: 100%;
-}
-
-.menu {
-  height: 100%;
-}
-
-.sidebar {
-  position: absolute;
-}
 </style>

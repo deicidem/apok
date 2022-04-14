@@ -1,7 +1,7 @@
 <template>
   <label class="input-wrapper">
-    <span class="input-label">{{label}}</span>
-    <input type="text" class="input" v-model="localValue"/>
+    <span class="input-label">{{ label }}</span>
+    <input type="text" class="input" v-model="localValue" />
   </label>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   props: {
     value: String,
-    label: String
+    label: String,
   },
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
   border-radius: 15px;
   border: none;
   box-shadow: $shadow-small;
-  line-height: 30px;
+  // line-height: 30px;
   font-size: 14px;
   color: $color-main-dark;
   &-wrapper {

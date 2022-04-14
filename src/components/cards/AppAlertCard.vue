@@ -5,20 +5,24 @@
       <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
     </div>
     <div class="alert-item__info">
-      <h2>{{text}}</h2>
+      <h2>{{ text }}</h2>
       <p>Посмотреть результат</p>
     </div>
-    <app-button @click="$emit('delete')" class="alert-item__trash" type="white-r">
-       <i class="fa fa-trash-o" aria-hidden="true"></i>
+    <app-button
+      @click="$emit('delete')"
+      class="alert-item__trash"
+      type="white-r"
+    >
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
     </app-button>
   </div>
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton.vue"
+import AppButton from "@/components/controls/AppButton.vue";
 export default {
   components: {
-    AppButton
+    AppButton,
   },
   props: {
     text: String,
@@ -26,18 +30,18 @@ export default {
     seen: Boolean,
     result: String,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.unread{
+.unread {
   background: $gradient;
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
-  .alert{
-   &-item{
+.alert {
+  &-item {
     margin-bottom: 20px;
     display: flex;
     box-shadow: $shadow-big;
@@ -46,12 +50,12 @@ export default {
     padding: 10px 15px;
     position: relative;
     background: #fff;
-    &__unread{
+    &__unread {
       position: absolute;
       top: -4px;
       left: -4px;
     }
-    &__img{
+    &__img {
       width: 40px;
       height: 40px;
       background: $gradient;
@@ -60,25 +64,25 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      i{
+      i {
         font-size: 24px;
         color: #fff;
       }
     }
-    &__info{
+    &__info {
       margin-left: 16px;
-      h2{
+      h2 {
         color: $color-main-dark;
         font-weight: 400;
         font-size: 14px;
       }
-      p{
+      p {
         color: $color-main;
         font-weight: 400;
         font-size: 12px;
       }
     }
-    &__trash{
+    &__trash {
       width: 35px;
       height: 35px;
       margin-left: auto;
@@ -87,5 +91,5 @@ export default {
       border-radius: 10px;
     }
   }
-  }
+}
 </style>

@@ -224,10 +224,16 @@ export default {
 </script>
 
 <style lang="scss">
+.search__title {
+  font-size: 20px;
+  color: #000;
+  font-weight: 400;
+}
 .select {
   position: relative;
   &-label {
     font-size: 12px;
+    color: $text-grey;
   }
   &-data {
     background: #fff;
@@ -241,6 +247,7 @@ export default {
     overflow: hidden;
     font-size: 12px;
     cursor: pointer;
+    border: 1px solid $color-main;
   }
   &-options {
     z-index: 10;
@@ -288,10 +295,13 @@ export default {
 .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
   border: 1px solid $color-main !important;
 }
+.datepicker-label {
+  color: $text-grey;
+}
 .vdp-datepicker {
   input {
     padding-right: 26px;
-    width: 130px;
+    width: 150px;
     height: 34px;
     border: 1px solid $color-main;
     border-radius: 10px;

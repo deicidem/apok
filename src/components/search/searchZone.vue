@@ -3,12 +3,16 @@
     <h2 class="search__title">Зона интереса</h2>
 
     <div class="search-zone__input">
-      <input type="radio" />
-      <label>Видимая область экрана</label>
+      <label class="label">
+        <input type="radio" class="radio" name="radio-button"/>
+        <span class="text">Видимая область экрана</span>
+      </label>
     </div>
     <div class="search-zone__input">
-      <input type="radio" />
-      <label>Задать вручную</label>
+      <label class="label">
+        <input type="radio" class="radio" name="radio-button"/>
+        <span class="text">Задать вручную</span>
+      </label>
     </div>
 
     <nav class="search-zone__nav">
@@ -197,9 +201,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.radio {
+  display: none;
+}
+.text {
+  position: relative;
+  padding-left: 30px;
+  display: inline-block;
+  &::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: $gradient-w;
+    box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    outline: 6px solid $color-main;
+    outline-offset: -6px;
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+.radio:checked + .text::after {
+  opacity: 1;
+}
 .number {
   max-width: 40px;
   text-align: center !important;
+}
+.search__title {
+  font-size: 20px;
+  color: #000;
+  font-weight: 400;
 }
 .search-zone {
   padding: 20px;

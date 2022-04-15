@@ -108,8 +108,7 @@ export default {
       color: #fff;
     }
   }
-  .title {
-  }
+
   .form {
     background: $gradient-w;
     margin: 30px 0 0 0;

@@ -39,6 +39,11 @@ export default {
 </script>
 
 <style lang="scss">
+.search__title{
+  font-size: 20px;
+  color: #000;
+  font-weight: 400;
+} 
 .search {
   &-cloud {
     &__subtitle {

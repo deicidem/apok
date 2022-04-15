@@ -2,12 +2,13 @@
   <div class="plan-popup">
     <div class="popup-card">
       <div class="popup-card__header">
-        <div class="back">
-          <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+
+          <div class="back" @click="$emit('close')">
+            <div class="back-arrow">
+              <img src="@/assets/img/arrow.svg" />
+            </div>
+            <p class="back-subtitle">Назад</p>
           </div>
-          <p class="back-subtitle">Назад</p>
-        </div>
 
         <h2 class="popup-card__title">Запланировать задачу</h2>
       </div>
@@ -116,8 +117,6 @@ export default {
       display: flex;
       margin-top: 20px;
     }
-    &__item {
-    }
     &__loading {
       width: 500px;
       padding: 20px;
@@ -156,8 +155,6 @@ export default {
       color: $text-grey;
       font-size: 12px;
       margin-top: 6px;
-    }
-    &__link {
     }
     .card-link {
       display: flex;

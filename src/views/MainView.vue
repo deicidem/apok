@@ -1,28 +1,27 @@
 <template>
-  <section class="hero">
-    <portal-target name="popup">
-
-    </portal-target>
-    <portal-target name="popup-card">
-      
-    </portal-target>
+  <div class="hero-wrapper">
+<section class="hero">
+    <portal-target name="popup"> </portal-target>
+    <portal-target name="popup-card"> </portal-target>
     <div class="sidebar-block" :class="sidebarBlock">
       <app-sidebar
-        @close="sidebarCollapsed = true; sidebarBlockClass()"
-        @open="sidebarCollapsed = false; sidebarBlockClass()"
+        @close="sidebarBlockClass()"
+        @open="sidebarBlockClass()"
       ></app-sidebar>
     </div>
 
-    <div class="map" :class="sidebarCollapsed ? '' : 'collapsed'">
-      <app-map></app-map>
+    <div ref="wrap" class="map" :class="mapBlock">
+      <app-map @ready="getRef($event)"></app-map>
     </div>
   </section>
+  </div>
+  
 </template>
 
 <script>
 import AppMap from "@/components/AppMap.vue";
 import AppSidebar from "@/components/AppSidebar.vue";
-
+import {mapGetters, mapActions} from "vuex";
 export default {
   name: "MainView",
   components: {
@@ -31,27 +30,49 @@ export default {
   },
   data() {
     return {
-      sidebarCollapsed: true,
-      sidebarBlock: 'collapsed'
+      sidebarBlock: "collapsed",
+      mapBlock: "",
+      mapRef: null,
     };
   },
   methods: {
+    ...mapActions(['setSidebarState']),
     sidebarBlockClass() {
-      if (this.sidebarCollapsed) {
+      console.log(this.getSidebarState);
+      if (this.getSidebarState) {
+        this.sidebarBlock = "";
         setTimeout(() => {
-          this.sidebarBlock = 'collapsed'
-        }, 300)
+          this.mapBlock = "collapsed";
+          this.$nextTick(() => {
+            this.mapRef.mapObject.invalidateSize();
+          }) 
+        }, 300);
       } else {
-        this.sidebarBlock = ''
+        this.mapBlock = "";
+        this.$nextTick(() => {
+          this.mapRef.mapObject.invalidateSize();
+        })   
+        setTimeout(() => {
+          this.sidebarBlock = "collapsed";
+        }, 300);
       }
     },
-    onSidebarOpen() {
-      this.sidebarCollapsed = false;
+    getRef($event) {
+      this.mapRef = $event;
     },
-    onSidebarClose() {
-      this.sidebarCollapsed = true;
+  },
+  computed: {
+    ...mapGetters(['getSidebarState'])
+  },
+  mounted() {
+    if (this.getSidebarState) {
+      this.mapBlock = 'collapsed';
+      this.sidebarBlock = "";
+    } else {
+      this.mapBlock = '';
+      this.sidebarBlock = "collapsed";
     }
-  }
+  },
 };
 </script>
 
@@ -61,6 +82,12 @@ export default {
   height: 100%;
   position: relative;
   overflow: hidden;
+  &-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-shadow: $shadow-big;
+  }
 }
 .map {
   height: 100%;
@@ -81,8 +108,8 @@ export default {
   max-width: 800px;
   z-index: 5;
   &.collapsed {
+    box-shadow: $shadow-big;
     max-width: 50px;
   }
 }
-
 </style>

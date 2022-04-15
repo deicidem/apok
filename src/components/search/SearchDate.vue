@@ -13,9 +13,9 @@
             class="input-date"
             calendar-class="input-calendar"
             :monday-first="true"
-            v-model="from"
+            :value="getTimeInterval.from"
             valueType="format"
-            @input="setTimeInterval({ from: $event, to, months })"
+            @input="setTimeInterval({ from: $event, to: getTimeInterval.to, months })"
           >
           </date-picker>
           <div class="search-date__back">
@@ -33,9 +33,9 @@
             :language="ru"
             calendar-class="input-calendar"
             class="input-date"
-            v-model="to"
+            :value="getTimeInterval.to"
             valueType="format"
-            @input="setTimeInterval({ from, to: $event, months })"
+            @input="setTimeInterval({ from: getTimeInterval.from, to: $event, months })"
           >
           </date-picker>
           <div class="search-date__back">
@@ -66,7 +66,7 @@
               v-for="(option, i) in monthsOptions"
               :key="i"
             >
-              <app-checkbox :mini="true" v-model="option.active"></app-checkbox>
+              <app-checkbox :mini="true" v-model="option.active" @change="setTimeInterval({ from: getTimeInterval.from, to: getTimeInterval.to, months })"></app-checkbox>
               <span>{{ option.name }}</span>
             </label>
           </div>
@@ -120,7 +120,6 @@ export default {
       from: "",
       to: "",
       selectActive: false,
-      allMonths: false,
       monthsOptions: [
         {
           cnt: 1,
@@ -188,7 +187,6 @@ export default {
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
     onAllCheck($event) {
-      this.allMonths = $event;
       if ($event) {
         this.monthsOptions.forEach((el) => {
           el.active = true;
@@ -219,7 +217,15 @@ export default {
       });
       return res;
     },
+    allMonths() {
+      return this.months.length == 12;
+    }
   },
+  mounted() {
+    this.getTimeInterval.months.forEach (el => {
+      this.monthsOptions[el.cnt - 1].active = true;
+    })
+  }
 };
 </script>
 

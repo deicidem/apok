@@ -1,8 +1,11 @@
 <template>
   <l-map
+    ref="map"
     @update:zoom="setZoom($event)"
-    @update:center="setCenter($event)"
+    @update:center="updateCenter($event)"
+    @update:bounds="updateCenter(center)"
     @click="onClick($event)"
+    @ready="$emit('ready', $refs.map)"
     style="height: 100%"
     :zoom="zoom"
     :center="center"
@@ -27,17 +30,23 @@
       :lat-lngs="polygon"
       color="#476D70"
     ></l-polygon>
-    <l-geo-json :geojson="circle"></l-geo-json>
+    <l-circle :lat-lng="circle.center" :radius="circle.radius" color="red"/>
     <template>
-      <l-geo-json :options="{fill: false}" v-for="(gj, i) in geoJsons" :key="'gj' + i" :geojson="gj.json"></l-geo-json>
+      <l-geo-json
+        :options="{ fill: false }"
+        v-for="(gj, i) in geoJsons"
+        :key="'gj' + i"
+        :geojson="gj.json"
+      ></l-geo-json>
     </template>
     <template>
-      <l-image-overlay v-for="(img, i) in images" :key="'img'+i"
-      :url="require(`@/assets/img/${img.img}`)"
-      :bounds="img.bounds"
-    ></l-image-overlay>
+      <l-image-overlay
+        v-for="(img, i) in images"
+        :key="'img' + i"
+        :url="require(`@/assets/img/${img.img}`)"
+        :bounds="img.bounds"
+      ></l-image-overlay>
     </template>
-    
   </l-map>
 </template>
 
@@ -55,6 +64,7 @@ import {
   LImageOverlay,
   // LTooltip
   LGeoJson,
+  LCircle
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -82,6 +92,7 @@ export default {
     // LPopup,
     LPolygon,
     LGeoJson,
+    LCircle
   },
   data() {
     return {
@@ -98,7 +109,7 @@ export default {
       zoom: "getZoom",
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
-      images: "getImages"
+      images: "getImages",
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
@@ -111,9 +122,12 @@ export default {
       "setCenter",
       "setZoom",
     ]),
+    updateCenter(center) {
+      this.$refs.map.mapObject.invalidateSize();
+      this.setCenter(center)
+    },
     // Добавление маркеров
     onClick($event) {
-      console.log($event);
       if (
         this.drawable &&
         $event.originalEvent.target.classList.contains("vue2leaflet-map")
@@ -128,7 +142,6 @@ export default {
       }
     },
     handleMarkerDrag($event, id) {
-      console.log(1);
       if (this.drawable) {
         this.changeCoordinate({ latlng: $event.latlng, id });
       }

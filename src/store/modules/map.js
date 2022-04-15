@@ -3,7 +3,7 @@ export default {
   state: {
     areaPolygon: [],
     polygonDrawable: false,
-    circlePolygon: {"type":"Polygon","coordinates":[]},
+    circlePolygon: {center: [0, 0], radius: 0},
     geoJsonPolygons: [],
     images: [],
     zoom: 5,
@@ -72,8 +72,9 @@ export default {
     setCenter(state, value) {
       state.center = value;
     },
-    setCirclePolygon(state, polygon) {
-      state.circlePolygon = polygon;
+    setCirclePolygon(state, {center, radius}) {
+      state.circlePolygon.center = center;
+      state.circlePolygon.radius = radius;
     },
     addGeoJsonPolygon(state, polygon) {
       state.geoJsonPolygons.push(polygon);
@@ -94,7 +95,7 @@ export default {
           state.images.splice(i, 1);
         }
       })
-    }
+    },
   },
   actions: {
     addCoordinate(store, i) {
@@ -118,8 +119,8 @@ export default {
     setCenter(store, value) {
       store.commit('setCenter', value);
     },
-    setCirclePolygon(store, polygon) {
-      store.commit('setCirclePolygon', polygon)
+    setCirclePolygon(store, data) {
+      store.commit('setCirclePolygon', data)
     },
     addGeoJsonPolygon(store, polygon) {
       store.commit('addGeoJsonPolygon', polygon)

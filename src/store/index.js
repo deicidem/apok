@@ -12,13 +12,22 @@ import search from './modules/search'
 
 export default new Vuex.Store({
   state: {
-
+    sidebarActive: false
   },
   getters: {
+    getSidebarState(state) {
+      return state.sidebarActive;
+    }
   },
   mutations: {
+    setSidebarState(state, val) {
+      state.sidebarActive = val;
+    }
   },
   actions: {
+    setSidebarState(store, val) {
+      store.commit('setSidebarState', val)
+    }
   },
   modules: {
     tasks,

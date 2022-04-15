@@ -4,13 +4,13 @@
 
     <div class="search-zone__input">
       <label class="label">
-        <input type="radio" class="radio" name="radio-button"/>
+        <input type="radio" class="radio" name="radio-button" />
         <span class="text">Видимая область экрана</span>
       </label>
     </div>
     <div class="search-zone__input">
       <label class="label">
-        <input type="radio" class="radio" name="radio-button"/>
+        <input type="radio" class="radio" name="radio-button" />
         <span class="text">Задать вручную</span>
       </label>
     </div>
@@ -159,10 +159,13 @@
           label="Радиус (км)"
           class="coordinates-wrapper__input"
         ></app-input>
-      </div>
 
-      <app-button @click="createCircle" class="coordinates-wrapper__button"
-        >Загрузить на карту</app-button
+        <app-button @click="createCircle" class="coordinates-wrapper__button"
+          >Загрузить на карту</app-button
+        >
+      </div>
+      <app-button class="coordinates-wrapper__button" type="red"
+        >Убрать с карты</app-button
       >
     </div>
 
@@ -173,9 +176,11 @@
       <div class="load-wrapper">
         <app-button type="white-g">Загрузить файл</app-button>
         <span class="load-wrapper__name">POLYGON.shp</span>
-        <app-button>Показать на карте</app-button>
       </div>
-      <app-button type="red">Удалить</app-button>
+      <div class="load-wrapper__buttons">
+        <app-button class="load-wrapper__button">Показать на карте</app-button>
+        <app-button class="load-wrapper__button" type="red">Удалить</app-button>
+      </div>
     </div>
   </div>
 </template>
@@ -239,19 +244,19 @@ export default {
       "clearCoordinates",
       "setCirclePolygon",
       "setCenter",
-      "setZoom"
+      "setZoom",
     ]),
     createCircle() {
       let lat = this.parseCoords(this.lat);
       let lng = this.parseCoords(this.lng);
       let radius = +this.rad * 1000;
-      this.setCirclePolygon({radius, center: {lng,lat}});
-      this.setCenter([lng,lat]);
+      this.setCirclePolygon({ radius, center: { lng, lat } });
+      this.setCenter([lng, lat]);
     },
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
       let lng = this.parseCoords(this.newCoord.lng);
-      this.addCoordinate({lat, lng});
+      this.addCoordinate({ lat, lng });
     },
     parseCoords(coord) {
       let str = coord;
@@ -306,6 +311,8 @@ export default {
   position: relative;
   padding-left: 30px;
   display: inline-block;
+  color: #000;
+  margin-top: 6px;
   &::before {
     content: "";
     display: block;
@@ -321,7 +328,7 @@ export default {
   &::after {
     content: "";
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     display: block;
     width: 20px;
@@ -481,28 +488,36 @@ export default {
       align-items: flex-end;
       &__input {
         margin-right: 20px;
-        width: 150px;
+        width: 120px;
       }
       &__button {
         margin-top: 20px;
         margin-left: auto;
+        max-width: 200px;
+        width: 190px;
       }
     }
   }
   &__load {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     .load-wrapper {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-bottom: 20px;
+      &__buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      &__button{
+        margin-bottom: 10px;
+        width: 180px;
+      }
       &__name {
+        margin-left: 20px;
         font-size: 12px;
         color: #000;
-        margin-left: 20px;
       }
     }
   }
@@ -513,7 +528,7 @@ export default {
   }
   &__button {
     margin: 10px 0;
-    height: 40px;
+    height: 35px;
   }
   &__edit__input {
     display: block;

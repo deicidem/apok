@@ -50,10 +50,13 @@
         <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
       </div>
 
-      <div class="sidebar-collapsed__item" @click="open">
+      <div class="sidebar-collapsed__item notification-wrapper" @click="open">
         <router-link to="/main/alerts">
           <div class="sidebar-collapsed__img">
             <img src="@/assets/img/sidebar-notification.svg" />
+          </div>
+          <div class="notification">
+            <div class="notification-number">3</div>
           </div>
         </router-link>
 
@@ -91,9 +94,25 @@ export default {
 };
 </script>
 
-
-
 <style lang="scss">
+.notification{
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  &-number{
+    color: #FFF;
+    font-size: 12px;
+    background: $color-red;
+    border-radius: 50%;
+    width: 16px;
+    height: 18px;
+    text-align: center;
+  }
+  &-wrapper{
+    position: relative;
+  }
+}
+
 .slide-enter {
   transform: translateX(-100%);
 }

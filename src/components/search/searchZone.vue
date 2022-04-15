@@ -75,14 +75,32 @@
             </tr>
             <tr>
               <td class="number"></td>
-              <td>
-                <app-input class="zone-table__input"></app-input>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lat"
+                    :mask="inputMaskLat"
+                    :placeholder="placeholderLat"
+                  />
+                </div>
+              </td>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lng"
+                    :mask="inputMaskLng"
+                    :placeholder="placeholderLng"
+                  />
+                </div>
               </td>
               <td>
-                <app-input class="zone-table__input"></app-input>
-              </td>
-              <td>
-                <app-button class="col-item__plus" type="white-g">
+                <app-button
+                  @click="onAddCoordinate"
+                  class="col-item__plus"
+                  type="white-g"
+                >
                   <i class="fa fa-plus" aria-hidden="true"></i>
                 </app-button>
               </td>
@@ -126,11 +144,15 @@
           v-model="lat"
           label="Широта"
           class="coordinates-wrapper__input"
+          :mask="inputMaskLat"
+          :placeholder="placeholderLat"
         ></app-input>
         <app-input
           v-model="lng"
           label="Долгота"
           class="coordinates-wrapper__input"
+          :mask="inputMaskLng"
+          :placeholder="placeholderLng"
         ></app-input>
         <app-input
           v-model="rad"
@@ -162,18 +184,43 @@
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
-const circleToPolygon = require("circle-to-polygon");
+import MaskedInput from "vue-masked-input";
 export default {
   components: {
     AppInput,
+    MaskedInput,
     AppButton,
   },
   data() {
     return {
+      inputMaskLat: {
+        pattern: `111°11'11" N`,
+        formatCharacters: {
+          N: {
+            validate: (char) => /[nsNS]/.test(char),
+            transform: (char) => char.toUpperCase(),
+          },
+        },
+      },
+      placeholderLat: "000°00'00\" N",
+      inputMaskLng: {
+        pattern: `111°11'11" E`,
+        formatCharacters: {
+          E: {
+            validate: (char) => /[ewEW]/.test(char),
+            transform: (char) => char.toUpperCase(),
+          },
+        },
+      },
+      placeholderLng: "000°00'00\" W",
       lng: "",
       lat: "",
       rad: "",
       searchZoneType: 1,
+      newCoord: {
+        lat: "",
+        lng: "",
+      },
     };
   },
   computed: {
@@ -191,10 +238,61 @@ export default {
       "setPolygonDrawable",
       "clearCoordinates",
       "setCirclePolygon",
+      "setCenter",
+      "setZoom"
     ]),
     createCircle() {
-      let polygon = circleToPolygon([+this.lng, +this.lat], +this.rad * 1000);
-      this.setCirclePolygon(polygon);
+      let lat = this.parseCoords(this.lat);
+      let lng = this.parseCoords(this.lng);
+      let radius = +this.rad * 1000;
+      this.setCirclePolygon({radius, center: {lng,lat}});
+      this.setCenter([lng,lat]);
+    },
+    onAddCoordinate() {
+      let lat = this.parseCoords(this.newCoord.lat);
+      let lng = this.parseCoords(this.newCoord.lng);
+      this.addCoordinate({lat, lng});
+    },
+    parseCoords(coord) {
+      let str = coord;
+      let deg = "";
+      let degEnd = false;
+      let min = "";
+      let minEnd = false;
+      let sec = "";
+      let secEnd = false;
+      let dir = "";
+      for (let i = 0; i < str.length; i++) {
+        if (!degEnd) {
+          if (str[i] == "°") {
+            degEnd = true;
+            continue;
+          }
+          deg += str[i];
+        } else if (!minEnd) {
+          if (str[i] == "'") {
+            minEnd = true;
+            continue;
+          }
+          min += str[i];
+        } else if (!secEnd) {
+          if (str[i] == '"') {
+            secEnd = true;
+            continue;
+          }
+          sec += str[i];
+        }
+      }
+      dir = str[str.length - 1];
+
+      sec = +sec / 3600;
+      min = +min / 60;
+      if (dir == "N" || dir == "E") {
+        deg = +deg + min + sec;
+      } else {
+        deg = -(+deg + min + sec);
+      }
+      return deg;
     },
   },
 };
@@ -251,19 +349,6 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
-  &__input {
-    margin-top: 10px;
-    input {
-      width: 14px;
-      height: 14px;
-    }
-    label {
-      font-weight: 400;
-      color: #000;
-      font-size: 14px;
-      margin-left: 6px;
-    }
-  }
   &__nav {
     margin-top: 10px;
     display: flex;
@@ -317,7 +402,21 @@ export default {
   &__table {
     flex: 1;
     .zone-table__input {
-      max-width: 120px;
+      display: block;
+      width: 120px;
+      font-family: inherit;
+      flex: 1;
+      border: none;
+      margin: 0;
+      line-height: 1.5;
+      padding: 6px;
+      &__td {
+        padding: 0;
+      }
+      &__wrapper {
+        height: 100%;
+        display: flex;
+      }
     }
     .input-label {
       font-size: 8px;
@@ -341,13 +440,6 @@ export default {
           color: #000000;
           padding: 0 6px 6px;
           box-sizing: border-box;
-          input {
-            width: 20px;
-            height: 20px;
-            background: #eff2f2;
-            border-radius: 50%;
-            border: none;
-          }
         }
         td {
           text-align: left;
@@ -356,13 +448,6 @@ export default {
           color: $color-main-dark;
           padding: 6px;
           box-sizing: border-box;
-          input {
-            width: 16px;
-            height: 16px;
-            background: #eff2f2;
-            border-radius: 50%;
-            border: none;
-          }
         }
         .col {
           max-width: 40px;

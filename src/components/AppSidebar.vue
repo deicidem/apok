@@ -1,7 +1,7 @@
 <template>
-  <div class="sidebar_wrap" :class="collapsed ? '' : 'active'">
+  <div class="sidebar_wrap" :class="active ? 'active' : ''">
     <transition name="slide">
-      <div class="sidebar" v-show="!collapsed">
+      <div class="sidebar" v-show="active">
         <div class="sidebar-content">
           <router-view> </router-view>
         </div>
@@ -64,27 +64,27 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from "vuex";
 export default {
   name: "AppSidebar",
-  data() {
-    return {
-      collapsed: true,
-    };
+  computed: {
+    ...mapGetters({active: 'getSidebarState'})
   },
   methods: {
+    ...mapActions(['setSidebarState']),
     open() {
+      this.setSidebarState(true);
       this.$emit("open");
-      this.collapsed = false;
     },
     close() {
+      this.setSidebarState(false);
       this.$emit("close");
-      this.collapsed = true;
     },
     toggleSidebar() {
-      if (this.collapsed) {
-        this.open();
-      } else {
+      if (this.active) {
         this.close();
+      } else {
+        this.open();
       }
     },
   },
@@ -150,7 +150,7 @@ export default {
   z-index: 5;
   height: 100%;
   width: calc(100% - 50px);
-  box-shadow: none;
+  box-shadow: $shadow-big;
   overflow: hidden;
   &-content {
     background: #edecec;
@@ -234,6 +234,9 @@ export default {
         opacity: 1;
       }
       &__hidden {
+        color: $color-main-dark;
+        white-space: nowrap;
+        display: inline-block;
         visibility: hidden;
         opacity: 0;
         z-index: -1;
@@ -244,12 +247,9 @@ export default {
         font-weight: 400;
         font-size: 14px;
         line-height: 24px;
-        padding: 5px;
-        box-shadow: 0 2px 5px 0 rgb(97, 133, 128, 0.5);
-        -webkit-box-shadow: 0 2px 5px 0 rgb(97, 133, 128, 0.5);
-        -moz-box-shadow: 0 2px 5px 0 rgb(97, 133, 128, 0.5);
+        padding: 5px 10px;
+        box-shadow: $shadow-big;
         border-radius: 5px;
-        width: 180px;
         transition: all 0.3s ease-out;
       }
     }

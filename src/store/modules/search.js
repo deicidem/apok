@@ -87,7 +87,6 @@ export default {
       to,
       months
     }) {
-      console.log(from, to, months);
 
       state.timeInterval.from = from;
       state.timeInterval.to = to;

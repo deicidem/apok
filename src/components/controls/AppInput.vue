@@ -1,15 +1,31 @@
 <template>
   <label class="input-wrapper">
     <span class="input-label">{{ label }}</span>
-    <input type="text" class="input" v-model="localValue" />
+    
+    <masked-input v-if="mask != ''" :mask="mask" :placeholder="placeholder" type="text" class="input" v-model="localValue" />
+    <input v-else type="text" class="input" v-model="localValue">
   </label>
 </template>
 
 <script>
+import MaskedInput from "vue-masked-input";
+
 export default {
+  components: {
+    MaskedInput
+  },
   props: {
     value: String,
     label: String,
+    mask: {
+      type: [String, Object],
+      default: ""
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    }
+    
   },
   data() {
     return {

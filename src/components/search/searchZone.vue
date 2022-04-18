@@ -260,7 +260,6 @@ export default {
       "getPolygonArea",
       "getDrawable",
       "getFormattedCoordinates",
-
       "getBounds",
       "getZoom",
     ]),
@@ -327,7 +326,6 @@ export default {
         }
       }
       dir = str[str.length - 1];
-
       sec = +sec / 3600;
       min = +min / 60;
       if (dir == "N" || dir == "E") {
@@ -356,7 +354,6 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
-
   &__screen__button {
     margin-right: 20px;
   }

@@ -43,7 +43,7 @@
           <app-button @click="submit" class="form-wrapper__item button"
             >Зарегистироваться</app-button
           >
-          <router-link class="form-wrapper__item" to="/login">
+          <router-link class="button-router" to="/login">
             <app-button type="white" class="form-wrapper__item button"
               >Авторизоваться</app-button
             >
@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button-router{
+  margin: 0 auto;
+}
 .authorize {
   position: absolute;
   top: 0;

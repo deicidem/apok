@@ -1,114 +1,206 @@
 <template>
   <div class="plan">
-    <div class="plan-wrapper__header">
-
-      <router-link to='/main/plan'>
-        <div class="back">
-          <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+    <vuescroll :ops="ops">
+      <div class="plan-wrapper__header">
+        <router-link to="/main/plan">
+          <div class="back">
+            <div class="back-arrow">
+              <img src="@/assets/img/arrow.svg" />
+            </div>
+            <p class="back-subtitle">Назад</p>
           </div>
-          <p class="back-subtitle">Назад</p>
-        </div>
-      </router-link>
+        </router-link>
 
-      <h2 class="plan-title">
-        Подготовка к запуску задачи 452: Формирование температурных карт
-      </h2>
+        <h2 class="plan-title">
+          Подготовка к запуску задачи 452: {{ plan.title }}
+        </h2>
 
-      <app-button class="plan-wrapper__button">Запланировать задачу</app-button>
-    </div>
-
-    <div class="plan-wrapper">
-      <div class="plan-wrapper__cards">
-        <div class="plan-wrapper__card">
-          <div class="plan-wrapper__title">Описание</div>
-          <p class="plan-wrapper__text">
-            Построение карты температур по тепловым каналам КА Landsat-8
-            производится с целью вычисления значений температур поверхности в
-            градусах Цельсия, выявления тепловых аномалий. Для определения
-            температуры поверхности производятся вычисления спектральной
-            интенсивности излучения, поверхностной яркостной температуры,
-            спектрального коэффициента излучения, значений температур
-            поверхности в градусах Цельсия. Результатом обработки является
-            векторная карта температур и отчетная форма с информацией об
-            используемом изображении. Для более наглядного представления
-            результата используется универсальная температурная шкала [-100;
-            +100]. Красным отображаются области высоких температур (очаги
-            пожаров), синим – области низких температур.
-          </p>
-        </div>
-        <div class="plan-wrapper__card">
-          <div class="plan-wrapper__title">Требования к данным</div>
-          <div class="plan-table">
-            <div class="plan-table__item">
-              <div class="plan-table__img">
-                <img src="@/assets/img/plan__data.svg" />
-              </div>
-              <p class="plan-table__subtitle">Данные:</p>
-              <p class="plan-table__text">
-                мультиспектральные оптические материалы с космического аппарата
-                (КА) Landsat 8.
-              </p>
-            </div>
-            <div class="plan-table__line"></div>
-            <div class="plan-table__item">
-              <div class="plan-table__img">
-                <img src="@/assets/img/plan__season.svg" />
-              </div>
-              <p class="plan-table__subtitle">Сезон съемки:</p>
-              <p class="plan-table__text">с мая по сентябрь включительно.</p>
-            </div>
-            <div class="plan-table__line"></div>
-            <div class="plan-table__item">
-              <div class="plan-table__img">
-                <img src="@/assets/img/plan__cloud.svg" />
-              </div>
-              <p class="plan-table__subtitle">Облачность:</p>
-              <p class="plan-table__text">не более 20%.</p>
-            </div>
-            <div class="plan-table__line"></div>
-          </div>
-        </div>
+        <app-button class="plan-wrapper__button"
+          >Запланировать задачу</app-button
+        >
       </div>
 
-      <div class="plan-wrapper__img">
-        <img src="@/assets/img/img.jpg" />
+      <div class="plan-wrapper">
+        <div class="plan-wrapper__cards">
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Описание</div>
+            <p class="plan-wrapper__text">
+              {{ plan.fullText }}
+            </p>
+          </div>
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Требования к данным</div>
+            <div class="plan-table">
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__data.svg" />
+                </div>
+                <p class="plan-table__subtitle">Данные:</p>
+                <p class="plan-table__text">
+                  {{ plan.requirements.data }}
+                </p>
+              </div>
+              <div class="plan-table__line"></div>
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__season.svg" />
+                </div>
+                <p class="plan-table__subtitle">Сезон съемки:</p>
+                <p class="plan-table__text">{{ plan.requirements.time }}</p>
+              </div>
+              <div class="plan-table__line"></div>
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__cloud.svg" />
+                </div>
+                <p class="plan-table__subtitle">Облачность:</p>
+                <p class="plan-table__text">
+                  {{ plan.requirements.cloudiness }}
+                </p>
+              </div>
+              <div class="plan-table__line"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-wrapper__img">
+          <img :src="itemImage" />
+        </div>
       </div>
-    </div>
+      <div class="plan-wrapper">
+        <div class="plan-wrapper__cards">
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Описание</div>
+            <p class="plan-wrapper__text">
+              {{ plan.fullText }}
+            </p>
+          </div>
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Требования к данным</div>
+            <div class="plan-table">
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__data.svg" />
+                </div>
+                <p class="plan-table__subtitle">Данные:</p>
+                <p class="plan-table__text">
+                  {{ plan.requirements.data }}
+                </p>
+              </div>
+              <div class="plan-table__line"></div>
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__season.svg" />
+                </div>
+                <p class="plan-table__subtitle">Сезон съемки:</p>
+                <p class="plan-table__text">{{ plan.requirements.time }}</p>
+              </div>
+              <div class="plan-table__line"></div>
+              <div class="plan-table__item">
+                <div class="plan-table__img">
+                  <img src="@/assets/img/plan__cloud.svg" />
+                </div>
+                <p class="plan-table__subtitle">Облачность:</p>
+                <p class="plan-table__text">
+                  {{ plan.requirements.cloudiness }}
+                </p>
+              </div>
+              <div class="plan-table__line"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-wrapper__img">
+          <img :src="itemImage" />
+        </div>
+      </div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
 import AppButton from "@/components/controls/AppButton.vue";
+import vuescroll from "vuescroll";
+import "vuescroll/dist/vuescroll.css";
+
 export default {
+  data() {
+    return {
+      ops: {
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500,
+        },
+        scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: "easeOutQuad",
+        },
+        rail: {
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
+          specifyBorderRadius: false,
+          gutterOfEnds: null,
+          gutterOfSide: "2px",
+          keepShow: false,
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          background: "#476D70",
+        },
+      },
+    };
+  },
   computed: {
     id() {
       return +this.$route.params.id;
     },
+    plan() {
+      return this.$store.getters["plans/plan"](this.id);
+    },
+    itemImage() {
+      const fileName = this.plan.image.toLowerCase();
+      return require(`@/assets/img/${fileName}`);
+    },
   },
   components: {
     AppButton,
+    vuescroll,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.__vuescroll {
+  display: flex;
+  flex-direction: column;
+}
+.__panel {
+  width: 100%;
+}
+
 .plan {
-  max-width: 1600px;
-  padding: 30px;
-  margin: 0 auto;
-  box-shadow: $shadow-small;
-  border-radius: 10px;
+  padding: 40px;
+  box-shadow: $shadow-big;
+  border-radius: 25px;
   overflow: hidden;
   background: $gradient-w;
+  height: 900px;
   &-title {
     color: #000;
     font-weight: 400;
   }
   &-wrapper {
-    margin: 30px 0;
+    max-width: 1600px;
+    margin: 50px auto;
     display: flex;
     &__header {
+      margin: auto;
+      max-width: 1600px;
       display: flex;
       justify-content: space-between;
     }
@@ -119,17 +211,20 @@ export default {
       justify-self: end;
     }
     &__cards {
-      max-width: 55%;
+      max-width: 65%;
       display: flex;
       flex-direction: column;
     }
     &__card {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       padding: 20px;
-      box-shadow: $shadow-small;
+      box-shadow: $shadow-big;
       border-radius: 10px;
       overflow: hidden;
       background: #fff;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
     &__title {
       font-size: 1.25rem;
@@ -165,6 +260,7 @@ export default {
         color: $color-main-dark;
       }
       &__text {
+        color: $text-grey;
         font-size: 14px;
         position: absolute;
         left: 180px;

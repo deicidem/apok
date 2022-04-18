@@ -1,5 +1,18 @@
 <template>
-  <div>
-    Help page
-  </div>
+  <div class="help"></div>
 </template>
+
+<script>
+</script>
+
+
+<style scoped lang="scss">
+.help {
+  padding: 40px;
+  box-shadow: $shadow-big;
+  border-radius: 25px;
+  overflow: hidden;
+  background: $gradient-w;
+  height: 100%;
+}
+</style>

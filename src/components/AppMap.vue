@@ -3,7 +3,7 @@
     ref="map"
     @update:zoom="setZoom($event)"
     @update:center="updateCenter($event)"
-    @update:bounds="updateCenter(center)"
+    @update:bounds="setBounds($event)"
     @click="onClick($event)"
     @ready="$emit('ready', $refs.map)"
     style="height: 100%"
@@ -30,7 +30,12 @@
       :lat-lngs="polygon"
       color="#476D70"
     ></l-polygon>
-    <l-circle :lat-lng="circle.center" :radius="circle.radius" color="red"/>
+    <l-rectangle
+      :fill="true"
+      :bounds="screenPolygon"
+      color="#476D70"
+    ></l-rectangle>
+    <l-circle v-if="circle.radius > 0" :lat-lng="circle.center" :radius="circle.radius" color="red"/>
     <template>
       <l-geo-json
         :options="{ fill: false }"
@@ -64,7 +69,8 @@ import {
   LImageOverlay,
   // LTooltip
   LGeoJson,
-  LCircle
+  LCircle,
+  LRectangle
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -92,7 +98,8 @@ export default {
     // LPopup,
     LPolygon,
     LGeoJson,
-    LCircle
+    LCircle,
+    LRectangle
   },
   data() {
     return {
@@ -110,6 +117,7 @@ export default {
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
       images: "getImages",
+      screenPolygon: "getScreenPolygon"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
@@ -121,6 +129,7 @@ export default {
       "changeCoordinate",
       "setCenter",
       "setZoom",
+      "setBounds"
     ]),
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();

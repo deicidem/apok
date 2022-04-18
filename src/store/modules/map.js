@@ -2,16 +2,21 @@ export default {
   namespaced: true,
   state: {
     areaPolygon: [],
+    screenPolygon: [[0, 0], [0,0]],
     polygonDrawable: false,
     circlePolygon: {center: [0, 0], radius: 0},
     geoJsonPolygons: [],
     images: [],
     zoom: 5,
     center: [45, 35],
+    bounds: []
   },
   getters: {
     getPolygonArea(state) {
       return state.areaPolygon;
+    },
+    getScreenPolygon(state) {
+      return state.screenPolygon;
     },
     getFormattedCoordinates(state) {
       let res = [];
@@ -46,6 +51,9 @@ export default {
     },
     getImages(state) {
       return state.images;
+    },
+    getBounds(state) {
+      return state.bounds;
     }
   },
   mutations: {
@@ -96,6 +104,12 @@ export default {
         }
       })
     },
+    setScreenPolygon(state, bounds) {
+      state.screenPolygon = bounds;
+    },
+    setBounds(state, bounds) {
+      state.bounds = bounds;
+    }
   },
   actions: {
     addCoordinate(store, i) {
@@ -133,6 +147,12 @@ export default {
     },
     removeImage(store, id) {
       store.commit('removeImage', id)
+    },
+    setScreenPolygon(store, polygon) {
+      store.commit('setScreenPolygon', polygon)
+    },
+    setBounds(store, bounds) {
+      store.commit('setBounds', bounds)
     }
   }
 }

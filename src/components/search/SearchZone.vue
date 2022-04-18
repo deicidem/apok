@@ -2,163 +2,176 @@
   <div class="search-zone">
     <h2 class="search__title">Зона интереса</h2>
 
-    <div class="search-zone__input">
-      <label class="label">
-        <input type="radio" class="radio" name="radio-button" />
-        <span class="text">Видимая область экрана</span>
-      </label>
-    </div>
-    <div class="search-zone__input">
-      <label class="label">
-        <input type="radio" class="radio" name="radio-button" />
-        <span class="text">Задать вручную</span>
-      </label>
-    </div>
 
-    <nav class="search-zone__nav">
-      <ul>
-        <li>
-          <button
-            @click="searchZoneType = 1"
-            :class="searchZoneType == 1 ? 'active' : ''"
-          >
-            Задать полигон
-          </button>
-        </li>
-        <li class="line"></li>
-        <li>
-          <button
-            @click="searchZoneType = 2"
-            :class="searchZoneType == 2 ? 'active' : ''"
-          >
-            Круглая зона
-          </button>
-        </li>
-        <li class="line"></li>
-        <li>
-          <button
-            @click="searchZoneType = 3"
-            :class="searchZoneType == 3 ? 'active' : ''"
-          >
-            Загрузить файл
-          </button>
-        </li>
-      </ul>
-    </nav>
-
-    <div
-      class="search-zone__card search-zone__main"
-      v-show="searchZoneType == 1"
-    >
-      <div class="search-zone__table">
-        <table>
-          <thead>
-            <tr>
-              <!-- <th class="col"><input type="checkbox" /></th> -->
-              <th class="number">№</th>
-              <th>Широта</th>
-              <th>Долгота</th>
-              <th class="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-              <!-- <td class="col"><input type="checkbox" /></td> -->
-              <td class="number">{{ i + 1 }}</td>
-              <td>{{ coord.lat }}</td>
-              <td>{{ coord.lng }}</td>
-              <td class="col delete" @click="deleteCoordinate(i)">
-                <app-button class="col-item__trash" type="white-r">
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </app-button>
-              </td>
-            </tr>
-            <tr>
-              <td class="number"></td>
-              <td class="zone-table__input__td">
-                <div class="zone-table__input__wrapper">
-                  <masked-input
-                    class="zone-table__input"
-                    v-model="newCoord.lat"
-                    :mask="inputMaskLat"
-                    :placeholder="placeholderLat"
-                  />
-                </div>
-              </td>
-              <td class="zone-table__input__td">
-                <div class="zone-table__input__wrapper">
-                  <masked-input
-                    class="zone-table__input"
-                    v-model="newCoord.lng"
-                    :mask="inputMaskLng"
-                    :placeholder="placeholderLng"
-                  />
-                </div>
-              </td>
-              <td>
-                <app-button
-                  @click="onAddCoordinate"
-                  class="col-item__plus"
-                  type="white-g"
-                >
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </app-button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="search-zone__buttons">
+    <label class="search-zone__input">
+      <app-radio value="screen" v-model="areaType"></app-radio>
+      <span class="text">Видимая область экрана</span>
+    </label>
+    <label class="search-zone__input">
+      <app-radio value="manual" v-model="areaType"></app-radio>
+      <span class="text">Задать вручную</span>
+    </label>
+    <template v-if="areaType == 'screen'">
+      <div class="search-zone__screen__buttons">
         <app-button
-          v-if="!getDrawable"
-          class="search-zone__button"
-          @click="setPolygonDrawable(true)"
-          >Использовать карту</app-button
-        >
-        <app-button
-          v-else
-          class="search-zone__button"
-          type="white"
-          @click="setPolygonDrawable(false)"
-          >Сохранить полигон</app-button
-        >
-        <app-button class="search-zone__button" type="white"
-          >Прописать координаты</app-button
-        >
-        <app-button
-          @click="clearCoordinates()"
-          class="search-zone__button"
+          class="search-zone__screen__button"
+          @click="setScreenPolygon([[0, 0], [0, 0]])"
           type="red"
-          >Очистить координаты</app-button
+          >Убрать с карты</app-button
+        >
+        <app-button
+          class="search-zone__screen__button"
+          @click="setScreenPolygon(getBounds); setZoom(getZoom - 1)"
+          >Показать на карте</app-button
         >
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <nav class="search-zone__nav">
+        <ul>
+          <li>
+            <button
+              @click="searchZoneType = 1"
+              :class="searchZoneType == 1 ? 'active' : ''"
+            >
+              Задать полигон
+            </button>
+          </li>
+          <li class="line"></li>
+          <li>
+            <button
+              @click="searchZoneType = 2"
+              :class="searchZoneType == 2 ? 'active' : ''"
+            >
+              Круглая зона
+            </button>
+          </li>
+          <li class="line"></li>
+          <li>
+            <button
+              @click="searchZoneType = 3"
+              :class="searchZoneType == 3 ? 'active' : ''"
+            >
+              Загрузить файл
+            </button>
+          </li>
+        </ul>
+      </nav>
 
-    <div
-      class="search-zone__card search-zone__coordinates"
-      v-show="searchZoneType == 2"
-    >
-      <div class="coordinates-wrapper">
-        <app-input
-          v-model="lat"
-          label="Широта"
-          class="coordinates-wrapper__input"
-          :mask="inputMaskLat"
-          :placeholder="placeholderLat"
-        ></app-input>
-        <app-input
-          v-model="lng"
-          label="Долгота"
-          class="coordinates-wrapper__input"
-          :mask="inputMaskLng"
-          :placeholder="placeholderLng"
-        ></app-input>
-        <app-input
-          v-model="rad"
-          label="Радиус (км)"
-          class="coordinates-wrapper__input"
-        ></app-input>
+      <div
+        class="search-zone__card search-zone__main"
+        v-show="searchZoneType == 1"
+      >
+        <div class="search-zone__table">
+          <table>
+            <thead>
+              <tr>
+                <!-- <th class="col"><input type="checkbox" /></th> -->
+                <th class="number">№</th>
+                <th>Широта</th>
+                <th>Долгота</th>
+                <th class="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
+                <!-- <td class="col"><input type="checkbox" /></td> -->
+                <td class="number">{{ i + 1 }}</td>
+                <td>{{ coord.lat }}</td>
+                <td>{{ coord.lng }}</td>
+                <td class="col delete" @click="deleteCoordinate(i)">
+                  <app-button class="col-item__trash" type="white-r">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </app-button>
+                </td>
+              </tr>
+              <tr>
+                <td class="number"></td>
+                <td class="zone-table__input__td">
+                  <div class="zone-table__input__wrapper">
+                    <masked-input
+                      class="zone-table__input"
+                      v-model="newCoord.lat"
+                      :mask="inputMaskLat"
+                      :placeholder="placeholderLat"
+                    />
+                  </div>
+                </td>
+                <td class="zone-table__input__td">
+                  <div class="zone-table__input__wrapper">
+                    <masked-input
+                      class="zone-table__input"
+                      v-model="newCoord.lng"
+                      :mask="inputMaskLng"
+                      :placeholder="placeholderLng"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <app-button
+                    @click="onAddCoordinate"
+                    class="col-item__plus"
+                    type="white-g"
+                  >
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </app-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="search-zone__buttons">
+          <app-button
+            v-if="!getDrawable"
+            class="search-zone__button"
+            @click="setPolygonDrawable(true)"
+            >Использовать карту</app-button
+          >
+          <app-button
+            v-else
+            class="search-zone__button"
+            type="white"
+            @click="setPolygonDrawable(false)"
+            >Сохранить полигон</app-button
+          >
+          <app-button class="search-zone__button" type="white"
+            >Прописать координаты</app-button
+          >
+          <app-button
+            @click="clearCoordinates()"
+            class="search-zone__button"
+            type="red"
+            >Очистить координаты</app-button
+          >
+        </div>
+      </div>
+
+      <div
+        class="search-zone__card search-zone__coordinates"
+        v-show="searchZoneType == 2"
+      >
+        <div class="coordinates-wrapper">
+          <app-input
+            v-model="lat"
+            label="Широта"
+            class="coordinates-wrapper__input"
+            :mask="inputMaskLat"
+            :placeholder="placeholderLat"
+          ></app-input>
+          <app-input
+            v-model="lng"
+            label="Долгота"
+            class="coordinates-wrapper__input"
+            :mask="inputMaskLng"
+            :placeholder="placeholderLng"
+          ></app-input>
+          <app-input
+            v-model="rad"
+            label="Радиус (км)"
+            class="coordinates-wrapper__input"
+          ></app-input>
+        </div>
 
         <app-button @click="createCircle" class="coordinates-wrapper__button"
           >Загрузить на карту</app-button
@@ -188,6 +201,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton.vue";
+import AppRadio from "@/components/controls/AppRadio.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import MaskedInput from "vue-masked-input";
 export default {
@@ -195,9 +209,11 @@ export default {
     AppInput,
     MaskedInput,
     AppButton,
+    AppRadio,
   },
   data() {
     return {
+      areaType: "screen",
       inputMaskLat: {
         pattern: `111°11'11" N`,
         formatCharacters: {
@@ -233,6 +249,9 @@ export default {
       "getPolygonArea",
       "getDrawable",
       "getFormattedCoordinates",
+
+      "getBounds",
+      "getZoom"
     ]),
   },
   methods: {
@@ -245,7 +264,12 @@ export default {
       "setCirclePolygon",
       "setCenter",
       "setZoom",
+      "setScreenPolygon",
     ]),
+    showScreenPolygon() {
+      this.setScreenPolygon([[this.getBounds._northEast.lat, this.getBounds._northEast.lng], [this.getBounds._southWest.lat, this.getBounds._southWest.lng]]);
+      this.setZoom(this.getZoom - 1);
+    },
     createCircle() {
       let lat = this.parseCoords(this.lat);
       let lng = this.parseCoords(this.lng);
@@ -304,44 +328,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.radio {
-  display: none;
-}
-.text {
-  position: relative;
-  padding-left: 30px;
-  display: inline-block;
-  color: #000;
-  margin-top: 6px;
-  &::before {
-    content: "";
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: $gradient-w;
-    box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    border-radius: 50%;
-    top: 0;
-    left: 0;
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 20px;
-    height: 20px;
-    outline: 6px solid $color-main;
-    outline-offset: -6px;
-    opacity: 0;
-    border-radius: 50%;
-  }
-}
-.radio:checked + .text::after {
-  opacity: 1;
-}
 .number {
   max-width: 40px;
   text-align: center !important;
@@ -356,6 +342,20 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
+
+  &__screen__button {
+    margin-right: 20px;
+  }
+  &__screen__buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  &__input {
+    display: flex;
+    align-items: center;
+    color: #000;
+  }
   &__nav {
     margin-top: 10px;
     display: flex;
@@ -518,6 +518,18 @@ export default {
         margin-left: 20px;
         font-size: 12px;
         color: #000;
+    flex-direction: column;
+    align-items: flex-end;
+    .load-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      &__name {
+        font-size: 12px;
+        color: #000;
+        margin-left: 20px;
       }
     }
   }

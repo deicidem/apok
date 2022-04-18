@@ -25,10 +25,10 @@
             v-model="user.password"
           >
           </app-input>
-          <router-link class="form-wrapper__item" to="/main">
+          <router-link class="button-router" to="/main">
             <app-button class="form-wrapper__item button">Войти</app-button>
           </router-link>
-          <router-link class="form-wrapper__item" to="/registration">
+          <router-link class="button-router"  to="/registration">
             <app-button type="white" class="form-wrapper__item button"
               >Регистрация</app-button
             >
@@ -67,6 +67,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button-router{
+  margin: 0 auto;
+}
+
 .authorize {
   position: absolute;
   top: 0;

@@ -368,7 +368,8 @@ export default {
   &__input {
     display: flex;
     align-items: center;
-    color: #000;
+    color: $text-grey;
+    padding-top: 10px;
   }
   &__nav {
     margin-top: 10px;

@@ -15,7 +15,9 @@
     >
       <i class="fa fa-trash-o" aria-hidden="true"></i>
     </app-button>
+
   </div>
+
 </template>
 
 <script>

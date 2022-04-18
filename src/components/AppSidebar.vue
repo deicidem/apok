@@ -56,7 +56,8 @@
             <img src="@/assets/img/sidebar-notification.svg" />
           </div>
           <div class="notification">
-            <div class="notification-number">3</div>
+            <!-- <div class="notification-number">3</div> -->
+            <div class="notification-number">{{ alerts.length }}</div>
           </div>
         </router-link>
 
@@ -71,7 +72,10 @@ import {mapGetters, mapActions} from "vuex";
 export default {
   name: "AppSidebar",
   computed: {
-    ...mapGetters({active: 'getSidebarState'})
+    ...mapGetters({active: 'getSidebarState'}),
+    ...mapGetters("alerts", {
+      alerts: "getAlerts",
+    }),
   },
   methods: {
     ...mapActions(['setSidebarState']),

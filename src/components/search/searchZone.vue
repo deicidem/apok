@@ -14,13 +14,21 @@
       <div class="search-zone__screen__buttons">
         <app-button
           class="search-zone__screen__button"
-          @click="setScreenPolygon([[0, 0], [0, 0]])"
+          @click="
+            setScreenPolygon([
+              [0, 0],
+              [0, 0],
+            ])
+          "
           type="red"
           >Убрать с карты</app-button
         >
         <app-button
           class="search-zone__screen__button"
-          @click="setScreenPolygon(getBounds); setZoom(getZoom - 1)"
+          @click="
+            setScreenPolygon(getBounds);
+            setZoom(getZoom - 1);
+          "
           >Показать на карте</app-button
         >
       </div>
@@ -170,10 +178,13 @@
             label="Радиус (км)"
             class="coordinates-wrapper__input"
           ></app-input>
-        </div>
 
-        <app-button @click="createCircle" class="coordinates-wrapper__button"
-          >Загрузить на карту</app-button
+          <app-button @click="createCircle" class="coordinates-wrapper__button"
+            >Загрузить на карту</app-button
+          >
+        </div>
+        <app-button class="coordinates-wrapper__button" type="red"
+          >Убрать с карты</app-button
         >
       </div>
 
@@ -184,9 +195,15 @@
         <div class="load-wrapper">
           <app-button type="white-g">Загрузить файл</app-button>
           <span class="load-wrapper__name">POLYGON.shp</span>
-          <app-button>Показать на карте</app-button>
         </div>
-        <app-button type="red">Удалить</app-button>
+        <div class="load-wrapper__buttons">
+          <app-button class="load-wrapper__button"
+            >Показать на карте</app-button
+          >
+          <app-button class="load-wrapper__button" type="red"
+            >Удалить</app-button
+          >
+        </div>
       </div>
     </template>
   </div>
@@ -243,8 +260,9 @@ export default {
       "getPolygonArea",
       "getDrawable",
       "getFormattedCoordinates",
+
       "getBounds",
-      "getZoom"
+      "getZoom",
     ]),
   },
   methods: {
@@ -260,7 +278,10 @@ export default {
       "setScreenPolygon",
     ]),
     showScreenPolygon() {
-      this.setScreenPolygon([[this.getBounds._northEast.lat, this.getBounds._northEast.lng], [this.getBounds._southWest.lat, this.getBounds._southWest.lng]]);
+      this.setScreenPolygon([
+        [this.getBounds._northEast.lat, this.getBounds._northEast.lng],
+        [this.getBounds._southWest.lat, this.getBounds._southWest.lng],
+      ]);
       this.setZoom(this.getZoom - 1);
     },
     createCircle() {
@@ -335,6 +356,7 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
+
   &__screen__button {
     margin-right: 20px;
   }
@@ -480,28 +502,36 @@ export default {
       align-items: flex-end;
       &__input {
         margin-right: 20px;
-        width: 150px;
+        width: 120px;
       }
       &__button {
         margin-top: 20px;
         margin-left: auto;
+        max-width: 200px;
+        width: 190px;
       }
     }
   }
   &__load {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     .load-wrapper {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-bottom: 20px;
+      &__buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      &__button {
+        margin-bottom: 10px;
+        width: 180px;
+      }
       &__name {
+        margin-left: 20px;
         font-size: 12px;
         color: #000;
-        margin-left: 20px;
       }
     }
   }
@@ -512,7 +542,7 @@ export default {
   }
   &__button {
     margin: 10px 0;
-    height: 40px;
+    height: 35px;
   }
   &__edit__input {
     display: block;

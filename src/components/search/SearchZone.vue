@@ -2,6 +2,7 @@
   <div class="search-zone">
     <h2 class="search__title">Зона интереса</h2>
 
+
     <label class="search-zone__input">
       <app-radio value="screen" v-model="areaType"></app-radio>
       <span class="text">Видимая область экрана</span>
@@ -176,19 +177,24 @@
           >Загрузить на карту</app-button
         >
       </div>
-
-      <div
-        class="search-zone__card search-zone__load"
-        v-show="searchZoneType == 3"
+      <app-button class="coordinates-wrapper__button" type="red"
+        >Убрать с карты</app-button
       >
-        <div class="load-wrapper">
-          <app-button type="white-g">Загрузить файл</app-button>
-          <span class="load-wrapper__name">POLYGON.shp</span>
-          <app-button>Показать на карте</app-button>
-        </div>
-        <app-button type="red">Удалить</app-button>
+    </div>
+
+    <div
+      class="search-zone__card search-zone__load"
+      v-show="searchZoneType == 3"
+    >
+      <div class="load-wrapper">
+        <app-button type="white-g">Загрузить файл</app-button>
+        <span class="load-wrapper__name">POLYGON.shp</span>
       </div>
-    </template>
+      <div class="load-wrapper__buttons">
+        <app-button class="load-wrapper__button">Показать на карте</app-button>
+        <app-button class="load-wrapper__button" type="red">Удалить</app-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -243,6 +249,7 @@ export default {
       "getPolygonArea",
       "getDrawable",
       "getFormattedCoordinates",
+
       "getBounds",
       "getZoom"
     ]),
@@ -335,6 +342,7 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
+
   &__screen__button {
     margin-right: 20px;
   }
@@ -480,16 +488,36 @@ export default {
       align-items: flex-end;
       &__input {
         margin-right: 20px;
-        width: 150px;
+        width: 120px;
       }
       &__button {
         margin-top: 20px;
         margin-left: auto;
+        max-width: 200px;
+        width: 190px;
       }
     }
   }
   &__load {
     display: flex;
+    align-items: flex-start;
+    .load-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      &__buttons{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      &__button{
+        margin-bottom: 10px;
+        width: 180px;
+      }
+      &__name {
+        margin-left: 20px;
+        font-size: 12px;
+        color: #000;
     flex-direction: column;
     align-items: flex-end;
     .load-wrapper {
@@ -512,7 +540,7 @@ export default {
   }
   &__button {
     margin: 10px 0;
-    height: 40px;
+    height: 35px;
   }
   &__edit__input {
     display: block;

@@ -10,8 +10,8 @@
           <search-spacecraft></search-spacecraft>
         </div>
         <div class="search-buttons">
-          <app-button type="white">Очистить</app-button>
-          <app-button>Запросить данные</app-button>
+          <button class="button button-white">Очистить</button>
+          <button class="button button-g">Запросить данные</button>
         </div>
       </div>
     </vuescroll>
@@ -27,7 +27,7 @@ import SearchDate from "@/components/search/SearchDate";
 import SearchSpacecraft from "@/components/search/SearchSpacecraft";
 import SearchCloud from "@/components/search/SearchCloud";
 import SearchZone from "@/components/search/SearchZone";
-import AppButton from '../../components/controls/AppButton.vue';
+// import AppButton from '../../components/controls/AppButton.vue';
 
 export default {
   components: {
@@ -36,7 +36,7 @@ export default {
     SearchSpacecraft,
     SearchCloud,
     SearchZone,
-    AppButton,
+    // AppButton,
   },
   data() {
     return {

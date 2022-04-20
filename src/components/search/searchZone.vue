@@ -12,8 +12,8 @@
     </label>
     <template v-if="areaType == 'screen'">
       <div class="search-zone__screen__buttons">
-        <app-button
-          class="search-zone__screen__button"
+        <button
+          class="button button-r search-zone__screen__button"
           @click="
             setScreenPolygon([
               [0, 0],
@@ -21,15 +21,15 @@
             ])
           "
           type="red"
-          >Убрать с карты</app-button
+          >Убрать с карты</button
         >
-        <app-button
-          class="search-zone__screen__button"
+        <button
+          class="button button-g"
           @click="
             setScreenPolygon(getBounds);
             setZoom(getZoom - 1);
           "
-          >Показать на карте</app-button
+          >Показать на карте</button
         >
       </div>
     </template>
@@ -87,9 +87,9 @@
                 <td>{{ coord.lat }}</td>
                 <td>{{ coord.lng }}</td>
                 <td class="col delete" @click="deleteCoordinate(i)">
-                  <app-button class="col-item__trash" type="white-r">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </app-button>
+                  <button class="button button-svg">
+                    <img inline-svg src="@/assets/img/trash.svg">
+                  </button>
                 </td>
               </tr>
               <tr>
@@ -114,14 +114,14 @@
                     />
                   </div>
                 </td>
-                <td>
-                  <app-button
+                <td class="col">
+                  <button
                     @click="onAddCoordinate"
-                    class="col-item__plus"
+                    class="button button-svg"
                     type="white-g"
                   >
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                  </app-button>
+                    <img inline-svg src="@/assets/img/plus.svg">
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -129,27 +129,25 @@
         </div>
 
         <div class="search-zone__buttons">
-          <app-button
+          <button
             v-if="!getDrawable"
-            class="search-zone__button"
+            class="button button-g search-zone__button"
             @click="setPolygonDrawable(true)"
-            >Использовать карту</app-button
+            >Использовать карту</button
           >
-          <app-button
+          <button
             v-else
-            class="search-zone__button"
-            type="white"
+            class="button button-white search-zone__button"
             @click="setPolygonDrawable(false)"
-            >Сохранить полигон</app-button
+            >Сохранить полигон</button
           >
-          <app-button class="search-zone__button" type="white"
-            >Прописать координаты</app-button
+          <button class="button button-white search-zone__button" 
+            >Прописать координаты</button
           >
-          <app-button
+          <button
             @click="clearCoordinates()"
-            class="search-zone__button"
-            type="red"
-            >Очистить координаты</app-button
+            class="button button-r search-zone__button"
+            >Очистить координаты</button
           >
         </div>
       </div>
@@ -179,12 +177,12 @@
             class="coordinates-wrapper__input"
           ></app-input>
 
-          <app-button @click="createCircle" class="coordinates-wrapper__button"
-            >Загрузить на карту</app-button
+          <button @click="createCircle" class="button button-g coordinates-wrapper__button"
+            >Загрузить на карту</button
           >
         </div>
-        <app-button class="coordinates-wrapper__button" type="red"
-          >Убрать с карты</app-button
+        <button class="button button-r coordinates-wrapper__button" 
+          >Убрать с карты</button
         >
       </div>
 
@@ -193,15 +191,15 @@
         v-show="searchZoneType == 3"
       >
         <div class="load-wrapper">
-          <app-button type="white-g">Загрузить файл</app-button>
+          <button class="button button-white">Загрузить файл</button>
           <span class="load-wrapper__name">POLYGON.shp</span>
         </div>
         <div class="load-wrapper__buttons">
-          <app-button class="load-wrapper__button"
-            >Показать на карте</app-button
+          <button class="button button-g load-wrapper__button"
+            >Показать на карте</button
           >
-          <app-button class="load-wrapper__button" type="red"
-            >Удалить</app-button
+          <button class="button button-r load-wrapper__button" type="red"
+            >Удалить</button
           >
         </div>
       </div>
@@ -211,7 +209,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 import AppRadio from "@/components/controls/AppRadio.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import MaskedInput from "vue-masked-input";
@@ -219,7 +217,7 @@ export default {
   components: {
     AppInput,
     MaskedInput,
-    AppButton,
+    // AppButton,
     AppRadio,
   },
   data() {

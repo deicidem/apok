@@ -1,30 +1,27 @@
 <template>
   <div class="alert-item">
     <div class="alert-item__unread unread" v-show="!seen"></div>
-    <div class="alert-item__img">
-      <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+    <div class="alert-content">
+      <div class="alert-item__img">
+        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+      </div>
+      <div class="alert-item__info">
+        <h2>{{ text }}</h2>
+        <p>Посмотреть результат</p>
+      </div>
     </div>
-    <div class="alert-item__info">
-      <h2>{{ text }}</h2>
-      <p>Посмотреть результат</p>
-    </div>
-    <app-button
-      @click="$emit('delete')"
-      class="alert-item__trash"
-      type="white-r"
-    >
-      <i class="fa fa-trash-o" aria-hidden="true"></i>
-    </app-button>
 
+    <button @click="$emit('delete')" class="button button-svg">
+      <img inline-svg src="@/assets/img/trash.svg" />
+    </button>
   </div>
-
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 export default {
   components: {
-    AppButton,
+    // AppButton,
   },
   props: {
     text: String,
@@ -43,7 +40,12 @@ export default {
   border-radius: 50%;
 }
 .alert {
+  &-content{
+    display: flex;
+  }
   &-item {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
     display: flex;
     box-shadow: $shadow-big;

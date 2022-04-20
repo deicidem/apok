@@ -4,21 +4,21 @@
     <app-input class="auth-input" label="Логин"></app-input>
     <app-input class="auth-input" label="Пароль"></app-input>
     <router-link to="/login">
-      <app-button class="auth-button">Войти</app-button>
+      <button class="button button-g auth-button">Войти</button>
     </router-link>
 
     <router-link to="/registration">
-      <app-button class="auth-button">Зарегистрироваться</app-button>
+      <button class="button button-g auth-button">Зарегистрироваться</button>
     </router-link>
   </div>
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 export default {
   components: {
-    AppButton,
+    // AppButton,
     AppInput,
   },
 };

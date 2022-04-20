@@ -15,22 +15,24 @@
 
       <div class="plan-item__buttons">
         <router-link :to="'/plan/' + planid">
-          <app-button type="white-g">Подробнее</app-button>
+          <!-- <app-button type="white-g">Подробнее</app-button> -->
+          <button class="button button-white">Подробнее</button>
         </router-link>
 
-        <app-button @click="planPopup = true">Запланировать</app-button>
+        <button class="button button-g" @click="planPopup = true">Запланировать</button>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton";
+// import AppButton from "@/components/controls/AppButton";
 import AppPlanPopup from "@/components/AppPlanPopup";
 
 export default {
   components: {
-    AppButton,
+    // AppButton,
     AppPlanPopup,
   },
   props: {

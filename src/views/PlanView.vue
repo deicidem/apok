@@ -15,8 +15,8 @@
           Подготовка к запуску задачи 452: {{ plan.title }}
         </h2>
 
-        <app-button class="plan-wrapper__button"
-          >Запланировать задачу</app-button
+        <button class="button button-g plan-wrapper__button"
+          >Запланировать задачу</button
         >
       </div>
 
@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
@@ -168,7 +168,7 @@ export default {
     },
   },
   components: {
-    AppButton,
+    // AppButton,
     vuescroll,
   },
 };

@@ -7,7 +7,7 @@
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
-            <router-link to="/">Главная</router-link>
+            <router-link to="/"><img src="@/assets/img/logo.svg"></router-link>
           </li>
           <li class="header-nav__item">
             <router-link to="/tutorial">Руководства пользователя</router-link>

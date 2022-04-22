@@ -15,7 +15,9 @@
             :monday-first="true"
             :value="getTimeInterval.from"
             valueType="format"
-            @input="setTimeInterval({ from: $event, to: getTimeInterval.to, months })"
+            @input="
+              setTimeInterval({ from: $event, to: getTimeInterval.to, months })
+            "
           >
           </date-picker>
           <div class="search-date__back">
@@ -35,7 +37,13 @@
             class="input-date"
             :value="getTimeInterval.to"
             valueType="format"
-            @input="setTimeInterval({ from: getTimeInterval.from, to: $event, months })"
+            @input="
+              setTimeInterval({
+                from: getTimeInterval.from,
+                to: $event,
+                months,
+              })
+            "
           >
           </date-picker>
           <div class="search-date__back">
@@ -66,7 +74,17 @@
               v-for="(option, i) in monthsOptions"
               :key="i"
             >
-              <app-checkbox :mini="true" v-model="option.active" @change="setTimeInterval({ from: getTimeInterval.from, to: getTimeInterval.to, months })"></app-checkbox>
+              <app-checkbox
+                :mini="true"
+                v-model="option.active"
+                @change="
+                  setTimeInterval({
+                    from: getTimeInterval.from,
+                    to: getTimeInterval.to,
+                    months,
+                  })
+                "
+              ></app-checkbox>
               <span>{{ option.name }}</span>
             </label>
           </div>
@@ -219,13 +237,13 @@ export default {
     },
     allMonths() {
       return this.months.length == 12;
-    }
+    },
   },
   mounted() {
-    this.getTimeInterval.months.forEach (el => {
+    this.getTimeInterval.months.forEach((el) => {
       this.monthsOptions[el.cnt - 1].active = true;
-    })
-  }
+    });
+  },
 };
 </script>
 
@@ -238,6 +256,7 @@ export default {
 .select {
   position: relative;
   &-label {
+    padding-left: 10px;
     font-size: 12px;
     color: $text-grey;
   }
@@ -253,7 +272,7 @@ export default {
     overflow: hidden;
     font-size: 12px;
     cursor: pointer;
-    border: 1px solid $color-main;
+    border: 1px solid rgb($text-grey, 0.2);
   }
   &-options {
     z-index: 10;
@@ -263,7 +282,7 @@ export default {
     background: #fff;
     display: flex;
     flex-direction: column;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     border-radius: 10px;
   }
   &-option {
@@ -303,18 +322,19 @@ export default {
 }
 .datepicker-label {
   color: $text-grey;
+  padding-left: 10px;
 }
 .vdp-datepicker {
   input {
     padding-right: 26px;
     width: 150px;
     height: 34px;
-    border: 1px solid $color-main;
+    border: 1px solid rgb($text-grey, 0.2);
     border-radius: 10px;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     outline: none;
     &:focus-visible {
-      border: 1px solid $color-main-dark;
+      border: 1px solid $color-main;
     }
   }
   &__calendar {
@@ -367,6 +387,9 @@ export default {
       font-size: 12px;
       position: relative;
       outline: none;
+      &:focus-within .datepicker-label {
+        color: $color-main;
+      }
     }
     &__arrow {
       max-height: 20px;

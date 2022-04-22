@@ -33,8 +33,8 @@ export default {
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
-  height: 30px;
   padding: 0 24px;
+  height: 35px;
   text-align: center;
   font-size: 0.875rem;
   cursor: pointer;

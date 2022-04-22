@@ -65,7 +65,7 @@ export default {
   },
   components: {
     vuescroll,
-    AppAlertCard,
+    AppAlertCard
   },
 };
 </script>

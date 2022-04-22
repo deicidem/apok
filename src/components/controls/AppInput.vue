@@ -1,9 +1,16 @@
 <template>
   <label class="input-wrapper">
     <span class="input-label">{{ label }}</span>
-    
-    <masked-input v-if="mask != ''" :mask="mask" :placeholder="placeholder" type="text" class="input" v-model="localValue" />
-    <input v-else type="text" class="input" v-model="localValue">
+
+    <masked-input
+      v-if="mask != ''"
+      :mask="mask"
+      :placeholder="placeholder"
+      type="text"
+      class="input"
+      v-model="localValue"
+    />
+    <input v-else type="text" class="input" v-model="localValue" />
   </label>
 </template>
 
@@ -12,20 +19,19 @@ import MaskedInput from "vue-masked-input";
 
 export default {
   components: {
-    MaskedInput
+    MaskedInput,
   },
   props: {
     value: String,
     label: String,
     mask: {
       type: [String, Object],
-      default: ""
+      default: "",
     },
     placeholder: {
       type: String,
-      default: ""
-    }
-    
+      default: "",
+    },
   },
   data() {
     return {
@@ -51,16 +57,23 @@ export default {
 <style lang="scss" scoped>
 .input {
   margin-top: 2px;
-  padding: 5px 10px;
-  border-radius: 15px;
+  padding: 8px 10px;
+  border-radius: 10px;
   border: none;
+  border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   font-size: 14px;
   color: $color-main-dark;
+  &:active {
+    outline: 1px solid $color-main;
+  }
   &-wrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    &:focus-within .input-label {
+      color: $color-main;
+    }
   }
   &:focus-visible {
     outline: 1px solid $color-main;

@@ -25,13 +25,13 @@
             v-model="user.password"
           >
           </app-input>
-          <router-link class="form-wrapper__item" to="/main">
-            <app-button class="form-wrapper__item button">Войти</app-button>
+          <router-link class="button-router" to="/main">
+            <button class="button button-g form-wrapper__item">Войти</button>
           </router-link>
-          <router-link class="form-wrapper__item" to="/registration">
-            <app-button type="white" class="form-wrapper__item button"
-              >Регистрация</app-button
-            >
+          <router-link class="button-router" to="/registration">
+            <button class="button button-white form-wrapper__item">
+              Регистрация
+            </button>
           </router-link>
         </form>
       </div>
@@ -41,13 +41,13 @@
 
 <script>
 import AppInput from "@/components/controls/AppInput.vue";
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 
 import { mapActions } from "vuex";
 
 export default {
   components: {
-    AppButton,
+    // AppButton,
     AppInput,
   },
   data() {
@@ -67,6 +67,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button-router {
+  margin: 0 auto;
+}
+
 .authorize {
   position: absolute;
   top: 0;

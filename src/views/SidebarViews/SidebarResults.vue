@@ -58,9 +58,9 @@
             </table>
           </div>
           <div class="card-buttons">
-            <app-button class="card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)">Скрыть контур</app-button>
-            <app-button class="card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.img, cardData.bounds)"
-              >Показать изображение</app-button
+            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)">Скрыть контур</button>
+            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.img, cardData.bounds)"
+              >Показать изображение</button
             >
           </div>
         </div>
@@ -84,8 +84,7 @@
             <tr v-for="(item, i) in results" :key="i">
               <td class="results-table__buttons">
                 <button
-                  class="button-small"
-                  type="white-r"
+                  class="button button-white button-small"
                   :class="buttons[i].polygonActive ? 'active' : ''"
                   @click="onPolygonButtonClick(i, item.id, item.GeoJSON)"
                 >
@@ -97,8 +96,7 @@
                   />
                 </button>
                 <button
-                  class="button-small"
-                  type="white-r"
+                  class="button button-white button-small"
                   :class="buttons[i].imageActive ? 'active' : ''"
                   @click="onImageButtonClick(i, item.id, item.img, item.bounds)"
                 >
@@ -118,8 +116,7 @@
               <td>{{ item.info.cloudiness }}</td>
               <td class="results-table__buttons">
                 <button
-                  class="button-small"
-                  type="white-r"
+                  class="button button-white button-small"
                   :class="buttons[i].cardActive ? 'active' : ''"
                   @click="onCardButtonClick(i)"
                 >
@@ -142,11 +139,11 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-import AppButton from "@/components/controls/AppButton";
+// import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     AppTable,
-    AppButton,
+    // AppButton,
   },
   data() {
     return {
@@ -337,10 +334,10 @@ export default {
     }
   }
   .button-small {
-    background: $gradient-w;
-    border: none;
-    box-shadow: $shadow_small;
-    cursor: pointer;
+    // background: $gradient-w;
+    // border: none;
+    // box-shadow: $shadow_small;
+    // cursor: pointer;
     margin: 0 5px;
     width: 25px;
     height: 25px;

@@ -18,23 +18,23 @@
         <div class="popup-card__item">
           <div class="popup-card__loading">
             <div class="popup-card__buttons">
-              <app-button>Загрузить файл</app-button>
+              <button class="button button-g">Загрузить файл</button>
               <p>POLYGON.shp</p>
             </div>
             <div class="popup-card__line"></div>
             <div class="popup-card__link">
               <div class="card-link">
                 <p>ftp://uic@imccloud.novacenter.ru:2021/Work_id_453</p>
-                <div class="card-link__img">
+                <button class="button button-svg">
                   <img src="@/assets/img/link.svg" />
-                </div>
+                </button>
               </div>
               <p class="popup-card__text">
                 Вы можете использовать удобный вам менеджер файлов для загрузки.
               </p>
             </div>
           </div>
-          <app-button class="popup-card__button">Начать</app-button>
+          <button class="button button-g popup-card__button">Начать</button>
         </div>
 
         <div class="popup-card__info">
@@ -72,10 +72,10 @@
 </template>
 
 <script>
-import AppButton from "@/components/controls/AppButton.vue";
+// import AppButton from "@/components/controls/AppButton.vue";
 export default {
   components: {
-    AppButton,
+    // AppButton,
   },
 };
 </script>
@@ -165,12 +165,12 @@ export default {
         line-height: 26px;
         color: $color-main-dark;
       }
-      &__img {
-        background: $gradient-w;
-        padding: 6px;
-        box-shadow: $shadow-small;
-        border-radius: 10px;
-      }
+      // &__img {
+        // background: $gradient-w;
+        // padding: 6px;
+        // box-shadow: $shadow-small;
+        // border-radius: 10px;
+      // }
     }
     &__info {
       margin-left: 20px;
@@ -200,6 +200,7 @@ export default {
             margin-right: 10px;
           }
           &__text {
+            color: $text-grey;
             font-size: 12px;
             max-width: 460px;
             margin-right: 10px;

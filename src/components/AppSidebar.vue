@@ -9,8 +9,7 @@
     </transition>
     <div class="sidebar-collapsed">
       <div
-        class="sidebar__item open sidebar-open"
-        id="collapsed"
+        class="sidebar-collapsed__img open sidebar-open"
         @click="toggleSidebar()"
       >
         <div class="sidebar-collapsed__img">
@@ -213,11 +212,14 @@ export default {
     height: 100%;
     width: 50px;
     box-shadow: $shadow-small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &__item {
       position: relative;
       display: flex;
       align-items: center;
-      margin: 12px;
+      margin: 8px;
       i {
         font-size: 24px;
         color: rgb(97, 133, 128);

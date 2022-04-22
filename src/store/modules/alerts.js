@@ -20,7 +20,9 @@ export default {
   }
 }
 
-function setAlerts() {
+ function setAlerts() {
+  
+
   return [
     {
       id: 1,

@@ -12,12 +12,18 @@ export default {
 
   },
   actions: {
-
+    async load() {
+      let response = await fetch("https://localhost:5001/api/plans/");
+      let commits = await response.json();
+      console.log(commits);
+    }
   }
 }
+ function setPlans() {
 
-function setPlans() {
-  return [
+
+
+  return  [
    {
     id: 1,
     title: "Формирование температурных карт",

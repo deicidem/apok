@@ -8,6 +8,8 @@ Vue.use(PortalVue)
 
 Vue.config.productionTip = false
 
+store.dispatch('plans/load')
+
 new Vue({
   router,
   store,

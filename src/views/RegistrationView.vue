@@ -40,13 +40,13 @@
           >
           </app-input>
 
-          <button @click="submit" class="button button-g form-wrapper__item"
-            >Зарегистироваться</button
-          >
+          <button @click="submit" class="button button-g form-wrapper__item">
+            Зарегистироваться
+          </button>
           <router-link class="button-router" to="/login">
-            <button class="button button-white form-wrapper__item"
-              >Авторизоваться</button
-            >
+            <button class="button button-white form-wrapper__item">
+              Авторизоваться
+            </button>
           </router-link>
         </form>
       </div>
@@ -56,13 +56,9 @@
 
 <script>
 import AppInput from "@/components/controls/AppInput.vue";
-// import AppButton from "@/components/controls/AppButton.vue";
-
 import { mapActions } from "vuex";
-
 export default {
   components: {
-    // AppButton,
     AppInput,
   },
   data() {
@@ -87,9 +83,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button-router{
-  margin: 0 auto;
-}
 .authorize {
   position: absolute;
   top: 0;
@@ -99,6 +92,9 @@ export default {
   width: 100%;
   height: 100%;
   background-size: cover;
+  .button-router {
+    margin: 0 auto;
+  }
   .back {
     margin: 40px;
     display: flex;

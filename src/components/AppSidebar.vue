@@ -56,7 +56,6 @@
             <img src="@/assets/img/sidebar-notification.svg" />
           </div>
           <div class="notification">
-            <!-- <div class="notification-number">3</div> -->
             <div class="notification-number">{{ alerts.length }}</div>
           </div>
         </router-link>
@@ -68,17 +67,17 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "AppSidebar",
   computed: {
-    ...mapGetters({active: 'getSidebarState'}),
+    ...mapGetters({ active: "getSidebarState" }),
     ...mapGetters("alerts", {
       alerts: "getAlerts",
     }),
   },
   methods: {
-    ...mapActions(['setSidebarState']),
+    ...mapActions(["setSidebarState"]),
     open() {
       this.setSidebarState(true);
       this.$emit("open");
@@ -99,73 +98,55 @@ export default {
 </script>
 
 <style lang="scss">
-.notification{
+.notification {
   position: absolute;
   top: -5px;
   right: -8px;
-  &-number{
-    color: #FFF;
+  &-number {
+    color: #fff;
     font-size: 12px;
-    background: $color-red;
+    background: $gradient-r;
     border-radius: 50%;
-    width: 16px;
+    width: 18px;
     height: 18px;
     text-align: center;
   }
-  &-wrapper{
+  &-wrapper {
     position: relative;
   }
 }
-
-.slide-enter {
-  transform: translateX(-100%);
+.slide {
+  &-enter {
+    transform: translateX(-100%);
+  }
+  &-enter-active {
+    transition: all 0.3s ease;
+  }
+  &-enter-to {
+    transform: translateX(0);
+  }
+  &-leave {
+    transform: translateX(0);
+  }
+  &-leave-active {
+    transition: all 0.3s ease;
+  }
+  &-leave-to {
+    transform: translateX(-100%);
+  }
 }
-.slide-enter-active {
-  transition: all 0.3s ease;
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
+  &-enter,
+  &-leave-active {
+    opacity: 0;
+  }
 }
-.slide-enter-to {
-  transform: translateX(0);
-}
-.slide-leave {
-  transform: translateX(0);
-}
-.slide-leave-active {
-  transition: all 0.3s ease;
-}
-.slide-leave-to {
-  transform: translateX(-100%);
-}
-.sidebar-title {
-  background: $gradient;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 400;
-  box-shadow: $shadow-small;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  transition-timing-function: ease;
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
-}
-.sidebar-title {
-  background: $gradient;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  font-size: 18px;
-  font-weight: 400;
-  box-shadow: $shadow-small;
-}
-
 .sidebar {
   display: block;
   position: absolute;
@@ -175,6 +156,15 @@ export default {
   width: calc(100% - 50px);
   box-shadow: $shadow-big;
   overflow: hidden;
+  &-title {
+    background: $gradient;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    box-shadow: $shadow-small;
+  }
   &-content {
     background: #edecec;
     transition: all 0.3s ease-out;

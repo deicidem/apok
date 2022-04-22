@@ -58,10 +58,28 @@
             </table>
           </div>
           <div class="card-buttons">
-            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)">Скрыть контур</button>
-            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.img, cardData.bounds)"
-              >Показать изображение</button
+            <button
+              class="button button-g card-button"
+              @click="
+                onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)
+              "
             >
+              Скрыть контур
+            </button>
+            <button
+              class="button button-white card-button"
+              type="white"
+              @click="
+                onImageButtonClick(
+                  card.ind,
+                  cardData.id,
+                  cardData.img,
+                  cardData.bounds
+                )
+              "
+            >
+              Показать изображение
+            </button>
           </div>
         </div>
       </portal>
@@ -133,17 +151,18 @@
         </app-table>
       </div>
     </div>
+    <vs-pagination :total-pages="5"></vs-pagination>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-// import AppButton from "@/components/controls/AppButton";
+import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     AppTable,
-    // AppButton,
+    VsPagination,
   },
   data() {
     return {
@@ -160,7 +179,7 @@ export default {
     }),
     cardData() {
       return this.results[this.card.ind];
-    }
+    },
   },
   methods: {
     ...mapActions("map", [
@@ -193,20 +212,20 @@ export default {
         this.buttons[ind].cardActive = false;
       } else {
         this.card.ind = ind;
-        this.buttons.forEach(el => {
+        this.buttons.forEach((el) => {
           el.cardActive = false;
-        })
+        });
         this.buttons[ind].cardActive = true;
         this.card.active = true;
-        this.card.data = {...this.results[ind]}
+        this.card.data = { ...this.results[ind] };
       }
     },
     onCardClose() {
-      this.buttons.forEach(el => {
+      this.buttons.forEach((el) => {
         el.cardActive = false;
-      })
+      });
       this.card.active = false;
-    }
+    },
   },
   beforeMount() {
     this.results.forEach((element) => {
@@ -334,10 +353,6 @@ export default {
     }
   }
   .button-small {
-    // background: $gradient-w;
-    // border: none;
-    // box-shadow: $shadow_small;
-    // cursor: pointer;
     margin: 0 5px;
     width: 25px;
     height: 25px;
@@ -364,7 +379,6 @@ export default {
     &:last-child {
       margin-right: 0;
     }
-
   }
   .icon {
     width: 15px;

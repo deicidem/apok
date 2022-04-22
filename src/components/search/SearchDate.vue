@@ -1,6 +1,6 @@
 <template>
   <div class="search-date">
-    <h2 class="search__title">Интервал дат съемки</h2>
+    <h2 class="search-title">Интервал дат съемки</h2>
 
     <div class="search-date__wrapper">
       <div class="search-date__inputs">
@@ -53,8 +53,8 @@
       </div>
 
       <div>
-        <label class="select-label">Выбрать месяцы:</label>
         <div class="select" v-on-clickaway="away">
+          <label class="select-label">Выбрать месяцы:</label>
           <div class="select-data" @click="selectActive = !selectActive">
             <span v-for="month in months" :key="month.cnt"
               >{{ month.name }},
@@ -89,28 +89,6 @@
             </label>
           </div>
         </div>
-        <!-- <multi-select
-          v-model="months"
-          :multiple="true"
-          :close-on-select="false"
-          :options="monthsOptions"
-          :searchable="false"
-          :show-labels="false"
-          :taggable="false"
-          :option-height="15"
-        >
-          <template slot="singleLabel" slot-scope="props">
-            <span class="option__desc">
-              <span class="option__title">{{ props.option }}</span>
-            </span>
-            </template
-          >
-          <template slot="option" slot-scope="props">
-            <div class="option__desc">
-              <span class="option__title">{{ props.option }}</span>
-            </div>
-          </template>
-        </multi-select> -->
       </div>
     </div>
   </div>
@@ -120,7 +98,6 @@
 import { mixin as clickaway } from "vue-clickaway";
 import DatePicker from "vuejs-datepicker";
 import { ru } from "vuejs-datepicker/dist/locale";
-// import MultiSelect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -130,7 +107,6 @@ export default {
   components: {
     DatePicker,
     AppCheckbox,
-    // MultiSelect,
   },
   data() {
     return {
@@ -248,12 +224,8 @@ export default {
 </script>
 
 <style lang="scss">
-.search__title {
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
-}
 .select {
+  margin-left: 30px;
   position: relative;
   &-label {
     padding-left: 10px;
@@ -262,9 +234,9 @@ export default {
   }
   &-data {
     background: #fff;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     border-radius: 10px;
-    width: 150px;
+    width: 158px;
     height: 34px;
     padding: 5px;
     display: flex;
@@ -277,8 +249,8 @@ export default {
   &-options {
     z-index: 10;
     position: absolute;
-    top: calc(100% + 5px);
-    width: 150px;
+    top: 110%;
+    width: 158px;
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -302,7 +274,6 @@ export default {
     }
   }
 }
-
 .input-calendar {
   color: #585858 !important;
   .next::after {
@@ -327,7 +298,7 @@ export default {
 .vdp-datepicker {
   input {
     padding-right: 26px;
-    width: 150px;
+    width: 160px;
     height: 34px;
     border: 1px solid rgb($text-grey, 0.2);
     border-radius: 10px;
@@ -353,7 +324,6 @@ export default {
     }
   }
 }
-
 .cell {
   color: $text-grey !important;
   &:hover {
@@ -364,7 +334,6 @@ export default {
   background: $color-main !important;
   color: #fff !important;
 }
-
 .search {
   &-date {
     margin-top: 20px;
@@ -374,8 +343,8 @@ export default {
     background: $gradient-w;
     &__wrapper {
       display: flex;
-      align-items: flex-end;
       justify-content: space-between;
+      align-items: flex-end;
       padding: 20px 0 20px 0;
     }
     &__inputs {
@@ -393,7 +362,7 @@ export default {
     }
     &__arrow {
       max-height: 20px;
-      margin: 24px 40px 8px 40px;
+      margin: 24px 20px 8px 20px;
       transform: rotate(180deg);
       img {
         width: 100%;

@@ -1,9 +1,9 @@
 <template>
   <div class="alert-item">
     <div class="alert-item__unread unread" v-show="!seen"></div>
-    <div class="alert-content">
+    <div class="alert-item__content">
       <div class="alert-item__img">
-        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+        <img inline-svg src="@/assets/img/envelope.svg" />
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
@@ -18,11 +18,7 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
 export default {
-  components: {
-    // AppButton,
-  },
   props: {
     text: String,
     icon: String,
@@ -33,16 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.unread {
-  background: $gradient;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
 .alert {
-  &-content{
-    display: flex;
-  }
   &-item {
     display: flex;
     justify-content: space-between;
@@ -54,6 +41,9 @@ export default {
     padding: 10px 15px;
     position: relative;
     background: #fff;
+    &__content {
+      display: flex;
+    }
     &__unread {
       position: absolute;
       top: -4px;
@@ -68,9 +58,8 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      i {
-        font-size: 24px;
-        color: #fff;
+      img {
+        max-width: 30px;
       }
     }
     &__info {
@@ -95,5 +84,11 @@ export default {
       border-radius: 10px;
     }
   }
+}
+.unread {
+  background: $gradient;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
 </style>

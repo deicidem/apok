@@ -119,7 +119,6 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
@@ -168,20 +167,12 @@ export default {
     },
   },
   components: {
-    // AppButton,
     vuescroll,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 
 .plan {
   padding: 40px;

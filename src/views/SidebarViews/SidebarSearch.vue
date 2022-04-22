@@ -27,7 +27,6 @@ import SearchDate from "@/components/search/SearchDate";
 import SearchSpacecraft from "@/components/search/SearchSpacecraft";
 import SearchCloud from "@/components/search/SearchCloud";
 import SearchZone from "@/components/search/SearchZone";
-// import AppButton from '../../components/controls/AppButton.vue';
 
 export default {
   components: {
@@ -36,7 +35,6 @@ export default {
     SearchSpacecraft,
     SearchCloud,
     SearchZone,
-    // AppButton,
   },
   data() {
     return {
@@ -73,13 +71,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .search {
   display: flex;
   flex-direction: column;
@@ -96,7 +87,7 @@ export default {
     font-size: 1.25rem;
     color: #000;
   }
-  &-buttons{
+  &-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-evenly;

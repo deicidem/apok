@@ -1,12 +1,10 @@
 <template>
   <div class="search-cloud">
-    <h2 class="search__title">Облачность</h2>
+    <h2 class="search-title">Облачность</h2>
     <div class="search-cloud__subtitle">
       Процент облачности:
       <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
     </div>
-
-    <!-- <no-ui-slider :config="rangeConfig" :values="cloudValue" /> -->
     <vue-slider
       :value="getCloudiness"
       @change="setCloudiness({ from: $event[0], to: $event[1] })"
@@ -38,12 +36,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.search__title{
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
-} 
+<style lang="scss" >
 .search {
   &-cloud {
     &__subtitle {

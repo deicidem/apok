@@ -41,13 +41,9 @@
 
 <script>
 import AppInput from "@/components/controls/AppInput.vue";
-// import AppButton from "@/components/controls/AppButton.vue";
-
 import { mapActions } from "vuex";
-
 export default {
   components: {
-    // AppButton,
     AppInput,
   },
   data() {
@@ -67,10 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button-router {
-  margin: 0 auto;
-}
-
 .authorize {
   position: absolute;
   top: 0;
@@ -80,6 +72,9 @@ export default {
   width: 100%;
   height: 100%;
   background-size: cover;
+  .button-router {
+    margin: 0 auto;
+  }
   .back {
     margin: 40px;
     display: flex;
@@ -91,8 +86,6 @@ export default {
       margin-left: 10px;
       color: #fff;
     }
-  }
-  .title {
   }
   .form {
     background: $gradient-w;
@@ -118,9 +111,6 @@ export default {
         margin: 10px auto;
         font-size: 18px;
         position: relative;
-        // input{
-        // position: relative;
-        // }
       }
       &__icon {
         position: absolute;

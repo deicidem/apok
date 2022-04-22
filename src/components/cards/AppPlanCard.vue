@@ -1,7 +1,10 @@
 <template>
   <div class="plan-item">
     <portal to="popup">
-      <app-plan-popup v-show="planPopup == true" @close="planPopup = false"></app-plan-popup>
+      <app-plan-popup
+        v-show="planPopup == true"
+        @close="planPopup = false"
+      ></app-plan-popup>
     </portal>
     <div class="plan-item__img">
       <img :src="itemImage" />
@@ -15,24 +18,22 @@
 
       <div class="plan-item__buttons">
         <router-link :to="'/plan/' + planid">
-          <!-- <app-button type="white-g">Подробнее</app-button> -->
           <button class="button button-white">Подробнее</button>
         </router-link>
 
-        <button class="button button-g" @click="planPopup = true">Запланировать</button>
-
+        <button class="button button-g" @click="planPopup = true">
+          Запланировать
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton";
 import AppPlanPopup from "@/components/AppPlanPopup";
 
 export default {
   components: {
-    // AppButton,
     AppPlanPopup,
   },
   props: {

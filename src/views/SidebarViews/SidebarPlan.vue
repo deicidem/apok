@@ -13,6 +13,7 @@
           :title="plan.title"
         ></app-plan-card>
       </div>
+      <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination>
     </vuescroll>
   </div>
 </template>
@@ -23,10 +24,12 @@ import "vuescroll/dist/vuescroll.css";
 
 import { mapGetters } from "vuex";
 import AppPlanCard from "@/components/cards/AppPlanCard.vue";
+import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     vuescroll,
     AppPlanCard,
+    VsPagination,
   },
   data() {
     return {
@@ -68,13 +71,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .plan {
   display: flex;
   flex-direction: column;

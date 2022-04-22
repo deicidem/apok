@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper" @click="closeUser($event)">
+  <div class="wrapper">
+    <!-- <div class="wrapper" @click="closeUser($event)"> -->
     <app-header></app-header>
     <div class="content">
       <router-view></router-view>
@@ -14,37 +15,37 @@ export default {
   components: {
     AppHeader,
   },
-  data() {
-    return {
-      showUser: false,
-      showSearch: false,
-    };
-  },
-  methods: {
-    closeUser($event) {
-      let el = document.querySelector(".user-box");
-      if ($event.target.classList.contains("user-box__click")) {
-        return;
-      }
-      if (this.showUser) {
-        if (!el.contains($event.target)) {
-          this.showUser = false;
-        }
-      }
-      this.closeSearch($event);
-    },
-    closeSearch($event) {
-      let el = document.querySelector(".search-box");
-      if ($event.target.classList.contains("search-box__click")) {
-        return;
-      }
-      if (this.showSearch) {
-        if (!el.contains($event.target)) {
-          this.showSearch = false;
-        }
-      }
-    },
-  },
+  // data() {
+  //   return {
+  //     showUser: false,
+  //     showSearch: false,
+  //   };
+  // },
+  // methods: {
+  //   closeUser($event) {
+  //     let el = document.querySelector(".user-box");
+  //     if ($event.target.classList.contains("user-box__click")) {
+  //       return;
+  //     }
+  //     if (this.showUser) {
+  //       if (!el.contains($event.target)) {
+  //         this.showUser = false;
+  //       }
+  //     }
+  //     this.closeSearch($event);
+  //   },
+  // closeSearch($event) {
+  //   let el = document.querySelector(".search-box");
+  //   if ($event.target.classList.contains("search-box__click")) {
+  //     return;
+  //   }
+  //   if (this.showSearch) {
+  //     if (!el.contains($event.target)) {
+  //       this.showSearch = false;
+  //     }
+  //   }
+  // },
+  // },
 };
 </script>
 
@@ -98,8 +99,7 @@ img {
   background: #dfdfdf;
 }
 
-/* _____________________button__________________ */
-
+/*_____________________button_________________*/
 .button {
   font-family: inherit;
   background: $gradient;
@@ -128,9 +128,50 @@ img {
     width: 30px;
     height: 30px;
     padding: 7px;
-    img{
+    img {
       max-width: 16px;
     }
   }
 }
+/*_____________________pagination_____________*/
+
+.vs-pagination {
+  &--active a {
+    color: $color-main !important;
+    font-weight: 600 !important;
+    background-color: transparent !important;
+  }
+  li {
+    a {
+      color: $text-grey !important;
+      &:hover {
+        background-color: transparent!important;
+        color: $color-main !important;
+      }
+    }
+  }
+}
+/*_____________________vueScroll______________*/
+.__vuescroll {
+  display: flex;
+  flex-direction: column;
+}
+.__panel {
+  width: 100%;
+}
+
+/*_______________________search_______________*/
+.search-title {
+  font-size: 20px;
+  color: #000;
+  font-weight: 400;
+}
+
+/*______________________________________*/
+
+
+
+
+
+
 </style>

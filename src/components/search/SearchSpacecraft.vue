@@ -1,6 +1,6 @@
 <template>
   <div class="search-spacecraft">
-    <h2 class="search__title">Космический аппарат</h2>
+    <h2 class="search-title">Космический аппарат</h2>
     <div class="accordion">
       <div
         class="accordion-item"
@@ -144,11 +144,6 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-.search__title{
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
 }
 .search {
   &-spacecraft {

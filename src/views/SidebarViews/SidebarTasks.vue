@@ -27,6 +27,7 @@
           </tbody>
         </app-table>
       </div>
+      <vs-pagination :total-pages="5"></vs-pagination>
     </vuescroll>
   </div>
 </template>
@@ -34,6 +35,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
+import VsPagination from "@vuesimple/vs-pagination";
 
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
@@ -44,6 +46,7 @@ export default {
     AppTable,
     AppCheckbox,
     vuescroll,
+    VsPagination,
   },
   data() {
     return {
@@ -91,13 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .tasks {
   display: flex;
   flex-direction: column;

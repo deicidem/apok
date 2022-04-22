@@ -7,11 +7,9 @@
         <form>
         <div class="user-box-input">
             <input type="login" placeholder="логин" />
-            <i class="fa fa-sign-in" aria-hidden="true"></i>
         </div>
         <div class="user-box-input">
             <input type="password" placeholder="пароль" />
-            <i class="fa fa-key" aria-hidden="true"></i>
         </div>
         <a href="./index.html" class="user-box-button"><p>Войти</p></a>
         <a

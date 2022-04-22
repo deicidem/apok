@@ -72,13 +72,8 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
-export default {
-  components: {
-    // AppButton,
-  },
-};
 </script>
+
 
 <style lang="scss" scoped>
 .plan-popup {
@@ -98,7 +93,7 @@ export default {
     overflow: hidden;
     background: $gradient-w;
     top: 50%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);
     &__header {
       position: relative;
@@ -165,12 +160,6 @@ export default {
         line-height: 26px;
         color: $color-main-dark;
       }
-      // &__img {
-        // background: $gradient-w;
-        // padding: 6px;
-        // box-shadow: $shadow-small;
-        // border-radius: 10px;
-      // }
     }
     &__info {
       margin-left: 20px;

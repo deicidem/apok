@@ -58,14 +58,16 @@ export default {
 
 html,
 body {
-  color: #c7c7c7;
-  font-size: 16px;
-  line-height: 1.5;
-  font-family: "Montserrat", sans-serif;
   min-width: 1024px;
   width: 100%;
-  overflow: visible;
+
+  font-size: 16px;
+  line-height: 1.5;
   font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+
+  overflow: visible;
+  color: #c7c7c7;
 }
 
 header,
@@ -82,9 +84,9 @@ a {
 }
 
 img {
+  display: block;
   object-fit: cover;
   width: 100%;
-  display: block;
 }
 
 .wrapper {
@@ -94,22 +96,25 @@ img {
 }
 
 .content {
-  flex: 1 1 auto;
   padding: 20px;
+
+  flex: 1 1 auto;
   background: #dfdfdf;
 }
 
 /*_____________________button_________________*/
 .button {
+  padding: 0 24px;
+  height: 35px;
+
   font-family: inherit;
+  text-align: center;
+  font-size: 0.875rem;
+
   background: $gradient;
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
-  padding: 0 24px;
-  height: 35px;
-  text-align: center;
-  font-size: 0.875rem;
   cursor: pointer;
   &-white {
     color: $color-main-dark;
@@ -145,7 +150,7 @@ img {
     a {
       color: $text-grey !important;
       &:hover {
-        background-color: transparent!important;
+        background-color: transparent !important;
         color: $color-main !important;
       }
     }
@@ -160,18 +165,13 @@ img {
   width: 100%;
 }
 
-/*_______________________search_______________*/
-.search-title {
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
-}
-
 /*______________________________________*/
+@media screen and (max-width: 1440px) {
+  .button {
+    height: 28px;
 
-
-
-
-
-
+    font-size: 0.75rem;
+  }
+}
+/*______________________________________*/
 </style>

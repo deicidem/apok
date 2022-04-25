@@ -86,19 +86,20 @@ export default {
 .authorize {
   position: absolute;
   top: 0;
-  z-index: 1;
   left: 0;
-  background: url("@/assets/img/authorize__background.png");
+  z-index: 1;
+
   width: 100%;
   height: 100%;
+  background: url("@/assets/img/authorize__background.png");
   background-size: cover;
   .button-router {
     margin: 0 auto;
   }
   .back {
-    margin: 40px;
     display: flex;
     align-items: center;
+    margin: 40px;
     &-arrow {
       width: 30px;
     }
@@ -109,19 +110,21 @@ export default {
   }
 
   .form {
-    background: $gradient-w;
-    margin: 30px 0 0 0;
+    margin: 10% auto;
     width: 400px;
     padding: 20px;
+
+    background: $gradient-w;
     border-radius: 10px;
     border: none;
     box-shadow: $shadow-big;
-    margin: 10% auto;
     &-title {
+      margin: 20px 0;
+
       text-align: center;
       font-size: 24px;
+
       color: $text-grey;
-      margin: 20px 0;
     }
     &-wrapper {
       display: flex;
@@ -130,6 +133,7 @@ export default {
       &__item {
         width: 300px;
         margin: 10px auto;
+        
         font-size: 18px;
         input {
           position: relative;

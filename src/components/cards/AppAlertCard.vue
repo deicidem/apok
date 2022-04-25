@@ -31,16 +31,17 @@ export default {
 <style lang="scss" scoped>
 .alert {
   &-item {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    display: flex;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
     align-items: center;
+    margin-bottom: 20px;
     padding: 10px 15px;
-    position: relative;
+
+    border-radius: 10px;
     background: #fff;
+    box-shadow: $shadow-big;
     &__content {
       display: flex;
     }
@@ -50,14 +51,15 @@ export default {
       left: -4px;
     }
     &__img {
-      width: 40px;
-      height: 40px;
-      background: $gradient;
-      border-radius: 10px;
-      box-shadow: $shadow-small;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 40px;
+      height: 40px;
+
+      border-radius: 10px;
+      background: $gradient;
+      box-shadow: $shadow-small;
       img {
         max-width: 30px;
       }
@@ -79,16 +81,29 @@ export default {
       width: 35px;
       height: 35px;
       margin-left: auto;
-      font-size: 20px;
       padding: 0;
+
+      font-size: 20px;
       border-radius: 10px;
     }
   }
 }
 .unread {
-  background: $gradient;
   width: 12px;
   height: 12px;
+
+  background: $gradient;
   border-radius: 50%;
+}
+@media screen and (max-width: 1440px) {
+  .alert {
+    &-item {
+      margin-bottom: 16px;
+      padding: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 </style>

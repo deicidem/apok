@@ -66,11 +66,13 @@ export default {
 .authorize {
   position: absolute;
   top: 0;
-  z-index: 1;
   left: 0;
-  background: url("@/assets/img/authorize__background.png");
+  z-index: 1;
+
   width: 100%;
   height: 100%;
+
+  background: url("@/assets/img/authorize__background.png");
   background-size: cover;
   .button-router {
     margin: 0 auto;

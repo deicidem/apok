@@ -149,11 +149,13 @@ export default {
   &-spacecraft {
     margin-top: 20px;
     padding: 20px;
+
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;
     .accordion {
       padding: 10px;
+
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
@@ -162,6 +164,7 @@ export default {
         position: relative;
         p {
           margin-left: 4px;
+
           color: #000;
           font-size: 0.875rem;
         }
@@ -169,8 +172,8 @@ export default {
           position: absolute;
           top: 0;
           left: 0;
-          opacity: 0;
 
+          opacity: 0;
           &:checked ~ .accordion-item__content {
             display: inline-block;
           }
@@ -184,15 +187,22 @@ export default {
           margin-right: 6px;
         }
         &__img {
-          background: url("@/assets/img/arrow-close.png");
           height: 24px;
           width: 24px;
+          background: url("@/assets/img/arrow-close.png");
         }
         &__content {
           padding: 6px 0 0 24px;
           border-top: none;
         }
       }
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search {
+    &-spacecraft {
+      padding: 14px;
     }
   }
 }

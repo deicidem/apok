@@ -348,6 +348,7 @@ export default {
 }
 .search-zone {
   padding: 20px;
+
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
@@ -362,33 +363,37 @@ export default {
   &__input {
     display: flex;
     align-items: center;
-    color: $text-grey;
-    padding-top: 10px;
+    margin-bottom: 10px;
+
+    color: #000;
   }
   &__nav {
-    margin-top: 10px;
     display: flex;
+    margin-top: 10px;
     ul {
       display: flex;
       align-items: center;
-      list-style: none;
       padding: 0;
       margin: 0;
+
+      list-style: none;
     }
     .line {
-      border-left: 1px solid $color-main;
       height: 12px;
+
+      border-left: 1px solid $color-main;
     }
     li {
       margin: 4px;
       list-style-type: none;
       button {
-        background: none;
-        color: #000;
-        font-family: inherit;
-        border: none;
         padding: 0;
         margin: 0;
+
+        font-family: inherit;
+        border: none;
+        background: none;
+        color: #000;
         cursor: pointer;
         &:hover {
           color: $color-main;
@@ -404,6 +409,7 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     padding: 15px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
@@ -411,6 +417,7 @@ export default {
   &__card {
     margin-top: 14px;
     padding: 20px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
@@ -419,19 +426,20 @@ export default {
     flex: 1;
     .zone-table__input {
       display: block;
-      width: 120px;
-      font-family: inherit;
       flex: 1;
-      border: none;
+      width: 120px;
       margin: 0;
-      line-height: 1.5;
       padding: 6px;
+
+      font-family: inherit;
+      border: none;
+      line-height: 1.5;
       &__td {
         padding: 0;
       }
       &__wrapper {
-        height: 100%;
         display: flex;
+        height: 100%;
       }
     }
     .input-label {
@@ -450,19 +458,23 @@ export default {
         }
         th {
           width: 130px;
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: #000000;
           padding: 0 6px 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: #000000;
           box-sizing: border-box;
         }
         td {
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: $color-main-dark;
           padding: 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: $color-main-dark;
           box-sizing: border-box;
         }
         .col {
@@ -473,6 +485,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -480,6 +493,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -545,8 +559,19 @@ export default {
     margin: 0 !important;
     padding: 0;
     height: 20px !important;
+
     font-size: 10px;
     border-radius: 0 !important;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search-zone {
+    padding: 14px;
+    &__input {
+      span {
+        font-size: 0.875rem;
+      }
+    }
   }
 }
 </style>

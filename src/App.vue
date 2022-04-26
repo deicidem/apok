@@ -138,6 +138,70 @@ img {
     }
   }
 }
+
+// ____________________input__________________
+.input:active .input-label {
+  display: block;
+}
+.input {
+  display: block;
+  padding: 10px 15px;
+
+  font-size: 14px;
+
+  border-radius: 10px;
+  border: none;
+  border: 1px solid rgb($text-grey, 0.2);
+  box-shadow: $shadow-small;
+  color: $color-main-dark;
+  &:active {
+    border: 1px solid $color-main;
+    outline: none;
+  }
+  &:focus-visible {
+    border: 1px solid $color-main;
+    outline: none;
+  }
+
+  &-img {
+    position: absolute;
+    max-width: 26px;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &-withIcon {
+    padding-right: 36px;
+  }
+  &-wrapper {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    width: 300px;
+    margin: 0 auto 20px auto;
+    &:focus-within .input-label {
+      color: $color-main;
+    }
+
+    &:focus .input-label {
+      display: inline-block;
+      margin-left: 10px;
+      width: 300px;
+      margin: 0 auto;
+      padding-left: 15px;
+
+      font-size: 12px;
+      color: $text-grey;
+    }
+  }
+  &-label {
+    display: none;
+  }
+}
+
 /*_____________________pagination_____________*/
 
 .vs-pagination {

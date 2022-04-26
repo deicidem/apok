@@ -11,34 +11,54 @@
       <div class="form">
         <div class="form-title">Регистрация</div>
 
-        <form class="form-wrapper">
-          <app-input
-            class="form-wrapper__item"
-            label="почтовый адрес"
-            v-model="user.mail"
-          >
-          </app-input>
+        <form
+          class="form-wrapper"
+          id="registration"
+          @submit="checkForm"
+          action="https://vuejs.org/"
+          method="post"
+        >
+          <label class="input-label">Логин</label>
+          <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.login"
+              type="text"
+              placeholder="Логин"
+            />
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
 
-          <app-input
-            class="form-wrapper__item"
-            label="логин"
-            v-model="user.login"
-          >
-          </app-input>
+          <label class="input-label">Почтовый адрес</label>
+          <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.mail"
+              type="email"
+              placeholder="Почтовый адрес"
+            />
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
 
-          <app-input
-            class="form-wrapper__item"
-            label="пароль"
-            v-model="user.password"
-          >
-          </app-input>
+          <label class="input-label">Пароль</label>
+          <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.password"
 
-          <app-input
-            class="form-wrapper__item"
-            label="повторите пароль"
-            v-model="user.passwordSecond"
-          >
-          </app-input>
+              placeholder="Пароль"
+            />
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
+
+          <div class="input-wrapper">
+            <label class="input-label">Повторите пароль</label>
+            <input
+              class="input input-withIcon"
+              placeholder="Повторите пароль"
+            />
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
 
           <button @click="submit" class="button button-g form-wrapper__item">
             Зарегистироваться
@@ -55,14 +75,11 @@
 </template>
 
 <script>
-import AppInput from "@/components/controls/AppInput.vue";
 import { mapActions } from "vuex";
 export default {
-  components: {
-    AppInput,
-  },
   data() {
     return {
+      errors: [],
       user: {
         mail: "",
         login: "",
@@ -77,6 +94,22 @@ export default {
     }),
     submit() {
       this.addUser(this.user);
+    },
+    checkForm(e) {
+      if (this.user.login && this.user.password) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.user.login) {
+        this.errors.push("Требуется указать логин.");
+      }
+      if (!this.user.password) {
+        this.errors.push("Требуется указать пароль.");
+      }
+
+      e.preventDefault();
     },
   },
 };
@@ -131,21 +164,25 @@ export default {
       justify-content: center;
       flex-direction: column;
       &__item {
+        position: relative;
+
         width: 300px;
         margin: 10px auto;
-        
+
         font-size: 18px;
-        input {
-          position: relative;
-        }
       }
       &__icon {
         position: absolute;
+        right: 0;
       }
       .button {
         height: 40px;
       }
     }
   }
+}
+.input-icon {
+  position: absolute;
+  top: 0;
 }
 </style>

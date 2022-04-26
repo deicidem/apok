@@ -38,11 +38,9 @@ export default {
       localValue: null,
     };
   },
-
   mounted() {
     this.localValue = this.value;
   },
-
   watch: {
     localValue: function () {
       this.$emit("input", this.localValue);
@@ -73,6 +71,7 @@ export default {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 20px;
     &:focus-within .input-label {
       color: $color-main;
     }

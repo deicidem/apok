@@ -1,8 +1,12 @@
 <template>
   <div class="alert-item">
-    <div class="alert-item__unread unread" v-show="!seen"></div>
+    <div
+      class="alert-item__unread unread"
+      :class="[theme]"
+      v-show="!seen"
+    ></div>
     <div class="alert-item__content">
-      <div class="alert-item__img">
+      <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
         <img inline-svg src="@/assets/img/envelope.svg" />
       </div>
       <div class="alert-item__info">
@@ -24,6 +28,12 @@ export default {
     icon: String,
     seen: Boolean,
     result: String,
+    theme: String,
+  },
+  methods: {
+    getTheme(theme) {
+      console.log(theme);
+    },
   },
 };
 </script>
@@ -95,6 +105,16 @@ export default {
   background: $gradient;
   border-radius: 50%;
 }
+.task {
+  background: $gradient;
+}
+.access {
+  background: $gradient-p;
+}
+.data {
+  background: $gradient-b;
+}
+
 @media screen and (max-width: 1440px) {
   .alert {
     &-item {

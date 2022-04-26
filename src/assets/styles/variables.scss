@@ -3,9 +3,16 @@ $color-main: #83B5B8;
 $gradient: linear-gradient(88.64deg, $color-main 0%, $color-main-dark 100%); // Main gradient
 $gradient-w:  linear-gradient(101.61deg, #FFFFFF 0%, #F6F9FA 100%); // White gradient
 $gradient-r: linear-gradient(91.36deg, #EB6060 0%, #8D4646 100%); // Red gradient
+$gradient-p: linear-gradient(88.64deg, #AF82B7 0%, #7B2789 100%); // Purple gradient
+$gradient-b: linear-gradient(88.64deg, #C2E3EA 0%, #467F8B 100%); // Blue gradient
 $color-red: #A24B4B;
 $shadow-big: 0px 4px 10px rgba(0, 0, 0, 0.15);
 $shadow-small: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
+//___ALERT___
+$color-alert-access: linear-gradient(88.64deg, #C2E3EA 0%, #467F8B 100%);
+
+
 
 // ___TEXT___
 $text-grey: #747474;

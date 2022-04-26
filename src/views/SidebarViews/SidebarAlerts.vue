@@ -9,6 +9,7 @@
           :seen="alert.seen"
           :result="alert.result"
           :text="alert.text"
+          :theme="alert.theme"
           @delete="deleteAlert(i)"
         ></app-alert-card>
       </div>

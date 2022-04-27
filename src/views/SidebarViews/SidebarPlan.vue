@@ -80,6 +80,19 @@ export default {
   }
   &-card {
     margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .plan {
+    &-wrapper {
+      margin: 20px;
+    }
+    &-card{
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

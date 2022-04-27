@@ -65,13 +65,16 @@ export default {
 <style lang="scss" scoped>
 .title {
   position: relative;
-  font-size: 1.5rem;
+
   padding: 10px;
+
+  font-size: 1.5rem;
   text-align: center;
+  font-weight: 400;
+
   background: $gradient;
   box-shadow: $shadow-big;
   color: #fff;
-  font-weight: 400;
 }
 .user-box {
   display: none;
@@ -92,20 +95,22 @@ export default {
     display: none;
   }
   &-items {
-    background: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 100px;
+
+    background: #fff;
     box-shadow: $shadow-big;
   }
   &-nav {
     ul {
       display: flex;
       align-items: center;
-      list-style: none;
       padding: 0;
       margin: 0;
+
+      list-style: none;
       li {
         margin-right: 50px;
         a {
@@ -141,6 +146,25 @@ export default {
           background-clip: text;
           color: rgba(0, 0, 0, 0);
         }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .title {
+    padding: 8px;
+
+    font-size: 1.125rem;
+  }
+  .header {
+    &-items {
+      padding: 10px 80px;
+    }
+    &-menu {
+      &__button {
+        width: 34px;
+        height: 34px;
+        margin-right: 16px;
       }
     }
   }

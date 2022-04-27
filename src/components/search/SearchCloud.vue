@@ -1,9 +1,9 @@
 <template>
   <div class="search-cloud">
     <h2 class="search-title">Облачность</h2>
-    <div class="search-cloud__subtitle">
-      Процент облачности:
-      <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
+    <div class="search-cloud__wrapper">
+      <p>0%</p>
+      <p>100%</p>
     </div>
     <vue-slider
       :value="getCloudiness"
@@ -11,9 +11,9 @@
       :adsorb="true"
       :interval="10"
     ></vue-slider>
-    <div class="search-cloud__wrapper">
-      <p>0%</p>
-      <p>100%</p>
+    <div class="search-cloud__subtitle">
+      Процент облачности:
+      <p>{{ getCloudiness[0] }}% - {{ getCloudiness[1] }}%</p>
     </div>
   </div>
 </template>
@@ -39,11 +39,18 @@ export default {
 <style lang="scss" >
 .search {
   &-cloud {
+    margin-top: 20px;
+    padding: 20px;
+
+    box-shadow: $shadow-small;
+    border-radius: 10px;
+    background: $gradient-w;
     &__subtitle {
       display: flex;
+      margin-top: 20px;
+
       font-size: 12px;
       color: $text-grey;
-      margin: 10px 0;
       p {
         color: #000000;
         margin-left: 8px;
@@ -53,25 +60,20 @@ export default {
       display: flex;
       justify-content: space-between;
       p {
-        margin: 10px 4px;
         font-size: 12px;
         color: #000;
       }
     }
-    margin-top: 20px;
-    padding: 20px;
-    box-shadow: $shadow-small;
-    border-radius: 10px;
-    background: $gradient-w;
   }
 }
 
 .vue-slider {
-  margin-top: 30px;
-  box-shadow: $shadow-big;
+  margin-top: 10px;
   height: 12px !important;
-  border-radius: 10px !important;
   padding: 0 !important;
+
+  box-shadow: $shadow-big;
+  border-radius: 10px !important;
   &-rail {
     background: #fff;
   }
@@ -81,9 +83,10 @@ export default {
   &-dot {
     top: 40% !important;
     &-handle {
-      border-radius: 4px !important;
       height: 18px !important;
       width: 18px !important;
+
+      border-radius: 4px !important;
       background: $gradient;
       &-focus {
         box-shadow: $shadow-big !important;
@@ -92,6 +95,13 @@ export default {
     &-tooltip-inner {
       background: $gradient;
       border-color: $color-main-dark;
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search {
+    &-cloud {
+      padding: 14px;
     }
   }
 }

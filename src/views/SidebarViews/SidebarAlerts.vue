@@ -9,6 +9,7 @@
           :seen="alert.seen"
           :result="alert.result"
           :text="alert.text"
+          :theme="alert.theme"
           @delete="deleteAlert(i)"
         ></app-alert-card>
       </div>
@@ -74,13 +75,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .alert {
   display: flex;
   flex-direction: column;
   max-height: 100%;
   &-wrapper {
     margin: 30px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .alert {
+    &-wrapper {
+      margin: 20px;
+    }
   }
 }
 </style>

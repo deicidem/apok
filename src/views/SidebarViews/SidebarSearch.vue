@@ -70,11 +70,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .search {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-title {
+    font-size: 20px;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
   &-wrapper {
     padding: 30px;
   }
@@ -82,7 +88,7 @@ export default {
     width: 100%;
     height: 100%;
   }
-  &__title {
+  &-title {
     font-weight: 400;
     font-size: 1.25rem;
     color: #000;
@@ -91,6 +97,18 @@ export default {
     margin-top: 20px;
     display: flex;
     justify-content: space-evenly;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search {
+    &-wrapper {
+      padding: 20px;
+    }
+    &-title {
+      font-size: 1.125rem;
+      line-height: 130%;
+      margin-bottom: 14px;
+    }
   }
 }
 </style>

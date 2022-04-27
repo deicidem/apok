@@ -19,27 +19,28 @@ import AppInput from "@/components/controls/AppInput.vue";
 export default {
   mixins: [clickaway],
   components: {
-    AppInput
+    AppInput,
   },
   methods: {
     away() {
-      this.$emit('close')
-    }
-  }
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .auth {
   &-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 30px;
+    
     box-shadow: $shadow-small;
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     &__title {
       text-align: center;
       font-size: 20px;

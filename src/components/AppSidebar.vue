@@ -5,8 +5,10 @@
         <div class="sidebar-content">
           <router-view> </router-view>
         </div>
+        <app-plan-data></app-plan-data>
       </div>
     </transition>
+
     <div class="sidebar-collapsed">
       <div
         class="sidebar__item open sidebar-open"
@@ -68,8 +70,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import AppPlanData from "@/components/cards/AppPlanData";
+
 export default {
   name: "AppSidebar",
+  components: {
+    AppPlanData,
+  },
   computed: {
     ...mapGetters({ active: "getSidebarState" }),
     ...mapGetters("alerts", {
@@ -103,12 +110,13 @@ export default {
   top: -5px;
   right: -8px;
   &-number {
+    width: 18px;
+    height: 18px;
+
     color: #fff;
     font-size: 12px;
     background: $gradient-r;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
     text-align: center;
   }
   &-wrapper {
@@ -148,27 +156,32 @@ export default {
   }
 }
 .sidebar {
-  display: block;
   position: absolute;
   left: 50px;
-  z-index: 5;
+
+  display: block;
   height: 100%;
   width: calc(100% - 50px);
+
+  z-index: 5;
   box-shadow: $shadow-big;
   overflow: hidden;
   &-title {
+    padding: 5px;
+
     background: $gradient;
     color: #fff;
     text-align: center;
-    padding: 5px;
     font-size: 18px;
     font-weight: 400;
     box-shadow: $shadow-small;
   }
   &-content {
+    position: relative;
+    height: 100%;
+
     background: #edecec;
     transition: all 0.3s ease-out;
-    height: 100%;
   }
   &-open {
     margin-top: 6px;
@@ -178,20 +191,15 @@ export default {
     display: flex;
   }
   &__item {
-    transition: background-color 0.2s ease-out;
-    flex-grow: 1;
     display: flex;
     justify-content: center;
+    flex-grow: 1;
+
     border-top: 1px solid transparent;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
-    i {
-      font-size: 24px;
-      color: #fff;
-      line-height: 40px;
-      padding: 0 12px;
-      transition: color 0.2s ease-out;
-    }
+
+    transition: background-color 0.2s ease-out;
     &:focus-within {
       background: #384342;
       box-sizing: border-box;
@@ -209,60 +217,60 @@ export default {
   }
   a {
     text-decoration: none;
-    color: #fff;
     font-weight: 400;
     font-size: 14px;
     box-sizing: border-box;
     line-height: 40px;
+
+    color: #fff;
     transition: color 0.2s ease-out;
   }
 
   &-collapsed {
     position: absolute;
-    z-index: 10;
     left: 0;
     top: 0;
-    background: #ffffff;
+    z-index: 10;
+
     height: 100%;
     width: 50px;
+
+    background: #ffffff;
     box-shadow: $shadow-small;
     &__item {
       position: relative;
+
       display: flex;
       align-items: center;
       margin: 12px;
-      i {
-        font-size: 24px;
-        color: rgb(97, 133, 128);
-        transition: all 0.2s ease-out;
-        &:hover {
-          transition: all 0.4s ease-out;
-          cursor: pointer;
-          color: #384342;
-        }
-      }
-      a:hover + &__hidden {
-        visibility: inherit;
-        z-index: 1;
-        opacity: 1;
-      }
+
+      // a:hover + &__hidden {
+      //   visibility: inherit;
+      //   z-index: 1;
+      //   opacity: 1;
+      // }
       &__hidden {
-        color: $color-main-dark;
-        white-space: nowrap;
-        display: inline-block;
-        visibility: hidden;
-        opacity: 0;
-        z-index: -1;
         position: absolute;
-        color: #618580;
+        z-index: -1;
         left: 33px;
-        background: #ffffff;
+
+        display: inline-block;
+        white-space: nowrap;
+        padding: 5px 10px;
+
         font-weight: 400;
         font-size: 14px;
         line-height: 24px;
-        padding: 5px 10px;
+
+        color: $color-main-dark;
+        visibility: hidden;
+        opacity: 0;
+
+        color: #618580;
+        background: #ffffff;
         box-shadow: $shadow-big;
         border-radius: 5px;
+
         transition: all 0.3s ease-out;
       }
     }

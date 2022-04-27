@@ -38,11 +38,9 @@ export default {
       localValue: null,
     };
   },
-
   mounted() {
     this.localValue = this.value;
   },
-
   watch: {
     localValue: function () {
       this.$emit("input", this.localValue);
@@ -58,11 +56,13 @@ export default {
 .input {
   margin-top: 2px;
   padding: 8px 10px;
+
+  font-size: 14px;
+
   border-radius: 10px;
   border: none;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
-  font-size: 14px;
   color: $color-main-dark;
   &:active {
     outline: 1px solid $color-main;
@@ -71,6 +71,7 @@ export default {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 20px;
     &:focus-within .input-label {
       color: $color-main;
     }
@@ -80,8 +81,9 @@ export default {
   }
   &-label {
     display: inline-block;
-    font-size: 12px;
     margin-left: 10px;
+
+    font-size: 12px;
     color: $text-grey;
   }
 }

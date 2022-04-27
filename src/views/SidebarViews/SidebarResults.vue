@@ -151,18 +151,18 @@
         </app-table>
       </div>
     </div>
-    <vs-pagination :total-pages="5"></vs-pagination>
+    <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-import VsPagination from "@vuesimple/vs-pagination";
+// import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     AppTable,
-    VsPagination,
+    // VsPagination,
   },
   data() {
     return {

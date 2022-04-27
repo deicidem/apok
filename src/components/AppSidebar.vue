@@ -5,8 +5,10 @@
         <div class="sidebar-content">
           <router-view> </router-view>
         </div>
+        <app-plan-data></app-plan-data>
       </div>
     </transition>
+
     <div class="sidebar-collapsed">
       <div
         class="sidebar__item open sidebar-open"
@@ -68,8 +70,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import AppPlanData from "@/components/cards/AppPlanData";
+
 export default {
   name: "AppSidebar",
+  components: {
+    AppPlanData,
+  },
   computed: {
     ...mapGetters({ active: "getSidebarState" }),
     ...mapGetters("alerts", {
@@ -170,6 +177,7 @@ export default {
     box-shadow: $shadow-small;
   }
   &-content {
+    position: relative;
     height: 100%;
 
     background: #edecec;

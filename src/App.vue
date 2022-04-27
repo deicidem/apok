@@ -145,7 +145,7 @@ img {
 }
 .input {
   display: block;
-  padding: 10px 15px;
+  padding: 15px 15px;
 
   font-size: 14px;
 
@@ -162,6 +162,12 @@ img {
     border: 1px solid $color-main;
     outline: none;
   }
+  &:focus ~ .input-label,
+  &:valid ~ label {
+    top: -20px;
+    font-size: 12px;
+    color: $color-main;
+  }
 
   &-img {
     position: absolute;
@@ -173,6 +179,9 @@ img {
   &-withIcon {
     padding-right: 36px;
   }
+  &-label {
+    display: none;
+  }
   &-wrapper {
     position: relative;
 
@@ -181,24 +190,27 @@ img {
     justify-content: flex-end;
 
     width: 300px;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 30px auto;
     &:focus-within .input-label {
       color: $color-main;
     }
 
-    &:focus .input-label {
+    .input-label {
+      position: absolute;
+      top: 15px;
+
       display: inline-block;
-      margin-left: 10px;
       width: 300px;
-      margin: 0 auto;
       padding-left: 15px;
 
-      font-size: 12px;
+      font-size: 14px;
       color: $text-grey;
+
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+      pointer-events: none;
     }
-  }
-  &-label {
-    display: none;
   }
 }
 

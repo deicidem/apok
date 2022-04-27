@@ -18,46 +18,40 @@
           action="https://vuejs.org/"
           method="post"
         >
-          <label class="input-label">Логин</label>
           <div class="input-wrapper">
-            <input
-              class="input input-withIcon"
-              v-model="user.login"
-              type="text"
-              placeholder="Логин"
-            />
+            <input class="input input-withIcon" v-model="user.login" required />
+            <label class="input-label">Логин</label>
+
             <img class="input-img" src="@/assets/img/header-logo.svg" />
           </div>
 
-          <label class="input-label">Почтовый адрес</label>
           <div class="input-wrapper">
-            <input
-              class="input input-withIcon"
-              v-model="user.mail"
-              type="email"
-              placeholder="Почтовый адрес"
-            />
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <input class="input input-withIcon" v-model="user.user" required />
+            <label class="input-label">Почтовый адрес</label>
+
+            <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
           </div>
 
-          <label class="input-label">Пароль</label>
           <div class="input-wrapper">
             <input
               class="input input-withIcon"
               v-model="user.password"
-
-              placeholder="Пароль"
+              required
             />
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <label class="input-label">Пароль</label>
+
+            <img class="input-img" src="@/assets/img/lock-icon.svg" />
           </div>
 
           <div class="input-wrapper">
-            <label class="input-label">Повторите пароль</label>
             <input
               class="input input-withIcon"
-              placeholder="Повторите пароль"
+              v-model="user.password"
+              required
             />
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <label class="input-label">Повторите пароль</label>
+
+            <img class="input-img" src="@/assets/img/lock-icon.svg" />
           </div>
 
           <button @click="submit" class="button button-g form-wrapper__item">

@@ -88,7 +88,7 @@
   .popup-card {
     position: absolute;
     top: 50%;
-    left: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
 
     padding: 20px;

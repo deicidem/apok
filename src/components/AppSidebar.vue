@@ -5,7 +5,6 @@
         <div class="sidebar-content">
           <router-view> </router-view>
         </div>
-        <app-plan-data></app-plan-data>
       </div>
     </transition>
 
@@ -65,6 +64,7 @@
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
       </div>
     </div>
+    <app-plan-data></app-plan-data>
   </div>
 </template>
 

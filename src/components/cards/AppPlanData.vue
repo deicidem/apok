@@ -46,6 +46,7 @@
   background: $gradient-w;
   border-radius: 0 20px 20px 0;
   overflow: hidden;
+  box-shadow: $shadow-big;
 
   &-content {
     display: flex;

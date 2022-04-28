@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "circle-to-polygon": "^2.2.0",
     "core-js": "^3.8.3",
     "html-loader": "^3.1.0",

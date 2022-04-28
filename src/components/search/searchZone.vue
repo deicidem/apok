@@ -181,7 +181,7 @@
             >Загрузить на карту</button
           >
         </div>
-        <button class="button button-r coordinates-wrapper__button" 
+        <button class="button button-r coordinates-wrapper__button"  @click="removeCircle"
           >Убрать с карты</button
         >
       </div>
@@ -287,6 +287,9 @@ export default {
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
       this.setCenter([lng, lat]);
+    },
+    removeCircle() {
+      this.setCirclePolygon(null);
     },
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);

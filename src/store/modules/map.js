@@ -2,9 +2,9 @@ export default {
   namespaced: true,
   state: {
     areaPolygon: [],
-    screenPolygon: [[0, 0], [0,0]],
+    screenPolygon: null,
     polygonDrawable: false,
-    circlePolygon: {center: [0, 0], radius: 0},
+    circlePolygon: null,
     geoJsonPolygons: [],
     images: [],
     zoom: 5,
@@ -80,14 +80,22 @@ export default {
     setCenter(state, value) {
       state.center = value;
     },
-    setCirclePolygon(state, {center, radius}) {
-      state.circlePolygon.center = center;
-      state.circlePolygon.radius = radius;
+    setCirclePolygon(state, data) {
+      state.circlePolygon = data
     },
     addGeoJsonPolygon(state, polygon) {
+      if (polygon.json == null) {
+        console.log("json in null");
+        return;
+      } 
       state.geoJsonPolygons.push(polygon);
+
     },
     addImage(state, image) {
+      if (image.id == null || image.img == null || image.bounds == null) {
+        console.log("image null");
+        return;
+      }
       state.images.push(image);
     },
     removeGeoJsonPolygon(state, id) {
@@ -135,6 +143,9 @@ export default {
     },
     setCirclePolygon(store, data) {
       store.commit('setCirclePolygon', data)
+    },
+    removeCirclePolygon(store) {
+      store.commit('setCirclePolygon', null)
     },
     addGeoJsonPolygon(store, polygon) {
       store.commit('addGeoJsonPolygon', polygon)

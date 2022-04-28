@@ -11,7 +11,7 @@
         </div>
         <div class="search-buttons">
           <button class="button button-white">Очистить</button>
-          <button class="button button-g">Запросить данные</button>
+          <button class="button button-g" @click="search">Запросить данные</button>
         </div>
       </div>
     </vuescroll>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex"
+
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
@@ -37,6 +39,9 @@ export default {
     SearchCloud,
     SearchZone,
     // AppButton,
+  },
+  methods: {
+    ...mapActions('search', ['search'])
   },
   data() {
     return {

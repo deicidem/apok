@@ -1,5 +1,5 @@
 <template>
-  <div class="plan">
+  <div class="plan" v-if="plan != null">
     <vuescroll :ops="ops">
       <div class="plan-wrapper__header">
         <router-link to="/main/plan">

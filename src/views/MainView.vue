@@ -38,7 +38,6 @@ export default {
   methods: {
     ...mapActions(['setSidebarState']),
     sidebarBlockClass() {
-      console.log(this.getSidebarState);
       if (this.getSidebarState) {
         this.sidebarBlock = "";
         setTimeout(() => {

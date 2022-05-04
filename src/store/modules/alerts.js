@@ -26,21 +26,52 @@ export default {
   return [
     {
       id: 1,
-      text: 'Формирование температурных карт 1',
+      text: 'Задача №1 “оценка качества ” выполнена',
       seen: false,
       result: 'https://gptl.ru/',
+      theme: 'task',
     },
     {
       id: 2,
-      text: 'Формирование температурных карт 2',
+      text: 'Задача №2 “оценка качества ” выполнена',
       seen: true,
       result: 'https://gptl.ru/',
+      theme: 'task',
     },
     {
       id: 3,
-      text: 'Формирование температурных карт 3',
+      text: 'Задача №3 “оценка качества ” выполнена',
       seen: false,
       result: 'https://gptl.ru/',
-    }
+      theme: 'task',
+    },
+    {
+      id: 4,
+      text: 'Загрузка данных выполнена',
+      seen: false,
+      result: 'https://gptl.ru/',
+      theme: 'data',
+    },
+    {
+      id: 5,
+      text: 'Доступ  ...  предоставлен',
+      seen: false,
+      result: 'https://gptl.ru/',
+      theme: 'access',
+    },
+    {
+      id: 6,
+      text: 'Загрузка данных выполнена',
+      seen: false,
+      result: 'https://gptl.ru/',
+      theme: 'data',
+    },
+    {
+      id: 7,
+      text: 'Доступ  ...  предоставлен',
+      seen: false,
+      result: 'https://gptl.ru/',
+      theme: 'access',
+    },
   ]
 }

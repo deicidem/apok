@@ -1,6 +1,6 @@
 <template>
   <div class="search-zone">
-    <h2 class="search__title">Зона интереса</h2>
+    <h2 class="search-title">Зона интереса</h2>
 
     <label class="search-zone__input">
       <app-radio value="screen" v-model="areaType"></app-radio>
@@ -21,16 +21,18 @@
             ])
           "
           type="red"
-          >Убрать с карты</button
         >
+          Убрать с карты
+        </button>
         <button
           class="button button-g"
           @click="
             setScreenPolygon(getBounds);
             setZoom(getZoom - 1);
           "
-          >Показать на карте</button
         >
+          Показать на карте
+        </button>
       </div>
     </template>
     <template v-else>
@@ -73,7 +75,6 @@
           <table>
             <thead>
               <tr>
-                <!-- <th class="col"><input type="checkbox" /></th> -->
                 <th class="number">№</th>
                 <th>Широта</th>
                 <th>Долгота</th>
@@ -82,13 +83,12 @@
             </thead>
             <tbody>
               <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-                <!-- <td class="col"><input type="checkbox" /></td> -->
                 <td class="number">{{ i + 1 }}</td>
                 <td>{{ coord.lat }}</td>
                 <td>{{ coord.lng }}</td>
                 <td class="col delete" @click="deleteCoordinate(i)">
                   <button class="button button-svg">
-                    <img inline-svg src="@/assets/img/trash.svg">
+                    <img inline-svg src="@/assets/img/trash.svg" />
                   </button>
                 </td>
               </tr>
@@ -120,7 +120,7 @@
                     class="button button-svg"
                     type="white-g"
                   >
-                    <img inline-svg src="@/assets/img/plus.svg">
+                    <img inline-svg src="@/assets/img/plus.svg" />
                   </button>
                 </td>
               </tr>
@@ -133,22 +133,25 @@
             v-if="!getDrawable"
             class="button button-g search-zone__button"
             @click="setPolygonDrawable(true)"
-            >Использовать карту</button
           >
+            Использовать карту
+          </button>
           <button
             v-else
             class="button button-white search-zone__button"
             @click="setPolygonDrawable(false)"
-            >Сохранить полигон</button
           >
-          <button class="button button-white search-zone__button" 
-            >Прописать координаты</button
-          >
+            Сохранить полигон
+          </button>
+          <button class="button button-white search-zone__button">
+            Прописать координаты
+          </button>
           <button
             @click="clearCoordinates()"
             class="button button-r search-zone__button"
-            >Очистить координаты</button
           >
+            Очистить координаты
+          </button>
         </div>
       </div>
 
@@ -177,9 +180,12 @@
             class="coordinates-wrapper__input"
           ></app-input>
 
-          <button @click="createCircle" class="button button-g coordinates-wrapper__button"
-            >Загрузить на карту</button
+          <button
+            @click="createCircle"
+            class="button button-g coordinates-wrapper__button"
           >
+            Загрузить на карту
+          </button>
         </div>
         <button class="button button-r coordinates-wrapper__button"  @click="removeCircle"
           >Убрать с карты</button
@@ -195,12 +201,12 @@
           <span class="load-wrapper__name">POLYGON.shp</span>
         </div>
         <div class="load-wrapper__buttons">
-          <button class="button button-g load-wrapper__button"
-            >Показать на карте</button
-          >
-          <button class="button button-r load-wrapper__button" type="red"
-            >Удалить</button
-          >
+          <button class="button button-g load-wrapper__button">
+            Показать на карте
+          </button>
+          <button class="button button-r load-wrapper__button" type="red">
+            Удалить
+          </button>
         </div>
       </div>
     </template>
@@ -209,7 +215,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-// import AppButton from "@/components/controls/AppButton.vue";
 import AppRadio from "@/components/controls/AppRadio.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import MaskedInput from "vue-masked-input";
@@ -217,7 +222,6 @@ export default {
   components: {
     AppInput,
     MaskedInput,
-    // AppButton,
     AppRadio,
   },
   data() {
@@ -345,13 +349,9 @@ export default {
   max-width: 40px;
   text-align: center !important;
 }
-.search__title {
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
-}
 .search-zone {
   padding: 20px;
+
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
@@ -366,33 +366,37 @@ export default {
   &__input {
     display: flex;
     align-items: center;
-    color: $text-grey;
-    padding-top: 10px;
+    margin-bottom: 10px;
+
+    color: #000;
   }
   &__nav {
-    margin-top: 10px;
     display: flex;
+    margin-top: 10px;
     ul {
       display: flex;
       align-items: center;
-      list-style: none;
       padding: 0;
       margin: 0;
+
+      list-style: none;
     }
     .line {
-      border-left: 1px solid $color-main;
       height: 12px;
+
+      border-left: 1px solid $color-main;
     }
     li {
       margin: 4px;
       list-style-type: none;
       button {
-        background: none;
-        color: #000;
-        font-family: inherit;
-        border: none;
         padding: 0;
         margin: 0;
+
+        font-family: inherit;
+        border: none;
+        background: none;
+        color: #000;
         cursor: pointer;
         &:hover {
           color: $color-main;
@@ -408,6 +412,7 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     padding: 15px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
@@ -415,6 +420,7 @@ export default {
   &__card {
     margin-top: 14px;
     padding: 20px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
@@ -423,19 +429,20 @@ export default {
     flex: 1;
     .zone-table__input {
       display: block;
-      width: 120px;
-      font-family: inherit;
       flex: 1;
-      border: none;
+      width: 120px;
       margin: 0;
-      line-height: 1.5;
       padding: 6px;
+
+      font-family: inherit;
+      border: none;
+      line-height: 1.5;
       &__td {
         padding: 0;
       }
       &__wrapper {
-        height: 100%;
         display: flex;
+        height: 100%;
       }
     }
     .input-label {
@@ -454,19 +461,23 @@ export default {
         }
         th {
           width: 130px;
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: #000000;
           padding: 0 6px 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: #000000;
           box-sizing: border-box;
         }
         td {
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: $color-main-dark;
           padding: 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: $color-main-dark;
           box-sizing: border-box;
         }
         .col {
@@ -477,6 +488,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -484,6 +496,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -549,8 +562,19 @@ export default {
     margin: 0 !important;
     padding: 0;
     height: 20px !important;
+
     font-size: 10px;
     border-radius: 0 !important;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search-zone {
+    padding: 14px;
+    &__input {
+      span {
+        font-size: 0.875rem;
+      }
+    }
   }
 }
 </style>

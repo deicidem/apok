@@ -1,34 +1,32 @@
 <template>
-  <header class="header">
+  <header class="header" @click="closeUser">
     <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
     <div class="header-items">
-      <app-auth-popup class="auth-wrapper" v-show="authPopup == true">
-      </app-auth-popup>
+      <app-auth-popup v-show="showUser" class="auth-wrapper"> </app-auth-popup>
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
-            <router-link to="/"><img src="@/assets/img/logo.svg"></router-link>
+            <router-link to="/"
+              ><img src="@/assets/img/logo.svg"
+            /></router-link>
           </li>
           <li class="header-nav__item">
             <router-link to="/tutorial">Руководства пользователя</router-link>
-          </li>
-          <li class="header-nav__item">
-            <router-link to="/help">Помощь</router-link>
           </li>
         </ul>
       </nav>
       <div class="header-menu">
         <div class="header-menu__text">Добро пожаловать!</div>
         <div class="header-menu__buttons">
-          <button class="button button-o header-menu__button">
-            <i class="fa fa-search" aria-hidden="true"></i>
+          <button class="button button-svg header-menu__button">
+            <img src="@/assets/img/sidebar-search.svg" />
           </button>
 
           <button
-            class="button button-o header-menu__button"
-            @click="toggle"
+            @click="showUser = true"
+            class="button button-svg header-menu__button"
           >
-            <i class="fa fa-user" aria-hidden="true"></i>
+            <img src="@/assets/img/header-logo.svg" />
           </button>
         </div>
       </div>
@@ -45,56 +43,50 @@ export default {
   },
   data() {
     return {
-      authPopup: false,
+      showUser: false,
     };
   },
   methods: {
-    toggle() {
-      this.authPopup = !this.authPopup
+    closeUser($event) {
+      let el = document.querySelector(".auth-popup");
+      if ($event.target.classList.contains("header-menu__button")) {
+        return;
+      }
+      if (this.showUser) {
+        if (!el.contains($event.target)) {
+          this.showUser = false;
+        }
+      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.title {
+  position: relative;
+
+  padding: 10px;
+
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 400;
+
+  background: $gradient;
+  box-shadow: $shadow-big;
+  color: #fff;
+}
+.user-box {
+  display: none;
+}
 .auth-wrapper {
   position: absolute;
   right: 100px;
   top: 140px;
   z-index: 30;
 }
-.button {
-  background: $gradient;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.button-o {
-  background: $gradient-w;
-  color: $color-main-dark;
-  cursor: pointer;
-}
-.title {
-  position: relative;
-  font-size: 1.5rem;
-  padding: 10px;
-  text-align: center;
-  background: $gradient;
-  box-shadow: $shadow-big;
-  color: #fff;
-  font-weight: 400;
-}
-
-.user-box {
-  display: none;
-}
-
 .search-box {
   display: none;
-}
-.header-items {
-  display: flex;
 }
 .header {
   z-index: 10;
@@ -103,21 +95,22 @@ export default {
     display: none;
   }
   &-items {
-    background: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 100px;
+
+    background: #fff;
     box-shadow: $shadow-big;
   }
-
   &-nav {
     ul {
       display: flex;
       align-items: center;
-      list-style: none;
       padding: 0;
       margin: 0;
+
+      list-style: none;
       li {
         margin-right: 50px;
         a {
@@ -127,7 +120,6 @@ export default {
       }
     }
   }
-
   &-menu {
     display: flex;
     align-items: center;
@@ -141,14 +133,12 @@ export default {
       align-items: center;
     }
     &__button {
-      margin-left: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin-right: 20px;
       width: 40px;
       height: 40px;
-      font-size: 1.5rem;
-      margin-top: 0;
+      img {
+        max-width: 100%;
+      }
       // На IE 11 не работает
       @supports (background-clip: text) {
         i {
@@ -156,6 +146,25 @@ export default {
           background-clip: text;
           color: rgba(0, 0, 0, 0);
         }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .title {
+    padding: 8px;
+
+    font-size: 1.125rem;
+  }
+  .header {
+    &-items {
+      padding: 10px 80px;
+    }
+    &-menu {
+      &__button {
+        width: 34px;
+        height: 34px;
+        margin-right: 16px;
       }
     }
   }

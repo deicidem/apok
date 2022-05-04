@@ -1,6 +1,6 @@
 <template>
   <div class="search-date">
-    <h2 class="search__title">Интервал дат съемки</h2>
+    <h2 class="search-title">Интервал дат съемки</h2>
 
     <div class="search-date__wrapper">
       <div class="search-date__inputs">
@@ -57,11 +57,11 @@
       </div>
 
       <div>
-        <label class="select-label">Выбрать месяцы:</label>
         <div class="select" v-on-clickaway="away">
+          <label class="select-label">Выбрать месяцы:</label>
           <div class="select-data" @click="selectActive = !selectActive">
-            <span v-for="month in months" :key="month.cnt"
-              >{{ month.name }},
+            <span v-for="month in months" :key="month.cnt">
+              <span>{{ month.cnt }} &thinsp; </span>
             </span>
           </div>
           <div class="select-options" v-show="selectActive">
@@ -93,28 +93,6 @@
             </label>
           </div>
         </div>
-        <!-- <multi-select
-          v-model="months"
-          :multiple="true"
-          :close-on-select="false"
-          :options="monthsOptions"
-          :searchable="false"
-          :show-labels="false"
-          :taggable="false"
-          :option-height="15"
-        >
-          <template slot="singleLabel" slot-scope="props">
-            <span class="option__desc">
-              <span class="option__title">{{ props.option }}</span>
-            </span>
-            </template
-          >
-          <template slot="option" slot-scope="props">
-            <div class="option__desc">
-              <span class="option__title">{{ props.option }}</span>
-            </div>
-          </template>
-        </multi-select> -->
       </div>
     </div>
   </div>
@@ -124,7 +102,6 @@
 import { mixin as clickaway } from "vue-clickaway";
 import DatePicker from "vuejs-datepicker";
 import { ru } from "vuejs-datepicker/dist/locale";
-// import MultiSelect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -134,7 +111,6 @@ export default {
   components: {
     DatePicker,
     AppCheckbox,
-    // MultiSelect,
   },
   data() {
     return {
@@ -209,6 +185,7 @@ export default {
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
     onAllCheck($event) {
+      let all = true;
       if ($event) {
         this.monthsOptions.forEach((el) => {
           el.active = true;
@@ -223,6 +200,8 @@ export default {
         to: this.to,
         months: this.months,
       });
+
+      return all;
     },
     away() {
       this.selectActive = false;
@@ -252,51 +231,55 @@ export default {
 </script>
 
 <style lang="scss">
-.search__title {
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
-}
 .select {
   position: relative;
+
+  margin-left: 30px;
   &-label {
     padding-left: 10px;
+
     font-size: 12px;
     color: $text-grey;
   }
   &-data {
-    background: #fff;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    width: 150px;
-    height: 34px;
-    padding: 5px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    width: 158px;
+    height: 34px;
+    padding: 5px;
+
     font-size: 12px;
-    cursor: pointer;
+
+    background: #fff;
+    box-shadow: $shadow-small;
+    border-radius: 10px;
+    overflow: hidden;
     border: 1px solid rgb($text-grey, 0.2);
+    cursor: pointer;
   }
   &-options {
-    z-index: 10;
     position: absolute;
-    top: calc(100% + 5px);
-    width: 150px;
-    background: #fff;
+    top: 110%;
+    z-index: 10;
+
     display: flex;
     flex-direction: column;
+    width: 158px;
+
+    background: #fff;
     box-shadow: $shadow-small;
     border-radius: 10px;
   }
   &-option {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    color: $text-grey;
     padding: 4px 7px;
-    border-radius: 0;
+
     font-size: 12px;
+
+    color: $text-grey;
+    border-radius: 0;
+    cursor: pointer;
     span {
       margin-left: 8px;
     }
@@ -306,7 +289,6 @@ export default {
     }
   }
 }
-
 .input-calendar {
   color: #585858 !important;
   .next::after {
@@ -325,14 +307,15 @@ export default {
   border: 1px solid $color-main !important;
 }
 .datepicker-label {
-  color: $text-grey;
   padding-left: 10px;
+  color: $text-grey;
 }
 .vdp-datepicker {
   input {
-    padding-right: 26px;
-    width: 150px;
+    width: 160px;
     height: 34px;
+    padding-right: 26px;
+
     border: 1px solid rgb($text-grey, 0.2);
     border-radius: 10px;
     box-shadow: $shadow-small;
@@ -357,7 +340,6 @@ export default {
     }
   }
 }
-
 .cell {
   color: $text-grey !important;
   &:hover {
@@ -368,28 +350,31 @@ export default {
   background: $color-main !important;
   color: #fff !important;
 }
-
 .search {
   &-date {
     margin-top: 20px;
     padding: 20px;
+
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;
     &__wrapper {
       display: flex;
-      align-items: flex-end;
       justify-content: space-between;
-      padding: 20px 0 20px 0;
+      align-items: flex-end;
+      margin: 10px 0;
     }
     &__inputs {
       display: flex;
+      align-items: flex-end;
     }
     &__input {
+      position: relative;
+
       display: flex;
       flex-direction: column;
+
       font-size: 12px;
-      position: relative;
       outline: none;
       &:focus-within .datepicker-label {
         color: $color-main;
@@ -397,21 +382,49 @@ export default {
     }
     &__arrow {
       max-height: 20px;
-      margin: 24px 40px 8px 40px;
+      margin: 0 20px;
       transform: rotate(180deg);
       img {
         width: 100%;
-        height: 100%;
+        max-height: 34px;
       }
     }
     &__back {
-      background: $gradient;
       position: absolute;
       right: 0;
       top: 18px;
+
       padding: 7px;
+
+      background: $gradient;
       border-radius: 0 10px 10px 0;
     }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .vdp-datepicker input {
+    width: 140px;
+    height: 28px;
+  }
+  .search {
+    &-date {
+      padding: 14px;
+      &__back {
+        top: 18px;
+
+        padding: 4px;
+      }
+      &__arrow {
+        margin: 0 16px;
+        img {
+          max-height: 28px;
+        }
+      }
+    }
+  }
+  .select-data {
+    width: 140px;
+    height: 28px;
   }
 }
 </style>

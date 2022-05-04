@@ -17,6 +17,7 @@
           @openPopup="planPopup = true"
         ></app-plan-card>
       </div>
+      <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
     </vuescroll>
   </div>
 </template>
@@ -27,11 +28,13 @@ import "vuescroll/dist/vuescroll.css";
 import { mapGetters } from "vuex";
 import AppPlanCard from "@/components/cards/AppPlanCard.vue";
 import AppPlanPopup from "@/components/AppPlanPopup.vue";
+// import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     vuescroll,
     AppPlanCard,
     AppPlanPopup
+    // VsPagination,
   },
   data() {
     return {
@@ -74,13 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .plan {
   display: flex;
   flex-direction: column;
@@ -90,6 +86,19 @@ export default {
   }
   &-card {
     margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .plan {
+    &-wrapper {
+      margin: 20px;
+    }
+    &-card{
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

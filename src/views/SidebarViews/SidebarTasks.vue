@@ -27,6 +27,7 @@
           </tbody>
         </app-table>
       </div>
+      <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
     </vuescroll>
   </div>
 </template>
@@ -34,6 +35,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
+// import VsPagination from "@vuesimple/vs-pagination";
 
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
@@ -44,6 +46,7 @@ export default {
     AppTable,
     AppCheckbox,
     vuescroll,
+    // VsPagination,
   },
   data() {
     return {
@@ -91,13 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .tasks {
   display: flex;
   flex-direction: column;
@@ -130,6 +126,7 @@ export default {
     input {
       width: 20px;
       height: 20px;
+
       background: #eff2f2;
       border-radius: 50%;
       border: none;
@@ -139,6 +136,7 @@ export default {
     input {
       width: 16px;
       height: 16px;
+
       background: #eff2f2;
       border-radius: 50%;
       border: none;
@@ -146,10 +144,32 @@ export default {
     input {
       width: 16px;
       height: 16px;
+
       background: #eff2f2;
       box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
       border-radius: 50%;
       border: none;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .tasks {
+    &__wrapper {
+      margin: 20px;
+    }
+    th,
+    td {
+      padding: 6px 10px;
+      line-height: 130%;
+
+      font-weight: 400;
+    }
+    .col-checkbox {
+      width: 24px;
+    }
+    .col-id {
+      width: 40px;
     }
   }
 }

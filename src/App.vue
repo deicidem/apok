@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper" @click="closeUser($event)">
+  <div class="wrapper">
+    <!-- <div class="wrapper" @click="closeUser($event)"> -->
     <app-header></app-header>
     <div class="content">
       <router-view></router-view>
@@ -14,37 +15,37 @@ export default {
   components: {
     AppHeader,
   },
-  data() {
-    return {
-      showUser: false,
-      showSearch: false,
-    };
-  },
-  methods: {
-    closeUser($event) {
-      let el = document.querySelector(".user-box");
-      if ($event.target.classList.contains("user-box__click")) {
-        return;
-      }
-      if (this.showUser) {
-        if (!el.contains($event.target)) {
-          this.showUser = false;
-        }
-      }
-      this.closeSearch($event);
-    },
-    closeSearch($event) {
-      let el = document.querySelector(".search-box");
-      if ($event.target.classList.contains("search-box__click")) {
-        return;
-      }
-      if (this.showSearch) {
-        if (!el.contains($event.target)) {
-          this.showSearch = false;
-        }
-      }
-    },
-  },
+  // data() {
+  //   return {
+  //     showUser: false,
+  //     showSearch: false,
+  //   };
+  // },
+  // methods: {
+  //   closeUser($event) {
+  //     let el = document.querySelector(".user-box");
+  //     if ($event.target.classList.contains("user-box__click")) {
+  //       return;
+  //     }
+  //     if (this.showUser) {
+  //       if (!el.contains($event.target)) {
+  //         this.showUser = false;
+  //       }
+  //     }
+  //     this.closeSearch($event);
+  //   },
+  // closeSearch($event) {
+  //   let el = document.querySelector(".search-box");
+  //   if ($event.target.classList.contains("search-box__click")) {
+  //     return;
+  //   }
+  //   if (this.showSearch) {
+  //     if (!el.contains($event.target)) {
+  //       this.showSearch = false;
+  //     }
+  //   }
+  // },
+  // },
 };
 </script>
 
@@ -57,14 +58,16 @@ export default {
 
 html,
 body {
-  color: #c7c7c7;
-  font-size: 16px;
-  line-height: 1.5;
-  font-family: "Montserrat", sans-serif;
   min-width: 1024px;
   width: 100%;
-  overflow: visible;
+
+  font-size: 16px;
+  line-height: 1.5;
   font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+
+  overflow: visible;
+  color: #c7c7c7;
 }
 
 header,
@@ -81,9 +84,9 @@ a {
 }
 
 img {
+  display: block;
   object-fit: cover;
   width: 100%;
-  display: block;
 }
 
 .wrapper {
@@ -93,24 +96,35 @@ img {
 }
 
 .content {
-  flex: 1 1 auto;
   padding: 20px;
+
+  flex: 1 1 auto;
   background: #dfdfdf;
 }
 
-/* _____________________button__________________ */
-
+/*_____________________button_________________*/
 .button {
+  padding: 0 24px;
+  height: 35px;
+
   font-family: inherit;
+  text-align: center;
+  font-size: 0.875rem;
+
   background: $gradient;
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
-  padding: 0 24px;
-  height: 35px;
-  text-align: center;
-  font-size: 0.875rem;
+  transition: all 0.1s ease-out;
   cursor: pointer;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 15px rgba(#000, 0.15);
+  }
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0px 1px 10px rgba(#000, 0.15);
+  }
   &-white {
     color: $color-main-dark;
     background: $gradient_w;
@@ -128,9 +142,121 @@ img {
     width: 30px;
     height: 30px;
     padding: 7px;
-    img{
+    img {
       max-width: 16px;
     }
   }
 }
+
+// ____________________input__________________
+.input:active .input-label {
+  display: block;
+}
+.input {
+  display: block;
+  padding: 15px 15px;
+
+  font-size: 14px;
+
+  border-radius: 10px;
+  border: none;
+  border: 1px solid rgb($text-grey, 0.2);
+  box-shadow: $shadow-small;
+  color: $color-main-dark;
+  &:active {
+    border: 1px solid $color-main;
+    outline: none;
+  }
+  &:focus-visible {
+    border: 1px solid $color-main;
+    outline: none;
+  }
+  &:focus ~ .input-label,
+  &:valid ~ label {
+    top: -20px;
+    font-size: 12px;
+    color: $color-main;
+  }
+
+  &-img {
+    position: absolute;
+    max-width: 26px;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &-withIcon {
+    padding-right: 36px;
+  }
+  &-label {
+    display: none;
+  }
+  &-wrapper {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    width: 300px;
+    margin: 0 auto 30px auto;
+    &:focus-within .input-label {
+      color: $color-main;
+    }
+
+    .input-label {
+      position: absolute;
+      top: 15px;
+
+      display: inline-block;
+      width: 300px;
+      padding-left: 15px;
+
+      font-size: 14px;
+      color: $text-grey;
+
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+      pointer-events: none;
+    }
+  }
+}
+
+/*_____________________pagination_____________*/
+
+.vs-pagination {
+  &--active a {
+    color: $color-main !important;
+    font-weight: 600 !important;
+    background-color: transparent !important;
+  }
+  li {
+    a {
+      color: $text-grey !important;
+      &:hover {
+        background-color: transparent !important;
+        color: $color-main !important;
+      }
+    }
+  }
+}
+/*_____________________vueScroll______________*/
+.__vuescroll {
+  display: flex;
+  flex-direction: column;
+}
+.__panel {
+  width: 100%;
+}
+
+/*______________________________________*/
+@media screen and (max-width: 1440px) {
+  .button {
+    height: 28px;
+
+    font-size: 0.75rem;
+  }
+}
+/*______________________________________*/
 </style>

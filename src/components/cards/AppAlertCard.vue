@@ -1,9 +1,13 @@
 <template>
   <div class="alert-item">
-    <div class="alert-item__unread unread" v-show="!seen"></div>
-    <div class="alert-content">
-      <div class="alert-item__img">
-        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+    <div
+      class="alert-item__unread unread"
+      :class="[theme]"
+      v-show="!seen"
+    ></div>
+    <div class="alert-item__content">
+      <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
+        <img inline-svg src="@/assets/img/envelope.svg" />
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
@@ -18,59 +22,56 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
 export default {
-  components: {
-    // AppButton,
-  },
   props: {
     text: String,
     icon: String,
     seen: Boolean,
     result: String,
+    theme: String,
+  },
+  methods: {
+    getTheme(theme) {
+      console.log(theme);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.unread {
-  background: $gradient;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
 .alert {
-  &-content{
-    display: flex;
-  }
   &-item {
+    position: relative;
+
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    display: flex;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
     align-items: center;
+    margin-bottom: 20px;
     padding: 10px 15px;
-    position: relative;
+
+    border-radius: 10px;
     background: #fff;
+    box-shadow: $shadow-big;
+    &__content {
+      display: flex;
+    }
     &__unread {
       position: absolute;
       top: -4px;
       left: -4px;
     }
     &__img {
-      width: 40px;
-      height: 40px;
-      background: $gradient;
-      border-radius: 10px;
-      box-shadow: $shadow-small;
       display: flex;
       justify-content: center;
       align-items: center;
-      i {
-        font-size: 24px;
-        color: #fff;
+      width: 40px;
+      height: 40px;
+
+      border-radius: 10px;
+      background: $gradient;
+      box-shadow: $shadow-small;
+      img {
+        max-width: 30px;
       }
     }
     &__info {
@@ -90,9 +91,38 @@ export default {
       width: 35px;
       height: 35px;
       margin-left: auto;
-      font-size: 20px;
       padding: 0;
+
+      font-size: 20px;
       border-radius: 10px;
+    }
+  }
+}
+.unread {
+  width: 12px;
+  height: 12px;
+
+  background: $gradient;
+  border-radius: 50%;
+}
+.task {
+  background: $gradient;
+}
+.access {
+  background: $gradient-p;
+}
+.data {
+  background: $gradient-b;
+}
+
+@media screen and (max-width: 1440px) {
+  .alert {
+    &-item {
+      margin-bottom: 16px;
+      padding: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }

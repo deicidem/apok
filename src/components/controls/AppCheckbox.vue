@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss" scoped>
 .checkbox__label {
-  margin-right: 4px;
   display: flex;
   align-items: center;
 }
@@ -64,15 +63,18 @@ export default {
   }
 }
 .checkbox-fake {
-  cursor: pointer;
+  position: relative;
+
   display: inline-block;
   width: 20px;
   height: 20px;
+
   border: none;
   border-radius: 5px;
   background: $gradient-w;
   box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
-  position: relative;
+
+  cursor: pointer;
 }
 
 .checkbox-fake::before {
@@ -80,16 +82,19 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
+
   display: block;
-  border-radius: 5px;
+  transform: translate(-50%, -50%);
   width: 20px;
   height: 20px;
-  opacity: 0;
-  transition: 0.1s ease-out;
+
+  font-size: 14px;
+  border-radius: 5px;
   color: #fff;
   background: $gradient;
+  opacity: 0;
+
+  transition: 0.1s ease-out;
 }
 .mini {
   width: 16px;
@@ -97,6 +102,7 @@ export default {
   &::before {
     width: 16px;
     height: 16px;
+    
     font-size: 10px;
     text-align: center;
   }

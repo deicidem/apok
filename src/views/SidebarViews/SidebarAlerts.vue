@@ -9,9 +9,11 @@
           :seen="alert.seen"
           :result="alert.result"
           :text="alert.text"
+          :theme="alert.theme"
           @delete="deleteAlert(i)"
         ></app-alert-card>
       </div>
+      <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
     </vuescroll>
   </div>
 </template>
@@ -22,6 +24,7 @@ import "vuescroll/dist/vuescroll.css";
 
 import AppAlertCard from "@/components/cards/AppAlertCard.vue";
 import { mapGetters, mapActions } from "vuex";
+// import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
   computed: {
@@ -65,25 +68,26 @@ export default {
   },
   components: {
     vuescroll,
-    AppAlertCard
+    AppAlertCard,
+    // VsPagination,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
 .alert {
   display: flex;
   flex-direction: column;
   max-height: 100%;
   &-wrapper {
     margin: 30px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .alert {
+    &-wrapper {
+      margin: 20px;
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-popup">
+  <div class="auth-popup" v-on-clickaway="away">
     <div class="auth-popup__title">Авторизация</div>
     <app-input class="auth-input" label="Логин"></app-input>
     <app-input class="auth-input" label="Пароль"></app-input>
@@ -14,29 +14,33 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
+import { mixin as clickaway } from "vue-clickaway";
 import AppInput from "@/components/controls/AppInput.vue";
 export default {
+  mixins: [clickaway],
   components: {
-    // AppButton,
     AppInput,
+  },
+  methods: {
+    away() {
+      this.$emit("close");
+    },
   },
 };
 </script>
 
-
-
 <style lang="scss" scoped>
 .auth {
   &-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 30px;
+    
     box-shadow: $shadow-small;
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     &__title {
       text-align: center;
       font-size: 20px;

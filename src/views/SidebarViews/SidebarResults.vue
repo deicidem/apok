@@ -133,17 +133,18 @@
         </app-table>
       </div>
     </div>
+    <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-// import AppButton from "@/components/controls/AppButton";
+// import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     AppTable,
-    // AppButton,
+    // VsPagination,
   },
   data() {
     return {
@@ -197,20 +198,20 @@ export default {
         this.buttons[ind].cardActive = false;
       } else {
         this.card.ind = ind;
-        this.buttons.forEach(el => {
+        this.buttons.forEach((el) => {
           el.cardActive = false;
-        })
+        });
         this.buttons[ind].cardActive = true;
         this.card.active = true;
-        this.card.data = {...this.results[ind]}
+        this.card.data = { ...this.results[ind] };
       }
     },
     onCardClose() {
-      this.buttons.forEach(el => {
+      this.buttons.forEach((el) => {
         el.cardActive = false;
-      })
+      });
       this.card.active = false;
-    }
+    },
   },
   created() {
     this.results.forEach((element) => {
@@ -338,10 +339,6 @@ export default {
     }
   }
   .button-small {
-    // background: $gradient-w;
-    // border: none;
-    // box-shadow: $shadow_small;
-    // cursor: pointer;
     margin: 0 5px;
     width: 25px;
     height: 25px;
@@ -368,7 +365,6 @@ export default {
     &:last-child {
       margin-right: 0;
     }
-
   }
   .icon {
     width: 15px;

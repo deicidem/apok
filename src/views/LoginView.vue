@@ -12,19 +12,24 @@
         <div class="form-title">Авторизация</div>
 
         <form class="form-wrapper">
-          <app-input
-            class="form-wrapper__item"
-            label="Логин"
-            v-model="user.login"
-          >
-          </app-input>
+          <div class="input-wrapper">
+            <input class="input input-withIcon" v-model="user.login" required />
+            <label class="input-label">Логин</label>
 
-          <app-input
-            class="form-wrapper__item"
-            label="Пароль"
-            v-model="user.password"
-          >
-          </app-input>
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
+
+          <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.password"
+              required
+            />
+            <label class="input-label">Пароль</label>
+
+            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+          </div>
+
           <router-link class="button-router" to="/main">
             <button class="button button-g form-wrapper__item">Войти</button>
           </router-link>
@@ -40,16 +45,8 @@
 </template>
 
 <script>
-import AppInput from "@/components/controls/AppInput.vue";
-// import AppButton from "@/components/controls/AppButton.vue";
-
 import { mapActions } from "vuex";
-
 export default {
-  components: {
-    // AppButton,
-    AppInput,
-  },
   data() {
     return {
       user: {
@@ -67,19 +64,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button-router {
-  margin: 0 auto;
-}
-
 .authorize {
   position: absolute;
   top: 0;
-  z-index: 1;
   left: 0;
-  background: url("@/assets/img/authorize__background.png");
+  z-index: 1;
+
   width: 100%;
   height: 100%;
+
+  background: url("@/assets/img/authorize__background.png");
   background-size: cover;
+  .button-router {
+    margin: 0 auto;
+  }
   .back {
     margin: 40px;
     display: flex;
@@ -91,8 +89,6 @@ export default {
       margin-left: 10px;
       color: #fff;
     }
-  }
-  .title {
   }
   .form {
     background: $gradient-w;
@@ -118,9 +114,6 @@ export default {
         margin: 10px auto;
         font-size: 18px;
         position: relative;
-        // input{
-        // position: relative;
-        // }
       }
       &__icon {
         position: absolute;

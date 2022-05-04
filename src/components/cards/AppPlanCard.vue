@@ -13,7 +13,6 @@
 
       <div class="plan-item__buttons">
         <router-link :to="'/plan/' + planid">
-          <!-- <app-button type="white-g">Подробнее</app-button> -->
           <button class="button button-white">Подробнее</button>
         </router-link>
 
@@ -50,11 +49,12 @@ export default {
 .plan {
   &-item {
     display: flex;
+    align-items: stretch;
+
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    align-items: stretch;
     background: #fff;
     &__img {
       img {
@@ -66,21 +66,44 @@ export default {
       h2 {
         font-size: 18px;
         font-weight: 400;
+
         color: #000;
       }
       p {
         margin-top: 10px;
+
         font-weight: 400;
         font-size: 14px;
-        color: #616161;
         line-height: 130%;
+
+        color: #616161;
       }
     }
     &__buttons {
-      margin-top: 30px;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
+      margin-top: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .plan {
+    &-item {
+      &__info {
+        font-size: 1rem;
+        line-height: 130%;
+        p {
+          font-size: 0.75rem;
+        }
+      }
+      &__buttons {
+        margin-top: 10px;
+      }
+      &__img{
+        max-width: 160px;
+      }
     }
   }
 }

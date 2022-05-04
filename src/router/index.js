@@ -63,7 +63,11 @@ const routes = [
   {
     path: '/plan/:id',
     component: () => import('../views/PlanView.vue')
-  }
+  },
+  {
+		path: '*',
+		component: () => import('../components/AppE404.vue')
+	},
 ]
 
 const router = new VueRouter({

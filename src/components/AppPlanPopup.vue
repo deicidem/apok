@@ -2,13 +2,12 @@
   <div class="plan-popup">
     <div class="popup-card">
       <div class="popup-card__header">
-
-          <div class="back" @click="$emit('close')">
-            <div class="back-arrow">
-              <img src="@/assets/img/arrow.svg" />
-            </div>
-            <p class="back-subtitle">Назад</p>
+        <div class="back" @click="$emit('close')">
+          <div class="back-arrow">
+            <img src="@/assets/img/arrow.svg" />
           </div>
+          <p class="back-subtitle">Назад</p>
+        </div>
 
         <h2 class="popup-card__title">Запланировать задачу</h2>
       </div>
@@ -72,34 +71,33 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
-export default {
-  components: {
-    // AppButton,
-  },
-};
 </script>
+
 
 <style lang="scss" scoped>
 .plan-popup {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(#000, 0.5);
   z-index: 100;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(#000, 0.5);
   .popup-card {
-    padding: 20px;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 20px;
+
     box-shadow: $shadow-small;
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
     &__header {
       position: relative;
     }
@@ -120,6 +118,7 @@ export default {
     &__loading {
       width: 500px;
       padding: 20px;
+
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
@@ -129,9 +128,9 @@ export default {
       display: flex;
       align-items: center;
       p {
-        color: $text-grey;
         font-size: 12px;
         margin-left: 40px;
+        color: $text-grey;
       }
     }
     &__button {
@@ -141,6 +140,7 @@ export default {
     &__info {
       width: 500px;
       padding: 20px;
+
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
@@ -152,9 +152,10 @@ export default {
       width: 100%;
     }
     &__text {
+      margin-top: 6px;
+
       color: $text-grey;
       font-size: 12px;
-      margin-top: 6px;
     }
     .card-link {
       display: flex;
@@ -165,12 +166,6 @@ export default {
         line-height: 26px;
         color: $color-main-dark;
       }
-      // &__img {
-        // background: $gradient-w;
-        // padding: 6px;
-        // box-shadow: $shadow-small;
-        // border-radius: 10px;
-      // }
     }
     &__info {
       margin-left: 20px;
@@ -181,29 +176,33 @@ export default {
         }
         &-table {
           &__item {
+            position: relative;
+
             display: flex;
             align-items: stretch;
-            position: relative;
             margin-top: 20px;
           }
           &__title {
-            color: $color-main-dark;
             margin-right: 10px;
             width: 160px;
+
+            color: $color-main-dark;
           }
           &__wrapper {
             display: flex;
           }
           &__vertical {
-            border-left: 1px solid #ebf0f0;
             height: 100%;
             margin-right: 10px;
+
+            border-left: 1px solid #ebf0f0;
           }
           &__text {
-            color: $text-grey;
-            font-size: 12px;
             max-width: 460px;
             margin-right: 10px;
+
+            color: $text-grey;
+            font-size: 12px;
           }
         }
       }

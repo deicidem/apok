@@ -15,9 +15,9 @@
           Подготовка к запуску задачи 452: {{ plan.title }}
         </h2>
 
-        <button class="button button-g plan-wrapper__button"
-          >Запланировать задачу</button
-        >
+        <button class="button button-g plan-wrapper__button">
+          Запланировать задачу
+        </button>
       </div>
 
       <div class="plan-wrapper">
@@ -119,7 +119,6 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton.vue";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
@@ -168,56 +167,51 @@ export default {
     },
   },
   components: {
-    // AppButton,
     vuescroll,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.__vuescroll {
-  display: flex;
-  flex-direction: column;
-}
-.__panel {
-  width: 100%;
-}
-
 .plan {
+  height: 900px;
   padding: 40px;
+
   box-shadow: $shadow-big;
   border-radius: 25px;
   overflow: hidden;
   background: $gradient-w;
-  height: 900px;
   &-title {
     color: #000;
     font-weight: 400;
   }
   &-wrapper {
+    display: flex;
     max-width: 1600px;
     margin: 50px auto;
-    display: flex;
     &__header {
-      margin: auto;
-      max-width: 1600px;
       display: flex;
       justify-content: space-between;
+      margin: auto;
+      max-width: 1600px;
     }
     &__button {
-      font-size: 1.125rem;
-      padding: 10px 15px 10px 15px;
       height: auto;
       justify-self: end;
+
+      padding: 10px 15px 10px 15px;
+
+      font-size: 1.125rem;
     }
     &__cards {
-      max-width: 65%;
       display: flex;
       flex-direction: column;
+      max-width: 65%;
     }
     &__card {
       margin-bottom: 30px;
       padding: 20px;
+
       box-shadow: $shadow-big;
       border-radius: 10px;
       overflow: hidden;
@@ -260,10 +254,12 @@ export default {
         color: $color-main-dark;
       }
       &__text {
-        color: $text-grey;
-        font-size: 14px;
         position: absolute;
         left: 180px;
+
+        font-size: 14px;
+
+        color: $text-grey;
       }
     }
   }
@@ -280,6 +276,15 @@ img {
   p {
     margin-left: 10px;
     color: $text-grey;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .plan {
+    height: 700px;
+    &-title{
+      font-size: 18px;
+    }
   }
 }
 </style>

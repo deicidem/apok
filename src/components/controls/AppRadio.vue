@@ -18,22 +18,22 @@ export default {
     event: "change",
   },
   props: {
-    "modelValue": { default: "" },
-    "value": { type: String, default: undefined }
+    modelValue: { default: "" },
+    value: { type: String, default: undefined },
   },
   computed: {
     isChecked() {
-      return this.modelValue == this.value
-    }
+      return this.modelValue == this.value;
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .radio__label {
-  margin-right: 4px;
   display: flex;
   align-items: center;
+  margin-right: 4px;
 }
 .radio__input {
   display: none;
@@ -43,18 +43,20 @@ export default {
       opacity: 1;
     }
   }
-  
 }
 .radio-fake {
   cursor: pointer;
+
+  position: relative;
+
   display: inline-block;
   width: 18px;
   height: 18px;
+
   border: none;
   border-radius: 50%;
   background: $gradient-w;
   box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
-  position: relative;
 }
 
 .radio-fake::before {
@@ -62,14 +64,18 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
+
   display: block;
-  border-radius: 50%;
   width: 8px;
   height: 8px;
+  transform: translate(-50%, -50%);
+
+  font-size: 14px;
+
+  border-radius: 50%;
   opacity: 1;
-  transition: 0.1s ease-out;
   background: #fff;
+
+  transition: 0.1s ease-out;
 }
 </style>

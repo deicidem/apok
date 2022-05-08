@@ -148,7 +148,7 @@ img {
 }
 .input {
   display: block;
-  padding: 15px 15px;
+  padding: 8px 15px;
 
   font-size: 14px;
 
@@ -181,6 +181,7 @@ img {
   }
   &-withIcon {
     padding-right: 36px;
+    padding: 15px 15px;
   }
   &-label {
     display: none;
@@ -250,6 +251,18 @@ img {
     height: 28px;
 
     font-size: 0.75rem;
+  }
+  .input {
+    font-size: 10px;
+    padding: 12px 10px;
+    &-img{
+      max-width: 22px;
+    }
+    &-wrapper {
+      .input-label {
+        top: 8px;
+      }
+    }
   }
 }
 /*______________________________________*/

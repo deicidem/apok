@@ -5,12 +5,22 @@
     <div class="user-box-line"></div>
     <div class="user-box-form">
         <form>
-        <div class="user-box-input">
-            <input type="login" placeholder="логин" />
-        </div>
-        <div class="user-box-input">
-            <input type="password" placeholder="пароль" />
-        </div>
+          <div class="input-wrapper">
+            <input class="input input-withIcon" v-model="user.login" required />
+            <label class="input-label">Логин</label>
+
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
+           <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.password"
+              required
+            />
+            <label class="input-label">Пароль</label>
+
+            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+          </div>
         <a href="./index.html" class="user-box-button"><p>Войти</p></a>
         <a
             href="./pages/registration.html"

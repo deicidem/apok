@@ -123,6 +123,9 @@ img {
   &-g {
     background: $gradient;
     color: #fff;
+    &:hover {
+      background: $color-main;
+    }
   }
   &-r {
     background: $gradient-r;

@@ -18,9 +18,6 @@
       <div class="header-menu">
         <div class="header-menu__text">Добро пожаловать!</div>
         <div class="header-menu__buttons">
-          <button class="button button-svg header-menu__button">
-            <img src="@/assets/img/sidebar-search.svg" />
-          </button>
 
           <button
             @click="showUser = true"

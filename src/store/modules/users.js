@@ -18,7 +18,6 @@ export default {
   },
   actions: {
     addUser(store, user) {
-      console.log(user);
       store.commit('addUser', user)
     },
     authorizeUser({state}, user) {

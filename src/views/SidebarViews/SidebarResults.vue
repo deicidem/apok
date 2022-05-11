@@ -13,13 +13,13 @@
         </div>
       </router-link>
       <portal to="popup-card">
-        <div class="card" v-show="card.active">
+        <div class="card" v-if="card.ind != null" v-show="card.active">
           <div class="card-close" @click="onCardClose()">
             <img svg-inline src="@/assets/img/cross.svg" alt="" />
           </div>
           <div class="card-title">Информация по объекту</div>
           <div class="card-img">
-            <img :src="require('@/assets/img/' + cardData.img)" alt="" />
+            <img :src="cardData.previewPath" alt="" />
           </div>
           <div class="card-table__wrapper">
             <table class="card-table">
@@ -32,54 +32,36 @@
               <tbody>
                 <tr>
                   <td>Идентификатор</td>
-                  <td>{{ cardData.info.idBig }}</td>
+                  <td>{{ cardData.name }}</td>
                 </tr>
                 <tr>
                   <td>Виток</td>
-                  <td>{{ cardData.info.round }}</td>
+                  <td>{{ cardData.round }}</td>
                 </tr>
                 <tr>
                   <td>Маршрут</td>
-                  <td>{{ cardData.info.route }}</td>
+                  <td>{{ cardData.route }}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>Аппарат</td>
-                  <td>{{ cardData.info.scName }}</td>
-                </tr>
+                  <td>{{ cardData.scName }}</td>
+                </tr> -->
                 <tr>
                   <td>Дата съемки</td>
-                  <td>{{ cardData.info.date }}</td>
+                  <td>{{ cardData.date }}</td>
                 </tr>
                 <tr>
                   <td>Облачность</td>
-                  <td>{{ cardData.info.cloudiness }}</td>
+                  <td>{{ cardData.cloudiness }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="card-buttons">
-            <button
-              class="button button-g card-button"
-              @click="
-                onPolygonButtonClick(card.ind, cardData.id, cardData.GeoJSON)
-              "
+            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.geography)">Скрыть контур</button>
+            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.previewPath, cardData.geography.geometry.bounds)"
+              >Показать изображение</button
             >
-              Скрыть контур
-            </button>
-            <button
-              class="button button-white card-button"
-              type="white"
-              @click="
-                onImageButtonClick(
-                  card.ind,
-                  cardData.id,
-                  cardData.img,
-                  cardData.bounds
-                )
-              "
-            >
-              Показать изображение
-            </button>
           </div>
         </div>
       </portal>
@@ -104,7 +86,7 @@
                 <button
                   class="button button-white button-small"
                   :class="buttons[i].polygonActive ? 'active' : ''"
-                  @click="onPolygonButtonClick(i, item.id, item.GeoJSON)"
+                  @click="onPolygonButtonClick(i, item.id, item.geography)"
                 >
                   <img
                     svg-inline
@@ -116,7 +98,7 @@
                 <button
                   class="button button-white button-small"
                   :class="buttons[i].imageActive ? 'active' : ''"
-                  @click="onImageButtonClick(i, item.id, item.img, item.bounds)"
+                  @click="onImageButtonClick(i, item.id, item.previewPath, item.geography == null ? null : item.geography.geometry.bounds )"
                 >
                   <img
                     svg-inline
@@ -126,12 +108,12 @@
                   />
                 </button>
               </td>
-              <td>{{ item.info.idBig }}</td>
-              <td>{{ item.info.round }}</td>
-              <td>{{ item.info.route }}</td>
-              <td>{{ item.info.scName }}</td>
-              <td>{{ item.info.date }}</td>
-              <td>{{ item.info.cloudiness }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.round }}</td>
+              <td>{{ item.route }}</td>
+              <td>Аппарат</td>
+              <td>{{ item.date }}</td>
+              <td>{{ item.cloudiness }}</td>
               <td class="results-table__buttons">
                 <button
                   class="button button-white button-small"
@@ -169,7 +151,7 @@ export default {
       buttons: [],
       card: {
         active: false,
-        ind: 0,
+        ind: null,
       },
     };
   },
@@ -178,8 +160,12 @@ export default {
       results: "getResults",
     }),
     cardData() {
-      return this.results[this.card.ind];
-    },
+      if (this.card.ind != null) {
+        return this.results[this.card.ind];
+      } else {
+        return null;
+      }
+    }
   },
   methods: {
     ...mapActions("map", [
@@ -227,7 +213,7 @@ export default {
       this.card.active = false;
     },
   },
-  beforeMount() {
+  created() {
     this.results.forEach((element) => {
       this.buttons.push({
         id: element.id,

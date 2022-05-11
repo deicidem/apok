@@ -164,12 +164,10 @@
             <label class="coordinates-wrapper__label" for="latitude">
               Широта
             </label>
-            <input
+            <masked-input
               v-model="lat"
-              id="latitude"
               class="input coordinates-wrapper__input"
               :mask="inputMaskLat"
-              :placeholder="placeholderLat"
             />
           </div>
 
@@ -177,12 +175,10 @@
             <label class="coordinates-wrapper__label" for="latitude">
               Долгота
             </label>
-            <input
+            <masked-input
               v-model="lng"
               class="input coordinates-wrapper__input"
-              id="longitude"
               :mask="inputMaskLng"
-              :placeholder="placeholderLng"
             />
           </div>
           <div class="coordinates-input">
@@ -203,9 +199,9 @@
             Загрузить на карту
           </button>
         </div>
-        <button class="button button-r coordinates-wrapper__button">
-          Убрать с карты
-        </button>
+        <button class="button button-r coordinates-wrapper__button"  @click="removeCircle"
+          >Убрать с карты</button
+        >
       </div>
 
       <div
@@ -305,6 +301,9 @@ export default {
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
       this.setCenter([lng, lat]);
+    },
+    removeCircle() {
+      this.setCirclePolygon(null);
     },
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);

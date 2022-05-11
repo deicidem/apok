@@ -9,6 +9,8 @@
             >Искать с:</label
           >
           <date-picker
+            format="yyyy-MM-dd"
+            :use-utc="true"
             :language="ru"
             class="input-date"
             calendar-class="input-calendar"
@@ -32,6 +34,8 @@
         <div class="search-date__input">
           <label class="datepicker-label" for="datepicker-end">До:</label>
           <date-picker
+            format="yyyy-MM-dd"
+            :use-utc="true"
             :language="ru"
             calendar-class="input-calendar"
             class="input-date"

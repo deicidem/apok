@@ -1,3 +1,4 @@
+import * as dzzApi from "@/api/dzz";
 export default {
   namespaced: true,
   state: {
@@ -13,8 +14,8 @@ export default {
       to: 100
     },
     spacecrafts: setupSpacecrafts(),
-    spacecragtsSelected: [],
-    results: setupResults()
+    spacecraftsSelected: [],
+    results: []
   },
   getters: {
     getPolygonArea(state) {
@@ -45,6 +46,17 @@ export default {
     getSpacecrafts(state) {
       return state.spacecrafts;
     },
+    getSelectedSpacecrafts(state) {
+      let res = [];
+      state.spacecrafts.forEach(el => {
+        el.models.forEach(m => {
+          if (m.checked) {
+            res.push(m.id)
+          }
+        });
+      });
+      return res;
+    },
     getCloudiness(state) {
       return [state.cloudiness.from, state.cloudiness.to];
     },
@@ -58,6 +70,9 @@ export default {
     }
   },
   mutations: {
+    setResults(state, results) {
+      state.results = results;
+    },
     addСoordinate(state, coord) {
       state.areaPolygon.push(coord);
     },
@@ -82,15 +97,9 @@ export default {
       state.cloudiness.from = from;
       state.cloudiness.to = to;
     },
-    setTimeInterval(state, {
-      from,
-      to,
-      months
-    }) {
+    setTimeInterval(state, data) {
 
-      state.timeInterval.from = from;
-      state.timeInterval.to = to;
-      state.timeInterval.months = months;
+      state.timeInterval = data;
     },
     setSpacecrafts(state, newSpaceCrafts) {
       state.spacecrafts = newSpaceCrafts;
@@ -131,7 +140,7 @@ export default {
       state.spacecrafts[seriesInd].models[scInd].mss = mss;
       state.spacecrafts[seriesInd].models[scInd].checked = checked;
     },
-
+    
   },
   actions: {
     addCoordinate(store, i) {
@@ -165,6 +174,36 @@ export default {
     },
     selectSeries(store, data) {
       store.commit('selectSeries', data);
+    },
+    async load({
+      commit
+    }) {
+      let params = {
+        startDate: new Date("2021-04-22"),
+        endDate: new Date("2022-05-30"),
+        startCloudiness: 0,
+        endCloudiness: 100,
+        months: [3,4,5,6,7,8],
+        satelites: [1,2,3,4,5,6]
+      }
+      let results = await dzzApi.all(params);
+
+      
+      commit('setResults', results)
+    },
+    async search({commit, getters}) {
+      let params = {
+        startDate: getters.getTimeInterval.from,
+        endDate: getters.getTimeInterval.to,
+        startCloudiness: getters.getCloudiness[0],
+        endCloudiness: getters.getCloudiness[1],
+        months: getters.getTimeInterval.months,
+        satelites: getters.getSelectedSpacecrafts
+      }
+      let results = await dzzApi.all(params);
+
+      
+      commit('setResults', results)
     }
   }
 }
@@ -226,192 +265,4 @@ function setupSpacecrafts() {
       ]
     }
   ]
-}
-
-function setupResults() {
-  return [{
-    id: 0,
-    info: {
-      idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-      round: "23121",
-      route: "0",
-      scName: "Канопус-В-3",
-      date: "04.04.2022",
-      cloudiness: "80%",
-    },
-    GeoJSON: {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              36.95827938552311,
-              45.66351373527003
-            ],
-            [
-              36.382933900683454,
-              43.95279779154811
-            ],
-            [
-              38.62953946820189,
-              43.539726516356005
-            ],
-            [
-              39.27154542776307,
-              45.246411064541334
-            ],
-            [
-              36.95827938552311,
-              45.66351373527003
-            ]
-          ]
-        ]
-      },
-    },
-    bounds: [
-      [43.539726516356005, 36.382933900683454],
-      [45.66351373527003, 39.27154542776307],
-    ],
-    img: "зона интереса.png"
-  }, {
-    id: 1,
-    info: {
-      idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-      round: "23121",
-      route: "1",
-      scName: "Канопус-В-3",
-      date: "04.04.2022",
-      cloudiness: "80%",
-    },
-    GeoJSON: {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              36.95827938552311,
-              45.66351373527003
-            ],
-            [
-              36.382933900683454,
-              43.95279779154811
-            ],
-            [
-              38.62953946820189,
-              43.539726516356005
-            ],
-            [
-              39.27154542776307,
-              45.246411064541334
-            ],
-            [
-              36.95827938552311,
-              45.66351373527003
-            ]
-          ]
-        ]
-      },
-    },
-    bounds: [
-      [43.539726516356005, 36.382933900683454],
-      [45.66351373527003, 39.27154542776307],
-    ],
-    img: "зона интереса.png"
-  },{
-    id: 2,
-    info: {
-      idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-      round: "23121",
-      route: "2",
-      scName: "Канопус-В-3",
-      date: "04.04.2022",
-      cloudiness: "80%",
-    },
-    GeoJSON: {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              36.95827938552311,
-              45.66351373527003
-            ],
-            [
-              36.382933900683454,
-              43.95279779154811
-            ],
-            [
-              38.62953946820189,
-              43.539726516356005
-            ],
-            [
-              39.27154542776307,
-              45.246411064541334
-            ],
-            [
-              36.95827938552311,
-              45.66351373527003
-            ]
-          ]
-        ]
-      },
-    },
-    bounds: [
-      [43.539726516356005, 36.382933900683454],
-      [45.66351373527003, 39.27154542776307],
-    ],
-    img: "зона интереса.png"
-  },{
-    id: 3,
-    info: {
-      idBig: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-      round: "23121",
-      route: "3",
-      scName: "Канопус-В-3",
-      date: "04.04.2022",
-      cloudiness: "80%",
-    },
-    GeoJSON: {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              36.95827938552311,
-              45.66351373527003
-            ],
-            [
-              36.382933900683454,
-              43.95279779154811
-            ],
-            [
-              38.62953946820189,
-              43.539726516356005
-            ],
-            [
-              39.27154542776307,
-              45.246411064541334
-            ],
-            [
-              36.95827938552311,
-              45.66351373527003
-            ]
-          ]
-        ]
-      },
-    },
-    bounds: [
-      [43.539726516356005, 36.382933900683454],
-      [45.66351373527003, 39.27154542776307],
-    ],
-    img: "зона интереса.png"
-  }]
 }

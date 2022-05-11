@@ -31,11 +31,12 @@
       color="#476D70"
     ></l-polygon>
     <l-rectangle
+      v-if="screenPolygon != null"
       :fill="true"
       :bounds="screenPolygon"
       color="#476D70"
     ></l-rectangle>
-    <l-circle v-if="circle.radius > 0" :lat-lng="circle.center" :radius="circle.radius" color="red"/>
+    <l-circle v-if="circle != null" :lat-lng="circle.center" :radius="circle.radius" color="red"/>
     <template>
       <l-geo-json
         :options="{ fill: false }"
@@ -48,7 +49,7 @@
       <l-image-overlay
         v-for="(img, i) in images"
         :key="'img' + i"
-        :url="require(`@/assets/img/${img.img}`)"
+        :url="img.img"
         :bounds="img.bounds"
       ></l-image-overlay>
     </template>
@@ -56,7 +57,9 @@
 </template>
 
 <script>
+// import {latLngBounds} from "leaflet"
 import { mapGetters, mapActions } from "vuex";
+
 // import * as SHP from "shp-write";
 import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
@@ -103,6 +106,10 @@ export default {
   },
   data() {
     return {
+      // maxBounds: latLngBounds([
+      //   [90, 240],
+      //   [-90, -240]
+      // ]),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',

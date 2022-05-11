@@ -10,8 +10,7 @@
 
     <div class="sidebar-collapsed">
       <div
-        class="sidebar__item open sidebar-open"
-        id="collapsed"
+        class="sidebar-collapsed__img open sidebar-open"
         @click="toggleSidebar()"
       >
         <div class="sidebar-collapsed__img">
@@ -237,18 +236,30 @@ export default {
 
     background: #ffffff;
     box-shadow: $shadow-small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &__item {
       position: relative;
 
       display: flex;
       align-items: center;
-      margin: 12px;
-
-      // a:hover + &__hidden {
-      //   visibility: inherit;
-      //   z-index: 1;
-      //   opacity: 1;
-      // }
+      margin: 8px;
+      i {
+        font-size: 24px;
+        color: rgb(97, 133, 128);
+        transition: all 0.2s ease-out;
+        &:hover {
+          transition: all 0.4s ease-out;
+          cursor: pointer;
+          color: #384342;
+        }
+      }
+      a:hover + &__hidden {
+        visibility: inherit;
+        z-index: 1;
+        opacity: 1;
+      }
       &__hidden {
         position: absolute;
         z-index: -1;

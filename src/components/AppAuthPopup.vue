@@ -32,6 +32,14 @@
 import { mixin as clickaway } from "vue-clickaway";
 export default {
   mixins: [clickaway],
+  data() {
+    return {
+      user: {
+        login: "",
+        password: ""
+      }
+    }
+  },
   methods: {
     away() {
       this.$emit("close");

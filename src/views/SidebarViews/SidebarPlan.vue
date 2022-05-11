@@ -1,6 +1,9 @@
 <template>
   <div class="plan">
     <h2 class="sidebar-title">Запланировать задачу</h2>
+    <portal to="popup">
+      <app-plan-popup v-show="planPopup == true" @close="planPopup = false"></app-plan-popup>
+    </portal>
     <vuescroll :ops="ops">
       <div class="plan-wrapper">
         <app-plan-card
@@ -11,6 +14,7 @@
           :img="plan.image"
           :text="plan.shortText"
           :title="plan.title"
+          @openPopup="planPopup = true"
         ></app-plan-card>
       </div>
       <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
@@ -21,18 +25,20 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-
 import { mapGetters } from "vuex";
 import AppPlanCard from "@/components/cards/AppPlanCard.vue";
+import AppPlanPopup from "@/components/AppPlanPopup.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
     vuescroll,
     AppPlanCard,
+    AppPlanPopup
     // VsPagination,
   },
   data() {
     return {
+      planPopup: false,
       ops: {
         vuescroll: {
           mode: "native",

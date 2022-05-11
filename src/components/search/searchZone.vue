@@ -160,25 +160,41 @@
         v-show="searchZoneType == 2"
       >
         <div class="coordinates-wrapper">
-          <app-input
-            v-model="lat"
-            label="Широта"
-            class="coordinates-wrapper__input"
-            :mask="inputMaskLat"
-            :placeholder="placeholderLat"
-          ></app-input>
-          <app-input
-            v-model="lng"
-            label="Долгота"
-            class="coordinates-wrapper__input"
-            :mask="inputMaskLng"
-            :placeholder="placeholderLng"
-          ></app-input>
-          <app-input
-            v-model="rad"
-            label="Радиус (км)"
-            class="coordinates-wrapper__input"
-          ></app-input>
+          <div class="coordinates-input">
+            <label class="coordinates-wrapper__label" for="latitude">
+              Широта
+            </label>
+            <input
+              v-model="lat"
+              id="latitude"
+              class="input coordinates-wrapper__input"
+              :mask="inputMaskLat"
+              :placeholder="placeholderLat"
+            />
+          </div>
+
+          <div class="coordinates-input">
+            <label class="coordinates-wrapper__label" for="latitude">
+              Долгота
+            </label>
+            <input
+              v-model="lng"
+              class="input coordinates-wrapper__input"
+              id="longitude"
+              :mask="inputMaskLng"
+              :placeholder="placeholderLng"
+            />
+          </div>
+          <div class="coordinates-input">
+            <label class="coordinates-wrapper__label" for="latitude">
+              Радиус (км)
+            </label>
+            <input
+              v-model="rad"
+              id="radius"
+              class="input coordinates-wrapper__input"
+            />
+          </div>
 
           <button
             @click="createCircle"
@@ -216,11 +232,9 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppRadio from "@/components/controls/AppRadio.vue";
-import AppInput from "@/components/controls/AppInput.vue";
 import MaskedInput from "vue-masked-input";
 export default {
   components: {
-    AppInput,
     MaskedInput,
     AppRadio,
   },
@@ -508,21 +522,6 @@ export default {
   &__coordinates {
     display: flex;
     flex-direction: column;
-    .coordinates-wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      &__input {
-        margin-right: 20px;
-        width: 120px;
-      }
-      &__button {
-        margin-top: 20px;
-        margin-left: auto;
-        max-width: 200px;
-        width: 190px;
-      }
-    }
   }
   &__load {
     display: flex;
@@ -567,6 +566,29 @@ export default {
     border-radius: 0 !important;
   }
 }
+.coordinates-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  &__input {
+    margin-right: 20px;
+    width: 120px;
+    &:focus-within ~ .coordinates-wrapper__label{
+      color: $color-main;
+    }
+  }
+  &__label {
+    font-size: 10px;
+    padding-left: 10px;
+    color: #747474;
+  }
+  &__button {
+    margin-top: 20px;
+    margin-left: auto;
+    max-width: 200px;
+    width: 190px;
+  }
+}
 @media screen and (max-width: 1440px) {
   .search-zone {
     padding: 14px;
@@ -575,6 +597,17 @@ export default {
         font-size: 0.875rem;
       }
     }
+  }
+  .search-zone__card {
+    padding: 10px;
+  }
+  .coordinates-wrapper__input {
+    width: 94px;
+    margin-right: 10px;
+    padding: 7px 10px;
+  }
+  .coordinates-wrapper__button {
+    margin-top: 10px;
   }
 }
 </style>

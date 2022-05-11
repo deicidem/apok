@@ -1,8 +1,23 @@
 <template>
   <div class="auth-popup" v-on-clickaway="away">
     <div class="auth-popup__title">Авторизация</div>
-    <app-input class="auth-input" label="Логин"></app-input>
-    <app-input class="auth-input" label="Пароль"></app-input>
+          <div class="input-wrapper">
+            <input class="input input-withIcon" v-model="user.login" required />
+            <label class="input-label">Логин</label>
+
+            <img class="input-img" src="@/assets/img/header-logo.svg" />
+          </div>
+
+          <div class="input-wrapper">
+            <input
+              class="input input-withIcon"
+              v-model="user.password"
+              required
+            />
+            <label class="input-label">Пароль</label>
+
+            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+          </div>
     <router-link to="/login">
       <button class="button button-g auth-button">Войти</button>
     </router-link>
@@ -15,12 +30,8 @@
 
 <script>
 import { mixin as clickaway } from "vue-clickaway";
-import AppInput from "@/components/controls/AppInput.vue";
 export default {
   mixins: [clickaway],
-  components: {
-    AppInput,
-  },
   methods: {
     away() {
       this.$emit("close");

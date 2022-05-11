@@ -64,9 +64,6 @@
       </div>
     </div>
     <app-plan-data></app-plan-data>
-    <div class="sidebar-data">
-      <img src="@/assets/img/open-w.svg" />
-    </div>
   </div>
 </template>
 
@@ -301,20 +298,6 @@ export default {
         cursor: pointer;
         color: #384342;
       }
-    }
-  }
-  &-data {
-    position: absolute;
-    left: 100%;
-    top: 0;
-
-    width: 40px;
-    background-color: $color-main;
-
-    border-radius: 0 20px 20px 0;
-    img{
-      max-width: 20px;
-      margin-left: 10px;
     }
   }
 }

@@ -11,12 +11,34 @@
         </div>
         <div class="data-item">
           <div class="data-info">
-            <p class="data__subtitle">Снимок:</p>
-            <p class="data__text">Формирование температурных карт</p>
+            <p class="data__subtitle">Архивный снимок</p>
+            <p class="data__text">
+              ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
+            </p>
           </div>
           <div class="data-btns">
-            <button class="button button-white data-btn">Выбрать</button>
-            <button class="button button-white data-btn">Загрузить</button>
+            <button class="button button-svg data-btn">
+              <img src="@/assets/img/choose.svg" />
+            </button>
+            <button class="button button-svg data-btn">
+              <img src="@/assets/img/upload.svg" />
+            </button>
+          </div>
+        </div>
+        <div class="data-item">
+          <div class="data-info">
+            <p class="data__subtitle">Актуальный снимок</p>
+            <p class="data__text">
+              ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
+            </p>
+          </div>
+          <div class="data-btns">
+            <button class="button button-svg data-btn">
+              <img src="@/assets/img/choose.svg" />
+            </button>
+            <button class="button button-svg data-btn">
+              <img src="@/assets/img/upload.svg" />
+            </button>
           </div>
         </div>
       </div>
@@ -24,7 +46,7 @@
     </div>
     <div class="data-line">
       <div class="data-close">
-        <img src="@/assets/img/cross-w.svg" alt="" />
+        <img src="@/assets/img/arrow-plan.svg" alt="" />
       </div>
     </div>
   </div>
@@ -41,10 +63,11 @@
 
   display: flex;
   justify-content: space-between;
-  width: 680px;
+  min-width: 500px;
+  margin: 20px;
 
   background: $gradient-w;
-  border-radius: 0 20px 20px 0;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: $shadow-big;
 
@@ -52,18 +75,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 640px;
-    padding: 20px;
+    padding: 16px;
   }
   &-line {
     width: 40px;
     background-color: $color-main;
+    display: flex;
+    align-items: center;
   }
   &-title {
     color: #000;
     font-size: 18px;
+    font-weight: 300;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   &-wrapper {
   }
@@ -73,24 +98,26 @@
     justify-content: space-between;
     margin-bottom: 10px;
     width: 100%;
+    background: $gradient-w;
+    padding: 6px;
+    box-shadow: $shadow-big;
+    border-radius: 5px;
   }
   &-info {
-    display: flex;
   }
   &__subtitle {
-    width: 100px;
-    font-size: 14px;
+    font-weight: bold;
+    font-size: 10px;
     color: $text-grey;
   }
   &__text {
     font-size: 12px;
+    font-weight: 300;
+    width: 100%;
     text-align: left;
     color: $text-grey;
   }
   &-close {
-    width: 16px;
-    margin-top: 20px;
-    margin-left: 10px;
   }
   &-btns {
     display: flex;
@@ -98,11 +125,11 @@
     max-width: 250px;
   }
   &-btn {
-    margin-left: 10px;
+    margin: 0 6px;
   }
   &-start {
-    width: 100px;
-    margin: 10px auto 0 auto;
+    width: 200px;
+    margin: 10px 16px 0 auto;
   }
 }
 </style>

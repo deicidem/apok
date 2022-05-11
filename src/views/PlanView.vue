@@ -199,8 +199,6 @@ export default {
       height: auto;
       justify-self: end;
 
-      padding: 10px 15px 10px 15px;
-
       font-size: 1.125rem;
     }
     &__cards {
@@ -284,6 +282,12 @@ img {
     height: 700px;
     &-title{
       font-size: 18px;
+    }
+    &-wrapper{
+      max-width: 1200px;
+      &__header{
+        max-width: 1200px;
+      }
     }
   }
 }

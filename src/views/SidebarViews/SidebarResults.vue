@@ -58,8 +58,8 @@
             </table>
           </div>
           <div class="card-buttons">
-            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.geographyPath)">Скрыть контур</button>
-            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.previewPath, cardData.geographyPath.geometry.bounds)"
+            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.geography)">Скрыть контур</button>
+            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.previewPath, cardData.geography.geometry.bounds)"
               >Показать изображение</button
             >
           </div>
@@ -86,7 +86,7 @@
                 <button
                   class="button button-white button-small"
                   :class="buttons[i].polygonActive ? 'active' : ''"
-                  @click="onPolygonButtonClick(i, item.id, item.geographyPath)"
+                  @click="onPolygonButtonClick(i, item.id, item.geography)"
                 >
                   <img
                     svg-inline
@@ -98,7 +98,7 @@
                 <button
                   class="button button-white button-small"
                   :class="buttons[i].imageActive ? 'active' : ''"
-                  @click="onImageButtonClick(i, item.id, item.previewPath, item.geographyPath == null ? null : item.geographyPath.geometry.bounds )"
+                  @click="onImageButtonClick(i, item.id, item.previewPath, item.geography == null ? null : item.geography.geometry.bounds )"
                 >
                   <img
                     svg-inline

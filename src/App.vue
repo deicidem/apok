@@ -111,26 +111,28 @@ img {
   text-align: center;
   font-size: 0.875rem;
 
-  background: $gradient;
+  background-image: linear-gradient(88.64deg, $color-main, $color-main-dark);
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
   transition: all 0.1s ease-out;
+  // background-size: 300% 100%;
   cursor: pointer;
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 3px 15px rgba(#000, 0.15);
+    // background-position: 100% 0;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(#000, 0.15);
   }
   &:active {
-    transform: translateY(-1px);
-    box-shadow: 0px 1px 10px rgba(#000, 0.15);
+    transition: all 0.05s ease-out;
+    transform: translateY(1px);
+    box-shadow: inset 0px 1px 5px rgba(#000, 0.15);
   }
   &-white {
     color: $color-main-dark;
-    background: $gradient_w;
+    background-image: linear-gradient(101.61deg, #FFFFFF, #F6F9FA, #FFFFFF);
   }
   &-g {
-    background: $gradient;
     color: #fff;
   }
   &-r {

@@ -30,6 +30,7 @@ export default {
   actions: {
     async load({commit}) {
       let plans = await plansApi.all();
+      console.log(plans);
       let res = [];
       plans.forEach(el => {
         res.push({...el, ...{shortText: "Построение карты температур по тепловым каналам КА Landsat-8 производится с целью вычисления значений температур поверхности в градусах Цельсия, выявления тепловых аномалий.",

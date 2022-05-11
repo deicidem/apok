@@ -1,5 +1,4 @@
 import * as dzzApi from "@/api/dzz";
-import server from "@/api/http"
 export default {
   namespaced: true,
   state: {
@@ -179,14 +178,17 @@ export default {
     async load({
       commit
     }) {
-      let results = await dzzApi.all();
+      let params = {
+        startDate: new Date("2021-04-22"),
+        endDate: new Date("2022-05-30"),
+        startCloudiness: 0,
+        endCloudiness: 100,
+        months: [3,4,5,6,7,8],
+        satelites: [1,2,3,4,5,6]
+      }
+      let results = await dzzApi.all(params);
 
-      results.forEach(el => {
-        if (el.geographyPath != null && el.previewPath != null) {
-          el.geographyPath = JSON.parse(el.geographyPath)
-          el.previewPath = server.defaults.baseURL + "images?path=" + el.previewPath
-        }
-      });
+      
       commit('setResults', results)
     },
     async search({commit, getters}) {

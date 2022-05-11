@@ -164,12 +164,10 @@
             <label class="coordinates-wrapper__label" for="latitude">
               Широта
             </label>
-            <input
+            <masked-input
               v-model="lat"
-              id="latitude"
               class="input coordinates-wrapper__input"
               :mask="inputMaskLat"
-              :placeholder="placeholderLat"
             />
           </div>
 
@@ -177,12 +175,10 @@
             <label class="coordinates-wrapper__label" for="latitude">
               Долгота
             </label>
-            <input
+            <masked-input
               v-model="lng"
               class="input coordinates-wrapper__input"
-              id="longitude"
               :mask="inputMaskLng"
-              :placeholder="placeholderLng"
             />
           </div>
           <div class="coordinates-input">

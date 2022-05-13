@@ -78,8 +78,8 @@ export default {
 }
 .auth-wrapper {
   position: absolute;
-  right: 100px;
-  top: 140px;
+  right: 70px;
+  top: 170px;
   z-index: 30;
 }
 .search-box {

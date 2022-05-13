@@ -23,7 +23,7 @@
     </router-link>
 
     <router-link to="/registration">
-      <button class="button button-g auth-button">Зарегистрироваться</button>
+      <button class="button button-white auth-button">Регистрация</button>
     </router-link>
   </div>
 </template>
@@ -63,16 +63,18 @@ export default {
     &__title {
       text-align: center;
       font-size: 20px;
-      color: $text-grey;
+      margin-bottom: 20px;
+      color: #000;
     }
   }
   &-input {
     margin-top: 20px;
   }
   &-button {
-    margin-top: 20px;
+    margin: 10px auto;
     height: 40px;
     width: 100%;
+    font-size: 18px;
   }
 }
 </style>

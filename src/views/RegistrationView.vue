@@ -22,7 +22,7 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <img svg-inline class="input-img" src="@/assets/img/header-logo.svg" />
           </div>
 
           <div class="input-wrapper">
@@ -40,7 +40,7 @@
             />
             <label class="input-label">Пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
           </div>
 
           <div class="input-wrapper">
@@ -51,7 +51,7 @@
             />
             <label class="input-label">Повторите пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
           </div>
 
           <button @click="submit" class="button button-g form-wrapper__item">
@@ -139,19 +139,19 @@ export default {
   .form {
     margin: 10% auto;
     width: 400px;
-    padding: 20px;
+    padding: 30px;
 
     background: $gradient-w;
     border-radius: 10px;
     border: none;
     box-shadow: $shadow-big;
     &-title {
-      margin: 20px 0;
+      margin-bottom: 24px;
 
       text-align: center;
-      font-size: 24px;
+      font-size: 20px;
 
-      color: $text-grey;
+      color: #000;
     }
     &-wrapper {
       display: flex;
@@ -174,9 +174,5 @@ export default {
       }
     }
   }
-}
-.input-icon {
-  position: absolute;
-  top: 0;
 }
 </style>

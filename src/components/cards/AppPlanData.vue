@@ -17,12 +17,18 @@
             </p>
           </div>
           <div class="data-btns">
-            <button class="button button-svg data-btn">
-              <img src="@/assets/img/choose.svg" />
-            </button>
-            <button class="button button-svg data-btn">
-              <img src="@/assets/img/upload.svg" />
-            </button>
+            <div class="data-btn">
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/choose.svg" />
+              </button>
+              <span class="data-tooltiptext">Выбрать</span>
+            </div>
+            <div class="data-btn">
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/upload.svg" />
+              </button>
+              <span class="data-tooltiptext">Загрузить</span>
+            </div>
           </div>
         </div>
         <div class="data-item">
@@ -33,12 +39,18 @@
             </p>
           </div>
           <div class="data-btns">
-            <button class="button button-svg data-btn">
-              <img src="@/assets/img/choose.svg" />
-            </button>
-            <button class="button button-svg data-btn">
-              <img src="@/assets/img/upload.svg" />
-            </button>
+            <div class="data-btn">
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/choose.svg" />
+              </button>
+              <span class="data-tooltiptext">Выбрать</span>
+            </div>
+            <div class="data-btn">
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/upload.svg" />
+              </button>
+              <span class="data-tooltiptext">Загрузить</span>
+            </div>
           </div>
         </div>
       </div>
@@ -58,19 +70,22 @@
 <style lang="scss" scoped>
 .data {
   position: absolute;
-  left: 100%;
-  top: 0;
+  left: calc(100% + 20px);
+  top: 37px;
 
   display: flex;
   justify-content: space-between;
-  min-width: 500px;
-  margin: 20px;
+  min-width: 540px;
 
   background: $gradient-w;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: $shadow-big;
-
+  transition: all 0.3s ease-out;
+  transform: translateX(calc(-100% + 10px));
+  &:hover {
+    transform: translate(0);
+  }
   &-content {
     display: flex;
     flex-direction: column;
@@ -78,7 +93,7 @@
     padding: 16px;
   }
   &-line {
-    width: 40px;
+    width: 30px;
     background-color: $color-main;
     display: flex;
     align-items: center;
@@ -100,7 +115,7 @@
     width: 100%;
     background: $gradient-w;
     padding: 6px;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     border-radius: 5px;
   }
   &-info {
@@ -112,10 +127,9 @@
   }
   &__text {
     font-size: 12px;
-    font-weight: 300;
     width: 100%;
     text-align: left;
-    color: $text-grey;
+    color: #313131;
   }
   &-close {
   }
@@ -125,7 +139,25 @@
     max-width: 250px;
   }
   &-btn {
+    position: relative;
     margin: 0 6px;
+    &:hover .data-tooltiptext {
+      display: block;
+    }
+  }
+  &-tooltiptext {
+    position: absolute;
+    bottom: 110%;
+    right: calc(0px - 6px);
+
+    display: none;
+    padding: 2px 5px;
+
+    color: $color-main-dark;
+    font-size: 10px;
+    background: $gradient-w;
+    border-radius: 6px;
+    box-shadow: $shadow-small;
   }
   &-start {
     width: 200px;

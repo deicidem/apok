@@ -7,8 +7,8 @@ Vue.use(PortalVue)
 
 Vue.config.productionTip = false
 
-store.dispatch('plans/load')
-store.dispatch('tasks/load')
+// store.dispatch('plans/load')
+// store.dispatch('tasks/load')
 // store.dispatch('search/load')
 
 

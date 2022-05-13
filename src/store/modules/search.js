@@ -15,7 +15,7 @@ export default {
     },
     spacecrafts: setupSpacecrafts(),
     spacecraftsSelected: [],
-    results: []
+    results: setupResults()
   },
   getters: {
     getPolygonArea(state) {
@@ -140,7 +140,7 @@ export default {
       state.spacecrafts[seriesInd].models[scInd].mss = mss;
       state.spacecrafts[seriesInd].models[scInd].checked = checked;
     },
-    
+
   },
   actions: {
     addCoordinate(store, i) {
@@ -183,15 +183,15 @@ export default {
         endDate: new Date("2022-05-30"),
         startCloudiness: 0,
         endCloudiness: 100,
-        months: [3,4,5,6,7,8],
-        satelites: [1,2,3,4,5,6]
+        months: [3, 4, 5, 6, 7, 8],
+        satelites: [1, 2, 3, 4, 5, 6]
       }
       let results = await dzzApi.all(params);
 
-      
+
       commit('setResults', results)
     },
-    async search({commit, getters}) {
+    async search({ commit, getters }) {
       let params = {
         startDate: getters.getTimeInterval.from,
         endDate: getters.getTimeInterval.to,
@@ -202,7 +202,7 @@ export default {
       }
       let results = await dzzApi.all(params);
 
-      
+
       commit('setResults', results)
     }
   }
@@ -211,58 +211,108 @@ export default {
 
 function setupSpacecrafts() {
   return [{
+    id: 0,
+    name: "Канопус В",
+    checked: false,
+    models: [{
       id: 0,
-      name: "Канопус В",
+      name: "Канопус В 1",
       checked: false,
-      models: [{
-          id: 0,
-          name: "Канопус В 1",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-        {
-          id: 1,
-          name: "Канопус В 2",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-        {
-          id: 2,
-          name: "Канопус В 3",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-      ]
+      mss: false,
+      pss: false
     },
     {
       id: 1,
-      name: "Ресурс П",
+      name: "Канопус В 2",
       checked: false,
-      models: [{
-          id: 0,
-          name: "Ресурс П 1",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-        {
-          id: 1,
-          name: "Ресурс П 2",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-        {
-          id: 2,
-          name: "Ресурс П 3",
-          checked: false,
-          mss: false,
-          pss: false
-        },
-      ]
-    }
+      mss: false,
+      pss: false
+    },
+    {
+      id: 2,
+      name: "Канопус В 3",
+      checked: false,
+      mss: false,
+      pss: false
+    },
+    ]
+  },
+  {
+    id: 1,
+    name: "Ресурс П",
+    checked: false,
+    models: [{
+      id: 0,
+      name: "Ресурс П 1",
+      checked: false,
+      mss: false,
+      pss: false
+    },
+    {
+      id: 1,
+      name: "Ресурс П 2",
+      checked: false,
+      mss: false,
+      pss: false
+    },
+    {
+      id: 2,
+      name: "Ресурс П 3",
+      checked: false,
+      mss: false,
+      pss: false
+    },
+    ]
+  }
   ]
+}
+
+function setupResults() {
+  return [
+   {
+    id: 1,
+    name: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+    round: "23121",
+    route: "1",
+    scName: "Канопус-В-3",
+    date: "04.04.2022",
+    cloudiness: 80,
+    processingLevel: "1",
+    geography: {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "bounds": [
+          [43.539726516356005, 36.382933900683454],
+          [45.66351373527003, 39.27154542776307],
+        ],
+        "coordinates": [
+          [
+            [
+              36.95827938552311,
+              45.66351373527003
+            ],
+            [
+              36.382933900683454,
+              43.95279779154811
+            ],
+            [
+              38.62953946820189,
+              43.539726516356005
+            ],
+            [
+              39.27154542776307,
+              45.246411064541334
+            ],
+            [
+              36.95827938552311,
+              45.66351373527003
+            ]
+          ]
+        ]
+      },
+    },
+    previewPath: "https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
+  }]
 }

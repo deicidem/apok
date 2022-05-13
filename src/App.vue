@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <!-- <div class="wrapper" @click="closeUser($event)"> -->
     <app-header></app-header>
     <div class="content">
       <router-view></router-view>
@@ -15,37 +14,6 @@ export default {
   components: {
     AppHeader,
   },
-  // data() {
-  //   return {
-  //     showUser: false,
-  //     showSearch: false,
-  //   };
-  // },
-  // methods: {
-  //   closeUser($event) {
-  //     let el = document.querySelector(".user-box");
-  //     if ($event.target.classList.contains("user-box__click")) {
-  //       return;
-  //     }
-  //     if (this.showUser) {
-  //       if (!el.contains($event.target)) {
-  //         this.showUser = false;
-  //       }
-  //     }
-  //     this.closeSearch($event);
-  //   },
-  // closeSearch($event) {
-  //   let el = document.querySelector(".search-box");
-  //   if ($event.target.classList.contains("search-box__click")) {
-  //     return;
-  //   }
-  //   if (this.showSearch) {
-  //     if (!el.contains($event.target)) {
-  //       this.showSearch = false;
-  //     }
-  //   }
-  // },
-  // },
 };
 </script>
 
@@ -104,44 +72,65 @@ img {
 
 /*_____________________button_________________*/
 .button {
+  position: relative;
+
   padding: 0 24px;
   height: 35px;
+  width: 190px;
 
   font-family: inherit;
   text-align: center;
   font-size: 0.875rem;
-
-  background-image: linear-gradient(88.64deg, $color-main, $color-main-dark, $color-main);
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
-  transition: all 0.3s ease-in-out;
-  background-size: 300% 100%;
+  transition: all 0.2s ease-out;
   cursor: pointer;
+  z-index: 1;
+  overflow: hidden;
+  color: #fff;
+  &::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.2s ease-out;
+    z-index: -1;
+  }
   &:hover {
-    // background-position: 100% 0;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(#000, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 10px rgba(#000, 0.3);
   }
   &:active {
-    transition: all 0.05s ease-out;
+    transition: all 0.1s ease-out;
     transform: translateY(1px);
-    box-shadow: inset 0px 1px 5px rgba(#000, 0.25);
+    box-shadow:  0 2px 4px rgba(#000, 0.1);
+  }
+  &:hover:after {
+    transform: translateX(-25%);
+  }
+  &:active:after {
+    transform: translateX(-75%);
+  }
+  &-g {
+    &::after {
+      background: $gradient;
+    }
   }
   &-white {
     color: $color-main-dark;
-    background-image: linear-gradient(101.61deg, #FFFFFF, #F6F9FA);
-  } 
-  &-g {
-    color: #fff;
-    // &:hover {
-    //   background: $color-main;
-    // }
+    &::after {
+      background: $gradient-w;
+    }
   }
   &-r {
-    // background: $gradient-r;
-    background-image: linear-gradient(91.36deg, #EB6060, #8D4646, #EB6060);
     color: #fff;
+    &::after {
+      background: $gradient-r;
+    }
   }
   &-svg {
     background: $gradient_w;
@@ -158,6 +147,9 @@ img {
 .input:active .input-label {
   display: block;
 }
+.input-wrapper:focus-within svg path {
+  fill: $color-main;
+}
 .input {
   display: block;
   padding: 8px 15px;
@@ -169,17 +161,13 @@ img {
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main-dark;
-  &:active {
-    border: 1px solid $color-main;
-    outline: none;
-  }
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
   }
   &:focus ~ .input-label,
   &:valid ~ label {
-    top: -20px;
+    top: -6px;
     font-size: 12px;
     color: $color-main;
   }
@@ -187,13 +175,19 @@ img {
   &-img {
     position: absolute;
     max-width: 26px;
-    right: 0;
+    right: 15px;
     top: 50%;
     transform: translate(-50%, -50%);
   }
   &-withIcon {
-    padding-right: 36px;
-    padding: 15px 15px;
+    padding: 15px 24px;
+    margin: 14px auto;
+    width: 300px;
+  }
+  &-withoutIcon {
+    padding-left: 8px;
+    height: 35px;
+    margin-right: 14px;
   }
   &-label {
     display: none;
@@ -205,29 +199,29 @@ img {
     flex-direction: column;
     justify-content: flex-end;
 
-    width: 300px;
-    margin: 0 auto 30px auto;
+    margin: 0;
     &:focus-within .input-label {
       color: $color-main;
-    }
-
-    .input-label {
-      position: absolute;
-      top: 15px;
-
-      display: inline-block;
-      width: 300px;
-      padding-left: 15px;
-
-      font-size: 14px;
-      color: $text-grey;
-
-      transition: 0.2s ease all;
-      -moz-transition: 0.2s ease all;
-      -webkit-transition: 0.2s ease all;
-      pointer-events: none;
+      font-size: 12px;
+      top: -6px;
     }
   }
+}
+.input-label {
+  position: absolute;
+  top: 28px;
+  left: 20px;
+
+  display: inline-block;
+  padding-left: 24px;
+
+  font-size: 14px;
+  color: $text-grey;
+
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  pointer-events: none;
 }
 
 /*_____________________pagination_____________*/
@@ -267,7 +261,7 @@ img {
   .input {
     font-size: 10px;
     padding: 12px 10px;
-    &-img{
+    &-img {
       max-width: 22px;
     }
     &-wrapper {
@@ -279,3 +273,132 @@ img {
 }
 /*______________________________________*/
 </style>
+
+
+// html {
+// 	height: 150%;
+// }
+
+// h1,
+// p,
+// button {
+// 	font-family: Helvetica, sans-serif;
+// 	font-weight: 100;
+// 	color: #488589;
+// }
+
+// h1 {
+// 	letter-spacing: 0.5em;
+// 	text-align: center;
+// 	margin-top: 50px;
+// 	line-height: 1.6em;
+// }
+
+// p {
+// 	font-size: 1.1em;
+// 	text-align: center;
+// 	margin: 110px auto 20px;
+// 	letter-spacing: 0.05em;
+// }
+
+// .container {
+// 	text-align: center;
+// 	position: relative;
+// 	width: 300px;
+// 	margin: 0 auto;
+// 	cursor: pointer;
+// }
+
+// button {
+// 	position: relative;
+// 	height: 50px;
+// 	width: 280px;
+// 	border: 0;
+// 	border-radius: 5px;
+// 	text-transform: uppercase;
+// 	font-size: 1.1em;
+// 	letter-spacing: 0.2em;
+// 	overflow: hidden;
+// 	box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+// 	z-index: 1;
+//   cursor: pointer;
+// }
+
+// .button-one {
+// }
+
+// .fill-one {
+// 	position: absolute;
+// 	background-image: linear-gradient(to right, #FFFFFF, #E6F6F7);
+// 	height: 70px;
+// 	width: 420px;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// 	border-radius: 5px;
+// 	z-index: -1;
+// 	transition: all 0.1s ease-out;
+// }
+// .container-one {
+//   transition: all 0.4s ease;
+// }
+// button:hover .fill-one {
+// 	left: 75%
+// }
+//  button:active .fill-one {
+// 	left: 25%;
+// }
+
+// .fill-two {
+// 	position: absolute;
+// 	background-image: linear-gradient(to right, #83B5B8, #618580);
+// 	background-size: 150% 150%;
+// 	height: 70px;
+// 	width: 420px;
+// 	border-radius: 5px;
+// 	margin: -40px 0 0 -140px;
+// 	z-index: -1;
+// 	transition: all 0.4s ease;
+// }
+
+// .container-two:hover .fill-two {
+// 	-webkit-animation: gradient 3s ease infinite;
+// 	-moz-animation: gradient 3s ease infinite;
+// 	animation: gradient 3s ease infinite;
+// }
+
+// @-webkit-keyframes gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }
+
+// @-moz-keyframes gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }
+
+// @keyframes gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }

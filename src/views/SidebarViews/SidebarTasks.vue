@@ -111,7 +111,7 @@ export default {
     }
   }
   .green {
-    color: $color-main;
+    color: #488589;
   }
   .col-checkbox {
     width: 40px;

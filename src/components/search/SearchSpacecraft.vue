@@ -8,7 +8,12 @@
         :key="series.id"
       >
         <div class="accordion-item__header" @click="updateShow(i)">
-          <div class="accordion-item__img"></div>
+          <div
+            v-bind:class="{
+              'accordion-item__close': !spacecraftsShow[i].show,
+              'accordion-item__open': spacecraftsShow[i].show,
+            }"
+          ></div>
           <app-checkbox
             :mini="true"
             :model-value="series.checked"
@@ -24,7 +29,12 @@
               :key="sc.id"
             >
               <div class="accordion-item__header" @click="updateShow(i, j)">
-                <div class="accordion-item__img"></div>
+                <div
+                  v-bind:class="{
+                    'accordion-item__close': !spacecraftsShow[i].children[j].show,
+                    'accordion-item__open': spacecraftsShow[i].children[j].show,
+                  }"
+                ></div>
                 <app-checkbox
                   :mini="true"
                   :modelValue="sc.checked"
@@ -60,8 +70,8 @@
                         })
                       "
                     />
-                    <div>
-                      <img src="@/assets/img/spektr.png" />
+                    <div class="accordion-item__img">
+                      <img src="@/assets/img/spektr.svg" />
                     </div>
                     <p>Многоспектральная съемка</p>
                   </label>
@@ -80,8 +90,8 @@
                         })
                       "
                     />
-                    <div>
-                      <img src="@/assets/img/panhrom.png" />
+                    <div class="accordion-item__img">
+                      <img src="@/assets/img/panhrom.svg" />
                     </div>
                     <p>Панхроматическая съемка</p>
                   </label>
@@ -153,49 +163,60 @@ export default {
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;
-    .accordion {
-      padding: 10px;
+  }
+}
+.accordion {
+  padding: 10px;
 
-      box-shadow: $shadow-small;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-      &-item {
-        position: relative;
-        p {
-          margin-left: 4px;
+  box-shadow: $shadow-small;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  &-item {
+    position: relative;
+    p {
+      margin-left: 4px;
 
-          color: #000;
-          font-size: 0.875rem;
-        }
-        &__input {
-          position: absolute;
-          top: 0;
-          left: 0;
+      color: #000;
+      font-size: 0.875rem;
+    }
+    &__img {
+      margin-left: 10px;
+    }
+    &__input {
+      position: absolute;
+      top: 0;
+      left: 0;
 
-          opacity: 0;
-          &:checked ~ .accordion-item__content {
-            display: inline-block;
-          }
-        }
-        &__header {
-          display: flex;
-          align-items: center;
-          padding: 6px 0 0 6px;
-        }
-        &__checkbox {
-          margin-right: 6px;
-        }
-        &__img {
-          height: 24px;
-          width: 24px;
-          background: url("@/assets/img/arrow-close.png");
-        }
-        &__content {
-          padding: 6px 0 0 24px;
-          border-top: none;
-        }
+      opacity: 0;
+      &:checked ~ .accordion-item__content {
+        display: inline-block;
       }
+    }
+    &__header {
+      display: flex;
+      align-items: center;
+      padding: 6px 0 0 6px;
+    }
+    &__checkbox {
+      margin-right: 6px;
+    }
+    &__close {
+      height: 24px;
+      width: 24px;
+      background: url("@/assets/img/arrow-close.svg");
+      cursor: pointer;
+    }
+    &__open {
+      height: 24px;
+      width: 24px;
+      background: url("@/assets/img/arrow-close.svg");
+      cursor: pointer;
+      transform: rotate(90deg);
+    }
+    &__content {
+      padding: 6px 0 0 24px;
+      border-top: none;
     }
   }
 }

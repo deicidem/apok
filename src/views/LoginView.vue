@@ -16,7 +16,7 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <img svg-inline class="input-img" src="@/assets/img/header-logo.svg" />
           </div>
 
           <div class="input-wrapper">
@@ -27,7 +27,7 @@
             />
             <label class="input-label">Пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
           </div>
 
           <router-link class="button-router" to="/main">
@@ -94,16 +94,16 @@ export default {
     background: $gradient-w;
     margin: 30px 0 0 0;
     width: 400px;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     border: none;
     box-shadow: $shadow-big;
-    margin: 20% auto;
+    margin: 16% auto;
     &-title {
       text-align: center;
-      font-size: 24px;
-      color: $text-grey;
-      margin: 20px 0;
+      font-size: 20px;
+      color: #000;
+      margin-bottom: 20px;
     }
     &-wrapper {
       display: flex;

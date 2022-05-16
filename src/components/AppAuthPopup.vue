@@ -1,28 +1,24 @@
 <template>
   <div class="auth-popup" v-on-clickaway="away">
     <div class="auth-popup__title">Авторизация</div>
-          <div class="input-wrapper">
-            <input class="input input-withIcon" v-model="user.login" required />
-            <label class="input-label">Логин</label>
+    <div class="input-wrapper">
+      <input class="input input-withIcon" v-model="user.login" required />
+      <label class="input-label auth-popup-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
-          </div>
+      <img svg-inline class="input-img" src="@/assets/img/header-logo.svg" />
+    </div>
 
-          <div class="input-wrapper">
-            <input
-              class="input input-withIcon"
-              v-model="user.password"
-              required
-            />
-            <label class="input-label">Пароль</label>
+    <div class="input-wrapper">
+      <input class="input input-withIcon" v-model="user.password" required />
+      <label class="input-label">Пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
-          </div>
+      <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+    </div>
     <router-link to="/login">
       <button class="button button-g auth-button">Войти</button>
     </router-link>
 
-    <router-link to="/registration">
+    <router-link  to="/registration">
       <button class="button button-white auth-button">Регистрация</button>
     </router-link>
   </div>
@@ -36,9 +32,9 @@ export default {
     return {
       user: {
         login: "",
-        password: ""
-      }
-    }
+        password: "",
+      },
+    };
   },
   methods: {
     away() {
@@ -53,9 +49,10 @@ export default {
   &-popup {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    text-align: center;
     padding: 30px;
-    
+    width: 400px;
+
     box-shadow: $shadow-small;
     border-radius: 10px;
     overflow: hidden;
@@ -73,8 +70,8 @@ export default {
   &-button {
     margin: 10px auto;
     height: 40px;
-    width: 100%;
-    font-size: 18px;
+    width: 300px;
+    font-size: 16px;
   }
 }
 </style>

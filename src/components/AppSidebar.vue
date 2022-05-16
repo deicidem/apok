@@ -10,8 +10,7 @@
 
     <div class="sidebar-collapsed">
       <div
-        class="sidebar-collapsed__open"
-        :v-bind:class="{
+        v-bind:class="{
           'sidebar-collapsed__collapse': isCollapse,
           'sidebar-collapsed__open': isOpen,
         }"
@@ -78,8 +77,8 @@ export default {
   },
   data() {
     return {
-      isCollapse: true,
-      isOpen: false,
+      isCollapse: false,
+      isOpen: true,
     };
   },
   computed: {

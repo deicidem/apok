@@ -199,6 +199,7 @@ export default {
       height: auto;
       justify-self: end;
 
+      width: 270px;
       font-size: 1.125rem;
     }
     &__cards {

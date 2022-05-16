@@ -16,7 +16,11 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img svg-inline class="input-img" src="@/assets/img/header-logo.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/header-logo.svg"
+            />
           </div>
 
           <div class="input-wrapper">
@@ -27,13 +31,17 @@
             />
             <label class="input-label">Пароль</label>
 
-            <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/lock-icon.svg"
+            />
           </div>
 
-          <router-link class="button-router" to="/main">
+          <router-link to="/main">
             <button class="button button-g form-wrapper__item">Войти</button>
           </router-link>
-          <router-link class="button-router" to="/registration">
+          <router-link to="/registration">
             <button class="button button-white form-wrapper__item">
               Регистрация
             </button>
@@ -70,6 +78,9 @@ export default {
   left: 0;
   z-index: 1;
 
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   width: 100%;
   height: 100%;
 
@@ -106,22 +117,11 @@ export default {
       margin-bottom: 20px;
     }
     &-wrapper {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
       &__item {
         width: 300px;
-        margin: 10px auto;
-        font-size: 18px;
-        position: relative;
-      }
-      &__icon {
-        position: absolute;
-        top: 0;
-        z-index: 100;
-      }
-      .button {
         height: 40px;
+        margin: 10px auto;
+        font-size: 16px;
       }
     }
   }

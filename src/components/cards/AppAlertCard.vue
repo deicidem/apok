@@ -7,11 +7,11 @@
     ></div>
     <div class="alert-item__content">
       <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
-        <img inline-svg src="@/assets/img/envelope.svg" />
+        <div :class="[theme] + '__icon'"></div>
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
-        <p>Посмотреть результат</p>
+        <p :class="'alert-item__' + [theme]">Посмотреть результат</p>
       </div>
     </div>
 
@@ -39,6 +39,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.task__icon {
+  background: url("@/assets/img/alert-task.svg");
+  width: 24px;
+  height: 24px;
+}
+.access__icon {
+  background: url("@/assets/img/alert-access.svg");
+  width: 24px;
+  height: 24px;
+}
+.data__icon {
+  background: url("@/assets/img/alert-data.svg");
+  width: 24px;
+  height: 24px;
+}
 .alert {
   &-item {
     position: relative;
@@ -52,6 +67,15 @@ export default {
     border-radius: 10px;
     background: #fff;
     box-shadow: $shadow-big;
+    &___task {
+      color: $color-main;
+    }
+    &___access {
+      color: $text-plum;
+    }
+    &___data {
+      color: $text-blue;
+    }
     &__content {
       display: flex;
     }
@@ -71,18 +95,17 @@ export default {
       background: $gradient;
       box-shadow: $shadow-small;
       img {
-        max-width: 30px;
+        max-width: 24px;
       }
     }
     &__info {
       margin-left: 16px;
       h2 {
-        color: $color-main-dark;
+        color: $text-grey;
         font-weight: 400;
         font-size: 14px;
       }
       p {
-        color: $color-main;
         font-weight: 400;
         font-size: 12px;
       }

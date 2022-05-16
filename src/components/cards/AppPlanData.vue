@@ -11,7 +11,7 @@
         </div>
         <div class="data-item">
           <div class="data-info">
-            <p class="data__subtitle">Архивный снимок</p>
+            <p class="data__subtitle">Архивный снимок:</p>
             <p class="data__text">
               ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
             </p>
@@ -33,7 +33,7 @@
         </div>
         <div class="data-item">
           <div class="data-info">
-            <p class="data__subtitle">Актуальный снимок</p>
+            <p class="data__subtitle">Актуальный снимок:</p>
             <p class="data__text">
               ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
             </p>
@@ -105,8 +105,6 @@
     text-align: center;
     margin-bottom: 16px;
   }
-  &-wrapper {
-  }
   &-item {
     display: flex;
     align-items: center;
@@ -118,12 +116,9 @@
     box-shadow: $shadow-small;
     border-radius: 5px;
   }
-  &-info {
-  }
   &__subtitle {
-    font-weight: bold;
-    font-size: 10px;
-    color: $text-grey;
+    font-size: 12px;
+    color: $text-grey-light;
   }
   &__text {
     font-size: 12px;
@@ -131,16 +126,15 @@
     text-align: left;
     color: #313131;
   }
-  &-close {
-  }
+
   &-btns {
     display: flex;
     justify-content: space-between;
-    max-width: 250px;
+    margin-left: 20px;
   }
   &-btn {
     position: relative;
-    margin: 0 6px;
+    margin: 0 4px;
     &:hover .data-tooltiptext {
       display: block;
     }

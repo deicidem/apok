@@ -13,10 +13,10 @@
 
       <div class="plan-item__buttons">
         <router-link :to="'/plan/' + planid">
-          <button class="button button-white">Подробнее</button>
+          <button class="button button-white plan-item__button">Подробнее</button>
         </router-link>
 
-        <button class="button button-g" @click="$emit('openPopup')">Запланировать</button>
+        <button class="button button-g plan-item__button" @click="$emit('openPopup')">Запланировать</button>
 
       </div>
     </div>
@@ -24,12 +24,8 @@
 </template>
 
 <script>
-// import AppButton from "@/components/controls/AppButton";
 
 export default {
-  components: {
-    // AppButton,
-  },
   props: {
     img: String,
     title: String,
@@ -84,6 +80,9 @@ export default {
       align-items: center;
       justify-content: space-evenly;
       margin-top: 30px;
+    }
+    &__button{
+      width: 160px;
     }
   }
 }

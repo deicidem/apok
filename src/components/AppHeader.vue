@@ -23,7 +23,7 @@
             @click="showUser = true"
             class="button button-svg header-menu__button"
           >
-            <img src="@/assets/img/header-logo.svg" />
+            <img src="@/assets/img/login-icon.svg" />
           </button>
         </div>
       </div>

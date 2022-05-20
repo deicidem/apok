@@ -3,9 +3,9 @@
     <div class="auth-popup__title">Авторизация</div>
     <div class="input-wrapper">
       <input class="input input-withIcon" v-model="user.login" required />
-      <label class="input-label auth-popup-label">Логин</label>
+      <label class="input-label">Логин</label>
 
-      <img svg-inline class="input-img" src="@/assets/img/header-logo.svg" />
+      <img svg-inline class="input-img" src="@/assets/img/login-icon.svg" />
     </div>
 
     <div class="input-wrapper">
@@ -14,6 +14,7 @@
 
       <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
     </div>
+
     <router-link to="/login">
       <button class="button button-g auth-button">Войти</button>
     </router-link>

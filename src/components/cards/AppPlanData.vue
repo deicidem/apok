@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <button class="data-start button button-g">Начать</button>
+      <button class="button button-g data-start">Начать</button>
     </div>
     <div class="data-line">
       <div class="data-close">

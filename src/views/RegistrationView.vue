@@ -25,7 +25,7 @@
             <img
               svg-inline
               class="input-img"
-              src="@/assets/img/header-logo.svg"
+              src="@/assets/img/login-icon.svg"
             />
           </div>
 

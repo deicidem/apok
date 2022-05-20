@@ -206,7 +206,9 @@
         v-show="searchZoneType == 3"
       >
         <div class="load-wrapper">
-          <button class="button button-white load-wrapper__button">Загрузить файл</button>
+          <button class="button button-white load-wrapper__button">
+            Загрузить файл
+          </button>
           <span class="load-wrapper__name">POLYGON.shp</span>
         </div>
         <div class="load-wrapper__buttons">

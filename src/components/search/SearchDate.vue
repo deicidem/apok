@@ -1,6 +1,6 @@
 <template>
   <div class="search-date">
-    <h2 class="search-title">Интервал дат съемки</h2>
+    <h2 class="search-date__title">Интервал дат съемки</h2>
 
     <div class="search-date__wrapper">
       <div class="search-date__inputs">
@@ -365,6 +365,12 @@ export default {
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;
+    &__title {
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: #000;
+      margin-bottom: 0px;
+    }
     &__wrapper {
       display: flex;
       justify-content: space-between;

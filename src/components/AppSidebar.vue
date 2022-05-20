@@ -61,6 +61,16 @@
 
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
       </div>
+
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/person">
+          <div class="sidebar-collapsed__img">
+            <img svg-inline src="@/assets/img/sidebar-person.svg" />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
+      </div>
     </div>
     <app-plan-data></app-plan-data>
   </div>
@@ -115,7 +125,7 @@ export default {
 <style lang="scss">
 .notification {
   position: absolute;
-  top: -5px;
+  top: -2px;
   right: -5px;
   &-number {
     width: 18px;
@@ -287,10 +297,11 @@ export default {
     }
     &__img {
       width: 31px;
-      &:hover {
-        svg path {
-          fill: $color-main;
-        }
+      display: flex;
+      margin-top: 2px;
+      justify-content: center;
+      path {
+        fill: $color-main-dark;
       }
     }
     &__collapse {
@@ -305,6 +316,7 @@ export default {
       width: 31px;
       height: 30px;
       background: url("@/assets/img/sidebar-open.svg");
+      background-repeat: no-repeat;
       cursor: pointer;
     }
   }

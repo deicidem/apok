@@ -175,9 +175,12 @@ img {
   &-img {
     position: absolute;
     max-width: 26px;
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translate(-50%, -50%);
+    path{
+      fill: $color-main-dark;
+    }
   }
   &-withIcon {
     padding: 15px 24px;

@@ -9,7 +9,7 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <img class="input-img" src="@/assets/img/login-icon.svg" />
           </div>
            <div class="input-wrapper">
             <input

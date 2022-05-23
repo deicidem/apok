@@ -1,10 +1,7 @@
 import * as dzzApi from "@/api/dzz";
-import * as L from "leaflet";
-import '@geoman-io/leaflet-geoman-free';  
 export default {
   namespaced: true,
   state: {
-    activePolygon: null,
     timeInterval: {
       from: '',
       to: '',
@@ -18,9 +15,6 @@ export default {
     spacecraftsSelected: [],
   },
   getters: {
-    getActivePolygon(state) {
-      return state.activePolygon;
-    },
     getTimeInterval(state) {
       return state.timeInterval;
     },
@@ -48,10 +42,6 @@ export default {
     // }
   },
   mutations: {
-    setActivePolygon(state, polygon) {
-      state.activePolygon = polygon;
-    },
-
     setCloudiness(state, {
       from,
       to
@@ -105,19 +95,6 @@ export default {
 
   },
   actions: {
-    setActivePolygon(store, data) {
-      store.dispatch('map/setAreaPolygonActive', false, {root : true});
-      store.dispatch('map/setScreenPolygonActive', false, {root : true});
-      store.dispatch('map/setCirclePolygonActive', false, {root : true});
-      store.commit('setActivePolygon', data);
-      if (data.type == 'polygon') {
-        store.dispatch('map/setAreaPolygonActive', true, {root : true});
-      } else if (data.type == 'circle') {
-        store.dispatch('map/setCirclePolygonActive', true, {root : true});
-      } else if (data.type == 'rectangle') {
-        store.dispatch('map/setScreenPolygonActive', true, {root : true});
-      }
-    },
     setCloudiness(store, data) {
       store.commit('setCloudiness', data);
     },
@@ -148,20 +125,10 @@ export default {
 
       dispatch('results/setResults',results ,  {root : true});
     },
-    async search({dispatch, getters}) {
-      let polygon = getters.getActivePolygon;
-      let json = null;
-
-      if (polygon.type == 'polygon') {
-        json = L.polygon(polygon.geometry).toGeoJSON();
-      } else if (polygon.type == 'circle') {
-        let circle = L.circle(polygon.geometry.center, polygon.geometry.radius);
-        json =  L.PM.Utils.circleToPolygon(circle, 60).toGeoJSON();
-      } else if (polygon.type == 'rectangle') {
-        json = L.rectangle(polygon.geometry).toGeoJSON();
-      }
-      json = JSON.stringify(json);
-
+    async search({dispatch, getters, rootGetters}) {
+      let polygon = rootGetters['map/getActivePolygonJson'];
+      console.log(polygon);
+      
       let params = {
         startDate: getters.getTimeInterval.from,
         endDate: getters.getTimeInterval.to,
@@ -169,7 +136,7 @@ export default {
         endCloudiness: getters.getCloudiness[1],
         months: getters.getTimeInterval.months,
         satelites: getters.getSelectedSpacecrafts,
-        polygon: json
+        polygon: polygon
       }
 
 
@@ -241,52 +208,52 @@ function setupSpacecrafts() {
   ]
 }
 
-function setupResults() {
-  return [
-   {
-    id: 1,
-    name: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-    round: "23121",
-    route: "1",
-    scName: "Канопус-В-3",
-    date: "04.04.2022",
-    cloudiness: 80,
-    processingLevel: "1",
-    geography: {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "Polygon",
-        "bounds": [
-          [43.539726516356005, 36.382933900683454],
-          [45.66351373527003, 39.27154542776307],
-        ],
-        "coordinates": [
-          [
-            [
-              36.95827938552311,
-              45.66351373527003
-            ],
-            [
-              36.382933900683454,
-              43.95279779154811
-            ],
-            [
-              38.62953946820189,
-              43.539726516356005
-            ],
-            [
-              39.27154542776307,
-              45.246411064541334
-            ],
-            [
-              36.95827938552311,
-              45.66351373527003
-            ]
-          ]
-        ]
-      },
-    },
-    previewPath: "https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
-  }]
-}
+// function setupResults() {
+//   return [
+//    {
+//     id: 1,
+//     name: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
+//     round: "23121",
+//     route: "1",
+//     scName: "Канопус-В-3",
+//     date: "04.04.2022",
+//     cloudiness: 80,
+//     processingLevel: "1",
+//     geography: {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "type": "Polygon",
+//         "bounds": [
+//           [43.539726516356005, 36.382933900683454],
+//           [45.66351373527003, 39.27154542776307],
+//         ],
+//         "coordinates": [
+//           [
+//             [
+//               36.95827938552311,
+//               45.66351373527003
+//             ],
+//             [
+//               36.382933900683454,
+//               43.95279779154811
+//             ],
+//             [
+//               38.62953946820189,
+//               43.539726516356005
+//             ],
+//             [
+//               39.27154542776307,
+//               45.246411064541334
+//             ],
+//             [
+//               36.95827938552311,
+//               45.66351373527003
+//             ]
+//           ]
+//         ]
+//       },
+//     },
+//     previewPath: "https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
+//   }]
+// }

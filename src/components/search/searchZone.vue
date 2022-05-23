@@ -43,7 +43,7 @@
         </button>
       </div>
     </template>
-    <template v-else>
+    <template v-if="areaType == 'manual'">
       <nav class="search-zone__nav">
         <ul>
           <li>
@@ -294,14 +294,16 @@ export default {
       "setCenter",
       "setZoom",
       "setScreenPolygon",
+      "setScreenPolygonActive",
+      "setAreaPolygonActive",
+      "setCircleenPolygonActive"
     ]),
-    ...mapActions("search", ["setActivePolygon"]),
     changeZoneType(type) {
       this.searchZoneType = type;
       if (this.searchZoneType == 1) {
-        this.setActivePolygon(this.getAreaPolygon);
+        this.setAreaPolygonActive();
       } else {
-        this.setActivePolygon(this.getCirclePolygon);
+        this.setCirclePolygonActive();
       }
     },
     showScreenPolygon() {
@@ -313,12 +315,12 @@ export default {
     },
     onRadioChange(e) {
       if (e == "screen") {
-        this.setActivePolygon(this.getScreenPolygon);
+        this.setScreenPolygonActive();
       } else {
         if (this.searchZoneType == 1) {
-          this.setActivePolygon(this.getAreaPolygon);
+          this.setAreaPolygonActive();
         } else {
-          this.setActivePolygon(this.getCirclePolygon);
+          this.setCirclePolygonActive();
         }
       }
     },

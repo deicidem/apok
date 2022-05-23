@@ -27,7 +27,7 @@ export default {
       state.plans = items;
     },
     setDataObject(state, data) {
-      state.plans[data.planIndex].data[data.dataIndex].ref = data.ref;
+      state.plans[data.planIndex].data[data.dataIndex].dzzIndex = data.dzzIndex;
     }
   },
   actions: {
@@ -35,7 +35,7 @@ export default {
       let plans = await plansApi.all();
       plans.forEach(el => {
         el.data.forEach(d => {
-          d.ref = null;
+          d.dzzIndex = null;
         });
       });
       commit("setPlans", plans)

@@ -3,6 +3,7 @@
     <section class="hero">
       <portal-target name="popup"> </portal-target>
       <portal-target name="popup-card"> </portal-target>
+      <portal-target name="password-popup"></portal-target>
       <div class="sidebar-block" :class="sidebarBlock">
         <app-sidebar
           @close="sidebarBlockClass()"

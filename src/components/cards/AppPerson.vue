@@ -15,12 +15,23 @@
         </div>
       </div>
       <div class="person-wrapper__buttons">
-        <button class="button button-white person-wrapper__button">Редактировать</button>
-
-        <button class="button button-g person-wrapper__button">Поменять пароль</button>
+        <button class="button button-white person-wrapper__button">
+          Редактировать
+        </button>
+        <button
+          class="button button-g person-wrapper__button"
+          @click="showPopup = true"
+        >
+          Поменять пароль
+        </button>
       </div>
     </div>
-    <app-password-popup></app-password-popup>
+    <portal to="password-popup">
+      <app-password-popup
+        v-show="showPopup"
+        @close="showPopup = false"
+      ></app-password-popup>
+    </portal>
   </div>
 </template>
 
@@ -29,7 +40,12 @@ import AppPasswordPopup from "@/components/cards/AppPasswordPopup.vue";
 
 export default {
   components: {
-    AppPasswordPopup
+    AppPasswordPopup,
+  },
+  data() {
+    return {
+      showPopup: false,
+    };
   },
 };
 </script>
@@ -78,8 +94,8 @@ export default {
       flex-direction: column;
       justify-content: space-between;
     }
-    &__button{
-        width: 220px;
+    &__button {
+      width: 220px;
     }
   }
 }

@@ -6,25 +6,57 @@
         <div class="data-item">
           <div class="data-info">
             <p class="data__subtitle">Задача:</p>
-            <p class="data__text">{{getPlans[0].title}}</p>
-          </div>
-        </div>
-        <div class="data-item" v-for="(data, i) in getPlans[0].data" :key="i">
-          <div class="data-info">
-            <p class="data__subtitle">{{data.title}}</p>
-            <p class="data__text" v-if="data.ref != null">
-              {{data.ref.name}}
+            <p
+              class="data__text data__selected"
+              @click="showSelect = !showSelect"
+            >
+            <template v-if="activePlan != null">
+              {{ activePlan.title }}
+            </template>
             </p>
-          </div>
-          <div class="data-btns">
-            <button class="button button-svg data-btn" @click="selectDzz(i)">
-              <img src="@/assets/img/choose.svg" />
-            </button>
-            <button class="button button-svg data-btn">
-              <img src="@/assets/img/upload.svg" />
-            </button>
+            <div class="data__select" v-show="showSelect">
+              <div
+                class="data__select__item"
+                @click="onSelect(i)"
+                v-for="(plan, i) in getPlans"
+                :key="i"
+              >
+                {{ plan.title }}
+              </div>
+            </div>
           </div>
         </div>
+        <template v-if="activePlan != null">
+          <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
+            <div class="data-info">
+              <p class="data__subtitle">{{ data.title }}</p>
+              <p class="data__text" v-if="data.dzzIndex != null">
+                {{ getResults[data.dzzIndex].name }}
+              </p>
+            </div>
+            <div class="data-btns" v-if="data.title == 'Зона интереса'">
+              <button class="button button-svg data-btn" @click="selectDzz(i)">
+                <img src="@/assets/img/choose.svg" />
+              </button>
+              <button class="button button-svg data-btn">
+                <img
+                  svg-inline
+                  class="icon icon-vector-o"
+                  src="@/assets/img/vector-o.svg"
+                  alt=""
+                />
+              </button>
+            </div>
+            <div class="data-btns" v-else>
+              <button class="button button-svg data-btn" @click="selectDzz(i)">
+                <img src="@/assets/img/choose.svg" />
+              </button>
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/upload.svg" />
+              </button>
+            </div>
+          </div>
+        </template>
       </div>
       <button class="button button-g data-start">Начать</button>
     </div>
@@ -37,19 +69,42 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      activePlanIndex: null,
+      showSelect: false,
+    };
+  },
   computed: {
-    ...mapGetters('plans', ['getPlans']),
-    ...mapGetters('results', ['getSelectable']),
+    ...mapGetters("plans", ["getPlans"]),
+    ...mapGetters("results", ["getSelectable", "getResults"]),
+    activePlan() {
+      return this.getPlans[this.activePlanIndex];
+    }
   },
   methods: {
-    ...mapActions('results', ['setSelectable']),
+    ...mapActions("results", ["setSelectable"]),
     selectDzz(i) {
-      this.setSelectable({type: i, value: !this.getSelectable.value, planIndex: 0, dataIndex: i});
-    }
-  }
-}
+      this.setSelectable({
+        type: i,
+        value: !this.getSelectable.value,
+        planIndex: this.activePlanIndex,
+        dataIndex: i,
+      });
+      // if (this.getSelectable) {
+      //   this.activePlan.data.forEach((el, i) => {
+          
+      //   });
+      // }
+    },
+    onSelect(index) {
+      this.activePlanIndex = index;
+      this.showSelect = false;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,17 +115,15 @@ export default {
 
   display: flex;
   justify-content: space-between;
-  min-width: 540px;
+  min-width: 400px;
 
   background: $gradient-w;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: $shadow-big;
   transition: all 0.3s ease-out;
-  transform: translateX(calc(-100% + 10px));
-  &:hover {
-    transform: translate(0);
-  }
+  // transform: translateX(calc(-100% + 10px));
+  translate: 0;
   &-content {
     width: 100%;
     display: flex;
@@ -92,6 +145,7 @@ export default {
     margin-bottom: 16px;
   }
   &-item {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -141,6 +195,37 @@ export default {
   &-start {
     width: 200px;
     margin: 10px 16px 0 auto;
+  }
+  &__selected {
+    border: 1px solid rgba($color-main-dark, 0.5);
+    min-height: 30px;
+    min-width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  &__select {
+    z-index: 10;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    background: $gradient-w;
+    box-shadow: $shadow-big;
+    border-radius: 10px;
+    &__item {
+      position: relative;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: #000;
+      border-bottom: 1px solid rgba($color-main-dark, 0.5);
+      transition: all 0.2s ease-out;
+      cursor: pointer;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        color: $color-main;
+      }
+    }
   }
 }
 </style>

@@ -122,6 +122,9 @@ img {
   }
   &-white {
     color: $color-main-dark;
+    &:hover {
+      color: $color-main;
+    }
     &::after {
       background: $gradient-w;
     }
@@ -251,6 +254,10 @@ img {
   flex-direction: column;
 }
 .__panel {
+  &::-webkit-scrollbar { width: 0; }
+
+/* ie 10+ */
+  & { -ms-overflow-style: none; }
   width: 100%;
 }
 

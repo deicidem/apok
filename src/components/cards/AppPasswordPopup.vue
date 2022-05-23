@@ -3,7 +3,7 @@
     <div class="password-popup__card">
       <div class="password-popup__line">
         <p>Поменять пароль</p>
-        <div class="password-popup__cross">
+        <div class="password-popup__cross" @click="$emit('close')">
           <img src="@/assets/img/cross-w.svg" />
         </div>
       </div>

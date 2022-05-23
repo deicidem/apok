@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <button class="data-start button button-g">Начать</button>
+      <button class="button button-g data-start">Начать</button>
     </div>
     <div class="data-line">
       <div class="data-close">
@@ -55,19 +55,22 @@ export default {
 <style lang="scss" scoped>
 .data {
   position: absolute;
-  left: 100%;
-  top: 0;
+  left: calc(100% + 20px);
+  top: 37px;
 
   display: flex;
   justify-content: space-between;
-  min-width: 500px;
-  margin: 20px;
+  min-width: 540px;
 
   background: $gradient-w;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: $shadow-big;
-
+  transition: all 0.3s ease-out;
+  transform: translateX(calc(-100% + 10px));
+  &:hover {
+    transform: translate(0);
+  }
   &-content {
     width: 100%;
     display: flex;
@@ -76,7 +79,7 @@ export default {
     padding: 16px;
   }
   &-line {
-    width: 40px;
+    width: 30px;
     background-color: $color-main;
     display: flex;
     align-items: center;
@@ -96,28 +99,44 @@ export default {
     width: 100%;
     background: $gradient-w;
     padding: 6px;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     border-radius: 5px;
   }
   &__subtitle {
-    font-weight: bold;
-    font-size: 10px;
-    color: $text-grey;
+    font-size: 12px;
+    color: $text-grey-light;
   }
   &__text {
     font-size: 12px;
-    font-weight: 300;
     width: 100%;
     text-align: left;
-    color: $text-grey;
+    color: #313131;
   }
   &-btns {
     display: flex;
     justify-content: space-between;
-    max-width: 250px;
+    margin-left: 20px;
   }
   &-btn {
-    margin: 0 6px;
+    position: relative;
+    margin: 0 4px;
+    &:hover .data-tooltiptext {
+      display: block;
+    }
+  }
+  &-tooltiptext {
+    position: absolute;
+    bottom: 110%;
+    right: calc(0px - 6px);
+
+    display: none;
+    padding: 2px 5px;
+
+    color: $color-main-dark;
+    font-size: 10px;
+    background: $gradient-w;
+    border-radius: 6px;
+    box-shadow: $shadow-small;
   }
   &-start {
     width: 200px;

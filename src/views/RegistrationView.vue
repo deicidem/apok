@@ -22,7 +22,11 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/header-logo.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/login-icon.svg"
+            />
           </div>
 
           <div class="input-wrapper">
@@ -40,7 +44,11 @@
             />
             <label class="input-label">Пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/lock-icon.svg"
+            />
           </div>
 
           <div class="input-wrapper">
@@ -51,13 +59,17 @@
             />
             <label class="input-label">Повторите пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/lock-icon.svg"
+            />
           </div>
 
           <button @click="submit" class="button button-g form-wrapper__item">
             Зарегистироваться
           </button>
-          <router-link class="button-router" to="/login">
+          <router-link to="/login">
             <button class="button button-white form-wrapper__item">
               Авторизоваться
             </button>
@@ -116,67 +128,56 @@ export default {
   left: 0;
   z-index: 1;
 
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
   width: 100%;
   height: 100%;
   background: url("@/assets/img/authorize__background.png");
   background-size: cover;
-  .button-router {
-    margin: 0 auto;
+}
+.back {
+  display: flex;
+  align-items: center;
+  margin: 40px;
+  &-arrow {
+    width: 30px;
   }
-  .back {
-    display: flex;
-    align-items: center;
-    margin: 40px;
-    &-arrow {
-      width: 30px;
-    }
-    p {
-      margin-left: 10px;
-      color: #fff;
-    }
-  }
-
-  .form {
-    margin: 10% auto;
-    width: 400px;
-    padding: 20px;
-
-    background: $gradient-w;
-    border-radius: 10px;
-    border: none;
-    box-shadow: $shadow-big;
-    &-title {
-      margin: 20px 0;
-
-      text-align: center;
-      font-size: 24px;
-
-      color: $text-grey;
-    }
-    &-wrapper {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      &__item {
-        position: relative;
-
-        width: 300px;
-        margin: 10px auto;
-
-        font-size: 18px;
-      }
-      &__icon {
-        position: absolute;
-        right: 0;
-      }
-      .button {
-        height: 40px;
-      }
-    }
+  p {
+    margin-left: 10px;
+    color: #fff;
   }
 }
-.input-icon {
-  position: absolute;
-  top: 0;
+
+.form {
+  margin: 10% auto;
+  width: 400px;
+  padding: 30px;
+
+  background: $gradient-w;
+  border-radius: 10px;
+  border: none;
+  box-shadow: $shadow-big;
+  &-title {
+    margin-bottom: 24px;
+
+    text-align: center;
+    font-size: 20px;
+
+    color: #000;
+  }
+  &-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    &__item {
+      width: 300px;
+      height: 40px;
+      margin: 10px auto;
+
+      font-size: 16px;
+    }
+  }
 }
 </style>

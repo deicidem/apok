@@ -37,6 +37,10 @@ const routes = [
       {
         path: 'results',
         component: () => import('../views/SidebarViews/SidebarResults')
+      },
+      {
+        path: 'person',
+        component: () => import('../views/SidebarViews/SidebarPerson')
       }
     ]
   },
@@ -55,11 +59,6 @@ const routes = [
     name: 'tutorial',
     component: () => import('../views/TutorialView.vue')
   },
-  // {
-  //   path: '/help',
-  //   name: 'help',
-  //   component: () => import('../views/HelpView.vue')
-  // },
   {
     path: '/plan/:id',
     component: () => import('../views/PlanView.vue')

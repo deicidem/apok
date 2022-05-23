@@ -163,35 +163,29 @@
         v-show="searchZoneType == 2"
       >
         <div class="coordinates-wrapper">
-          <div class="coordinates-input">
-            <label class="coordinates-wrapper__label" for="latitude">
-              Широта
-            </label>
+          <div class="input-wrapper coordinates-inputs">
+            <label class="input-label coordinates-label"> Широта </label>
             <masked-input
               v-model="lat"
-              class="input coordinates-wrapper__input"
+              class="input input-withoutIcon coordinates-input"
               :mask="inputMaskLat"
             />
           </div>
 
-          <div class="coordinates-input">
-            <label class="coordinates-wrapper__label" for="latitude">
-              Долгота
-            </label>
+          <div class="input-wrapper coordinates-inputs">
+            <label class="input-label coordinates-label"> Долгота </label>
             <masked-input
               v-model="lng"
-              class="input coordinates-wrapper__input"
+              class="input input-withoutIcon coordinates-input"
               :mask="inputMaskLng"
             />
           </div>
-          <div class="coordinates-input">
-            <label class="coordinates-wrapper__label" for="latitude">
-              Радиус (км)
-            </label>
+          <div class="input-wrapper coordinates-inputs">
+            <label class="input-label coordinates-label"> Радиус (км) </label>
             <input
               v-model="rad"
               id="radius"
-              class="input coordinates-wrapper__input"
+              class="input input-withoutIcon coordinates-input"
             />
           </div>
 
@@ -215,7 +209,9 @@
         v-show="searchZoneType == 3"
       >
         <div class="load-wrapper">
-          <button class="button button-white">Загрузить файл</button>
+          <button class="button button-white load-wrapper__button">
+            Загрузить файл
+          </button>
           <span class="load-wrapper__name">POLYGON.shp</span>
         </div>
         <div class="load-wrapper__buttons">
@@ -580,6 +576,7 @@ export default {
   }
   &__button {
     margin: 10px 0;
+    width: 230px;
     height: 35px;
   }
   &__edit__input {
@@ -593,27 +590,30 @@ export default {
     border-radius: 0 !important;
   }
 }
-.coordinates-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  &__input {
-    margin-right: 20px;
-    width: 120px;
-    &:focus-within ~ .coordinates-wrapper__label {
-      color: $color-main;
+.coordinates {
+  &-inputs {
+    &:focus-within .coordinates-label {
+      top: -20px;
+      font-size: 12px;
     }
   }
-  &__label {
-    font-size: 10px;
-    padding-left: 10px;
-    color: #747474;
+  &-label {
+    top: 8px;
+    left: -10px;
   }
-  &__button {
-    margin-top: 20px;
-    margin-left: auto;
-    max-width: 200px;
-    width: 190px;
+  &-input {
+    width: 120px;
+  }
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    &__button {
+      margin-top: 20px;
+      margin-left: auto;
+      max-width: 200px;
+      width: 190px;
+    }
   }
 }
 @media screen and (max-width: 1440px) {

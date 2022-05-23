@@ -1,18 +1,24 @@
-$color-main-dark: #476D70;
-$color-main: #83B5B8;
+// ___TEXT___
+$color-main-dark: #488589;
+$color-main: #90C0C4;
+$text-grey: #747474;
+$text-grey-light: #AAAAAA;
+
+$text-plum: #946492;
+$text-blue: #547ba4;
+
+
+// ___BACKGROUND___
 $gradient: linear-gradient(88.64deg, $color-main 0%, $color-main-dark 100%); // Main gradient
-$gradient-w:  linear-gradient(101.61deg, #FFFFFF 0%, #F6F9FA 100%); // White gradient
-$gradient-r: linear-gradient(91.36deg, #EB6060 0%, #8D4646 100%); // Red gradient
-$gradient-p: linear-gradient(88.64deg, #AF82B7 0%, #7B2789 100%); // Purple gradient
-$gradient-b: linear-gradient(88.64deg, #C2E3EA 0%, #467F8B 100%); // Blue gradient
-$color-red: #A24B4B;
+$gradient-w: linear-gradient(101.61deg, #ffffff 0%, #f6f9fa 100%); // White gradient
+$gradient-r: linear-gradient(91.36deg, #F07A7A 0%, #A54949 100%); // Red gradient
+$gradient-b: linear-gradient(88.64deg, $text-blue 0%, #7571a3 100%); // Purple gradient
+$gradient-p: linear-gradient(88.64deg, $text-plum 0%, #a85a75 100%); // Blue gradient
+$color-red: #a24b4b;
 $shadow-big: 0px 4px 10px rgba(0, 0, 0, 0.15);
 $shadow-small: 0px 2px 4px rgba(0, 0, 0, 0.15);
+$icon-hover: #659093;
 
 //___ALERT___
-$color-alert-access: linear-gradient(88.64deg, #C2E3EA 0%, #467F8B 100%);
+$color-alert-access: linear-gradient(88.64deg, #c2e3ea 0%, #467f8b 100%);
 
-
-
-// ___TEXT___
-$text-grey: #747474;

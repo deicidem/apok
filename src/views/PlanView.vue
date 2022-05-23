@@ -194,13 +194,14 @@ export default {
     &__header {
       display: flex;
       justify-content: space-between;
-      margin: auto;
+      margin: 4px auto;
       max-width: 1600px;
     }
     &__button {
       height: auto;
       justify-self: end;
 
+      width: 270px;
       font-size: 1.125rem;
     }
     &__cards {

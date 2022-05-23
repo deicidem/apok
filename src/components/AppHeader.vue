@@ -23,7 +23,7 @@
             @click="showUser = true"
             class="button button-svg header-menu__button"
           >
-            <img src="@/assets/img/header-logo.svg" />
+            <img src="@/assets/img/login-icon.svg" />
           </button>
         </div>
       </div>
@@ -78,8 +78,8 @@ export default {
 }
 .auth-wrapper {
   position: absolute;
-  right: 100px;
-  top: 140px;
+  right: 70px;
+  top: 170px;
   z-index: 30;
 }
 .search-box {

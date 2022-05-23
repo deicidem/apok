@@ -1,18 +1,17 @@
 <template>
   <div class="search-date">
-    <h2 class="search-title">Интервал дат съемки</h2>
+    <h2 class="search-date__title">Интервал дат съемки</h2>
 
     <div class="search-date__wrapper">
       <div class="search-date__inputs">
         <div class="search-date__input">
-          <label class="datepicker-label" for="datepicker-start"
+          <label class="search-date__label" for="datepicker-start"
             >Искать с:</label
           >
           <date-picker
             format="yyyy-MM-dd"
             :use-utc="true"
             :language="ru"
-            class="input-date"
             calendar-class="input-calendar"
             :monday-first="true"
             :value="getTimeInterval.from"
@@ -32,13 +31,12 @@
         </div>
 
         <div class="search-date__input">
-          <label class="datepicker-label" for="datepicker-end">До:</label>
+          <label class="search-date__label" for="datepicker-end">До:</label>
           <date-picker
             format="yyyy-MM-dd"
             :use-utc="true"
             :language="ru"
             calendar-class="input-calendar"
-            class="input-date"
             :value="getTimeInterval.to"
             valueType="format"
             @input="
@@ -309,64 +307,115 @@ export default {
         background: $color-main;
       }
     }
-    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
-    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
-    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
-      border: 1px solid $color-main !important;
-    }
-    .datepicker-label {
-      padding-left: 10px;
-      color: $text-grey;
-    }
-    .vdp-datepicker {
-      input {
-        width: 160px;
-        height: 34px;
-        padding-right: 26px;
+  }
+}
+.input-calendar {
+  color: #585858 !important;
+  .next::after {
+    border-left: 10px solid $color-main !important;
+  }
+  .prev::after {
+    border-right: 10px solid $color-main !important;
+  }
+  .cell.selected {
+    background: $color-main;
+  }
+}
 
-        border: 1px solid rgb($text-grey, 0.2);
-        border-radius: 10px;
-        box-shadow: $shadow-small;
-        outline: none;
-        &:focus-visible {
-          border: 1px solid $color-main;
-        }
-      }
-      &__calendar {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: $shadow-big;
-        header {
-          box-shadow: $shadow-big;
-          span {
-            .prev {
-              &::after {
-                color: #000 !important;
-              }
-            }
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border: 1px solid $color-main !important;
+}
+.vdp-datepicker {
+  input {
+    width: 160px;
+    height: 34px;
+    padding-right: 26px;
+
+    border: 1px solid rgb($text-grey, 0.2);
+    border-radius: 10px;
+    box-shadow: $shadow-small;
+    outline: none;
+    &:focus-visible {
+      border: 1px solid $color-main;
+    }
+    &:focus ~ .search-date__label,
+    &:valid ~ label {
+      top: -22px;
+
+      color: $color-main;
+      font-size: 12px;
+    }
+  }
+  &__calendar {
+    top: 110%;
+
+    width: 260px !important;
+    border-radius: 10px;
+    border: none !important;
+    overflow: hidden;
+    box-shadow: $shadow-big;
+    
+    header {
+      box-shadow: $shadow-big;
+      span {
+        .prev {
+          &::after {
+            color: #000 !important;
           }
         }
       }
     }
-    .cell {
-      color: $text-grey !important;
-      &:hover {
-        border: 1px solid $color-main;
-      }
-    }
-    .selected {
-      background: $color-main !important;
-      color: #fff !important;
+
+  }
+}
+.cell {
+  color: $text-grey !important;
+  &:hover {
+    border: 1px solid $color-main;
+  }
+}
+.selected {
+  background: $color-main !important;
+  color: #fff !important;
+}
+.search {
+  &-date {
+    margin-top: 20px;
+    padding: 20px;
+
+    box-shadow: $shadow-small;
+    border-radius: 10px;
+    background: $gradient-w;
+    &__title {
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: #000;
+      margin-bottom: 0px;
     }
     &__wrapper {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin: 10px 0;
     }
     &__inputs {
       display: flex;
       align-items: flex-end;
+    }
+    &__label {
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      padding-left: 10px;
+      font-size: 14px;
+      color: $text-grey;
+      z-index: 10;
+
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+      pointer-events: none;
     }
     &__input {
       position: relative;
@@ -376,12 +425,15 @@ export default {
 
       font-size: 12px;
       outline: none;
-      &:focus-within .datepicker-label {
+      &:focus-within .search-date__label {
+        top: -22px;
+
         color: $color-main;
+        font-size: 12px;
       }
     }
     &__arrow {
-      max-height: 20px;
+      max-height: 40px;
       margin: 0 20px;
       transform: rotate(180deg);
       img {
@@ -392,7 +444,7 @@ export default {
     &__back {
       position: absolute;
       right: 0;
-      top: 18px;
+      top: 0;
 
       padding: 7px;
 

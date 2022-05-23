@@ -10,7 +10,7 @@
           <search-spacecraft></search-spacecraft>
         </div>
         <div class="search-buttons">
-          <button class="button button-white">Очистить</button>
+          <button class="button button-r">Очистить</button>
           <button class="button button-g" @click="search">Запросить данные</button>
         </div>
       </div>

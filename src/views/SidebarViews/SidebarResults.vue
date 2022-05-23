@@ -330,7 +330,7 @@ export default {
     }
     &:hover {
       svg path {
-        fill: $color-main;
+        fill: #000;
       }
     }
   }

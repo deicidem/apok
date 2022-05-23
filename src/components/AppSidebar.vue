@@ -10,18 +10,17 @@
 
     <div class="sidebar-collapsed">
       <div
-        class="sidebar-collapsed__img open sidebar-open"
+        v-bind:class="{
+          'sidebar-collapsed__collapse': isCollapse,
+          'sidebar-collapsed__open': isOpen,
+        }"
         @click="toggleSidebar()"
-      >
-        <div class="sidebar-collapsed__img">
-          <img src="@/assets/img/sidebar-collapse.svg" />
-        </div>
-      </div>
+      ></div>
 
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/tasks">
           <div class="sidebar-collapsed__img">
-            <img src="@/assets/img/sidebar-task.svg" />
+            <img svg-inline src="@/assets/img/sidebar-task.svg" />
           </div>
         </router-link>
 
@@ -31,7 +30,7 @@
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/plan">
           <div class="sidebar-collapsed__img">
-            <img src="@/assets/img/sidebar-plan.svg" />
+            <img svg-inline src="@/assets/img/sidebar-plan.svg" />
           </div>
         </router-link>
 
@@ -43,7 +42,7 @@
       <div class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/search">
           <div class="sidebar-collapsed__img">
-            <img src="@/assets/img/sidebar-search.svg" />
+            <img svg-inline src="@/assets/img/sidebar-search.svg" />
           </div>
         </router-link>
 
@@ -53,7 +52,7 @@
       <div class="sidebar-collapsed__item notification-wrapper" @click="open">
         <router-link to="/main/alerts">
           <div class="sidebar-collapsed__img">
-            <img src="@/assets/img/sidebar-notification.svg" />
+            <img svg-inline src="@/assets/img/sidebar-notification.svg" />
           </div>
           <div class="notification">
             <div class="notification-number">{{ alerts.length }}</div>
@@ -61,6 +60,16 @@
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
+      </div>
+
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/person">
+          <div class="sidebar-collapsed__img">
+            <img svg-inline src="@/assets/img/sidebar-person.svg" />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
       </div>
     </div>
     <app-plan-data></app-plan-data>
@@ -75,6 +84,12 @@ export default {
   name: "AppSidebar",
   components: {
     AppPlanData,
+  },
+  data() {
+    return {
+      isCollapse: false,
+      isOpen: true,
+    };
   },
   computed: {
     ...mapGetters({ active: "getSidebarState" }),
@@ -95,8 +110,12 @@ export default {
     toggleSidebar() {
       if (this.active) {
         this.close();
+        this.isCollapse = false;
+        this.isOpen = true;
       } else {
         this.open();
+        this.isCollapse = true;
+        this.isOpen = false;
       }
     },
   },
@@ -106,8 +125,8 @@ export default {
 <style lang="scss">
 .notification {
   position: absolute;
-  top: -5px;
-  right: -8px;
+  top: -2px;
+  right: -5px;
   &-number {
     width: 18px;
     height: 18px;
@@ -241,20 +260,11 @@ export default {
     align-items: center;
     &__item {
       position: relative;
-
       display: flex;
       align-items: center;
-      margin: 8px;
-      i {
-        font-size: 24px;
-        color: rgb(97, 133, 128);
-        transition: all 0.2s ease-out;
-        &:hover {
-          transition: all 0.4s ease-out;
-          cursor: pointer;
-          color: #384342;
-        }
-      }
+      margin-top: 6px;
+      transition: all 0.2s ease-out;
+
       a:hover + &__hidden {
         visibility: inherit;
         z-index: 1;
@@ -270,8 +280,8 @@ export default {
         padding: 5px 10px;
 
         font-weight: 400;
-        font-size: 14px;
-        line-height: 24px;
+        font-size: 12px;
+        line-height: 20px;
 
         color: $color-main-dark;
         visibility: hidden;
@@ -279,14 +289,34 @@ export default {
 
         color: #618580;
         background: #ffffff;
-        box-shadow: $shadow-big;
-        border-radius: 5px;
+        box-shadow: $shadow-small;
+        border-radius: 10px;
 
         transition: all 0.3s ease-out;
       }
     }
     &__img {
-      width: 32px;
+      width: 31px;
+      display: flex;
+      margin-top: 2px;
+      justify-content: center;
+      path {
+        fill: $color-main-dark;
+      }
+    }
+    &__collapse {
+      margin-top: 6px;
+      width: 31px;
+      height: 30px;
+      background: url("@/assets/img/sidebar-collapse.svg");
+      cursor: pointer;
+    }
+    &__open {
+      margin-top: 6px;
+      width: 31px;
+      height: 30px;
+      background: url("@/assets/img/sidebar-open.svg");
+      background-repeat: no-repeat;
       cursor: pointer;
     }
   }

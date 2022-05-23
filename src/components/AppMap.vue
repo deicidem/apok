@@ -6,11 +6,13 @@
     @update:bounds="setBounds($event)"
     @click="onClick($event)"
     @ready="$emit('ready', $refs.map)"
+    :options="{zoomControl: false}"
     style="height: 100%"
     :zoom="zoom"
     :center="center"
   >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+    <l-control-zoom position="bottomleft"></l-control-zoom>
 
     <template v-if="polygon.active">
       <l-marker
@@ -90,6 +92,8 @@ import {
   LGeoJson,
   LCircle,
   LRectangle,
+  LControlZoom
+
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -119,6 +123,7 @@ export default {
     LGeoJson,
     LCircle,
     LRectangle,
+    LControlZoom
   },
   data() {
     return {

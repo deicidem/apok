@@ -41,6 +41,10 @@ const routes = [
       {
         path: 'person',
         component: () => import('../views/SidebarViews/SidebarPerson')
+      },
+      {
+        path: 'area',
+        component: () => import('../views/SidebarViews/SidebarArea')
       }
     ]
   },

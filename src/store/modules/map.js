@@ -1,3 +1,5 @@
+import * as L from "leaflet";
+import '@geoman-io/leaflet-geoman-free';  
 export default {
   namespaced: true,
   state: {
@@ -21,9 +23,25 @@ export default {
     images: [],
     zoom: 5,
     center: [45, 35],
-    bounds: []
+    bounds: [],
+    activePolygon: null
   },
   getters: {
+    getActivePolygon(state) {
+      return state.activePolygon;
+    },
+    getActivePolygonJson(state) {
+      let json = null;
+      if (state.areaPolygon.active) {
+        json = L.polygon(state.areaPolygon.geometry).toGeoJSON();
+      } else if (state.screenPolygon.active) {
+        json = L.rectangle(state.screenPolygon.geometry).toGeoJSON();
+      } else if (state.circlePolygon.active) {
+        let circle = L.circle(state.circlePolygon.geometry.center, state.circlePolygon.geometry.radius);
+        json =  L.PM.Utils.circleToPolygon(circle, 60).toGeoJSON();
+      }
+      return JSON.stringify(json);
+    },
     getAreaPolygon(state) {
       return state.areaPolygon;
     },
@@ -69,6 +87,9 @@ export default {
     }
   },
   mutations: {
+    setActivePolygon(state, polygon) {
+      state.activePolygon = polygon;
+    },
     addСoordinate(state, coord) {
       state.areaPolygon.geometry.push(coord);
     },
@@ -159,14 +180,20 @@ export default {
     setAreaPolygonDrawable(store, val) {
       store.commit('setAreaPolygonDrawable', val);
     },
-    setAreaPolygonActive(store, val) {
-      store.commit('setAreaPolygonActive', val);
+    setAreaPolygonActive(store) {
+      store.commit('setScreenPolygonActive', false);
+      store.commit('setCirclePolygonActive', false);
+      store.commit('setAreaPolygonActive', true);
     },
-    setScreenPolygonActive(store, val) {
-      store.commit('setScreenPolygonActive', val);
+    setScreenPolygonActive(store) {
+      store.commit('setScreenPolygonActive', true);
+      store.commit('setCirclePolygonActive', false);
+      store.commit('setAreaPolygonActive', false);
     },
-    setCirclePolygonActive(store, val) {
-      store.commit('setCirclePolygonActive', val);
+    setCirclePolygonActive(store) {
+      store.commit('setScreenPolygonActive', false);
+      store.commit('setCirclePolygonActive', true);
+      store.commit('setAreaPolygonActive', false);
     },
     clearCoordinates(store) {
       store.commit('clearCoordinates');

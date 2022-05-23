@@ -1,11 +1,10 @@
 <template>
-  <div class="person">
-    <h2 class="sidebar-title">Личный кабинет</h2>
+  <div class="search">
+    <h2 class="sidebar-title">Выбор зоны интереса</h2>
     <vuescroll :ops="ops">
-      <div class="person-wrapper">
-        
-        <div class="person-content">
-          <app-person></app-person>
+      <div class="search-wrapper">
+        <div class="search-content">
+          <search-zone></search-zone>
         </div>
       </div>
     </vuescroll>
@@ -13,14 +12,20 @@
 </template>
 
 <script>
-import AppPerson from "@/components/cards/AppPerson.vue";
+import {mapActions} from "vuex"
+
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
+
+import SearchZone from "@/components/search/SearchZone";
 
 export default {
   components: {
     vuescroll,
-    AppPerson,
+    SearchZone,
+  },
+  methods: {
+    ...mapActions('search', ['search'])
   },
   data() {
     return {
@@ -56,18 +61,45 @@ export default {
 };
 </script>
 
-
-<style scoped lang="scss">
-.person {
+<style lang="scss" >
+.search {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-title {
+    font-size: 20px;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
   &-wrapper {
     padding: 30px;
   }
   &-content {
     width: 100%;
     height: 100%;
+  }
+  &-title {
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: #000;
+  }
+  &-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search {
+    &-wrapper {
+      padding: 20px;
+    }
+    &-title {
+      font-size: 1.125rem;
+      line-height: 130%;
+      margin-bottom: 14px;
+    }
   }
 }
 </style>

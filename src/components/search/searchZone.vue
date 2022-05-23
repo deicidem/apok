@@ -3,11 +3,19 @@
     <h2 class="search-title">Зона интереса</h2>
 
     <label class="search-zone__input">
-      <app-radio value="screen" v-model="areaType"></app-radio>
+      <app-radio
+        value="screen"
+        v-model="areaType"
+        @change="onRadioChange($event)"
+      ></app-radio>
       <span class="text">Видимая область экрана</span>
     </label>
     <label class="search-zone__input">
-      <app-radio value="manual" v-model="areaType"></app-radio>
+      <app-radio
+        value="manual"
+        v-model="areaType"
+        @change="onRadioChange($event)"
+      ></app-radio>
       <span class="text">Задать вручную</span>
     </label>
     <template v-if="areaType == 'screen'">
@@ -40,7 +48,7 @@
         <ul>
           <li>
             <button
-              @click="searchZoneType = 1"
+              @click="changeZoneType(1)"
               :class="searchZoneType == 1 ? 'active' : ''"
             >
               Задать полигон
@@ -49,7 +57,7 @@
           <li class="line"></li>
           <li>
             <button
-              @click="searchZoneType = 2"
+              @click="changeZoneType(2)"
               :class="searchZoneType == 2 ? 'active' : ''"
             >
               Круглая зона
@@ -58,7 +66,7 @@
           <li class="line"></li>
           <li>
             <button
-              @click="searchZoneType = 3"
+              @click="changeZoneType(3)"
               :class="searchZoneType == 3 ? 'active' : ''"
             >
               Загрузить файл
@@ -130,19 +138,14 @@
 
         <div class="search-zone__buttons">
           <button
-            v-if="!getDrawable"
-            class="button button-g search-zone__button"
-            @click="setPolygonDrawable(true)"
+            class="button search-zone__button"
+            :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
+            @click="setAreaPolygonDrawable(!getAreaPolygonDrawable)"
           >
-            Использовать карту
+            <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
+            <span v-else> Сохранить полигон </span>
           </button>
-          <button
-            v-else
-            class="button button-white search-zone__button"
-            @click="setPolygonDrawable(false)"
-          >
-            Сохранить полигон
-          </button>
+
           <button class="button button-white search-zone__button">
             Прописать координаты
           </button>
@@ -235,7 +238,7 @@ export default {
   },
   data() {
     return {
-      areaType: "screen",
+      areaType: null,
       inputMaskLat: {
         pattern: `111°11'11" N`,
         formatCharacters: {
@@ -268,8 +271,10 @@ export default {
   },
   computed: {
     ...mapGetters("map", [
-      "getPolygonArea",
-      "getDrawable",
+      "getAreaPolygon",
+      "getCirclePolygon",
+      "getScreenPolygon",
+      "getAreaPolygonDrawable",
       "getFormattedCoordinates",
       "getBounds",
       "getZoom",
@@ -280,19 +285,42 @@ export default {
       "addCoordinate",
       "changeCoordinate",
       "deleteCoordinate",
-      "setPolygonDrawable",
+      "setAreaPolygonDrawable",
+      "setAreaPolygonActive",
+      "setScreenPolygonActive",
+      "setCirclePolygonActive",
       "clearCoordinates",
       "setCirclePolygon",
       "setCenter",
       "setZoom",
       "setScreenPolygon",
     ]),
+    ...mapActions("search", ["setActivePolygon"]),
+    changeZoneType(type) {
+      this.searchZoneType = type;
+      if (this.searchZoneType == 1) {
+        this.setActivePolygon(this.getAreaPolygon);
+      } else {
+        this.setActivePolygon(this.getCirclePolygon);
+      }
+    },
     showScreenPolygon() {
       this.setScreenPolygon([
         [this.getBounds._northEast.lat, this.getBounds._northEast.lng],
         [this.getBounds._southWest.lat, this.getBounds._southWest.lng],
       ]);
       this.setZoom(this.getZoom - 1);
+    },
+    onRadioChange(e) {
+      if (e == "screen") {
+        this.setActivePolygon(this.getScreenPolygon);
+      } else {
+        if (this.searchZoneType == 1) {
+          this.setActivePolygon(this.getAreaPolygon);
+        } else {
+          this.setActivePolygon(this.getCirclePolygon);
+        }
+      }
     },
     createCircle() {
       let lat = this.parseCoords(this.lat);

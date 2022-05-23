@@ -6,51 +6,23 @@
         <div class="data-item">
           <div class="data-info">
             <p class="data__subtitle">Задача:</p>
-            <p class="data__text">Формирование температурных карт</p>
+            <p class="data__text">{{getPlans[0].title}}</p>
           </div>
         </div>
-        <div class="data-item">
+        <div class="data-item" v-for="(data, i) in getPlans[0].data" :key="i">
           <div class="data-info">
-            <p class="data__subtitle">Архивный снимок:</p>
-            <p class="data__text">
-              ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
+            <p class="data__subtitle">{{data.title}}</p>
+            <p class="data__text" v-if="data.ref != null">
+              {{data.ref.name}}
             </p>
           </div>
           <div class="data-btns">
-            <div class="data-btn">
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/choose.svg" />
-              </button>
-              <span class="data-tooltiptext">Выбрать</span>
-            </div>
-            <div class="data-btn">
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/upload.svg" />
-              </button>
-              <span class="data-tooltiptext">Загрузить</span>
-            </div>
-          </div>
-        </div>
-        <div class="data-item">
-          <div class="data-info">
-            <p class="data__subtitle">Актуальный снимок:</p>
-            <p class="data__text">
-              ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK
-            </p>
-          </div>
-          <div class="data-btns">
-            <div class="data-btn">
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/choose.svg" />
-              </button>
-              <span class="data-tooltiptext">Выбрать</span>
-            </div>
-            <div class="data-btn">
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/upload.svg" />
-              </button>
-              <span class="data-tooltiptext">Загрузить</span>
-            </div>
+            <button class="button button-svg data-btn" @click="selectDzz(i)">
+              <img src="@/assets/img/choose.svg" />
+            </button>
+            <button class="button button-svg data-btn">
+              <img src="@/assets/img/upload.svg" />
+            </button>
           </div>
         </div>
       </div>
@@ -65,6 +37,19 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex';
+export default {
+  computed: {
+    ...mapGetters('plans', ['getPlans']),
+    ...mapGetters('results', ['getSelectable']),
+  },
+  methods: {
+    ...mapActions('results', ['setSelectable']),
+    selectDzz(i) {
+      this.setSelectable({type: i, value: !this.getSelectable.value, planIndex: 0, dataIndex: i});
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -87,6 +72,7 @@
     transform: translate(0);
   }
   &-content {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,7 +112,6 @@
     text-align: left;
     color: #313131;
   }
-
   &-btns {
     display: flex;
     justify-content: space-between;

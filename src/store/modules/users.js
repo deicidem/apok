@@ -1,3 +1,5 @@
+import * as authApi from "@/api/auth";
+
 export default {
   namespaced: true,
   state: {
@@ -20,7 +22,7 @@ export default {
     addUser(store, user) {
       store.commit('addUser', user)
     },
-    authorizeUser({state}, user) {
+    async authorizeUser({state}, user) {
       let foundUser = false;
       for (let i = 0; i < state.users.length; i++) {
         const u = state.users[i];
@@ -33,6 +35,8 @@ export default {
       } else {
         console.log("Вы не авторизованы");
       }
+      let res = await authApi.login(user.email, user.password);
+      return res;
     },
 
   }

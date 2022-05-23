@@ -2,7 +2,7 @@
   <div class="plan-item">
     
     <div class="plan-item__img">
-      <img :src="itemImage" />
+      <img :src="img" />
     </div>
 
     <div class="plan-item__info">
@@ -31,12 +31,6 @@ export default {
     title: String,
     text: String,
     planid: Number,
-  },
-  computed: {
-    itemImage() {
-      const fileName = this.img.toLowerCase();
-      return require(`@/assets/img/${fileName}`);
-    },
   },
 };
 </script>

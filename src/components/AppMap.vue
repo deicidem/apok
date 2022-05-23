@@ -11,11 +11,14 @@
     :center="center"
   >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-    <l-marker
+
+    <template v-if="polygon.active">
+      <l-marker
+      
       data-number="id"
       :draggable="drawable"
       @dragend="handleMarkerDragEnd($event, id)"
-      v-for="(marker, id) in polygon"
+      v-for="(marker, id) in polygon.geometry"
       :key="id"
       :lat-lng="marker"
     >
@@ -24,19 +27,30 @@
         <img style="pointer-events: none" :src="icon" alt="" />
       </l-icon>
     </l-marker>
+    </template>
+    
     <l-polygon
+      v-if="polygon.active"
       @click="save"
       :fill="true"
-      :lat-lngs="polygon"
+      :lat-lngs="polygon.geometry"
       color="#476D70"
     ></l-polygon>
+
     <l-rectangle
-      v-if="screenPolygon != null"
+      v-if="screenPolygon.active && screenPolygon.geometry != null"
       :fill="true"
-      :bounds="screenPolygon"
+      :bounds="screenPolygon.geometry"
       color="#476D70"
     ></l-rectangle>
-    <l-circle v-if="circle != null" :lat-lng="circle.center" :radius="circle.radius" color="red"/>
+
+    <l-circle
+      v-if="circle.active && circle.geometry != null"
+      :lat-lng="circle.geometry.center"
+      :radius="circle.geometry.radius"
+      color="red"
+    />
+
     <template>
       <l-geo-json
         :options="{ fill: false }"
@@ -45,6 +59,7 @@
         :geojson="gj.json"
       ></l-geo-json>
     </template>
+
     <template>
       <l-image-overlay
         v-for="(img, i) in images"
@@ -53,6 +68,7 @@
         :bounds="img.bounds"
       ></l-image-overlay>
     </template>
+
   </l-map>
 </template>
 
@@ -73,7 +89,7 @@ import {
   // LTooltip
   LGeoJson,
   LCircle,
-  LRectangle
+  LRectangle,
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -102,7 +118,7 @@ export default {
     LPolygon,
     LGeoJson,
     LCircle,
-    LRectangle
+    LRectangle,
   },
   data() {
     return {
@@ -117,14 +133,14 @@ export default {
   },
   computed: {
     ...mapGetters("map", {
-      polygon: "getPolygonArea",
-      drawable: "getDrawable",
+      polygon: "getAreaPolygon",
+      drawable: "getAreaPolygonDrawable",
       center: "getCenter",
       zoom: "getZoom",
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
       images: "getImages",
-      screenPolygon: "getScreenPolygon"
+      screenPolygon: "getScreenPolygon",
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
@@ -136,11 +152,11 @@ export default {
       "changeCoordinate",
       "setCenter",
       "setZoom",
-      "setBounds"
+      "setBounds",
     ]),
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();
-      this.setCenter(center)
+      this.setCenter(center);
     },
     // Добавление маркеров
     onClick($event) {
@@ -164,7 +180,7 @@ export default {
     },
     // Сохранение файла
     save() {
-      let polygon = L.polygon(this.polygon);
+      let polygon = L.polygon(this.polygon.geometry);
       let json = polygon.toGeoJSON();
       let string = JSON.stringify(json);
       console.log(string);

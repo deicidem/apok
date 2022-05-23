@@ -1,10 +1,22 @@
 export default {
   namespaced: true,
   state: {
-    areaPolygon: [],
-    screenPolygon: null,
-    polygonDrawable: false,
-    circlePolygon: null,
+    areaPolygon: {
+      geometry: [],
+      drawable: false,
+      type: "polygon",
+      active: false
+    },
+    screenPolygon: {
+      geometry: null,
+      type: "rectangle",
+      active: false
+    },
+    circlePolygon: {
+      geometry: null,
+      type: "circle",
+      active: false
+    },
     geoJsonPolygons: [],
     images: [],
     zoom: 5,
@@ -12,15 +24,15 @@ export default {
     bounds: []
   },
   getters: {
-    getPolygonArea(state) {
+    getAreaPolygon(state) {
       return state.areaPolygon;
     },
-    getScreenPolygon(state) {
-      return state.screenPolygon;
+    getAreaPolygonDrawable(state) {
+      return state.areaPolygon.drawable
     },
     getFormattedCoordinates(state) {
       let res = [];
-      state.areaPolygon.forEach(el => {
+      state.areaPolygon.geometry.forEach(el => {
         res.push({
           lat: `${Math.trunc(Math.abs(el.lat))}
                °${Math.trunc(Math.abs(el.lat) % 1 * 60)}
@@ -34,8 +46,11 @@ export default {
       });
       return res;
     },
-    getDrawable(state) {
-      return state.polygonDrawable;
+    getScreenPolygon(state) {
+      return state.screenPolygon;
+    },
+    getCirclePolygon(state) {
+      return state.circlePolygon;
     },
     getZoom(state) {
       return state.zoom;
@@ -43,36 +58,42 @@ export default {
     getCenter(state) {
       return state.center;
     },
-    getCirclePolygon(state) {
-      return state.circlePolygon;
+    getBounds(state) {
+      return state.bounds;
     },
     getGeoJsonPolygons(state) {
       return state.geoJsonPolygons;
     },
     getImages(state) {
       return state.images;
-    },
-    getBounds(state) {
-      return state.bounds;
     }
   },
   mutations: {
     addСoordinate(state, coord) {
-      state.areaPolygon.push(coord);
+      state.areaPolygon.geometry.push(coord);
     },
     deleteCoordinate(state, i) {
-      state.areaPolygon.splice(i, 1);
+      state.areaPolygon.geometry.splice(i, 1);
     },
     changeCoordinate(state, data) {
-      let polygon = [...state.areaPolygon];
+      let polygon = [...state.areaPolygon.geometry];
       polygon[data.id] = data.latlng;
-      state.areaPolygon = [...polygon];
+      state.areaPolygon.geometry = [...polygon];
     },
-    setPolygonDrawable(state, val) {
-      state.polygonDrawable = val;
+    setAreaPolygonDrawable(state, val) {
+      state.areaPolygon.drawable = val;
+    },
+    setAreaPolygonActive(state, val) {
+      state.areaPolygon.active = val;
+    },
+    setScreenPolygonActive(state, val) {
+      state.screenPolygon.active = val;
+    },
+    setCirclePolygonActive(state, val) {
+      state.circlePolygon.active = val;
     },
     clearCoordinates(state) {
-      state.areaPolygon = [];
+      state.areaPolygon.geometry = [];
     },
     setZoom(state, value) {
       state.zoom = value;
@@ -81,7 +102,7 @@ export default {
       state.center = value;
     },
     setCirclePolygon(state, data) {
-      state.circlePolygon = data
+      state.circlePolygon.geometry = data
     },
     addGeoJsonPolygon(state, polygon) {
       if (polygon.json == null) {
@@ -89,13 +110,13 @@ export default {
         return;
       } 
       state.geoJsonPolygons.push(polygon);
-
     },
     addImage(state, image) {
       if (image.id == null || image.img == null || image.bounds == null) {
         console.log("image null");
         return;
       }
+      image.bounds = [[image.bounds[1], image.bounds[0]], [image.bounds[3], image.bounds[2]]]
       state.images.push(image);
     },
     removeGeoJsonPolygon(state, id) {
@@ -112,8 +133,14 @@ export default {
         }
       })
     },
-    setScreenPolygon(state, bounds) {
-      state.screenPolygon = bounds;
+    clearImages(state) {
+      state.images = [];
+    },
+    clearGeoJsons(state) {
+      state.geoJsonPolygons = [];
+    },
+    setScreenPolygon(state, polygon) {
+      state.screenPolygon.geometry = polygon;
     },
     setBounds(state, bounds) {
       state.bounds = bounds;
@@ -129,11 +156,26 @@ export default {
     deleteCoordinate(store, i) {
       store.commit('deleteCoordinate', i);
     },
-    setPolygonDrawable(store, val) {
-      store.commit('setPolygonDrawable', val);
+    setAreaPolygonDrawable(store, val) {
+      store.commit('setAreaPolygonDrawable', val);
+    },
+    setAreaPolygonActive(store, val) {
+      store.commit('setAreaPolygonActive', val);
+    },
+    setScreenPolygonActive(store, val) {
+      store.commit('setScreenPolygonActive', val);
+    },
+    setCirclePolygonActive(store, val) {
+      store.commit('setCirclePolygonActive', val);
     },
     clearCoordinates(store) {
       store.commit('clearCoordinates');
+    },
+    clearImages(store) {
+      store.commit('clearImages');
+    },
+    clearGeoJsons(store) {
+      store.commit('clearGeoJsons');
     },
     setZoom(store, value) {
       store.commit('setZoom', value);

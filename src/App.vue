@@ -115,7 +115,6 @@ img {
   border-radius: 10px;
   border: none;
   box-shadow: $shadow_small;
-  transition: all 0.3s ease-in-out;
   background-size: 300% 100%;
   cursor: pointer;
   &:hover {

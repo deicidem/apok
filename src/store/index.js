@@ -9,6 +9,7 @@ import plans from './modules/plans'
 import alerts from './modules/alerts'
 import map from './modules/map'
 import search from './modules/search'
+import results from './modules/results'
 
 export default new Vuex.Store({
   state: {
@@ -27,7 +28,7 @@ export default new Vuex.Store({
   actions: {
     setSidebarState(store, val) {
       store.commit('setSidebarState', val)
-    }
+    },
   },
   modules: {
     tasks,
@@ -35,7 +36,8 @@ export default new Vuex.Store({
     plans,
     alerts,
     map,
-    search
+    search,
+    results
   },
   strict: process.env.NODE_ENV !== 'production'
 })

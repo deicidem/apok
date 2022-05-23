@@ -58,10 +58,28 @@
             </table>
           </div>
           <div class="card-buttons">
-            <button class="button button-g card-button"  @click="onPolygonButtonClick(card.ind, cardData.id, cardData.geography)">Скрыть контур</button>
-            <button class="button button-white card-button" type="white" @click="onImageButtonClick(card.ind, cardData.id, cardData.previewPath, cardData.geography.geometry.bounds)"
-              >Показать изображение</button
+            <button
+              class="button button-g card-button"
+              @click="
+                onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
+              "
             >
+              Скрыть контур
+            </button>
+            <button
+              class="button button-white card-button"
+              type="white"
+              @click="
+                onImageButtonClick(
+                  card.ind,
+                  cardData.id,
+                  cardData.previewPath,
+                  cardData.geography.bbox
+                )
+              "
+            >
+              Показать изображение
+            </button>
           </div>
         </div>
       </portal>
@@ -80,12 +98,22 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(item, i) in results" :key="i">
+          <tbody v-if="loaded">
+            <tr
+              v-for="(item, i) in results"
+              :key="i"
+              :class="(() => {
+                let res = '';
+                if (selectable.value) res += 'selectable ';
+                if (item.selected.value) res += `selected-${item.selected.type + 1}`;
+                return res;
+              })()"
+              @click="select(i, item.selected.value)"
+            >
               <td class="results-table__buttons">
                 <button
                   class="button button-white button-small"
-                  :class="buttons[i].polygonActive ? 'active' : ''"
+                  :class="results[i].polygonActive ? 'active' : ''"
                   @click="onPolygonButtonClick(i, item.id, item.geography)"
                 >
                   <img
@@ -97,8 +125,15 @@
                 </button>
                 <button
                   class="button button-white button-small"
-                  :class="buttons[i].imageActive ? 'active' : ''"
-                  @click="onImageButtonClick(i, item.id, item.previewPath, item.geography == null ? null : item.geography.geometry.bounds )"
+                  :class="results[i].imageActive ? 'active' : ''"
+                  @click="
+                    onImageButtonClick(
+                      i,
+                      item.id,
+                      item.previewPath,
+                      item.geography == null ? null : item.geography.bbox
+                    )
+                  "
                 >
                   <img
                     svg-inline
@@ -117,7 +152,7 @@
               <td class="results-table__buttons">
                 <button
                   class="button button-white button-small"
-                  :class="buttons[i].cardActive ? 'active' : ''"
+                  :class="results[i].cardActive ? 'active' : ''"
                   @click="onCardButtonClick(i)"
                 >
                   <img
@@ -148,6 +183,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       buttons: [],
       card: {
         active: false,
@@ -156,8 +192,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("search", {
+    ...mapGetters("results", {
       results: "getResults",
+      selectable: "getSelectable",
     }),
     cardData() {
       if (this.card.ind != null) {
@@ -165,7 +202,7 @@ export default {
       } else {
         return null;
       }
-    }
+    },
   },
   methods: {
     ...mapActions("map", [
@@ -174,54 +211,90 @@ export default {
       "addImage",
       "removeImage",
     ]),
+    ...mapActions("results", ["setResultProperty", "selectResult"]),
     onPolygonButtonClick(ind, id, json) {
-      if (this.buttons[ind].polygonActive) {
+      if (this.results[ind].polygonActive) {
         this.removeGeoJsonPolygon(id);
-        this.buttons[ind].polygonActive = false;
+        this.setResultProperty({
+          index: ind,
+          property: "polygonActive",
+          value: false,
+        });
       } else {
         this.addGeoJsonPolygon({ id, json });
-        this.buttons[ind].polygonActive = true;
+        this.setResultProperty({
+          index: ind,
+          property: "polygonActive",
+          value: true,
+        });
+      }
+    },
+    select(i, selected) {
+      if (this.selectable.value) {
+        console.log(i);
+        this.selectResult({
+          index: i,
+          value: !selected,
+          type: this.selectable.type,
+        });
       }
     },
     onImageButtonClick(ind, id, img, bounds) {
-      if (this.buttons[ind].imageActive) {
+      if (this.results[ind].imageActive) {
         this.removeImage(id);
-        this.buttons[ind].imageActive = false;
+        this.setResultProperty({
+          index: ind,
+          property: "imageActive",
+          value: false,
+        });
       } else {
         this.addImage({ id, img, bounds });
-        this.buttons[ind].imageActive = true;
+        this.setResultProperty({
+          index: ind,
+          property: "imageActive",
+          value: true,
+        });
       }
     },
     onCardButtonClick(ind) {
-      if (this.buttons[ind].cardActive) {
+      if (this.results[ind].cardActive) {
         this.card.active = false;
-        this.buttons[ind].cardActive = false;
+        this.setResultProperty({
+          index: ind,
+          property: "cardActive",
+          value: false,
+        });
       } else {
         this.card.ind = ind;
-        this.buttons.forEach((el) => {
-          el.cardActive = false;
+        for (let i = 0; i < this.results.length; i++) {
+          this.setResultProperty({
+            index: i,
+            property: "cardActive",
+            value: false,
+          });
+        }
+        this.setResultProperty({
+          index: ind,
+          property: "cardActive",
+          value: true,
         });
-        this.buttons[ind].cardActive = true;
         this.card.active = true;
         this.card.data = { ...this.results[ind] };
       }
     },
     onCardClose() {
-      this.buttons.forEach((el) => {
-        el.cardActive = false;
-      });
+      for (let i = 0; i < this.results.length; i++) {
+        this.setResultProperty({
+          index: i,
+          property: "cardActive",
+          value: false,
+        });
+      }
       this.card.active = false;
     },
   },
   created() {
-    this.results.forEach((element) => {
-      this.buttons.push({
-        id: element.id,
-        polygonActive: false,
-        imageActive: false,
-        cardActive: false,
-      });
-    });
+    this.loaded = true;
   },
 };
 </script>
@@ -241,6 +314,7 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 15px 20px;
+
   &-close {
     position: absolute;
     right: 5px;
@@ -305,6 +379,7 @@ export default {
   &-content {
     padding: 10px 30px;
   }
+
   .back {
     margin-bottom: 0px;
     display: flex;
@@ -324,6 +399,39 @@ export default {
     overflow: hidden;
   }
   &-table {
+    .selectable {
+      position: relative;
+      &::after {
+        content: "";
+        opacity: 0;
+        position: absolute;
+        border: 2px solid $color-main;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+      }
+      &:hover:after {
+        opacity: 1;
+      }
+      &:last-child:after {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+    }
+    .selected {
+      &-1 {
+        background: $gradient-b;
+        color: #fff;
+      }
+      &-2 {
+        background: $gradient-p;
+        color: #fff;
+      }
+    }
+    tbody {
+      background: none;
+    }
     td,
     th {
       word-break: break-all;

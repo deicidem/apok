@@ -196,8 +196,8 @@ export default {
         });
       }
       this.setTimeInterval({
-        from: this.from,
-        to: this.to,
+        from: this.getTimeInterval.from,
+        to: this.getTimeInterval.to,
         months: this.months,
       });
 
@@ -231,125 +231,6 @@ export default {
 </script>
 
 <style lang="scss">
-.select {
-  position: relative;
-
-  margin-left: 30px;
-  &-label {
-    padding-left: 10px;
-
-    font-size: 12px;
-    color: $text-grey;
-  }
-  &-data {
-    display: flex;
-    align-items: center;
-    width: 158px;
-    height: 34px;
-    padding: 5px;
-
-    font-size: 12px;
-
-    background: #fff;
-    box-shadow: $shadow-small;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgb($text-grey, 0.2);
-    cursor: pointer;
-  }
-  &-options {
-    position: absolute;
-    top: 110%;
-    z-index: 10;
-
-    display: flex;
-    flex-direction: column;
-    width: 158px;
-
-    background: #fff;
-    box-shadow: $shadow-small;
-    border-radius: 10px;
-  }
-  &-option {
-    display: flex;
-    align-items: center;
-    padding: 4px 7px;
-
-    font-size: 12px;
-
-    color: $text-grey;
-    border-radius: 0;
-    cursor: pointer;
-    span {
-      margin-left: 8px;
-    }
-    &.active {
-      background: $color-main;
-      color: #fff;
-    }
-  }
-}
-.input-calendar {
-  color: #585858 !important;
-  .next::after {
-    border-left: 10px solid $color-main !important;
-  }
-  .prev::after {
-    border-right: 10px solid $color-main !important;
-  }
-  .cell.selected {
-    background: $color-main;
-  }
-}
-.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
-.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
-.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
-  border: 1px solid $color-main !important;
-}
-.datepicker-label {
-  padding-left: 10px;
-  color: $text-grey;
-}
-.vdp-datepicker {
-  input {
-    width: 160px;
-    height: 34px;
-    padding-right: 26px;
-
-    border: 1px solid rgb($text-grey, 0.2);
-    border-radius: 10px;
-    box-shadow: $shadow-small;
-    outline: none;
-    &:focus-visible {
-      border: 1px solid $color-main;
-    }
-  }
-  &__calendar {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: $shadow-big;
-    header {
-      box-shadow: $shadow-big;
-      span {
-        .prev {
-          &::after {
-            color: #000 !important;
-          }
-        }
-      }
-    }
-  }
-}
-.cell {
-  color: $text-grey !important;
-  &:hover {
-    border: 1px solid $color-main;
-  }
-}
-.selected {
-  background: $color-main !important;
-  color: #fff !important;
-}
 .search {
   &-date {
     margin-top: 20px;
@@ -358,6 +239,125 @@ export default {
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;
+    .select {
+      position: relative;
+
+      margin-left: 30px;
+      &-label {
+        padding-left: 10px;
+
+        font-size: 12px;
+        color: $text-grey;
+      }
+      &-data {
+        display: flex;
+        align-items: center;
+        width: 158px;
+        height: 34px;
+        padding: 5px;
+
+        font-size: 12px;
+
+        background: #fff;
+        box-shadow: $shadow-small;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgb($text-grey, 0.2);
+        cursor: pointer;
+      }
+      &-options {
+        position: absolute;
+        top: 110%;
+        z-index: 10;
+
+        display: flex;
+        flex-direction: column;
+        width: 158px;
+
+        background: #fff;
+        box-shadow: $shadow-small;
+        border-radius: 10px;
+      }
+      &-option {
+        display: flex;
+        align-items: center;
+        padding: 4px 7px;
+
+        font-size: 12px;
+
+        color: $text-grey;
+        border-radius: 0;
+        cursor: pointer;
+        span {
+          margin-left: 8px;
+        }
+        &.active {
+          background: $color-main;
+          color: #fff;
+        }
+      }
+    }
+    .input-calendar {
+      color: #585858 !important;
+      .next::after {
+        border-left: 10px solid $color-main !important;
+      }
+      .prev::after {
+        border-right: 10px solid $color-main !important;
+      }
+      .cell.selected {
+        background: $color-main;
+      }
+    }
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+    .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+      border: 1px solid $color-main !important;
+    }
+    .datepicker-label {
+      padding-left: 10px;
+      color: $text-grey;
+    }
+    .vdp-datepicker {
+      input {
+        width: 160px;
+        height: 34px;
+        padding-right: 26px;
+
+        border: 1px solid rgb($text-grey, 0.2);
+        border-radius: 10px;
+        box-shadow: $shadow-small;
+        outline: none;
+        &:focus-visible {
+          border: 1px solid $color-main;
+        }
+      }
+      &__calendar {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: $shadow-big;
+        header {
+          box-shadow: $shadow-big;
+          span {
+            .prev {
+              &::after {
+                color: #000 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .cell {
+      color: $text-grey !important;
+      &:hover {
+        border: 1px solid $color-main;
+      }
+    }
+    .selected {
+      background: $color-main !important;
+      color: #fff !important;
+    }
     &__wrapper {
       display: flex;
       justify-content: space-between;

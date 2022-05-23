@@ -1,9 +1,10 @@
 import * as dzzApi from "@/api/dzz";
+import * as L from "leaflet";
+import '@geoman-io/leaflet-geoman-free';  
 export default {
   namespaced: true,
   state: {
-    areaPolygon: [],
-    polygonDrawable: false,
+    activePolygon: null,
     timeInterval: {
       from: '',
       to: '',
@@ -15,30 +16,10 @@ export default {
     },
     spacecrafts: setupSpacecrafts(),
     spacecraftsSelected: [],
-    results: []
   },
   getters: {
-    getPolygonArea(state) {
-      return state.areaPolygon;
-    },
-    getFormattedCoordinates(state) {
-      let res = [];
-      state.areaPolygon.forEach(el => {
-        res.push({
-          lat: `${Math.trunc(Math.abs(el.lat))}
-               °${Math.trunc(Math.abs(el.lat) % 1 * 60)}
-               '${Math.round((Math.abs(el.lat) % 1 * 60) % 1 * 60)}" 
-                ${el.lat > 0 ? "N" : "S"}`,
-          lng: `${Math.trunc(Math.abs(el.lng))}°
-                ${Math.trunc(Math.abs(el.lng) % 1 * 60)}'
-                ${Math.round((Math.abs(el.lng) % 1 * 60) % 1 * 60)}" 
-                ${el.lng > 0 ? "E" : "W"}`,
-        })
-      });
-      return res;
-    },
-    getDrawable(state) {
-      return state.polygonDrawable;
+    getActivePolygon(state) {
+      return state.activePolygon;
     },
     getTimeInterval(state) {
       return state.timeInterval;
@@ -65,31 +46,12 @@ export default {
     //     return state.spacecrafts[seriesInd].models[scInd].checked;
     //   }
     // }
-    getResults(state) {
-      return state.results;
-    }
   },
   mutations: {
-    setResults(state, results) {
-      state.results = results;
+    setActivePolygon(state, polygon) {
+      state.activePolygon = polygon;
     },
-    addСoordinate(state, coord) {
-      state.areaPolygon.push(coord);
-    },
-    deleteCoordinate(state, i) {
-      state.areaPolygon.splice(i, 1);
-    },
-    changeCoordinate(state, data) {
-      let polygon = [...state.areaPolygon];
-      polygon[data.id] = data.latlng;
-      state.areaPolygon = [...polygon];
-    },
-    setPolygonDrawable(state, val) {
-      state.polygonDrawable = val;
-    },
-    clearCoordinates(state) {
-      state.areaPolygon = [];
-    },
+
     setCloudiness(state, {
       from,
       to
@@ -143,22 +105,18 @@ export default {
     
   },
   actions: {
-    addCoordinate(store, i) {
-      store.commit('addСoordinate', i)
-    },
-    changeCoordinate(store, data) {
-      store.commit('changeCoordinate', {
-        ...data
-      })
-    },
-    deleteCoordinate(store, i) {
-      store.commit('deleteCoordinate', i);
-    },
-    setPolygonDrawable(store, val) {
-      store.commit('setPolygonDrawable', val);
-    },
-    clearCoordinates(store) {
-      store.commit('clearCoordinates');
+    setActivePolygon(store, data) {
+      store.dispatch('map/setAreaPolygonActive', false, {root : true});
+      store.dispatch('map/setScreenPolygonActive', false, {root : true});
+      store.dispatch('map/setCirclePolygonActive', false, {root : true});
+      store.commit('setActivePolygon', data);
+      if (data.type == 'polygon') {
+        store.dispatch('map/setAreaPolygonActive', true, {root : true});
+      } else if (data.type == 'circle') {
+        store.dispatch('map/setCirclePolygonActive', true, {root : true});
+      } else if (data.type == 'rectangle') {
+        store.dispatch('map/setScreenPolygonActive', true, {root : true});
+      }
     },
     setCloudiness(store, data) {
       store.commit('setCloudiness', data);
@@ -176,7 +134,7 @@ export default {
       store.commit('selectSeries', data);
     },
     async load({
-      commit
+      dispatch
     }) {
       let params = {
         startDate: new Date("2021-04-22"),
@@ -188,22 +146,37 @@ export default {
       }
       let results = await dzzApi.all(params);
 
-      
-      commit('setResults', results)
+      dispatch('results/setResults',results ,  {root : true});
     },
-    async search({commit, getters}) {
+    async search({dispatch, getters}) {
+      let polygon = getters.getActivePolygon;
+      let json = null;
+
+      if (polygon.type == 'polygon') {
+        json = L.polygon(polygon.geometry).toGeoJSON();
+      } else if (polygon.type == 'circle') {
+        let circle = L.circle(polygon.geometry.center, polygon.geometry.radius);
+        json =  L.PM.Utils.circleToPolygon(circle, 60).toGeoJSON();
+      } else if (polygon.type == 'rectangle') {
+        json = L.rectangle(polygon.geometry).toGeoJSON();
+      }
+      json = JSON.stringify(json);
+
       let params = {
         startDate: getters.getTimeInterval.from,
         endDate: getters.getTimeInterval.to,
         startCloudiness: getters.getCloudiness[0],
         endCloudiness: getters.getCloudiness[1],
         months: getters.getTimeInterval.months,
-        satelites: getters.getSelectedSpacecrafts
+        satelites: getters.getSelectedSpacecrafts,
+        polygon: json
       }
+
+
+
       let results = await dzzApi.all(params);
 
-      
-      commit('setResults', results)
+      dispatch('results/setResults',results ,  {root : true});
     }
   }
 }

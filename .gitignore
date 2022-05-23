@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+/apok_backend_php
+/rest-api
 
 # local env files
 .env.local

@@ -25,22 +25,23 @@
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Описание</div>
             <p class="plan-wrapper__text">
-              {{ plan.fullText }}
+              {{ plan.description }}
             </p>
           </div>
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Требования к данным</div>
             <div class="plan-table">
-              <div class="plan-table__item">
-                <div class="plan-table__img">
+                <div class="plan-table__item" v-for="(req, i) in plan.requirements" :key="i">
+                <!-- <div class="plan-table__img">
                   <img src="@/assets/img/plan__data.svg" />
-                </div>
-                <p class="plan-table__subtitle">Данные:</p>
+                </div> -->
+                <p class="plan-table__subtitle">{{req.title}}:</p>
                 <p class="plan-table__text">
-                  {{ plan.requirements.data }}
+                  {{ req.description }}
                 </p>
               </div>
-              <div class="plan-table__line"></div>
+              
+              <!-- <div class="plan-table__line"></div>
               <div class="plan-table__item">
                 <div class="plan-table__img">
                   <img src="@/assets/img/plan__season.svg" />
@@ -58,13 +59,13 @@
                   {{ plan.requirements.cloudiness }}
                 </p>
               </div>
-              <div class="plan-table__line"></div>
+              <div class="plan-table__line"></div> -->
             </div>
           </div>
         </div>
 
         <div class="plan-wrapper__img">
-          <img :src="itemImage" />
+          <img :src="plan.previewPath" />
         </div>
       </div>
       <div class="plan-wrapper">
@@ -72,22 +73,23 @@
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Описание</div>
             <p class="plan-wrapper__text">
-              {{ plan.fullText }}
+              {{ plan.description }}
             </p>
           </div>
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Требования к данным</div>
             <div class="plan-table">
-              <div class="plan-table__item">
-                <div class="plan-table__img">
+                <div class="plan-table__item" v-for="(req, i) in plan.requirements" :key="i">
+                <!-- <div class="plan-table__img">
                   <img src="@/assets/img/plan__data.svg" />
-                </div>
-                <p class="plan-table__subtitle">Данные:</p>
+                </div> -->
+                <p class="plan-table__subtitle">{{req.title}}:</p>
                 <p class="plan-table__text">
-                  {{ plan.requirements.data }}
+                  {{ req.description }}
                 </p>
               </div>
-              <div class="plan-table__line"></div>
+              
+              <!-- <div class="plan-table__line"></div>
               <div class="plan-table__item">
                 <div class="plan-table__img">
                   <img src="@/assets/img/plan__season.svg" />
@@ -105,13 +107,13 @@
                   {{ plan.requirements.cloudiness }}
                 </p>
               </div>
-              <div class="plan-table__line"></div>
+              <div class="plan-table__line"></div> -->
             </div>
           </div>
         </div>
 
         <div class="plan-wrapper__img">
-          <img :src="itemImage" />
+          <img :src="plan.previewPath" />
         </div>
       </div>
     </vuescroll>
@@ -249,7 +251,7 @@ export default {
       }
       &__subtitle {
         font-size: 18px;
-        color: $color-main-dark;
+        color: $color-main;
       }
       &__text {
         position: absolute;

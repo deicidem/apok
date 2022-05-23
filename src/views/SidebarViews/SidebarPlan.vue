@@ -11,8 +11,8 @@
           v-for="(plan, i) in plans"
           :key="i"
           :planid="plan.id"
-          :img="plan.image"
-          :text="plan.shortText"
+          :img="plan.previewPath"
+          :text="plan.excerpt"
           :title="plan.title"
           @openPopup="planPopup = true"
         ></app-plan-card>

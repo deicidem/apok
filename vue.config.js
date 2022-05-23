@@ -3,6 +3,14 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://localhost/apok_backend_php/public/',
+        changeOrigin: true,
+      }
+    }
+  },
   configureWebpack: {
     // resolve: {
     //   alias: {

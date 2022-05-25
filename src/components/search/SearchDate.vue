@@ -60,6 +60,7 @@
           <div class="select-data" @click="selectActive = !selectActive">
             <span v-for="month in months" :key="month.cnt">
               <span>{{ month.cnt }} &thinsp; </span>
+              <span v-if="all">ВСЕ</span>
             </span>
           </div>
           <div class="select-options" v-show="selectActive">

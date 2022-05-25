@@ -168,12 +168,12 @@ img {
     border: 1px solid $color-main;
     outline: none;
   }
-  &:focus ~ .input-label,
-  &:valid ~ label {
-    top: -6px;
-    font-size: 12px;
-    color: $color-main;
-  }
+  // &:focus ~ .input-label,
+  // &:valid ~ label {
+  //   top: -6px;
+  //   font-size: 12px;
+  //   color: $color-main;
+  // }
 
   &-img {
     position: absolute;
@@ -281,134 +281,4 @@ img {
     }
   }
 }
-/*______________________________________*/
 </style>
-
-
-// html {
-// 	height: 150%;
-// }
-
-// h1,
-// p,
-// button {
-// 	font-family: Helvetica, sans-serif;
-// 	font-weight: 100;
-// 	color: #488589;
-// }
-
-// h1 {
-// 	letter-spacing: 0.5em;
-// 	text-align: center;
-// 	margin-top: 50px;
-// 	line-height: 1.6em;
-// }
-
-// p {
-// 	font-size: 1.1em;
-// 	text-align: center;
-// 	margin: 110px auto 20px;
-// 	letter-spacing: 0.05em;
-// }
-
-// .container {
-// 	text-align: center;
-// 	position: relative;
-// 	width: 300px;
-// 	margin: 0 auto;
-// 	cursor: pointer;
-// }
-
-// button {
-// 	position: relative;
-// 	height: 50px;
-// 	width: 280px;
-// 	border: 0;
-// 	border-radius: 5px;
-// 	text-transform: uppercase;
-// 	font-size: 1.1em;
-// 	letter-spacing: 0.2em;
-// 	overflow: hidden;
-// 	box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
-// 	z-index: 1;
-//   cursor: pointer;
-// }
-
-// .button-one {
-// }
-
-// .fill-one {
-// 	position: absolute;
-// 	background-image: linear-gradient(to right, #FFFFFF, #E6F6F7);
-// 	height: 70px;
-// 	width: 420px;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// 	border-radius: 5px;
-// 	z-index: -1;
-// 	transition: all 0.1s ease-out;
-// }
-// .container-one {
-//   transition: all 0.4s ease;
-// }
-// button:hover .fill-one {
-// 	left: 75%
-// }
-//  button:active .fill-one {
-// 	left: 25%;
-// }
-
-// .fill-two {
-// 	position: absolute;
-// 	background-image: linear-gradient(to right, #83B5B8, #618580);
-// 	background-size: 150% 150%;
-// 	height: 70px;
-// 	width: 420px;
-// 	border-radius: 5px;
-// 	margin: -40px 0 0 -140px;
-// 	z-index: -1;
-// 	transition: all 0.4s ease;
-// }
-
-// .container-two:hover .fill-two {
-// 	-webkit-animation: gradient 3s ease infinite;
-// 	-moz-animation: gradient 3s ease infinite;
-// 	animation: gradient 3s ease infinite;
-// }
-
-// @-webkit-keyframes gradient {
-// 	0% {
-// 		background-position: 0% 50%;
-// 	}
-// 	50% {
-// 		background-position: 100% 50%;
-// 	}
-// 	100% {
-// 		background-position: 0% 50%;
-// 	}
-// }
-
-// @-moz-keyframes gradient {
-// 	0% {
-// 		background-position: 0% 50%;
-// 	}
-// 	50% {
-// 		background-position: 100% 50%;
-// 	}
-// 	100% {
-// 		background-position: 0% 50%;
-// 	}
-// }
-
-// @keyframes gradient {
-// 	0% {
-// 		background-position: 0% 50%;
-// 	}
-// 	50% {
-// 		background-position: 100% 50%;
-// 	}
-// 	100% {
-// 		background-position: 0% 50%;
-// 	}
-// }

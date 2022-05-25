@@ -204,7 +204,6 @@ export default {
   &-open {
     margin-top: 6px;
   }
-
   &__box {
     display: flex;
   }
@@ -243,7 +242,6 @@ export default {
     color: #fff;
     transition: color 0.2s ease-out;
   }
-
   &-collapsed {
     position: absolute;
     left: 0;

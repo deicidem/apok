@@ -10,23 +10,53 @@
               class="data__text data__selected"
               @click="showSelect = !showSelect"
             >
-            <template v-if="activePlan != null">
-              {{ activePlan.title }}
-            </template>
+              <template v-if="activePlan != null">
+                {{ activePlan.title }}
+              </template>
             </p>
             <div class="data__select" v-show="showSelect">
-              <div
-                class="data__select__item"
-                @click="onSelect(i)"
-                v-for="(plan, i) in getPlans"
-                :key="i"
-              >
-                {{ plan.title }}
-              </div>
+              <vuescroll :ops="ops">
+                <div
+                  class="data__select__item"
+                  @click="onSelect(i)"
+                  v-for="(plan, i) in getPlans"
+                  :key="i"
+                >
+                  {{ plan.title }}
+                </div>
+              </vuescroll>
             </div>
           </div>
         </div>
         <template v-if="activePlan != null">
+          <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
+            <div class="data-info">
+              <p class="data__subtitle"></p>
+              <p class="data__text" v-if="data.dzzIndex != null">
+                {{ getResults[data.dzzIndex].name }}
+              </p>
+            </div>
+            <div class="data-btns" v-if="data.title == 'Зона интереса'">
+              <button class="button button-svg data-btn" @click="selectDzz(i)">
+                <img src="@/assets/img/choose.svg" />
+              </button>
+              <button class="button button-svg data-btn">
+                <img
+                  svg-inline
+                  class="icon icon-vector-o"
+                  src="@/assets/img/vector-o.svg"
+                  alt=""
+                />
+              </button>
+            </div>
+            <div class="data-btns" v-else>
+              <p class="data-btns__text">Не выбрано</p>
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/upload.svg" />
+              </button>
+            </div>
+          </div>
+
           <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
             <div class="data-info">
               <p class="data__subtitle">{{ data.title }}</p>
@@ -48,11 +78,9 @@
               </button>
             </div>
             <div class="data-btns" v-else>
+              <p class="data-btns__text">Не выбрано</p>
               <button class="button button-svg data-btn" @click="selectDzz(i)">
                 <img src="@/assets/img/choose.svg" />
-              </button>
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/upload.svg" />
               </button>
             </div>
           </div>
@@ -69,20 +97,53 @@
 </template>
 
 <script>
+import vuescroll from "vuescroll";
+import "vuescroll/dist/vuescroll.css";
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       activePlanIndex: null,
       showSelect: false,
+      ops: {
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500,
+        },
+        scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: "easeOutQuad",
+        },
+        rail: {
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
+          specifyBorderRadius: false,
+          gutterOfEnds: null,
+          gutterOfSide: "2px",
+          keepShow: false,
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          background: "#476D70",
+        },
+      },
     };
+  },
+  components: {
+    vuescroll,
   },
   computed: {
     ...mapGetters("plans", ["getPlans"]),
     ...mapGetters("results", ["getSelectable", "getResults"]),
     activePlan() {
       return this.getPlans[this.activePlanIndex];
-    }
+    },
   },
   methods: {
     ...mapActions("results", ["setSelectable"]),
@@ -95,7 +156,7 @@ export default {
       });
       // if (this.getSelectable) {
       //   this.activePlan.data.forEach((el, i) => {
-          
+
       //   });
       // }
     },
@@ -156,9 +217,13 @@ export default {
     box-shadow: $shadow-small;
     border-radius: 5px;
   }
+  &-info {
+    padding: 10px;
+  }
   &__subtitle {
     font-size: 12px;
     color: $text-grey-light;
+    margin-bottom: 14px;
   }
   &__text {
     font-size: 12px;
@@ -168,12 +233,17 @@ export default {
   }
   &-btns {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-left: 20px;
+    &__text {
+      font-size: 12px;
+      color: #313131;
+      line-height: 30px;
+    }
   }
   &-btn {
     position: relative;
-    margin: 0 4px;
+    margin: 0 20px;
     &:hover .data-tooltiptext {
       display: block;
     }
@@ -197,26 +267,30 @@ export default {
     margin: 10px 16px 0 auto;
   }
   &__selected {
-    border: 1px solid rgba($color-main-dark, 0.5);
+    border: 1px solid #DFDFDF;
     min-height: 30px;
     min-width: 300px;
-    padding: 5px;
+    padding: 5px 5px 5px 10px;
     border-radius: 5px;
+    &:hover {
+      border: 1px solid rgba($color-main-dark, 0.5);
+    }
   }
   &__select {
     z-index: 10;
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% - 10px);
+    width: 340px;
+    height: 70px;
     left: 0;
     background: $gradient-w;
     box-shadow: $shadow-big;
     border-radius: 10px;
     &__item {
       position: relative;
-      padding: 5px 10px;
+      padding: 5px 25px;
       font-size: 12px;
       color: #000;
-      border-bottom: 1px solid rgba($color-main-dark, 0.5);
       transition: all 0.2s ease-out;
       cursor: pointer;
       &:last-child {

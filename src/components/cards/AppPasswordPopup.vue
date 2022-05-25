@@ -9,19 +9,19 @@
       </div>
       <div class="password-popup__wrapper">
         <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon" />
+          <input class="input input-withIcon password-popup__input" />
           <label class="input-label">Текущий пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
         <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon" />
+          <input class="input input-withIcon password-popup__input" />
           <label class="input-label">Новый пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
         <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon" />
+          <input class="input input-withIcon password-popup__input" />
           <label class="input-label">Подтвердить пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
@@ -74,6 +74,7 @@
     right: 10px;
 
     width: 18px;
+    cursor: pointer;
   }
   &__wrapper {
     padding: 30px 50px 30px 50px;

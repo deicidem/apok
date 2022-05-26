@@ -98,16 +98,11 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="loaded">
+          <tbody v-if="loaded" :class="{selectable: selectable.value}">
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="(() => {
-                let res = '';
-                if (selectable.value) res += 'selectable ';
-                if (item.selected.value) res += `selected-${item.selected.type + 1}`;
-                return res;
-              })()"
+              :class="item.selected.value ? `selected-${item.selected.type + 1}`: ''"
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">
@@ -400,23 +395,25 @@ export default {
   }
   &-table {
     .selectable {
-      position: relative;
-      &::after {
-        content: "";
-        opacity: 0;
-        position: absolute;
-        border: 2px solid $color-main;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-      }
-      &:hover:after {
-        opacity: 1;
-      }
-      &:last-child:after {
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
+      tr {
+        position: relative;
+        &::after {
+          content: "";
+          opacity: 0;
+          position: absolute;
+          border: 2px solid $color-main;
+          top: 0px;
+          left: 0px;
+          right: 0px;
+          bottom: 0px;
+        }
+        &:hover:after {
+          opacity: 1;
+        }
+        &:last-child:after {
+          border-bottom-right-radius: 10px;
+          border-bottom-left-radius: 10px;
+        }
       }
     }
     .selected {

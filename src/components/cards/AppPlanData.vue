@@ -15,7 +15,6 @@
               </template>
             </p>
             <div class="data__select" v-show="showSelect">
-              <vuescroll :ops="ops">
                 <div
                   class="data__select__item"
                   @click="onSelect(i)"
@@ -24,45 +23,17 @@
                 >
                   {{ plan.title }}
                 </div>
-              </vuescroll>
             </div>
           </div>
         </div>
         <template v-if="activePlan != null">
           <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
             <div class="data-info">
-              <p class="data__subtitle"></p>
-              <p class="data__text" v-if="data.dzzIndex != null">
-                {{ getResults[data.dzzIndex].name }}
-              </p>
-            </div>
-            <div class="data-btns" v-if="data.title == 'Зона интереса'">
-              <button class="button button-svg data-btn" @click="selectDzz(i)">
-                <img src="@/assets/img/choose.svg" />
-              </button>
-              <button class="button button-svg data-btn">
-                <img
-                  svg-inline
-                  class="icon icon-vector-o"
-                  src="@/assets/img/vector-o.svg"
-                  alt=""
-                />
-              </button>
-            </div>
-            <div class="data-btns" v-else>
-              <p class="data-btns__text">Не выбрано</p>
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/upload.svg" />
-              </button>
-            </div>
-          </div>
-
-          <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
-            <div class="data-info">
               <p class="data__subtitle">{{ data.title }}</p>
               <p class="data__text" v-if="data.dzzIndex != null">
                 {{ getResults[data.dzzIndex].name }}
               </p>
+              <p class="data__text" v-else>Не выбрано</p>
             </div>
             <div class="data-btns" v-if="data.title == 'Зона интереса'">
               <button class="button button-svg data-btn" @click="selectDzz(i)">
@@ -78,9 +49,11 @@
               </button>
             </div>
             <div class="data-btns" v-else>
-              <p class="data-btns__text">Не выбрано</p>
               <button class="button button-svg data-btn" @click="selectDzz(i)">
                 <img src="@/assets/img/choose.svg" />
+              </button>
+              <button class="button button-svg data-btn">
+                <img src="@/assets/img/upload.svg" />
               </button>
             </div>
           </div>
@@ -97,8 +70,6 @@
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -135,9 +106,6 @@ export default {
       },
     };
   },
-  components: {
-    vuescroll,
-  },
   computed: {
     ...mapGetters("plans", ["getPlans"]),
     ...mapGetters("results", ["getSelectable", "getResults"]),
@@ -146,7 +114,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("results", ["setSelectable"]),
+    ...mapActions("results", ["setSelectable", "resetResultSelection"]),
     selectDzz(i) {
       this.setSelectable({
         type: i,
@@ -163,6 +131,7 @@ export default {
     onSelect(index) {
       this.activePlanIndex = index;
       this.showSelect = false;
+      this.resetResultSelection({planIndex: index});
     },
   },
 };
@@ -208,7 +177,7 @@ export default {
   &-item {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     margin-bottom: 10px;
     width: 100%;
@@ -232,9 +201,9 @@ export default {
     color: #313131;
   }
   &-btns {
+    padding: 10px;
     display: flex;
-    justify-content: center;
-    margin-left: 20px;
+    align-items: flex-end;
     &__text {
       font-size: 12px;
       color: #313131;
@@ -243,9 +212,12 @@ export default {
   }
   &-btn {
     position: relative;
-    margin: 0 20px;
+    margin-right: 10px;
     &:hover .data-tooltiptext {
       display: block;
+    }
+    &:last-child {
+      margin: 0;
     }
   }
   &-tooltiptext {
@@ -267,7 +239,7 @@ export default {
     margin: 10px 16px 0 auto;
   }
   &__selected {
-    border: 1px solid #DFDFDF;
+    border: 1px solid #dfdfdf;
     min-height: 30px;
     min-width: 300px;
     padding: 5px 5px 5px 10px;

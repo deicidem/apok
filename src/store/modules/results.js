@@ -24,14 +24,11 @@ export default {
 
       state.results = results;
     },
-    setResultProperty(state, data) {
-      state.results[data.index][data.property] = data.value;
-    },
     selectResult(state, data) {
-      if (state.selectable.value) {
+        console.log(data);
         let resultSelected = state.results[data.index].selected;
 
-        if (resultSelected.value && resultSelected.type != data.type) {
+        if (resultSelected.value == data.value && resultSelected.type != data.type) {
           console.log("Снимок уже выбран");
           return;
         } else {
@@ -45,18 +42,14 @@ export default {
           resultSelected.value = data.value;
           resultSelected.type = data.type;
         }
-      }
     },
     setSelectable(state, selectable) {
       state.selectable = selectable;
     },
     clearSelectable(state) {
-      state.selectable = {
-        type: null,
-        value: false,
-        planIndex: null,
-        dataIndex: null
-      }
+      state.selectable.type = null;
+      state.selectable.value = false;
+      state.selectable.dataIndex = null;
     }
   },
   actions: {
@@ -81,11 +74,7 @@ export default {
       }
       store.commit('clearSelectable');
     },
-    setResults({
-      dispatch,
-      commit
-    }, results) {
-
+    setResults({dispatch, commit}, results) {
       results.forEach(el => {
         el.polygonActive = false;
         el.imageActive = false;
@@ -110,6 +99,16 @@ export default {
     },
     setSelectable(store, data) {
       store.commit('setSelectable', data);
+    },
+    resetResultSelection(store, data) {
+      for (let i = 0; i < store.getters.getResults.length; i++) {
+        store.commit('selectResult', {index: i, type: null, value: false});
+      } 
+      store.rootGetters['plans/getPlans'][data.planIndex].data.forEach((el, i) => {
+        if (el.dzzIndex != null) {
+          store.commit('selectResult', {index: el.dzzIndex, type: i, value: true});
+        }
+      })
     }
   },
 

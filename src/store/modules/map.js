@@ -32,13 +32,15 @@ export default {
     },
     getActivePolygonJson(state) {
       let json = null;
-      if (state.areaPolygon.active) {
+      if (state.areaPolygon.active && state.areaPolygon.geometry.length != 0) {
         json = L.polygon(state.areaPolygon.geometry).toGeoJSON();
-      } else if (state.screenPolygon.active) {
+      } else if (state.screenPolygon.active && state.screenPolygon.geometry != null) {
         json = L.rectangle(state.screenPolygon.geometry).toGeoJSON();
-      } else if (state.circlePolygon.active) {
+      } else if (state.circlePolygon.active && state.circlePolygon.geometry != null) {
         let circle = L.circle(state.circlePolygon.geometry.center, state.circlePolygon.geometry.radius);
         json =  L.PM.Utils.circleToPolygon(circle, 60).toGeoJSON();
+      } else {
+        return null;
       }
       return JSON.stringify(json);
     },

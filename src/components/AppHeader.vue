@@ -113,6 +113,9 @@ export default {
         a {
           color: #000;
           font-size: 20px;
+          img {
+            max-height: 60px;
+          }
         }
       }
     }

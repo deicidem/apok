@@ -15,47 +15,63 @@
               </template>
             </p>
             <div class="data__select" v-show="showSelect">
-                <div
-                  class="data__select__item"
-                  @click="onSelect(i)"
-                  v-for="(plan, i) in getPlans"
-                  :key="i"
-                >
-                  {{ plan.title }}
-                </div>
+              <div
+                class="data__select__item"
+                @click="onSelect(i)"
+                v-for="(plan, i) in getPlans"
+                :key="i"
+              >
+                {{ plan.title }}
+              </div>
             </div>
           </div>
         </div>
         <template v-if="activePlan != null">
           <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
-            <div class="data-info">
-              <p class="data__subtitle">{{ data.title }}</p>
-              <p class="data__text" v-if="data.dzzIndex != null">
-                {{ getResults[data.dzzIndex].name }}
-              </p>
-              <p class="data__text" v-else>Не выбрано</p>
-            </div>
-            <div class="data-btns" v-if="data.title == 'Зона интереса'">
-              <button class="button button-svg data-btn" @click="selectDzz(i)">
-                <img src="@/assets/img/choose.svg" />
-              </button>
-              <button class="button button-svg data-btn">
-                <img
-                  svg-inline
-                  class="icon icon-vector-o"
-                  src="@/assets/img/vector-o.svg"
-                  alt=""
-                />
-              </button>
-            </div>
-            <div class="data-btns" v-else>
-              <button class="button button-svg data-btn" @click="selectDzz(i)">
-                <img src="@/assets/img/choose.svg" />
-              </button>
-              <button class="button button-svg data-btn">
-                <img src="@/assets/img/upload.svg" />
-              </button>
-            </div>
+            <template v-if="data.type == 1">
+              <div class="data-info">
+                <p class="data__subtitle">{{ data.title }}</p>
+                <p class="data__text" v-if="data.dzzIndex != null">
+                  {{ getResults[data.dzzIndex].name }}
+                </p>
+                <p class="data__text" v-else>Не выбрано</p>
+              </div>
+              <div class="data-btns">
+                <button
+                  class="button button-svg data-btn"
+                  @click="selectDzz(i)"
+                >
+                  <img src="@/assets/img/choose.svg" />
+                </button>
+                <button class="button button-svg data-btn">
+                  <img src="@/assets/img/upload.svg" />
+                </button>
+              </div>
+            </template>
+            <template v-else>
+              <div class="data-info">
+                <p class="data__subtitle">{{ data.title }}</p>
+                <p class="data__text" v-if="getActivePolygonJson != null">
+                  Выбрана
+                </p>
+                <p class="data__text" v-else>Не выбрана</p>
+              </div>
+              <div class="data-btns">
+                <router-link to="area">
+                  <button class="button button-svg data-btn">
+                    <img src="@/assets/img/choose.svg" />
+                  </button>
+                </router-link>
+                <button class="button button-svg data-btn">
+                  <img
+                    svg-inline
+                    class="icon icon-vector-o"
+                    src="@/assets/img/vector-o.svg"
+                    alt=""
+                  />
+                </button>
+              </div>
+            </template>
           </div>
         </template>
       </div>
@@ -108,6 +124,7 @@ export default {
   },
   computed: {
     ...mapGetters("plans", ["getPlans"]),
+    ...mapGetters("map", ["getActivePolygonJson"]),
     ...mapGetters("results", ["getSelectable", "getResults"]),
     activePlan() {
       return this.getPlans[this.activePlanIndex];
@@ -131,7 +148,7 @@ export default {
     onSelect(index) {
       this.activePlanIndex = index;
       this.showSelect = false;
-      this.resetResultSelection({planIndex: index});
+      this.resetResultSelection({ planIndex: index });
     },
   },
 };

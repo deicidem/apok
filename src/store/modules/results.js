@@ -20,6 +20,9 @@ export default {
     }
   },
   mutations: {
+    setResultProperty(state, data) {
+      state.results[data.index][data.property] = data.value;
+    },
     setResults(state, results) {
 
       state.results = results;
@@ -92,7 +95,7 @@ export default {
       dispatch('map/clearGeoJsons', true, {
         root: true
       });
-      router.push('results');
+      router.push('/main/results');
     },
     setResultProperty(store, data) {
       store.commit('setResultProperty', data);

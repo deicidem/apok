@@ -5,12 +5,17 @@
     <div class="search-date__wrapper">
       <div class="search-date__inputs">
         <div class="search-date__input">
-          <label class="search-date__label" for="datepicker-start"
+          <label
+            class="search-date__label"
+            :class="{ active: getTimeInterval.from }"
             >Искать с:</label
           >
           <date-picker
             format="yyyy-MM-dd"
+            placeholder=" "
             :use-utc="true"
+            required
+            input-class="input"
             :language="ru"
             calendar-class="input-calendar"
             :monday-first="true"
@@ -21,7 +26,7 @@
             "
           >
           </date-picker>
-          <div class="search-date__back">
+          <div class="search-date__background">
             <img src="@/assets/img/calendar.svg" />
           </div>
         </div>
@@ -31,10 +36,17 @@
         </div>
 
         <div class="search-date__input">
-          <label class="search-date__label" for="datepicker-end">До:</label>
+          <label
+            class="search-date__label"
+            :class="{ active: getTimeInterval.to }"
+            >До:</label
+          >
           <date-picker
             format="yyyy-MM-dd"
+            placeholder=" "
             :use-utc="true"
+            required
+            input-class="input"
             :language="ru"
             calendar-class="input-calendar"
             :value="getTimeInterval.to"
@@ -48,7 +60,7 @@
             "
           >
           </date-picker>
-          <div class="search-date__back">
+          <div class="search-date__background">
             <img src="@/assets/img/calendar.svg" />
           </div>
         </div>
@@ -58,10 +70,12 @@
         <div class="select" v-on-clickaway="away">
           <label class="select-label">Выбрать месяцы:</label>
           <div class="select-data" @click="selectActive = !selectActive">
-            <span v-for="month in months" :key="month.cnt">
-              <span>{{ month.cnt }} &thinsp; </span>
-              <span v-if="all">ВСЕ</span>
-            </span>
+            <span v-if="allMonths">Все</span>
+            <template v-else>
+              <span v-for="month in months" :key="month.cnt">
+                {{ month.cnt }} &thinsp;
+              </span>
+            </template>
           </div>
           <div class="select-options" v-show="selectActive">
             <label class="select-option">
@@ -121,62 +135,62 @@ export default {
         {
           cnt: 1,
           name: "январь",
-          active: false,
+          active: true,
         },
         {
           cnt: 2,
           name: "февраль",
-          active: false,
+          active: true,
         },
         {
           cnt: 3,
           name: "март",
-          active: false,
+          active: true,
         },
         {
           cnt: 4,
           name: "апрель",
-          active: false,
+          active: true,
         },
         {
           cnt: 5,
           name: "май",
-          active: false,
+          active: true,
         },
         {
           cnt: 6,
           name: "июнь",
-          active: false,
+          active: true,
         },
         {
           cnt: 7,
           name: "июль",
-          active: false,
+          active: true,
         },
         {
           cnt: 8,
           name: "август",
-          active: false,
+          active: true,
         },
         {
           cnt: 9,
           name: "сентябрь",
-          active: false,
+          active: true,
         },
         {
           cnt: 10,
           name: "октябрь",
-          active: false,
+          active: true,
         },
         {
           cnt: 11,
           name: "ноябрь",
-          active: false,
+          active: true,
         },
         {
           cnt: 12,
           name: "декабрь",
-          active: false,
+          active: true,
         },
       ],
     };
@@ -184,7 +198,6 @@ export default {
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
     onAllCheck($event) {
-      let all = true;
       if ($event) {
         this.monthsOptions.forEach((el) => {
           el.active = true;
@@ -199,8 +212,6 @@ export default {
         to: this.getTimeInterval.to,
         months: this.months,
       });
-
-      return all;
     },
     away() {
       this.selectActive = false;
@@ -230,6 +241,12 @@ export default {
 </script>
 
 <style lang="scss">
+label.active {
+  top: -20px;
+  font-size: 12px;
+  color: $color-main;
+}
+
 .search {
   &-date {
     margin-top: 20px;
@@ -357,7 +374,7 @@ export default {
     border: none !important;
     overflow: hidden;
     box-shadow: $shadow-big;
-    
+
     header {
       box-shadow: $shadow-big;
       span {
@@ -368,7 +385,6 @@ export default {
         }
       }
     }
-
   }
 }
 .cell {
@@ -442,7 +458,7 @@ export default {
         max-height: 34px;
       }
     }
-    &__back {
+    &__background {
       position: absolute;
       right: 0;
       top: 0;

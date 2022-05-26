@@ -13,7 +13,12 @@
 
         <form class="form-wrapper">
           <div class="input-wrapper">
-            <input class="input input-withIcon" v-model="user.login" required />
+            <input
+              placeholder=" "
+              class="input input-withIcon"
+              v-model="user.login"
+              required
+            />
             <label class="input-label">Логин</label>
 
             <img
@@ -25,6 +30,7 @@
 
           <div class="input-wrapper">
             <input
+              placeholder=" "
               class="input input-withIcon"
               v-model="user.password"
               required

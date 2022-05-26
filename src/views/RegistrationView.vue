@@ -19,7 +19,12 @@
           method="post"
         >
           <div class="input-wrapper">
-            <input class="input input-withIcon" v-model="user.login" required />
+            <input
+              placeholder=" "
+              class="input input-withIcon"
+              v-model="user.login"
+              required
+            />
             <label class="input-label">Логин</label>
 
             <img
@@ -30,7 +35,12 @@
           </div>
 
           <div class="input-wrapper">
-            <input class="input input-withIcon" v-model="user.user" required />
+            <input
+              placeholder=" "
+              class="input input-withIcon"
+              v-model="user.user"
+              required
+            />
             <label class="input-label">Почтовый адрес</label>
 
             <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
@@ -38,6 +48,7 @@
 
           <div class="input-wrapper">
             <input
+              placeholder=" "
               class="input input-withIcon"
               v-model="user.password"
               required
@@ -53,6 +64,7 @@
 
           <div class="input-wrapper">
             <input
+              placeholder=" "
               class="input input-withIcon"
               v-model="user.password"
               required
@@ -69,6 +81,7 @@
           <button @click="submit" class="button button-g form-wrapper__item">
             Зарегистироваться
           </button>
+          
           <router-link to="/login">
             <button class="button button-white form-wrapper__item">
               Авторизоваться

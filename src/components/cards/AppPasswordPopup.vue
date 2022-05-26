@@ -8,27 +8,29 @@
         </div>
       </div>
       <div class="password-popup__wrapper">
-        <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon password-popup__input" />
+        <div class="input-wrapper">
+          <input required placeholder=" " class="input input-withIcon" />
           <label class="input-label">Текущий пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
-        <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon password-popup__input" />
+        <div class="input-wrapper">
+          <input required placeholder=" " class="input input-withIcon" />
           <label class="input-label">Новый пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
-        <div class="input-wrapper password-popup__input">
-          <input class="input input-withIcon password-popup__input" />
+        <div class="input-wrapper">
+          <input required placeholder=" " class="input input-withIcon" />
           <label class="input-label">Подтвердить пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
-        <button class="button button-g password-popup__button">
-          Подтвердить
-        </button>
+        <div class="password-popup__button">
+          <button class="button button-g password-popup__btn">
+            Подтвердить
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -77,14 +79,19 @@
     cursor: pointer;
   }
   &__wrapper {
-    padding: 30px 50px 30px 50px;
+    width: 400px;
+    padding: 30px;
   }
   &__input {
     margin-top: 10px;
   }
   &__button {
-    margin-top: 10px;
+    margin: 10px auto;
+    width: 300px;
+  }
+  &__btn {
     width: 100%;
+    font-size: 16px;
     height: 40px;
   }
 }

@@ -168,12 +168,12 @@ img {
     border: 1px solid $color-main;
     outline: none;
   }
-  // &:focus ~ .input-label,
-  // &:valid ~ label {
-  //   top: -6px;
-  //   font-size: 12px;
-  //   color: $color-main;
-  // }
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    top: -6px;
+    font-size: 12px;
+    color: $color-main;
+  }
 
   &-img {
     position: absolute;

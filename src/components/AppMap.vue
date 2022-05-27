@@ -6,7 +6,7 @@
     @update:bounds="setBounds($event)"
     @click="onClick($event)"
     @ready="$emit('ready', $refs.map)"
-    :options="{zoomControl: false}"
+    :options="{ zoomControl: false }"
     style="height: 100%"
     :zoom="zoom"
     :center="center"
@@ -16,21 +16,20 @@
 
     <template v-if="polygon.active">
       <l-marker
-      
-      data-number="id"
-      :draggable="drawable"
-      @dragend="handleMarkerDragEnd($event, id)"
-      v-for="(marker, id) in polygon.geometry"
-      :key="id"
-      :lat-lng="marker"
-    >
-      <l-icon :icon-size="[40, 40]" :icon-anchor="[20, 40]" :icon-url="icon">
-        <div class="marker-text">{{ id + 1 }}</div>
-        <img style="pointer-events: none" :src="icon" alt="" />
-      </l-icon>
-    </l-marker>
+        data-number="id"
+        :draggable="drawable"
+        @dragend="handleMarkerDragEnd($event, id)"
+        v-for="(marker, id) in polygon.geometry"
+        :key="id"
+        :lat-lng="marker"
+      >
+        <l-icon :icon-size="[40, 40]" :icon-anchor="[20, 40]" :icon-url="icon">
+          <div class="marker-text">{{ id + 1 }}</div>
+          <img style="pointer-events: none" :src="icon" alt="" />
+        </l-icon>
+      </l-marker>
     </template>
-    
+
     <l-polygon
       v-if="polygon.active"
       @click="save"
@@ -39,12 +38,12 @@
       color="#476D70"
     ></l-polygon>
 
-    <l-rectangle
-      v-if="screenPolygon.active && screenPolygon.geometry != null"
-      :fill="true"
-      :bounds="screenPolygon.geometry"
-      color="#476D70"
-    ></l-rectangle>
+    <l-geo-json
+      :options="{ fill: false }"
+      v-if="filePolygon.geometry != null"
+      :geojson="filePolygon.geometry"
+    ></l-geo-json>
+
 
     <l-circle
       v-if="circle.active && circle.geometry != null"
@@ -70,7 +69,6 @@
         :bounds="img.bounds"
       ></l-image-overlay>
     </template>
-
   </l-map>
 </template>
 
@@ -91,9 +89,7 @@ import {
   // LTooltip
   LGeoJson,
   LCircle,
-  LRectangle,
-  LControlZoom
-
+  LControlZoom,
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -122,8 +118,7 @@ export default {
     LPolygon,
     LGeoJson,
     LCircle,
-    LRectangle,
-    LControlZoom
+    LControlZoom,
   },
   data() {
     return {
@@ -145,7 +140,7 @@ export default {
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
       images: "getImages",
-      screenPolygon: "getScreenPolygon",
+      filePolygon: "getFilePolygon"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");

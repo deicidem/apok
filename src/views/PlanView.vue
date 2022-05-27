@@ -271,6 +271,7 @@ img {
 .back {
   display: flex;
   align-items: center;
+  cursor: pointer;
   &-arrow {
     width: 40px;
   }

@@ -353,17 +353,23 @@ label.active {
     right: 0;
   }
   &-data {
+    &:focus-within .input-label{
+      top: -20px;
+    }
     input {
       width: 180px;
       height: 35px;
-      padding: 5px 26px 5px 20px;
+      padding: 5px 30px 5px 14px;
 
       overflow: hidden;
       margin: 0;
+      color: $text-grey;
       cursor: pointer;
-      &:focus ~ .select-label,
+      &:focus ~ .input-label,
       &:not(:placeholder-shown) ~ label {
         top: -20px;
+        font-size: 12px;
+        color: $color-main;
       }
     }
   }
@@ -466,6 +472,7 @@ label.active {
         top: 18px;
 
         padding: 4px;
+        cursor: pointer;
       }
       &__arrow {
         margin: 0 16px;

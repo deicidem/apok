@@ -351,7 +351,7 @@ export default {
     border-collapse: collapse;
     table-layout: fixed;
     th {
-      color: $color-main-dark;
+      color: $color-main;
       text-align: left;
       font-size: 12px;
     }
@@ -390,12 +390,13 @@ export default {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
+    cursor: pointer;
     &-arrow {
       width: 30px;
     }
     p {
       margin-left: 10px;
-      color: $color-main-dark;
+      color: $color-main;
     }
   }
   &-wrapper {

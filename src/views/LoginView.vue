@@ -99,6 +99,7 @@ export default {
     margin: 40px;
     display: flex;
     align-items: center;
+    cursor: pointer;
     &-arrow {
       width: 30px;
     }

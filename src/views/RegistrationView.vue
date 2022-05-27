@@ -153,6 +153,7 @@ export default {
 .back {
   display: flex;
   align-items: center;
+  cursor: pointer;
   margin: 40px;
   &-arrow {
     width: 30px;

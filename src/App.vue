@@ -74,6 +74,9 @@ img {
 .button {
   position: relative;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0 24px;
   height: 35px;
   width: 190px;
@@ -121,9 +124,9 @@ img {
     }
   }
   &-white {
-    color: $color-main-dark;
+    color: $color-main;
     &:hover {
-      color: $color-main;
+      color: $color-main-light;
     }
     &::after {
       background: $gradient-w;
@@ -162,8 +165,7 @@ img {
   border-radius: 10px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
-  color: $text-grey;
-  outline: none;
+  color: $color-main;
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
@@ -183,7 +185,7 @@ img {
     top: 50%;
     transform: translate(-50%, -50%);
     path{
-      fill: $color-main-dark;
+      fill: $color-main;
     }
   }
   &-withIcon {

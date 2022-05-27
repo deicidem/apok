@@ -1,243 +1,214 @@
 <template>
   <div class="search-zone">
     <h2 class="search-title">Зона интереса</h2>
+    <nav class="search-zone__nav">
+      <ul>
+        <li>
+          <button
+            @click="changeZoneType(1)"
+            :class="searchZoneType == 1 ? 'active' : ''"
+          >
+            Задать полигон
+          </button>
+        </li>
+        <li class="line"></li>
+        <li>
+          <button
+            @click="changeZoneType(2)"
+            :class="searchZoneType == 2 ? 'active' : ''"
+          >
+            Круглая зона
+          </button>
+        </li>
+        <li class="line"></li>
+        <li>
+          <button
+            @click="changeZoneType(3)"
+            :class="searchZoneType == 3 ? 'active' : ''"
+          >
+            Загрузить файл
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-    <label class="search-zone__input">
-      <app-radio
-        value="screen"
-        v-model="areaType"
-        @change="onRadioChange($event)"
-      ></app-radio>
-      <span class="text">Видимая область экрана</span>
-    </label>
-    <label class="search-zone__input">
-      <app-radio
-        value="manual"
-        v-model="areaType"
-        @change="onRadioChange($event)"
-      ></app-radio>
-      <span class="text">Задать вручную</span>
-    </label>
-    <template v-if="areaType == 'screen'">
-      <div class="search-zone__screen__buttons">
+    <div
+      class="search-zone__card search-zone__main"
+      v-show="searchZoneType == 1"
+    >
+      <div class="search-zone__table">
+        <table>
+          <thead>
+            <tr>
+              <th class="number">№</th>
+              <th>Широта</th>
+              <th>Долгота</th>
+              <th class="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
+              <td class="number">{{ i + 1 }}</td>
+              <td>{{ coord.lat }}</td>
+              <td>{{ coord.lng }}</td>
+              <td class="col delete" @click="deleteCoordinate(i)">
+                <button class="button button-svg">
+                  <img inline-svg src="@/assets/img/trash.svg" />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="number"></td>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lat"
+                    :mask="inputMaskLat"
+                    :placeholder="placeholderLat"
+                  />
+                </div>
+              </td>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lng"
+                    :mask="inputMaskLng"
+                    :placeholder="placeholderLng"
+                  />
+                </div>
+              </td>
+              <td class="col">
+                <button
+                  @click="onAddCoordinate"
+                  class="button button-svg"
+                  type="white-g"
+                >
+                  <img inline-svg src="@/assets/img/plus.svg" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="search-zone__buttons">
         <button
-          class="button button-r search-zone__screen__button"
-          @click="
-            setScreenPolygon([
-              [0, 0],
-              [0, 0],
-            ])
-          "
-          type="red"
+          class="button search-zone__button"
+          :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
+          @click="setAreaPolygonDrawable(!getAreaPolygonDrawable)"
         >
-          Убрать с карты
+          <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
+          <span v-else> Сохранить полигон </span>
+        </button>
+
+        <button
+          class="button button-white search-zone__button"
+          @click="selectScreenArea"
+        >
+          Видимая область
         </button>
         <button
-          class="button button-g"
-          @click="
-            setScreenPolygon(getBounds);
-            setZoom(getZoom - 1);
-          "
+          @click="clearCoordinates()"
+          class="button button-r search-zone__button"
+        >
+          Очистить координаты
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="search-zone__card search-zone__coordinates"
+      v-show="searchZoneType == 2"
+    >
+      <div class="coordinates-wrapper">
+        <div class="input-wrapper coordinates-inputs">
+          <label class="input-label coordinates-label"> Широта </label>
+          <masked-input
+            v-model="lat"
+            class="input input-withoutIcon coordinates-input"
+            :mask="inputMaskLat"
+          />
+        </div>
+
+        <div class="input-wrapper coordinates-inputs">
+          <label class="input-label coordinates-label"> Долгота </label>
+          <masked-input
+            v-model="lng"
+            class="input input-withoutIcon coordinates-input"
+            :mask="inputMaskLng"
+          />
+        </div>
+        <div class="input-wrapper coordinates-inputs">
+          <label class="input-label coordinates-label"> Радиус (км) </label>
+          <input
+            v-model="rad"
+            id="radius"
+            class="input input-withoutIcon coordinates-input"
+          />
+        </div>
+
+        <button
+          @click="createCircle"
+          class="button button-g coordinates-wrapper__button"
+        >
+          Загрузить на карту
+        </button>
+      </div>
+      <button
+        class="button button-r coordinates-wrapper__button"
+        @click="removeCircle"
+      >
+        Убрать с карты
+      </button>
+    </div>
+
+    <div
+      class="search-zone__card search-zone__load"
+      v-show="searchZoneType == 3"
+    >
+      <label class="load-wrapper">
+        <input
+          @change="onFileUpload"
+          class="load-wrapper__input"
+          ref="file"
+          type="file"
+          name="file"
+          id="file"
+        />
+        <span class="button button-white load-wrapper__button"
+          >Загрузить файл</span
+        >
+        <span class="load-wrapper__name">{{
+          file == null ? "не выбран" : file.name
+        }}</span>
+      </label>
+      <div class="load-wrapper__buttons">
+        <button
+          class="button button-g load-wrapper__button"
+          @click="sendFile()"
         >
           Показать на карте
         </button>
-      </div>
-    </template>
-    <template v-if="areaType == 'manual'">
-      <nav class="search-zone__nav">
-        <ul>
-          <li>
-            <button
-              @click="changeZoneType(1)"
-              :class="searchZoneType == 1 ? 'active' : ''"
-            >
-              Задать полигон
-            </button>
-          </li>
-          <li class="line"></li>
-          <li>
-            <button
-              @click="changeZoneType(2)"
-              :class="searchZoneType == 2 ? 'active' : ''"
-            >
-              Круглая зона
-            </button>
-          </li>
-          <li class="line"></li>
-          <li>
-            <button
-              @click="changeZoneType(3)"
-              :class="searchZoneType == 3 ? 'active' : ''"
-            >
-              Загрузить файл
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      <div
-        class="search-zone__card search-zone__main"
-        v-show="searchZoneType == 1"
-      >
-        <div class="search-zone__table">
-          <table>
-            <thead>
-              <tr>
-                <th class="number">№</th>
-                <th>Широта</th>
-                <th>Долгота</th>
-                <th class="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-                <td class="number">{{ i + 1 }}</td>
-                <td>{{ coord.lat }}</td>
-                <td>{{ coord.lng }}</td>
-                <td class="col delete" @click="deleteCoordinate(i)">
-                  <button class="button button-svg">
-                    <img inline-svg src="@/assets/img/trash.svg" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td class="number"></td>
-                <td class="zone-table__input__td">
-                  <div class="zone-table__input__wrapper">
-                    <masked-input
-                      class="zone-table__input"
-                      v-model="newCoord.lat"
-                      :mask="inputMaskLat"
-                      :placeholder="placeholderLat"
-                    />
-                  </div>
-                </td>
-                <td class="zone-table__input__td">
-                  <div class="zone-table__input__wrapper">
-                    <masked-input
-                      class="zone-table__input"
-                      v-model="newCoord.lng"
-                      :mask="inputMaskLng"
-                      :placeholder="placeholderLng"
-                    />
-                  </div>
-                </td>
-                <td class="col">
-                  <button
-                    @click="onAddCoordinate"
-                    class="button button-svg"
-                    type="white-g"
-                  >
-                    <img inline-svg src="@/assets/img/plus.svg" />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="search-zone__buttons">
-          <button
-            class="button search-zone__button"
-            :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
-            @click="setAreaPolygonDrawable(!getAreaPolygonDrawable)"
-          >
-            <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
-            <span v-else> Сохранить полигон </span>
-          </button>
-
-          <button class="button button-white search-zone__button">
-            Прописать координаты
-          </button>
-          <button
-            @click="clearCoordinates()"
-            class="button button-r search-zone__button"
-          >
-            Очистить координаты
-          </button>
-        </div>
-      </div>
-
-      <div
-        class="search-zone__card search-zone__coordinates"
-        v-show="searchZoneType == 2"
-      >
-        <div class="coordinates-wrapper">
-          <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Широта </label>
-            <masked-input
-              v-model="lat"
-              class="input input-withoutIcon coordinates-input"
-              :mask="inputMaskLat"
-            />
-          </div>
-
-          <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Долгота </label>
-            <masked-input
-              v-model="lng"
-              class="input input-withoutIcon coordinates-input"
-              :mask="inputMaskLng"
-            />
-          </div>
-          <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Радиус (км) </label>
-            <input
-              v-model="rad"
-              id="radius"
-              class="input input-withoutIcon coordinates-input"
-            />
-          </div>
-
-          <button
-            @click="createCircle"
-            class="button button-g coordinates-wrapper__button"
-          >
-            Загрузить на карту
-          </button>
-        </div>
-        <button
-          class="button button-r coordinates-wrapper__button"
-          @click="removeCircle"
-        >
-          Убрать с карты
+        <button class="button button-r load-wrapper__button" type="red">
+          Удалить
         </button>
       </div>
-
-      <div
-        class="search-zone__card search-zone__load"
-        v-show="searchZoneType == 3"
-      >
-        <div class="load-wrapper">
-          <button class="button button-white load-wrapper__button">
-            Загрузить файл
-          </button>
-          <span class="load-wrapper__name">POLYGON.shp</span>
-        </div>
-        <div class="load-wrapper__buttons">
-          <button class="button button-g load-wrapper__button">
-            Показать на карте
-          </button>
-          <button class="button button-r load-wrapper__button" type="red">
-            Удалить
-          </button>
-        </div>
-      </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import AppRadio from "@/components/controls/AppRadio.vue";
 import MaskedInput from "vue-masked-input";
 export default {
   components: {
     MaskedInput,
-    AppRadio,
   },
   data() {
     return {
+      file: null,
       areaType: null,
       inputMaskLat: {
         pattern: `111°11'11" N`,
@@ -273,7 +244,6 @@ export default {
     ...mapGetters("map", [
       "getAreaPolygon",
       "getCirclePolygon",
-      "getScreenPolygon",
       "getAreaPolygonDrawable",
       "getFormattedCoordinates",
       "getBounds",
@@ -287,41 +257,36 @@ export default {
       "deleteCoordinate",
       "setAreaPolygonDrawable",
       "setAreaPolygonActive",
-      "setScreenPolygonActive",
       "setCirclePolygonActive",
       "clearCoordinates",
       "setCirclePolygon",
       "setCenter",
       "setZoom",
-      "setScreenPolygon",
-      "setScreenPolygonActive",
-      "setAreaPolygonActive",
-      "setCircleenPolygonActive"
+      "setFilePolygon",
+      "setFilePolygonActive",
     ]),
+    selectScreenArea() {
+      this.clearCoordinates();
+      this.addCoordinate(this.getBounds.getNorthEast());
+      this.addCoordinate(this.getBounds.getNorthWest());
+      this.addCoordinate(this.getBounds.getSouthWest());
+      this.addCoordinate(this.getBounds.getSouthEast());
+      this.setZoom(this.getZoom - 1);
+    },
+    onFileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+    sendFile() {
+      this.setFilePolygon(this.file);
+    },
     changeZoneType(type) {
       this.searchZoneType = type;
       if (this.searchZoneType == 1) {
         this.setAreaPolygonActive();
-      } else {
+      } else if (this.searchZoneType == 2) {
         this.setCirclePolygonActive();
-      }
-    },
-    showScreenPolygon() {
-      this.setScreenPolygon([
-        [this.getBounds._northEast.lat, this.getBounds._northEast.lng],
-        [this.getBounds._southWest.lat, this.getBounds._southWest.lng],
-      ]);
-      this.setZoom(this.getZoom - 1);
-    },
-    onRadioChange(e) {
-      if (e == "screen") {
-        this.setScreenPolygonActive();
       } else {
-        if (this.searchZoneType == 1) {
-          this.setAreaPolygonActive();
-        } else {
-          this.setCirclePolygonActive();
-        }
+        this.setFilePolygonActive();
       }
     },
     createCircle() {
@@ -516,7 +481,7 @@ export default {
           font-size: 12px;
 
           border: none;
-          color: $color-main-dark;
+          color: $color-main;
           box-sizing: border-box;
         }
         .col {
@@ -568,6 +533,9 @@ export default {
         margin-left: 20px;
         font-size: 12px;
         color: #000;
+      }
+      &__input {
+        display: none;
       }
     }
   }

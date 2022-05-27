@@ -44,14 +44,14 @@ export default {
 }
 .white {
   .button-content {
-    color: $color-main-dark;
+    color: $color-main;
   }
   background: $gradient_w;
 
   &-g {
     background: $gradient_w;
     .button-content {
-      color: $color-main-dark;
+      color: $color-main;
     }
     @supports (background-clip: text) {
       .button-content {

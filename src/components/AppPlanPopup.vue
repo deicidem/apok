@@ -164,7 +164,7 @@
       p {
         font-size: 12px;
         line-height: 26px;
-        color: $color-main-dark;
+        color: $color-main;
       }
     }
     &__info {
@@ -186,7 +186,7 @@
             margin-right: 10px;
             width: 160px;
 
-            color: $color-main-dark;
+            color: $color-main;
           }
           &__wrapper {
             display: flex;

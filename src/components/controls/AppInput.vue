@@ -63,7 +63,7 @@ export default {
   border: none;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
-  color: $color-main-dark;
+  color: $color-main;
   &:active {
     outline: 1px solid $color-main;
   }

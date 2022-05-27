@@ -46,7 +46,7 @@ table {
         text-align: left;
         border: none;
         font-size: 12px;
-        color: $color-main-dark;
+        color: $color-main;
         padding: 10px;
         box-sizing: border-box;
       }

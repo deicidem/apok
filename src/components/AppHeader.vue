@@ -2,7 +2,8 @@
   <header class="header" @click="closeUser">
     <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
     <div class="header-items">
-      <app-auth-popup v-show="showUser" class="auth-wrapper"> </app-auth-popup>
+      <app-auth-popup v-show="showUser" class="auth-wrapper" ref="authPopup">
+      </app-auth-popup>
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -18,9 +19,9 @@
       <div class="header-menu">
         <div class="header-menu__text">Добро пожаловать!</div>
         <div class="header-menu__buttons">
-
           <button
             @click="showUser = true"
+            ref="showUser"
             class="button button-svg header-menu__button"
           >
             <img src="@/assets/img/login-icon.svg" />
@@ -45,14 +46,20 @@ export default {
   },
   methods: {
     closeUser($event) {
-      let el = document.querySelector(".auth-popup");
-      if ($event.target.classList.contains("header-menu__button")) {
+      console.log(this.$refs.authPopup.$el);
+      console.log($event.target);
+      console.log(this.$refs.showUser.isEqualNode($event.target),
+        this.$refs.showUser.contains($event.target),
+        this.$refs.authPopup.$el.contains($event.target));
+      if (
+        this.$refs.showUser.isEqualNode($event.target) ||
+        this.$refs.showUser.contains($event.target) ||
+        this.$refs.authPopup.$el.contains($event.target)
+      ) {
         return;
       }
       if (this.showUser) {
-        if (!el.contains($event.target)) {
-          this.showUser = false;
-        }
+        this.showUser = false;
       }
     },
   },

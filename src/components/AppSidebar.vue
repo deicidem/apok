@@ -281,7 +281,7 @@ export default {
         font-size: 12px;
         line-height: 20px;
 
-        color: $color-main-dark;
+        color: $color-main;
         visibility: hidden;
         opacity: 0;
 
@@ -299,7 +299,7 @@ export default {
       margin-top: 2px;
       justify-content: center;
       path {
-        fill: $color-main-dark;
+        fill: $color-main;
       }
     }
     &__collapse {

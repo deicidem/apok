@@ -1,4 +1,5 @@
 import * as L from "leaflet";
+import * as filesApi from "@/api/files";
 import '@geoman-io/leaflet-geoman-free';  
 export default {
   namespaced: true,
@@ -6,17 +7,14 @@ export default {
     areaPolygon: {
       geometry: [],
       drawable: false,
-      type: "polygon",
-      active: false
-    },
-    screenPolygon: {
-      geometry: null,
-      type: "rectangle",
-      active: false
+      active: true
     },
     circlePolygon: {
       geometry: null,
-      type: "circle",
+      active: false
+    },
+    filePolygon: {
+      geometry: null,
       active: false
     },
     geoJsonPolygons: [],
@@ -34,8 +32,6 @@ export default {
       let json = null;
       if (state.areaPolygon.active && state.areaPolygon.geometry.length != 0) {
         json = L.polygon(state.areaPolygon.geometry).toGeoJSON();
-      } else if (state.screenPolygon.active && state.screenPolygon.geometry != null) {
-        json = L.rectangle(state.screenPolygon.geometry).toGeoJSON();
       } else if (state.circlePolygon.active && state.circlePolygon.geometry != null) {
         let circle = L.circle(state.circlePolygon.geometry.center, state.circlePolygon.geometry.radius);
         json =  L.PM.Utils.circleToPolygon(circle, 60).toGeoJSON();
@@ -66,11 +62,11 @@ export default {
       });
       return res;
     },
-    getScreenPolygon(state) {
-      return state.screenPolygon;
-    },
     getCirclePolygon(state) {
       return state.circlePolygon;
+    },
+    getFilePolygon(state) {
+      return state.filePolygon;
     },
     getZoom(state) {
       return state.zoom;
@@ -109,11 +105,11 @@ export default {
     setAreaPolygonActive(state, val) {
       state.areaPolygon.active = val;
     },
-    setScreenPolygonActive(state, val) {
-      state.screenPolygon.active = val;
-    },
     setCirclePolygonActive(state, val) {
       state.circlePolygon.active = val;
+    },
+    setFilePolygonActive(state, val) {
+      state.filePolygon.active = val;
     },
     clearCoordinates(state) {
       state.areaPolygon.geometry = [];
@@ -126,6 +122,9 @@ export default {
     },
     setCirclePolygon(state, data) {
       state.circlePolygon.geometry = data
+    },
+    setFilePolygon(state, data) {
+      state.filePolygon.geometry = data
     },
     addGeoJsonPolygon(state, polygon) {
       if (polygon.json == null) {
@@ -183,19 +182,19 @@ export default {
       store.commit('setAreaPolygonDrawable', val);
     },
     setAreaPolygonActive(store) {
-      store.commit('setScreenPolygonActive', false);
+      store.commit('setAreaPolygonActive',   true);
       store.commit('setCirclePolygonActive', false);
-      store.commit('setAreaPolygonActive', true);
-    },
-    setScreenPolygonActive(store) {
-      store.commit('setScreenPolygonActive', true);
-      store.commit('setCirclePolygonActive', false);
-      store.commit('setAreaPolygonActive', false);
+      store.commit('setFilePolygonActive',   false);
     },
     setCirclePolygonActive(store) {
-      store.commit('setScreenPolygonActive', false);
+      store.commit('setAreaPolygonActive',   false);
       store.commit('setCirclePolygonActive', true);
-      store.commit('setAreaPolygonActive', false);
+      store.commit('setFilePolygonActive',   false);
+    },
+    setFilePolygonActive(store) {
+      store.commit('setAreaPolygonActive',   false);
+      store.commit('setCirclePolygonActive', false);
+      store.commit('setFilePolygonActive',   true);
     },
     clearCoordinates(store) {
       store.commit('clearCoordinates');
@@ -230,11 +229,15 @@ export default {
     removeImage(store, id) {
       store.commit('removeImage', id)
     },
-    setScreenPolygon(store, polygon) {
-      store.commit('setScreenPolygon', polygon)
-    },
     setBounds(store, bounds) {
       store.commit('setBounds', bounds)
+    },
+    async setFilePolygon(store, file) {
+      let formData = new FormData();
+      formData.append('file', file);
+      let data = await filesApi.getPolygon(formData);
+      console.log(data.data.file);
+      store.commit('setFilePolygon', data.data.file)
     }
   }
 }

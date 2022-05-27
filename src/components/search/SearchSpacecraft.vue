@@ -21,7 +21,6 @@
           />
           <p>{{ series.name }}</p>
         </div>
-        <transition name="fade">
           <div class="accordion-item__body" v-show="spacecraftsShow[i].show">
             <div
               class="accordion-item__content"
@@ -99,7 +98,6 @@
               </div>
             </div>
           </div>
-        </transition>
       </div>
     </div>
   </div>
@@ -124,6 +122,7 @@ export default {
   methods: {
     ...mapActions("search", ["selectSpacecraft", "selectSeries"]),
     updateShow(seriesInd, scInd = null) {
+      console.log(seriesInd);
       if (scInd == null) {
         this.spacecraftsShow[seriesInd].show =
           !this.spacecraftsShow[seriesInd].show;

@@ -6,12 +6,11 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
     endDate: endDate.toJSON(),
     startCloudiness,
     endCloudiness,
-    polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[30.234375,58.859224],[29.003906,49.61071],[52.382813,45.828799],[47.900391,61.100789],[30.234375,58.859224]]]}}'
+    polygon: polygon
   }
-  console.log(polygon);
   for (let i = 0; i < months.length; i++) {
-    // params[`months[${i}]`] = months[i].cnt;    
-    params[`months[${i}]`] = months[i];    
+    params[`months[${i}]`] = months[i].cnt;    
+    // params[`months[${i}]`] = months[i];    
   }
   for (let i = 0; i < satelites.length; i++) {
     params[`satelites[${i}]`] = satelites[i];    

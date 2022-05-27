@@ -348,7 +348,7 @@ export default {
     border-collapse: collapse;
     table-layout: fixed;
     th {
-      color: $color-main-dark;
+      color: $color-main;
       text-align: left;
       font-size: 12px;
     }
@@ -384,7 +384,7 @@ export default {
     }
     p {
       margin-left: 10px;
-      color: $color-main-dark;
+      color: $color-main;
     }
   }
   &-wrapper {

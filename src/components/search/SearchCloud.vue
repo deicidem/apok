@@ -72,13 +72,13 @@ export default {
   height: 12px !important;
   padding: 0 !important;
 
-  box-shadow: $shadow-big;
   border-radius: 10px !important;
   &-rail {
+    box-shadow: inset 1px 1px 4px rgba(#000, 0.25);
     background: #fff;
   }
   &-process {
-    background: $color-main-dark;
+    background: $color-main;
   }
   &-dot {
     top: 40% !important;
@@ -94,7 +94,7 @@ export default {
     }
     &-tooltip-inner {
       background: $gradient;
-      border-color: $color-main-dark;
+      border-color: $color-main;
     }
   }
 }

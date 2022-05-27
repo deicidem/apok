@@ -46,6 +46,7 @@
                 <button class="button button-svg data-btn">
                   <img src="@/assets/img/upload.svg" />
                 </button>
+                <input type="file" name="file" ref="dzzFile">
               </div>
             </template>
             <template v-else>
@@ -57,8 +58,8 @@
                 <p class="data__text" v-else>Не выбрана</p>
               </div>
               <div class="data-btns">
-                <router-link to="area">
-                  <button class="button button-svg data-btn">
+                <router-link to="area" custom v-slot="{ navigate}">
+                  <button @click="navigate" class="button button-svg data-btn">
                     <img src="@/assets/img/choose.svg" />
                   </button>
                 </router-link>
@@ -75,7 +76,7 @@
           </div>
         </template>
       </div>
-      <button class="button button-g data-start">Начать</button>
+      <button @click="startPlan" class="button button-g data-start">Начать</button>
     </div>
     <div class="data-line">
       <div class="data-close">
@@ -87,7 +88,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
+import * as filesApi from "@/api/files";
 export default {
   data() {
     return {
@@ -132,6 +133,14 @@ export default {
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
+    startPlan(){
+      let formData = new FormData();
+      this.$refs.dzzFile.forEach((el, i) => {
+        formData.append(`file${i}`, el.files[0]);
+      })
+      let data = filesApi.loadDzzArchive(formData);
+      console.log(data);
+    },
     selectDzz(i) {
       this.setSelectable({
         type: i,
@@ -245,7 +254,7 @@ export default {
     display: none;
     padding: 2px 5px;
 
-    color: $color-main-dark;
+    color: $color-main;
     font-size: 10px;
     background: $gradient-w;
     border-radius: 6px;
@@ -262,7 +271,7 @@ export default {
     padding: 5px 5px 5px 10px;
     border-radius: 5px;
     &:hover {
-      border: 1px solid rgba($color-main-dark, 0.5);
+      border: 1px solid rgba($color-main, 0.5);
     }
   }
   &__select {

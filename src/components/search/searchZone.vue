@@ -164,25 +164,31 @@
       >
         <div class="coordinates-wrapper">
           <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Широта </label>
             <masked-input
+              required
+              placeholder=" "
               v-model="lat"
-              class="input input-withoutIcon coordinates-input"
+              class="input coordinates-input"
               :mask="inputMaskLat"
             />
+            <label class="input-label coordinates-label"> Широта </label>
           </div>
 
           <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Долгота </label>
             <masked-input
+              required
+              placeholder=" "
               v-model="lng"
-              class="input input-withoutIcon coordinates-input"
+              class="input coordinates-input"
               :mask="inputMaskLng"
             />
+            <label class="input-label coordinates-label"> Долгота </label>
           </div>
           <div class="input-wrapper coordinates-inputs">
             <label class="input-label coordinates-label"> Радиус (км) </label>
             <input
+              required
+              placeholder=" "
               v-model="rad"
               id="radius"
               class="input input-withoutIcon coordinates-input"
@@ -296,7 +302,7 @@ export default {
       "setScreenPolygon",
       "setScreenPolygonActive",
       "setAreaPolygonActive",
-      "setCircleenPolygonActive"
+      "setCircleenPolygonActive",
     ]),
     changeZoneType(type) {
       this.searchZoneType = type;
@@ -384,6 +390,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+label.active {
+  top: -20px;
+  font-size: 12px;
+  color: $color-main;
+}
 .number {
   max-width: 40px;
   text-align: center !important;
@@ -594,6 +605,10 @@ export default {
 }
 .coordinates {
   &-inputs {
+    margin-left: 16px;
+    &:first-child{
+      margin-left: 0;
+    }
     &:focus-within .coordinates-label {
       top: -20px;
       font-size: 12px;

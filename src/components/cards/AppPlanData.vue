@@ -29,6 +29,7 @@
         <template v-if="activePlan != null">
           <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
             <template v-if="data.type == 1">
+              <div class="data-circle"></div>
               <div class="data-info">
                 <p class="data__subtitle">{{ data.title }}</p>
                 <p class="data__text" v-if="data.dzzIndex != null">
@@ -49,6 +50,7 @@
               </div>
             </template>
             <template v-else>
+              <div class="data-circle"></div>
               <div class="data-info">
                 <p class="data__subtitle">{{ data.title }}</p>
                 <p class="data__text" v-if="getActivePolygonJson != null">
@@ -171,6 +173,15 @@ export default {
   transition: all 0.3s ease-out;
   // transform: translateX(calc(-100% + 10px));
   translate: 0;
+  &-circle {
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+    transform: -20px;
+  }
   &-content {
     width: 100%;
     display: flex;
@@ -195,7 +206,6 @@ export default {
     position: relative;
     display: flex;
     align-items: stretch;
-    justify-content: space-between;
     margin-bottom: 10px;
     width: 100%;
     background: $gradient-w;
@@ -204,21 +214,22 @@ export default {
     border-radius: 5px;
   }
   &-info {
-    padding: 10px;
+    padding: 8px;
   }
   &__subtitle {
     font-size: 12px;
-    color: $text-grey-light;
-    margin-bottom: 14px;
+    color: $text-grey;
+    margin-bottom: 10px;
   }
   &__text {
     font-size: 12px;
     width: 100%;
     text-align: left;
-    color: #313131;
+    color: $text-grey-light;
   }
   &-btns {
     padding: 10px;
+    margin: 0 0 0 auto;
     display: flex;
     align-items: flex-end;
     &__text {

@@ -160,10 +160,10 @@ img {
   font-size: 14px;
 
   border-radius: 10px;
-  border: none;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
-  color: $color-main-dark;
+  color: $text-grey;
+  outline: none;
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
@@ -174,6 +174,7 @@ img {
     font-size: 12px;
     color: $color-main;
   }
+
 
   &-img {
     position: absolute;
@@ -186,7 +187,7 @@ img {
     }
   }
   &-withIcon {
-    padding: 15px 24px;
+    padding: 15px 36px 15px 24px;
     margin: 14px auto;
     width: 300px;
   }
@@ -224,9 +225,9 @@ img {
   font-size: 14px;
   color: $text-grey;
 
-  transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -webkit-transition: 0.2s ease all;
+  transition: 0.3s ease all;
+  -moz-transition: 0.3s ease all;
+  -webkit-transition: 0.3s ease all;
   pointer-events: none;
 }
 

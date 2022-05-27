@@ -33,7 +33,7 @@ export default {
 .radio__label {
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  margin-right: 8px;
 }
 .radio__input {
   display: none;

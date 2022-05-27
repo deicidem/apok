@@ -2,14 +2,14 @@
   <div class="auth-popup" v-on-clickaway="away">
     <div class="auth-popup__title">Авторизация</div>
     <div class="input-wrapper">
-      <input class="input input-withIcon" v-model="user.login" required />
+      <input placeholder=" " class="input input-withIcon" v-model="user.login" required />
       <label class="input-label">Логин</label>
 
       <img svg-inline class="input-img" src="@/assets/img/login-icon.svg" />
     </div>
 
     <div class="input-wrapper">
-      <input class="input input-withIcon" v-model="user.password" required />
+      <input placeholder=" " class="input input-withIcon" v-model="user.password" required />
       <label class="input-label">Пароль</label>
 
       <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />

@@ -98,16 +98,19 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="loaded" :class="{selectable: selectable.value}">
+          <tbody v-if="loaded" :class="{ selectable: selectable.value }">
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="item.selected.value ? `selected-${item.selected.type + 1}`: ''"
+              :class="
+                item.selected.value ? `selected-${item.selected.type + 1}` : ''
+              "
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">
+                <div class="results-circle"></div>
                 <button
-                  class="button button-white button-small"
+                  class="button button-svg results-button"
                   :class="results[i].polygonActive ? 'active' : ''"
                   @click="onPolygonButtonClick(i, item.id, item.geography)"
                 >
@@ -119,7 +122,7 @@
                   />
                 </button>
                 <button
-                  class="button button-white button-small"
+                  class="button button-svg results-button"
                   :class="results[i].imageActive ? 'active' : ''"
                   @click="
                     onImageButtonClick(
@@ -146,7 +149,7 @@
               <td>{{ item.cloudiness }}</td>
               <td class="results-table__buttons">
                 <button
-                  class="button button-white button-small"
+                  class="button button-svg results-button"
                   :class="results[i].cardActive ? 'active' : ''"
                   @click="onCardButtonClick(i)"
                 >
@@ -355,7 +358,7 @@ export default {
     td {
       word-break: break-all;
       padding: 10px 10px 10px 0;
-      font-size: 10px;
+      font-size: 12px;
     }
     tr {
       border-bottom: 1px solid rgba($color-main, 0.2);
@@ -368,13 +371,21 @@ export default {
   }
   &-button {
     margin-top: 15px;
+    min-width: 230px;
   }
 }
 .results {
   &-content {
     padding: 10px 30px;
   }
-
+  &-circle {
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #FFF;
+    box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+  }
   .back {
     margin-bottom: 0px;
     display: flex;
@@ -418,12 +429,16 @@ export default {
     }
     .selected {
       &-1 {
-        background: $gradient-b;
-        color: #fff;
+        .results-circle {
+          background: $gradient-b;
+          box-shadow: $shadow-small;
+        }
       }
       &-2 {
-        background: $gradient-p;
-        color: #fff;
+        .results-circle {
+          background: $gradient-p;
+          box-shadow: $shadow-small;
+        }
       }
     }
     tbody {
@@ -433,6 +448,7 @@ export default {
     th {
       word-break: break-all;
     }
+
     * {
       font-size: 10px !important;
     }
@@ -443,12 +459,9 @@ export default {
       justify-content: center;
     }
   }
-  .button-small {
+  &-button {
     margin: 0 5px;
-    width: 25px;
-    height: 25px;
     padding: 0;
-    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;

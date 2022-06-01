@@ -7,7 +7,7 @@
     ></div>
     <div class="alert-item__content">
       <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
-        <div :class="[theme] + '__icon'"></div>
+        <div class="icon" :class="'icon__' + [theme]"></div>
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
@@ -39,20 +39,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.task__icon {
-  background: url("@/assets/img/alert-task.svg");
+.icon {
   width: 24px;
   height: 24px;
-}
-.access__icon {
-  background: url("@/assets/img/alert-access.svg");
-  width: 24px;
-  height: 24px;
-}
-.data__icon {
-  background: url("@/assets/img/alert-data.svg");
-  width: 24px;
-  height: 24px;
+  &__task {
+    background: url("@/assets/img/alert-task.svg");
+  }
+
+  &__access {
+    background: url("@/assets/img/alert-access.svg");
+  }
+  &__data {
+    background: url("@/assets/img/alert-data.svg");
+  }
 }
 .alert {
   &-item {
@@ -67,13 +66,13 @@ export default {
     border-radius: 10px;
     background: #fff;
     box-shadow: $shadow-big;
-    &___task {
+    &__task {
       color: $color-main;
     }
-    &___access {
+    &__access {
       color: $text-plum;
     }
-    &___data {
+    &__data {
       color: $text-blue;
     }
     &__content {

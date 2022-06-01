@@ -9,9 +9,9 @@
           <p class="back-subtitle">Назад</p>
         </div>
 
-        <h2 class="popup-card__title">Запланировать задачу</h2>
+        <h2 class="popup-card__title">Задача: Формирование температурных карт</h2>
       </div>
-      <div class="popup-card__subtitle">Формирование температурных карт</div>
+      <div class="popup-card__subtitle"></div>
 
       <div class="popup-card__wrapper">
         <div class="popup-card__info">
@@ -64,6 +64,7 @@
   display: flex;
   align-items: center;
   position: absolute;
+  left: 0;
   cursor: pointer;
   &-arrow {
     width: 40px;
@@ -99,9 +100,13 @@
 
     &__header {
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     &__title {
-      font-size: 22px;
+      font-size: 20px;
+      font-weight: 400;
       text-align: center;
       color: $text-grey;
     }

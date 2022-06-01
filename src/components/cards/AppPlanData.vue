@@ -4,6 +4,12 @@
       <div class="data-title">Запланировать задачу</div>
       <div class="data-wrapper">
         <div class="data-item">
+          <portal to="popup">
+            <app-plan-popup
+              v-show="planPopup == true"
+              @close="planPopup = false"
+            ></app-plan-popup>
+          </portal>
           <div class="data-info">
             <p class="data__subtitle">Задача:</p>
             <div
@@ -40,6 +46,7 @@
                 </p>
                 <p class="data__text" v-else>Не выбрано</p>
               </div>
+
               <div class="data-btns">
                 <button
                   class="button button-svg data-btn"
@@ -47,10 +54,8 @@
                 >
                   <img src="@/assets/img/choose.svg" />
                 </button>
-                <button
-                  @click="$emit('openPopup')"
-                  class="button button-svg data-btn"
-                >
+
+                <button class="button button-svg data-btn" @click="planPopup = true">
                   <img src="@/assets/img/upload.svg" />
                 </button>
               </div>
@@ -98,9 +103,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import * as filesApi from "@/api/files";
+import AppPlanPopup from "@/components/AppPlanPopup.vue";
+
 export default {
   data() {
     return {
+      planPopup: false,
       activePlanIndex: null,
       showSelect: false,
       ops: {
@@ -131,6 +139,9 @@ export default {
         },
       },
     };
+  },
+  components: {
+    AppPlanPopup,
   },
   computed: {
     ...mapGetters("plans", ["getPlans"]),

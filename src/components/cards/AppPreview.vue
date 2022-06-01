@@ -5,17 +5,14 @@
         <div class="preview-wrapper__title">Предпросмотр</div>
         <nav class="preview-wrapper__nav">
           <ul>
-            <li>
-              <button @click="showResult">Отчет</button>
-            </li>
-            <li>
-              <button @click="showResult">Изображение</button>
+            <li v-for="(view, i) in views" :key="i">
+              <button @click="setActiveView(i)" :class="{active: i == activeViewIndex}">{{view.title}}</button>
             </li>
           </ul>
         </nav>
-        <div v-if="!reportType">
+        <div v-if="activeView != null">
           <div class="preview-picture">
-            <img src="@/assets/img/report.png" />
+            <img :src="activeView.previewPath" />
           </div>
           <div class="preview-btns">
             <button class="button button-white">Скачать</button>
@@ -24,26 +21,13 @@
             </router-link>
           </div>
         </div>
-        <div v-if="pictureType">
-          <div class="preview-picture">
-            <img src="@/assets/img/зона интереса.png" />
-          </div>
-          <div class="preview-btns">
-            <button class="button button-white">Показать на карте</button>
-            <router-link to="/picture">
-              <button class="button button-g">На весь экран</button>
-            </router-link>
-          </div>
-        </div>
       </div>
       <div class="preview-wrapper__files">
         <div class="preview-wrapper__title">Файлы</div>
         <ul>
-          <li>Отчет</li>
-          <li>Изображение</li>
-          <li>Зона интереса</li>
-          <li>Векторы</li>
-          <li>Все</li>
+          <li v-for="(file, i) in files" :key="i">
+            <a :href="file.path" target="_blank" download>{{file.name}}</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -51,25 +35,41 @@
 </template>
 
 <script>
+import * as filesApi from "@/api/files";
 export default {
+  props: ['files', 'views'],
   data() {
     return {
       reportType: false,
       pictureType: false,
-    };
+      activeViewIndex: 0
+    }
   },
   methods: {
     showResult() {
       this.reportType = !this.reportType;
       this.pictureType = !this.pictureType;
     },
+    setActiveView(i) {
+      this.activeViewIndex = i;
+    },
+    download(path) {
+      filesApi.download(path);
+    }
   },
+  computed: {
+    activeView() {
+      return this.views[this.activeViewIndex]
+    }
+  },
+  mounted() {
+    this.setActiveView(0);
+  }
 };
 </script>
 
 <style scoped lang="scss">
 .preview {
-  padding: 20px;
   width: 100%;
   &-picture {
     margin: 20px auto;
@@ -131,7 +131,7 @@ export default {
           color: #000;
           cursor: pointer;
           &:hover {
-            color: $color-main;
+            color: $color-main-light;
           }
           &.active {
             color: $color-main;
@@ -151,6 +151,9 @@ export default {
         margin-top: 4px;
         font-size: 14px;
         cursor: pointer;
+        a {
+          color: $color-main;
+        }
       }
     }
     &__title {

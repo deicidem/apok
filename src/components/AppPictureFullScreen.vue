@@ -1,28 +1,70 @@
 <template>
   <div class="fullScreen">
-    <div class="fullScreen-wrapper">
-      <router-link to="/main/tasks">
-        <div class="back">
-          <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+    <vuescroll :ops="ops">
+      <div class="fullScreen-wrapper">
+        <router-link to="/main/tasks">
+          <div class="back">
+            <div class="back-arrow">
+              <img src="@/assets/img/arrow.svg" />
+            </div>
+            <p class="back-subtitle">Назад</p>
           </div>
-          <p class="back-subtitle">Назад</p>
-        </div>
-      </router-link>
+        </router-link>
 
-      <h2 class="fullScreen-title">Изображение</h2>
+        <h2 class="fullScreen-title">Изображение</h2>
 
-      <button class="button button-g fullScreen-button">Скачать</button>
-    </div>
+        <button class="button button-g fullScreen-button">Скачать</button>
+      </div>
 
-    <div class="fullScreen-picture">
-      <img src="@/assets/img/зона интереса.png" />
-    </div>
+      <div class="fullScreen-picture">
+        <img src="@/assets/img/зона интереса.png" />
+      </div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
+import vuescroll from "vuescroll";
+import "vuescroll/dist/vuescroll.css";
+
+export default {
+  components: {
+    vuescroll,
+  },
+  data() {
+    return {
+      ops: {
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500,
+        },
+        scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: "easeOutQuad",
+        },
+        rail: {
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
+          specifyBorderRadius: false,
+          gutterOfEnds: null,
+          gutterOfSide: "2px",
+          keepShow: false,
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          background: "#476D70",
+        },
+      },
+    };
+  },
+};
 </script>
+
 
 <style scoped lang="scss">
 .fullScreen {
@@ -55,7 +97,6 @@
     img {
       margin: 20px auto;
       max-width: 100%;
-      min-width: 50%;
       max-height: 100%;
       height: auto;
       width: auto;

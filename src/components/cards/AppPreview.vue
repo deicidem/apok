@@ -111,14 +111,16 @@ export default {
         border-left: 1px solid $color-main;
       }
       li {
-        margin: 0 8px 0 0;
+        margin: 0 20px 0 0;
         list-style-type: none;
         position: relative;
         &:first-child :after {
           display: block;
-          height: 10px;
+          height: 12px;
           content: "";
           position: absolute;
+          top: 30%;
+          right: -10px;
           border-right: 1px solid #000;
         }
         button {

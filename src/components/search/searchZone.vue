@@ -118,30 +118,7 @@
       </div>
     </div>
 
-    <div
-      class="search-zone__card search-zone__coordinates"
-      v-show="searchZoneType == 2"
-    >
-      <div class="coordinates-wrapper">
-        <div class="input-wrapper coordinates-inputs">
-          <label class="input-label coordinates-label"> Широта </label>
-          <masked-input
-            v-model="lat"
-            class="input input-withoutIcon coordinates-input"
-            :mask="inputMaskLat"
-          />
-        </div>
-
-        <div class="input-wrapper coordinates-inputs">
-          <label class="input-label coordinates-label"> Долгота </label>
-          <masked-input
-            v-model="lng"
-            class="input input-withoutIcon coordinates-input"
-            :mask="inputMaskLng"
-          />
-        </div>
-      </div>
-
+    <div>
       <div
         class="search-zone__card search-zone__coordinates"
         v-show="searchZoneType == 2"
@@ -173,21 +150,6 @@
             <input
               required
               placeholder=" "
-              v-model="rad"
-              id="radius"
-              class="input input-withoutIcon coordinates-input"
-            />
-          </div>
-
-          <button
-            @click="createCircle"
-            class="button button-g coordinates-wrapper__button"
-          >
-            Загрузить на карту
-          </button>
-          <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Радиус (км) </label>
-            <input
               v-model="rad"
               id="radius"
               class="input input-withoutIcon coordinates-input"
@@ -621,6 +583,7 @@ label.active {
       top: -20px;
       font-size: 12px;
     }
+    
   }
   &-label {
     top: 8px;
@@ -628,6 +591,10 @@ label.active {
   }
   &-input {
     width: 120px;
+    // &:focus .coordinates-label {
+    //   top: -20px;
+    //   font-size: 12px;
+    // }
   }
   &-wrapper {
     display: flex;

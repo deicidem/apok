@@ -2,6 +2,7 @@
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="ops">
+      <app-preview></app-preview>
       <div class="tasks__wrapper">
         <app-table>
           <thead>
@@ -22,12 +23,14 @@
               <td>{{ item.title }}</td>
               <td>{{ item.date }}</td>
               <td class="green">{{ item.status }}</td>
+
               <td class="green">Посмотреть результат</td>
             </tr>
             <tr>
               <td colspan="6"  class="td_preview">
                 <app-preview :views="item.result.views" :files="item.result.files"></app-preview>
               </td>
+
             </tr>
           </tbody>
         </app-table>

@@ -8,21 +8,29 @@
           <thead>
             <tr>
               <th class="col-checkbox center">
-                <app-checkbox class="checkbox-big" @input="onCheck($event)" />
+                <app-checkbox class="checkbox-big" @change="onCheck($event)" />
               </th>
               <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
             </tr>
           </thead>
 
-          <tbody>
-            <tr v-for="item in tasks" :key="item.id">
+          <tbody v-for="item in tasks" :key="item.id">
+            <tr >
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" @input="onCheck($event)" />
+                <app-checkbox :mini="true" @change="onCheck($event)"/>
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
               <td>{{ item.date }}</td>
               <td class="green">{{ item.status }}</td>
+
+              <td class="green">Посмотреть результат</td>
+            </tr>
+            <tr>
+              <td colspan="6"  class="td_preview">
+                <app-preview :views="item.result.views" :files="item.result.files"></app-preview>
+              </td>
+
             </tr>
           </tbody>
         </app-table>
@@ -36,7 +44,6 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
-
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
@@ -141,6 +148,9 @@ export default {
     }
   }
   tbody {
+    tr {
+      position: relative;
+    }
     input {
       width: 16px;
       height: 16px;

@@ -1,5 +1,6 @@
 <template>
   <div class="fullScreen">
+    <vuescroll :ops="ops">
     <div class="fullScreen-wrapper">
       <router-link to="/main/tasks">
         <div class="back">
@@ -18,10 +19,50 @@
     <div class="fullScreen-report">
       <img src="@/assets/img/report.png" />
     </div>
+    </vuescroll>
   </div>
 </template>
 
 <script>
+import vuescroll from "vuescroll";
+import "vuescroll/dist/vuescroll.css";
+
+export default {
+  components: {
+    vuescroll,
+  },
+  data() {
+    return {
+      ops: {
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "percent",
+          detectResize: true,
+          wheelScrollDuration: 500,
+        },
+        scrollPanel: {
+          scrollingX: false,
+          speed: 300,
+          easing: "easeOutQuad",
+        },
+        rail: {
+          background: "#000",
+          opacity: 0.1,
+          size: "6px",
+          specifyBorderRadius: false,
+          gutterOfEnds: null,
+          gutterOfSide: "2px",
+          keepShow: false,
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          background: "#476D70",
+        },
+      },
+    };
+  },
+}
 </script>
 
 <style scoped lang="scss">

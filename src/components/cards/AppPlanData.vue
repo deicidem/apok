@@ -47,10 +47,12 @@
                 >
                   <img src="@/assets/img/choose.svg" />
                 </button>
-                <button class="button button-svg data-btn">
+                <button
+                  @click="$emit('openPopup')"
+                  class="button button-svg data-btn"
+                >
                   <img src="@/assets/img/upload.svg" />
                 </button>
-                <input type="file" name="file" ref="dzzFile" />
               </div>
             </template>
             <template v-else>

@@ -2,7 +2,10 @@
   <div class="plan">
     <h2 class="sidebar-title">Запланировать задачу</h2>
     <portal to="popup">
-      <app-plan-popup v-show="planPopup == true" @close="planPopup = false"></app-plan-popup>
+      <app-plan-popup
+        v-show="planPopup == true"
+        @close="planPopup = false"
+      ></app-plan-popup>
     </portal>
     <vuescroll :ops="ops">
       <div class="plan-wrapper">
@@ -33,7 +36,7 @@ export default {
   components: {
     vuescroll,
     AppPlanCard,
-    AppPlanPopup
+    AppPlanPopup,
     // VsPagination,
   },
   data() {
@@ -96,7 +99,7 @@ export default {
     &-wrapper {
       margin: 20px;
     }
-    &-card{
+    &-card {
       margin-bottom: 20px;
     }
   }

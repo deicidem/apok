@@ -14,28 +14,6 @@
       <div class="popup-card__subtitle">Формирование температурных карт</div>
 
       <div class="popup-card__wrapper">
-        <div class="popup-card__item">
-          <div class="popup-card__loading">
-            <div class="popup-card__buttons">
-              <button class="button button-g">Загрузить файл</button>
-              <p>POLYGON.shp</p>
-            </div>
-            <div class="popup-card__line"></div>
-            <div class="popup-card__link">
-              <div class="card-link">
-                <p>ftp://uic@imccloud.novacenter.ru:2021/Work_id_453</p>
-                <button class="button button-svg">
-                  <img src="@/assets/img/link.svg" />
-                </button>
-              </div>
-              <p class="popup-card__text">
-                Вы можете использовать удобный вам менеджер файлов для загрузки.
-              </p>
-            </div>
-          </div>
-          <button class="button button-g popup-card__button">Начать</button>
-        </div>
-
         <div class="popup-card__info">
           <div class="info-title">
             Описание директорий, автоматически создаваемых программой
@@ -65,6 +43,13 @@
             </div>
           </div>
         </div>
+        <div class="popup-card__buttons">
+          <button class="button button-g">Загрузить</button>
+          <div class="popup-card__text">
+            Выбрано:
+            <p class="popup-card__file">file.shp</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +60,19 @@
 
 
 <style lang="scss" scoped>
+.back {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  &-arrow {
+    width: 40px;
+  }
+  p {
+    margin-left: 10px;
+    color: $text-grey;
+  }
+}
 .plan-popup {
   position: fixed;
   top: 0;
@@ -92,6 +90,7 @@
     transform: translate(-50%, -50%);
 
     padding: 20px;
+    min-width: 900px;
 
     box-shadow: $shadow-small;
     border-radius: 10px;
@@ -113,32 +112,14 @@
     }
     &__wrapper {
       display: flex;
-      margin-top: 20px;
-    }
-    &__loading {
-      width: 500px;
-      padding: 20px;
-
-      box-shadow: $shadow-small;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-    }
-    &__buttons {
-      display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      p {
-        font-size: 12px;
-        margin-left: 40px;
-        color: $text-grey;
-      }
-    }
-    &__button {
       margin-top: 20px;
-      float: right;
     }
     &__info {
       width: 500px;
+      margin-top: 20px;
       padding: 20px;
 
       box-shadow: $shadow-small;
@@ -152,20 +133,23 @@
       width: 100%;
     }
     &__text {
+      display: flex;
       margin-top: 6px;
+      margin-left: 10px;
 
       color: $text-grey;
-      font-size: 12px;
+      font-size: 14px;
     }
-    .card-link {
+    &__buttons {
+      margin-top: 20px;
       display: flex;
-      text-align: center;
-      justify-content: space-between;
-      p {
-        font-size: 12px;
-        line-height: 26px;
-        color: $color-main;
-      }
+      align-items: center;
+    }
+    &__file {
+      margin-left: 10px;
+
+      color: #000;
+      font-size: 14px;
     }
     &__info {
       margin-left: 20px;
@@ -209,6 +193,4 @@
     }
   }
 }
-
-
 </style>

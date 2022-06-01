@@ -146,14 +146,14 @@
             <label class="input-label coordinates-label"> Долгота </label>
           </div>
           <div class="input-wrapper coordinates-inputs">
-            <label class="input-label coordinates-label"> Радиус (км) </label>
             <input
               required
               placeholder=" "
               v-model="rad"
               id="radius"
-              class="input input-withoutIcon coordinates-input"
+              class="input coordinates-input"
             />
+            <label class="input-label coordinates-label"> Радиус (км) </label>
           </div>
 
           <button
@@ -529,28 +529,6 @@ label.active {
   &__load {
     display: flex;
     align-items: flex-start;
-    .load-wrapper {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      &__buttons {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-      }
-      &__button {
-        margin-bottom: 10px;
-        width: 180px;
-      }
-      &__name {
-        margin-left: 20px;
-        font-size: 12px;
-        color: #000;
-      }
-      &__input {
-        display: none;
-      }
-    }
   }
   &__buttons {
     display: flex;
@@ -583,7 +561,6 @@ label.active {
       top: -20px;
       font-size: 12px;
     }
-    
   }
   &-label {
     top: 8px;
@@ -591,10 +568,11 @@ label.active {
   }
   &-input {
     width: 120px;
-    // &:focus .coordinates-label {
-    //   top: -20px;
-    //   font-size: 12px;
-    // }
+    &:focus .coordinates-label,
+    &:not(:placeholder-shown) ~ label {
+      top: -20px;
+      font-size: 12px;
+    }
   }
   &-wrapper {
     display: flex;
@@ -606,6 +584,28 @@ label.active {
       max-width: 200px;
       width: 190px;
     }
+  }
+}
+.load-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  &__button {
+    margin-bottom: 10px;
+    width: 180px;
+  }
+  &__name {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #000;
+  }
+  &__input {
+    display: none;
   }
 }
 @media screen and (max-width: 1440px) {

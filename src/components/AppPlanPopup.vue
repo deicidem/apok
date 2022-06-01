@@ -210,17 +210,5 @@
   }
 }
 
-.back {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  cursor: pointer;
-  &-arrow {
-    width: 40px;
-  }
-  p {
-    margin-left: 10px;
-    color: $text-grey;
-  }
-}
+
 </style>

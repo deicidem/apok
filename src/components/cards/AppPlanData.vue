@@ -290,6 +290,7 @@ export default {
     border: 1px solid #dfdfdf;
     min-height: 30px;
     min-width: 300px;
+    width: 100%;
     padding: 5px 5px 5px 10px;
     border-radius: 5px;
     &:hover {
@@ -300,15 +301,15 @@ export default {
     z-index: 10;
     position: absolute;
     top: calc(100% - 10px);
-    width: 340px;
+    width: 300px;
     height: 70px;
-    left: 0;
+    left: 14px;
     background: $gradient-w;
     box-shadow: $shadow-big;
     border-radius: 10px;
     &__item {
       position: relative;
-      padding: 5px 25px;
+      padding: 5px 8px;
       font-size: 12px;
       color: #000;
       transition: all 0.2s ease-out;

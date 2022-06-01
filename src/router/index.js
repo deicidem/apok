@@ -68,6 +68,14 @@ const routes = [
     component: () => import('../views/PlanView.vue')
   },
   {
+    path: '/report',
+    component: () => import('../components/AppReportFullScreen.vue')
+  },
+  {
+    path: '/picture',
+    component: () => import('../components/AppPictureFullScreen.vue')
+  },
+  {
 		path: '*',
 		component: () => import('../components/AppE404.vue')
 	},

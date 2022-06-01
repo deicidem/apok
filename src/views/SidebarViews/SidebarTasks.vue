@@ -27,6 +27,7 @@
           </tbody>
         </app-table>
       </div>
+      <app-preview></app-preview>
       <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
     </vuescroll>
   </div>
@@ -40,16 +41,20 @@ import "vuescroll/dist/vuescroll.css";
 import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
+import AppPreview from "@/components/cards/AppPreview";
 export default {
   name: "SidebarTasks",
   components: {
     AppTable,
     AppCheckbox,
     vuescroll,
+    AppPreview,
     // VsPagination,
   },
   data() {
     return {
+      reportType: false,
+      pictureType: false,
       ops: {
         vuescroll: {
           mode: "native",
@@ -88,6 +93,10 @@ export default {
   methods: {
     onCheck(val) {
       console.log(val);
+    },
+    showResult() {
+      this.reportType = !this.reportType;
+      this.pictureType = !this.pictureType;
     },
   },
 };
@@ -149,6 +158,89 @@ export default {
       box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
       border-radius: 50%;
       border: none;
+    }
+  }
+}
+.preview {
+  padding: 20px;
+  width: 100%;
+  &-picture {
+    margin: 20px auto;
+    img {
+      height: auto;
+      width: auto;
+      max-width: 450px;
+      max-height: 350px;
+    }
+  }
+  &-btns {
+    margin-top: 20px;
+    display: flex;
+    button {
+      margin-right: 20px;
+    }
+  }
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: $shadow-big;
+
+    &__nav {
+      display: flex;
+      margin-top: 10px;
+      ul {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+
+        list-style: none;
+      }
+      .line {
+        height: 12px;
+        border-left: 1px solid $color-main;
+      }
+      li {
+        margin: 0 8px 0 0;
+        list-style-type: none;
+        button {
+          padding: 0;
+          margin: 0;
+
+          font-family: inherit;
+          border: none;
+          background: none;
+          color: #000;
+          cursor: pointer;
+          &:hover {
+            color: $color-main;
+          }
+          &.active {
+            color: $color-main;
+          }
+        }
+      }
+    }
+    &__files {
+      margin-right: 20px;
+      ul {
+        margin-top: 10px;
+        color: $color-main;
+        text-decoration: underline;
+      }
+      li {
+        list-style-type: none;
+        margin-top: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    &__title {
+      font-size: 16px;
+      color: #000;
     }
   }
 }

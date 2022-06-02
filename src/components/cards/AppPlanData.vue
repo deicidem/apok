@@ -135,7 +135,7 @@ export default {
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: "#476D70",
+          background: "#83B5B8",
         },
       },
     };
@@ -191,7 +191,7 @@ export default {
 
   display: flex;
   justify-content: space-between;
-  min-width: 400px;
+  min-width: 440px;
 
   background: $gradient-w;
   border-radius: 20px;
@@ -236,12 +236,11 @@ export default {
     margin-bottom: 10px;
     width: 100%;
     background: $gradient-w;
-    padding: 6px;
+    padding: 10px;
     box-shadow: $shadow-small;
     border-radius: 5px;
   }
   &-info {
-    padding: 8px;
   }
   &-arrowDown {
     position: absolute;
@@ -302,7 +301,7 @@ export default {
   &__selected {
     border: 1px solid #dfdfdf;
     min-height: 30px;
-    min-width: 300px;
+    min-width: 360px;
     width: 100%;
     padding: 5px 5px 5px 10px;
     border-radius: 5px;
@@ -311,18 +310,19 @@ export default {
     }
   }
   &__select {
+    margin-top: 4px;
     z-index: 10;
     position: absolute;
     top: calc(100% - 10px);
-    width: 300px;
+    width: 360px;
     height: 70px;
-    left: 14px;
+    left: 10px;
     background: $gradient-w;
     box-shadow: $shadow-big;
     border-radius: 10px;
     &__item {
       position: relative;
-      padding: 5px 8px;
+      padding: 5px 10px;
       font-size: 12px;
       color: #000;
       transition: all 0.2s ease-out;

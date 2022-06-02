@@ -2,7 +2,6 @@
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="ops">
-      <app-preview></app-preview>
       <div class="tasks__wrapper">
         <app-table>
           <thead>
@@ -15,9 +14,9 @@
           </thead>
 
           <tbody v-for="item in tasks" :key="item.id">
-            <tr >
+            <tr>
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" @change="onCheck($event)"/>
+                <app-checkbox :mini="true" @change="onCheck($event)" />
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -27,10 +26,12 @@
               <td class="green">Посмотреть результат</td>
             </tr>
             <tr>
-              <td colspan="6"  class="td_preview">
-                <app-preview :views="item.result.views" :files="item.result.files"></app-preview>
+              <td colspan="6" class="td_preview">
+                <app-preview
+                  :views="item.result.views"
+                  :files="item.result.files"
+                ></app-preview>
               </td>
-
             </tr>
           </tbody>
         </app-table>
@@ -48,6 +49,7 @@ import { mapGetters } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppPreview from "@/components/cards/AppPreview";
+
 export default {
   name: "SidebarTasks",
   components: {
@@ -85,7 +87,7 @@ export default {
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: "#476D70",
+          background: "#83B5B8",
         },
       },
     };

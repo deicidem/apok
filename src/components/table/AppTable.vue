@@ -50,7 +50,6 @@ table {
         padding: 10px;
         box-sizing: border-box;
       }
-      
     }
   }
   tbody {
@@ -59,24 +58,19 @@ table {
     color: #384342;
     vertical-align: top;
     line-height: 150%;
+    border-bottom: 1px solid rgba(71, 109, 112, 0.3);
+    &:last-child {
+      border-bottom: none;
+    }
     tr {
-        border-bottom: 1px solid rgba(71, 109, 112, 0.3);
-      &:last-child {
-        border-bottom: none;
-      }
       td {
         padding: 10px;
         max-width: 150px;
-        &:last-child {
-          padding-right: 20px;
-        }
       }
       .green {
         color: $color-main;
       }
     }
-    
-    
   }
 }
 </style>

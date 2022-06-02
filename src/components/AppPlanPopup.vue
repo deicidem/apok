@@ -11,7 +11,6 @@
 
         <h2 class="popup-card__title">Задача: Формирование температурных карт</h2>
       </div>
-      <div class="popup-card__subtitle"></div>
 
       <div class="popup-card__wrapper">
         <div class="popup-card__info">
@@ -107,11 +106,6 @@
     &__title {
       font-size: 20px;
       font-weight: 400;
-      text-align: center;
-      color: $text-grey;
-    }
-    &__subtitle {
-      font-size: 20px;
       text-align: center;
       color: $text-grey;
     }

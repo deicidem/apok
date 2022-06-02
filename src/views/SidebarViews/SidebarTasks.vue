@@ -16,7 +16,7 @@
           <tbody v-for="(item, i) in tasks" :key="item.id">
             <tr @click="setTaskActive({index: i, val: !item.result.active})">
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" @change="onCheck($event)"/>
+                <app-checkbox :mini="true" @change="onCheck($event)" />
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -28,7 +28,6 @@
               <td colspan="6"  class="td_preview">
                 <app-preview v-show="item.result.active" v-if="item.result.files.length || item.result.views.length" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
               </td>
-
             </tr>
           </tbody>
         </app-table>
@@ -46,6 +45,7 @@ import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppPreview from "@/components/cards/AppPreview";
+
 export default {
   name: "SidebarTasks",
   components: {

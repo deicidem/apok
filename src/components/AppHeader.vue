@@ -46,11 +46,6 @@ export default {
   },
   methods: {
     closeUser($event) {
-      console.log(this.$refs.authPopup.$el);
-      console.log($event.target);
-      console.log(this.$refs.showUser.isEqualNode($event.target),
-        this.$refs.showUser.contains($event.target),
-        this.$refs.authPopup.$el.contains($event.target));
       if (
         this.$refs.showUser.isEqualNode($event.target) ||
         this.$refs.showUser.contains($event.target) ||

@@ -17,13 +17,31 @@ export default {
   mutations: {
     setTasks(state, items) {
       state.tasks = items;
+    },
+    setTaskActive(state, data) {
+      state.tasks[data.index].result.active = data.val;
+    },
+    setTaskViewActive(state, data) {
+      state.tasks[data.taskIndex].result.views[data.viewIndex].active = data.val;
     }
   },
   actions: {
     async load({commit}) {
       let tasks = await tasksApi.all();
+      tasks.forEach(el => {
+        el.result.active = false;
+        el.result.views.forEach(el => {
+          el.active = false;
+        })
+      });
       commit('setTasks', tasks);
       return tasks;
+    },
+    setTaskActive({commit}, data) {
+      commit('setTaskActive', data);
+    },
+    setTaskViewActive({commit}, data) {
+      commit('setTaskViewActive', data);
     }
   }
 }

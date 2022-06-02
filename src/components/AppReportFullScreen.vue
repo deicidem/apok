@@ -57,7 +57,7 @@ export default {
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: "#83B5B8",
+          background: "#6BA2A6",
         },
       },
     };

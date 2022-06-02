@@ -19,10 +19,12 @@ export default {
     },
     geoJsonPolygons: [],
     images: [],
+    viewImages: [],
     zoom: 5,
     center: [45, 35],
     bounds: [],
-    activePolygon: null
+    activePolygon: null,
+    needUpdateBounds: false
   },
   getters: {
     getActivePolygon(state) {
@@ -82,7 +84,13 @@ export default {
     },
     getImages(state) {
       return state.images;
-    }
+    },
+    getViewImages(state) {
+      return state.viewImages;
+    },
+    getNeedUpdateBounds(state) {
+      return state.needUpdateBounds;
+    },
   },
   mutations: {
     setActivePolygon(state, polygon) {
@@ -138,8 +146,15 @@ export default {
         console.log("image null");
         return;
       }
-      image.bounds = [[image.bounds[1], image.bounds[0]], [image.bounds[3], image.bounds[2]]]
       state.images.push(image);
+    },
+    addViewImage(state, image) {
+      if (image.id == null || image.img == null || image.bounds == null) {
+        console.log("image null");
+        return;
+      }
+      
+      state.viewImages.push(image);
     },
     removeGeoJsonPolygon(state, id) {
       state.geoJsonPolygons.forEach((el, i) => {
@@ -155,7 +170,17 @@ export default {
         }
       })
     },
+    removeViewImage(state, id) {
+      state.viewImages.forEach((el, i) => {
+        if (el.id === id) {
+          state.viewImages.splice(i, 1);
+        }
+      })
+    },
     clearImages(state) {
+      state.images = [];
+    },
+    clearViewImages(state) {
       state.images = [];
     },
     clearGeoJsons(state) {
@@ -166,6 +191,9 @@ export default {
     },
     setBounds(state, bounds) {
       state.bounds = bounds;
+    },
+    setNeedUpdateBounds(state, needUpdateBounds) {
+      state.needUpdateBounds = needUpdateBounds;
     }
   },
   actions: {
@@ -224,19 +252,48 @@ export default {
       store.commit('removeGeoJsonPolygon', id)
     },
     addImage(store, image) {
+      let p1 = L.latLng(image.bounds[1], image.bounds[0]);
+      let p2 = L.latLng(image.bounds[3], image.bounds[2]);
+      console.log(p1);
+      console.log(p2);
+      let bounds = L.latLngBounds(p1, p2);
+      console.log(bounds);
+      let center = bounds.getCenter();
+      console.log(center);
+
+      store.commit('setCenter', center);
+      store.commit('setBounds', bounds);
+      store.commit('setNeedUpdateBounds', true)
+      image.bounds = bounds;
       store.commit('addImage', image)
     },
     removeImage(store, id) {
       store.commit('removeImage', id)
     },
+    addViewImage(store, image) {
+      let p1 = L.latLng(image.bounds[1], image.bounds[0]);
+      let p2 = L.latLng(image.bounds[3], image.bounds[2]);
+      let bounds = L.latLngBounds(p1, p2);
+      let center = bounds.getCenter();
+      store.commit('setCenter', center);
+      store.commit('setBounds', bounds);
+      store.commit('setNeedUpdateBounds', true)
+      image.bounds = bounds;
+      store.commit('addViewImage', image)
+    },
+    removeViewImage(store, id) {
+      store.commit('removeViewImage', id)
+    },
     setBounds(store, bounds) {
       store.commit('setBounds', bounds)
+    },
+    setNeedUpdateBounds(store, needUpdateBounds) {
+      store.commit('setNeedUpdateBounds', needUpdateBounds)
     },
     async setFilePolygon(store, file) {
       let formData = new FormData();
       formData.append('file', file);
       let data = await filesApi.getPolygon(formData);
-      console.log(data.data.file);
       store.commit('setFilePolygon', data.data.file)
     }
   }

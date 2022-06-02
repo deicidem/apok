@@ -14,8 +14,15 @@
           <div class="preview-picture">
             <img :src="activeView.previewPath" />
           </div>
-          <div class="preview-btns">
+          <div class="preview-btns" v-if="activeView.type == 1">
             <button class="button button-white">Скачать</button>
+            <router-link to="/report">
+              <button class="button button-g">На весь экран</button>
+            </router-link>
+          </div>
+          <div class="preview-btns" v-else>
+            <button class="button button-white" v-if="this.activeView.active" @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Убрать с карты</button>
+            <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Показать на карте</button>
             <router-link to="/report">
               <button class="button button-g">На весь экран</button>
             </router-link>
@@ -35,17 +42,21 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 import * as filesApi from "@/api/files";
 export default {
-  props: ['files', 'views'],
+  props: ['files', 'views', 'taskIndex'],
   data() {
     return {
       reportType: false,
       pictureType: false,
-      activeViewIndex: 0
+      activeViewIndex: 0,
+      viewStates: []
     }
   },
   methods: {
+    ...mapActions('map', ['addViewImage', 'removeViewImage']),
+    ...mapActions('tasks', ['setTaskViewActive']),
     showResult() {
       this.reportType = !this.reportType;
       this.pictureType = !this.pictureType;
@@ -55,7 +66,24 @@ export default {
     },
     download(path) {
       filesApi.download(path);
-    }
+    },
+    onImageButtonClick(id, img, bounds) {
+      if (this.views[this.activeViewIndex].active) {
+        this.removeViewImage(id);
+        this.setTaskViewActive({
+          taskIndex: this.taskIndex,
+          viewIndex: this.activeViewIndex,
+          val: false
+        });
+      } else {
+        this.addViewImage({ id, img, bounds });
+        this.setTaskViewActive({
+          taskIndex: this.taskIndex,
+          viewIndex: this.activeViewIndex,
+          val: true
+        })
+      }
+    },
   },
   computed: {
     activeView() {
@@ -64,6 +92,9 @@ export default {
   },
   mounted() {
     this.setActiveView(0);
+    for (let i = 0; i < this.views.length; i++) {
+      this.viewStates.push({active: false})
+    }
   }
 };
 </script>

@@ -6,8 +6,10 @@
         <div class="data-item">
           <portal to="popup">
             <app-plan-popup
-              v-show="planPopup == true"
-              @close="planPopup = false"
+              :plan="activePlan"
+              :data="planPopup.data"
+              v-if="planPopup.visible"
+              @close="planPopup.visible = false"
             ></app-plan-popup>
           </portal>
           <div class="data-info">
@@ -55,7 +57,7 @@
                   <img src="@/assets/img/choose.svg" />
                 </button>
 
-                <button class="button button-svg data-btn" @click="planPopup = true">
+                <button class="button button-svg data-btn" @click="onUploadClick(i)">
                   <img src="@/assets/img/upload.svg" />
                 </button>
               </div>
@@ -108,7 +110,10 @@ import AppPlanPopup from "@/components/AppPlanPopup.vue";
 export default {
   data() {
     return {
-      planPopup: false,
+      planPopup: {
+        data: null,
+        visible: false
+      },
       activePlanIndex: null,
       showSelect: false,
       ops: {
@@ -135,7 +140,7 @@ export default {
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: "#476D70",
+          background: "#6BA2A6",
         },
       },
     };
@@ -153,6 +158,9 @@ export default {
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
+    setPlanPopupData(i) {
+      this.$set(this.planPopup, 'data', this.activePlan.data[i])
+    },
     startPlan() {
       let formData = new FormData();
       this.$refs.dzzFile.forEach((el, i) => {
@@ -160,6 +168,10 @@ export default {
       });
       let data = filesApi.loadDzzArchive(formData);
       console.log(data);
+    },
+    onUploadClick(i) {
+      this.setPlanPopupData(i);
+      this.planPopup.visible = true;
     },
     selectDzz(i) {
       this.setSelectable({

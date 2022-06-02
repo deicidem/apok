@@ -2,7 +2,6 @@
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="ops">
-      <app-preview></app-preview>
       <div class="tasks__wrapper">
         <app-table>
           <thead>
@@ -14,8 +13,8 @@
             </tr>
           </thead>
 
-          <tbody v-for="item in tasks" :key="item.id">
-            <tr >
+          <tbody v-for="(item, i) in tasks" :key="item.id">
+            <tr @click="setTaskActive({index: i, val: !item.result.active})">
               <td class="col-checkbox center">
                 <app-checkbox :mini="true" @change="onCheck($event)"/>
               </td>
@@ -23,12 +22,11 @@
               <td>{{ item.title }}</td>
               <td>{{ item.date }}</td>
               <td class="green">{{ item.status }}</td>
-
               <td class="green">Посмотреть результат</td>
             </tr>
             <tr>
               <td colspan="6"  class="td_preview">
-                <app-preview :views="item.result.views" :files="item.result.files"></app-preview>
+                <app-preview v-show="item.result.active" v-if="item.result.files.length || item.result.views.length" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
               </td>
 
             </tr>
@@ -44,7 +42,7 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppPreview from "@/components/cards/AppPreview";
@@ -85,7 +83,7 @@ export default {
         bar: {
           onlyShowBarOnScroll: false,
           keepShow: true,
-          background: "#476D70",
+          background: "#6BA2A6",
         },
       },
     };
@@ -97,6 +95,7 @@ export default {
     }),
   },
   methods: {
+    ...mapActions("tasks", ['setTaskActive']),
     onCheck(val) {
       console.log(val);
     },
@@ -105,6 +104,7 @@ export default {
       this.pictureType = !this.pictureType;
     },
   },
+
 };
 </script>
 
@@ -126,7 +126,7 @@ export default {
     }
   }
   .green {
-    color: #488589;
+    color: $color-main;
   }
   .col-checkbox {
     width: 40px;

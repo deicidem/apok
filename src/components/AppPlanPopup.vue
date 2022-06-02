@@ -9,7 +9,9 @@
           <p class="back-subtitle">Назад</p>
         </div>
 
-        <h2 class="popup-card__title">Задача: Формирование температурных карт</h2>
+        <h2 class="popup-card__title">
+          Задача: Формирование температурных карт
+        </h2>
       </div>
 
       <div class="popup-card__wrapper">

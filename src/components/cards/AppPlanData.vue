@@ -55,7 +55,10 @@
                   <img src="@/assets/img/choose.svg" />
                 </button>
 
-                <button class="button button-svg data-btn" @click="planPopup = true">
+                <button
+                  class="button button-svg data-btn"
+                  @click="planPopup = true"
+                >
                   <img src="@/assets/img/upload.svg" />
                 </button>
               </div>

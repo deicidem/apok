@@ -22,7 +22,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.login"
+              v-model.trim="user.login"
               required
             />
             <label class="input-label">Логин</label>
@@ -38,7 +38,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.user"
+              v-model.trim="user.user"
               required
             />
             <label class="input-label">Почтовый адрес</label>
@@ -50,7 +50,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.password"
+              v-model.trim="user.password"
               required
             />
             <label class="input-label">Пароль</label>
@@ -66,7 +66,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.password"
+              v-model.trim="user.password"
               required
             />
             <label class="input-label">Повторите пароль</label>
@@ -81,7 +81,7 @@
           <button @click="submit" class="button button-g form-wrapper__item">
             Зарегистироваться
           </button>
-          
+
           <router-link to="/login">
             <button class="button button-white form-wrapper__item">
               Авторизоваться

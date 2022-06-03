@@ -103,8 +103,6 @@ export default {
       color: $color-main;
       width: 80px;
     }
-    &__information {
-    }
     &__info {
       color: #000;
       margin-bottom: 14px;

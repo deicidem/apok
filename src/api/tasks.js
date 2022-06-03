@@ -12,5 +12,6 @@ export async function all() {
         f.path = server.defaults.baseURL + "api/files/download?path=" + f.path
       })
   });
+  console.log(data);
   return data.tasks;
 }

@@ -9,15 +9,14 @@
           <p class="back-subtitle">Назад</p>
         </div>
 
-        <h2 class="popup-card__title">
-          Задача: Формирование температурных карт
-        </h2>
+        <h2 class="popup-card__title">Задача: {{plan.title}}</h2>
+
       </div>
 
       <div class="popup-card__wrapper">
         <div class="popup-card__info">
           <div class="info-title">
-            Описание директорий, автоматически создаваемых программой
+            Описание директорий для пункта "{{data.title}}"
           </div>
           <div class="info-table">
             <div class="info-table__item">
@@ -57,6 +56,9 @@
 </template>
 
 <script>
+export default {
+  props: ['plan', 'data']
+}
 </script>
 
 

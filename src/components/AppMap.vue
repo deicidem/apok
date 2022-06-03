@@ -3,7 +3,7 @@
     ref="map"
     @update:zoom="setZoom($event)"
     @update:center="updateCenter($event)"
-    @update:bounds="setBounds($event)"
+    @update:bounds="updateBounds($event)"
     @click="onClick($event)"
     @ready="$emit('ready', $refs.map)"
     :options="{ zoomControl: false }"
@@ -35,7 +35,7 @@
       @click="save"
       :fill="true"
       :lat-lngs="polygon.geometry"
-      color="#476D70"
+      color="#6BA2A6"
     ></l-polygon>
 
     <l-geo-json
@@ -65,6 +65,15 @@
       <l-image-overlay
         v-for="(img, i) in images"
         :key="'img' + i"
+        :url="img.img"
+        :bounds="img.bounds"
+      ></l-image-overlay>
+    </template>
+
+    <template>
+      <l-image-overlay
+        v-for="(img, i) in viewImages"
+        :key="'viewImg' + i"
         :url="img.img"
         :bounds="img.bounds"
       ></l-image-overlay>
@@ -136,11 +145,14 @@ export default {
       polygon: "getAreaPolygon",
       drawable: "getAreaPolygonDrawable",
       center: "getCenter",
+      bounds: "getBounds",
       zoom: "getZoom",
       circle: "getCirclePolygon",
       geoJsons: "getGeoJsonPolygons",
       images: "getImages",
-      filePolygon: "getFilePolygon"
+      viewImages: "getViewImages",
+      filePolygon: "getFilePolygon",
+      needUpdateBounds: "getNeedUpdateBounds"
     }),
     icon() {
       return require("@/assets/img/geo_marker.svg");
@@ -153,10 +165,14 @@ export default {
       "setCenter",
       "setZoom",
       "setBounds",
+      "setNeedUpdateBounds"
     ]),
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();
       this.setCenter(center);
+    },
+    updateBounds(bounds) {
+      this.setBounds(bounds);
     },
     // Добавление маркеров
     onClick($event) {
@@ -205,6 +221,15 @@ export default {
       // );
     },
   },
+  watch: {
+    needUpdateBounds(b, a) {
+      if (b) {
+        this.$refs.map.fitBounds(this.bounds);
+        this.setNeedUpdateBounds(false);
+      }
+      return a;
+    }
+  }
 };
 </script>
 

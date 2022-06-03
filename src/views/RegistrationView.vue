@@ -18,6 +18,17 @@
           action="https://vuejs.org/"
           method="post"
         >
+          <div v-if="errors.length">
+            <p class="form-error__title">
+              Пожалуйста исправьте указанные ошибки:
+            </p>
+            <ul>
+              <li class="form-error__text" v-for="error in errors" :key="error">
+                {{ error }}
+              </li>
+            </ul>
+          </div>
+
           <div class="input-wrapper">
             <input
               placeholder=" "
@@ -32,6 +43,9 @@
               class="input-img"
               src="@/assets/img/login-icon.svg"
             />
+            <div v-if="!user.login" class="error-tooltip">
+              <p>Введите логин</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
@@ -66,7 +80,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="user.password"
+              v-model.trim="user.repeatedPassword"
               required
             />
             <label class="input-label">Повторите пароль</label>
@@ -98,12 +112,12 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      errors: [],
+      errors: ["2", "4"],
       user: {
         mail: "",
         login: "",
         password: "",
-        passwordSecond: "",
+        repeatedPassword: "",
       },
     };
   },
@@ -115,7 +129,12 @@ export default {
       this.addUser(this.user);
     },
     checkForm(e) {
-      if (this.user.login && this.user.password) {
+      if (
+        this.user.login &&
+        this.user.password &&
+        this.user.mail &&
+        this.user.repeatedPassword
+      ) {
         return true;
       }
 
@@ -126,6 +145,12 @@ export default {
       }
       if (!this.user.password) {
         this.errors.push("Требуется указать пароль.");
+      }
+      if (!this.user.mail) {
+        this.errors.push("Требуется указать почтовый адрес.");
+      }
+      if (!this.user.repeatedPassword) {
+        this.errors.push("Требуется указать пароль повторно.");
       }
 
       e.preventDefault();
@@ -191,6 +216,38 @@ export default {
       margin: 10px auto;
 
       font-size: 16px;
+    }
+  }
+  &-error {
+    &__title {
+      color: $color-red;
+      font-size: 14px;
+    }
+    &__text {
+      color: $color-red;
+      font-size: 14px;
+    }
+  }
+}
+
+.error {
+  &-tooltip {
+    position: absolute;
+    right: -200px;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    display: flex;
+    align-items: center;
+
+    height: 49px;
+    width: 200px;
+    background: linear-gradient(to right, rgb(235, 96, 96, 0.7), rgb(141, 70, 70, 0.7));
+    color: #FFF;
+    font-size: 14px;
+    border-radius: 10px;
+    p{
+      margin-left: 8px;
     }
   }
 }

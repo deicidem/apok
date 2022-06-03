@@ -61,7 +61,7 @@ export default {
       if (data.value) {
         store.dispatch('plans/setDataObject', {
           planIndex: store.getters.getSelectable.planIndex,
-          dzzIndex: data.index,
+          dzzIndex: store.getters.getResults[data.index].id,
           dataIndex: store.getters.getSelectable.dataIndex,
         }, {
           root: true

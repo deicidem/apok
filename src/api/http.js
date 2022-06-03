@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://192.168.1.104/apok_backend_php/public/",
+  baseURL: "/api",
+  // baseURL: "http://192.168.1.104/apok_backend_php/public/",
   timeout: 10000,
   withCredentials: true
 });

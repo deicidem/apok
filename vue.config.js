@@ -5,9 +5,15 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     proxy: {
-      '^/api': {
-        target: 'http://192.168.1.104/apok_backend_php/public/',
+      '/api': {
+        target: 'http://192.168.1.104/apok_backend_php/public',
         changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        },
+        onProxyReq: function(request) {
+          request.setHeader("origin", "http://192.168.1.104");
+        },
       }
     }
   },

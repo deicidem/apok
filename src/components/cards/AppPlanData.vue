@@ -9,7 +9,7 @@
               :plan="activePlan"
               :data="planPopup.data"
               v-if="planPopup.visible"
-              @close="planPopup.visible = false"
+              @close="onPopupClose"
             ></app-plan-popup>
           </portal>
           <div class="data-info">
@@ -91,7 +91,7 @@
           </div>
         </template>
       </div>
-      <button @click="startPlan" class="button button-g data-start">
+      <button @click="planNewTask(activePlanIndex)" class="button button-g data-start">
         Начать
       </button>
     </div>
@@ -113,6 +113,7 @@ export default {
     return {
       planPopup: {
         data: null,
+        dataIndex: null,
         visible: false
       },
       activePlanIndex: null,
@@ -159,6 +160,7 @@ export default {
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
+    ...mapActions("plans", ['setDataFile', 'planNewTask']),
     setPlanPopupData(i) {
       this.$set(this.planPopup, 'data', this.activePlan.data[i])
     },
@@ -170,9 +172,14 @@ export default {
       let data = filesApi.loadDzzArchive(formData);
       console.log(data);
     },
+    onPopupClose(file) {
+      this.setDataFile({planIndex: this.activePlanIndex, dataIndex: this.planPopup.dataIndex, file})
+      this.planPopup.visible = false
+    },
     onUploadClick(i) {
       this.setPlanPopupData(i);
       this.planPopup.visible = true;
+      this.planPopup.dataIndex = i;
     },
     selectDzz(i) {
       this.setSelectable({
@@ -252,8 +259,6 @@ export default {
     padding: 10px;
     box-shadow: $shadow-small;
     border-radius: 5px;
-  }
-  &-info {
   }
   &-arrowDown {
     position: absolute;

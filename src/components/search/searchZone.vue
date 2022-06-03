@@ -182,7 +182,6 @@
             ref="file"
             type="file"
             name="file"
-            id="file"
           />
           <span class="button button-white load-wrapper__button"
             >Загрузить файл</span

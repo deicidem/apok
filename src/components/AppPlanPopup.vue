@@ -2,7 +2,7 @@
   <div class="plan-popup">
     <div class="popup-card">
       <div class="popup-card__header">
-        <div class="back" @click="$emit('close')">
+        <div class="back" @click="$emit('close', file)">
           <div class="back-arrow">
             <img src="@/assets/img/arrow.svg" />
           </div>
@@ -49,6 +49,7 @@
             Выбрано:
             <p class="popup-card__file">file.shp</p>
           </div>
+          <input type="file" name="a" ref="file" @change="onFileUpload">
         </div>
       </div>
     </div>
@@ -57,7 +58,17 @@
 
 <script>
 export default {
-  props: ['plan', 'data']
+  props: ['plan', 'data'],
+  data() {
+    return {
+      file: null
+    }
+  },
+  methods: {
+    onFileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+  }
 }
 </script>
 

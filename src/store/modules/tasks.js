@@ -42,7 +42,8 @@ export default {
     },
     setTaskViewActive({commit}, data) {
       commit('setTaskViewActive', data);
-    }
+    },
+    
   }
 }
 

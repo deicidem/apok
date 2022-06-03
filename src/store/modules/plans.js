@@ -1,4 +1,5 @@
-import * as plansApi from '@/api/plans'
+import * as plansApi from '@/api/plans';
+import * as tasksApi from '@/api/tasks';
 
 export default {
   namespaced: true,
@@ -28,7 +29,10 @@ export default {
     },
     setDataObject(state, data) {
       state.plans[data.planIndex].data[data.dataIndex].dzzIndex = data.dzzIndex;
-    }
+    },
+    setDataFile(state, data) {
+      state.plans[data.planIndex].data[data.dataIndex].file = data.file;
+    },
   },
   actions: {
     async load({commit}) {
@@ -36,6 +40,7 @@ export default {
       plans.forEach(el => {
         el.data.forEach(d => {
           d.dzzIndex = null;
+          d.file = null;
         });
       });
       commit("setPlans", plans)
@@ -43,6 +48,31 @@ export default {
     },
     setDataObject(store, data) {
       store.commit('setDataObject', data);
+    },
+    setDataFile(store, data) {
+      store.commit('setDataFile', data);
+    },
+    async planNewTask(store, i) {
+        let dzzs = [];
+        let params = [];
+        let vectors = [];
+        let files = [];
+        let plan = store.getters.getPlans[i];
+        let planId = plan.id;
+
+        plan.data.forEach(el => {
+          if (el.file != null) {
+            files.push(el.file);
+          } else if (el.dzzIndex != null) {
+            dzzs.push(el.dzzIndex)
+          } else {
+            vectors.push(store.rootGetters['map/getActivePolygonJson']);
+          }
+        })
+        console.log({dzzs, params, vectors, files, planId});
+        tasksApi.add({dzzs, params, vectors, files, planId}).catch((e) => {
+          console.log(e);
+        });
     }
   }
 }

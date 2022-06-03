@@ -14,27 +14,15 @@
         <form
           class="form-wrapper"
           id="registration"
-          @submit="checkForm"
-          action="https://vuejs.org/"
+          @submit.prevent="submitForm()"
           method="post"
         >
-          <div v-if="errors.length">
-            <p class="form-error__title">
-              Пожалуйста исправьте указанные ошибки:
-            </p>
-            <ul>
-              <li class="form-error__text" v-for="error in errors" :key="error">
-                {{ error }}
-              </li>
-            </ul>
-          </div>
-
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="user.login"
-              required
+              v-model.trim="login"
+              :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
 
@@ -43,7 +31,7 @@
               class="input-img"
               src="@/assets/img/login-icon.svg"
             />
-            <div v-if="!user.login" class="error-tooltip">
+            <div v-if="v$.login.$error" class="error-tooltip">
               <p>Введите логин</p>
             </div>
           </div>
@@ -52,20 +40,27 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="user.user"
-              required
+              v-model.trim="mail"
+              :class="{ invalid: v$.mail.$error }"
             />
             <label class="input-label">Почтовый адрес</label>
 
-            <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              src="@/assets/img/mail.svg"
+            />
+            <div v-if="v$.mail.$error" class="error-tooltip">
+              <p>Введите почтовый адрес</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="user.password"
-              required
+              v-model.trim="password"
+              :class="{ invalid: v$.password.$error }"
             />
             <label class="input-label">Пароль</label>
 
@@ -74,14 +69,17 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
+            <div v-if="v$.password.$error" class="error-tooltip">
+              <p>Введите пароль</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="user.repeatedPassword"
-              required
+              v-model.trim="repeatedPassword"
+              :class="{ invalid: v$.repeatedPassword.$error }"
             />
             <label class="input-label">Повторите пароль</label>
 
@@ -90,9 +88,16 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
+            <div v-if="v$.repeatedPassword.$error" class="error-tooltip">
+              <p>Введите пароль повторно</p>
+            </div>
           </div>
 
-          <button @click="submit" class="button button-g form-wrapper__item">
+          <button
+            type="submit"
+            @click="submitForm()"
+            class="button button-g form-wrapper__item"
+          >
             Зарегистироваться
           </button>
 
@@ -109,51 +114,46 @@
 
 <script>
 import { mapActions } from "vuex";
+import { reactive } from "@vue/composition-api";
+import useVuelidate from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+
 export default {
   data() {
     return {
-      errors: ["2", "4"],
-      user: {
-        mail: "",
-        login: "",
-        password: "",
-        repeatedPassword: "",
-      },
+      login: "",
+      mail: "",
+      password: "",
+      repeatedPassword: "",
     };
+  },
+  setup() {
+    const state = reactive({
+      login: "",
+      mail: "",
+      password: "",
+      repeatedPassword: "",
+    });
+    const rules = {
+      login: { required },
+      mail: { required, email },
+      password: { required },
+      repeatedPassword: { required },
+    };
+
+    const v$ = useVuelidate(rules, state);
+
+    return { state, v$ };
   },
   methods: {
     ...mapActions("users", {
       addUser: "addUser",
     }),
-    submit() {
-      this.addUser(this.user);
-    },
-    checkForm(e) {
-      if (
-        this.user.login &&
-        this.user.password &&
-        this.user.mail &&
-        this.user.repeatedPassword
-      ) {
-        return true;
-      }
-
-      this.errors = [];
-
-      if (!this.user.login) {
-        this.errors.push("Требуется указать логин.");
-      }
-      if (!this.user.password) {
-        this.errors.push("Требуется указать пароль.");
-      }
-      if (!this.user.mail) {
-        this.errors.push("Требуется указать почтовый адрес.");
-      }
-      if (!this.user.repeatedPassword) {
-        this.errors.push("Требуется указать пароль повторно.");
-      }
-
-      e.preventDefault();
+    async submitForm() {
+      const isFormCorrect = await this.v$.$validate();
+      // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
+      if (!isFormCorrect) return;
+      // actually submit form
     },
   },
 };
@@ -229,24 +229,39 @@ export default {
     }
   }
 }
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+}
+
 
 .error {
   &-tooltip {
     position: absolute;
-    right: -200px;
+    right: -240px;
     top: 50%;
     transform: translate(0, -50%);
+    transition: all 2s ease-out;
 
     display: flex;
     align-items: center;
 
     height: 49px;
-    width: 200px;
-    background: linear-gradient(to right, rgb(235, 96, 96, 0.7), rgb(141, 70, 70, 0.7));
-    color: #FFF;
+    width: 240px;
+    background: linear-gradient(
+      to right,
+      rgb(235, 96, 96, 0.6),
+      rgb(141, 70, 70, 0.6)
+    );
+    color: #fff;
     font-size: 14px;
     border-radius: 10px;
-    p{
+    p {
       margin-left: 8px;
     }
   }

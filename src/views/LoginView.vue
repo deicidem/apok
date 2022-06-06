@@ -11,12 +11,16 @@
       <div class="form">
         <div class="form-title">Авторизация</div>
 
-        <form class="form-wrapper" @submit.prevent="submitForm()">
+        <form
+          class="form-wrapper"
+          @submit.prevent="submitForm()"
+          method= "POST"
+        >
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="login"
+              v-model.trim="state.login"
               :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
@@ -26,8 +30,8 @@
               class="input-img"
               src="@/assets/img/login-icon.svg"
             />
-            <div v-if="v$.password.$error" class="error-tooltip">
-              <p>Введите логин</p>
+            <div v-if="v$.login.$error" class="error-tooltip">
+              <p>{{ v$.login.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -35,7 +39,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="password"
+              v-model.trim="state.password"
               :class="{ invalid: v$.password.$error }"
             />
             <label class="input-label">Пароль</label>
@@ -46,7 +50,7 @@
               src="@/assets/img/lock-icon.svg"
             />
             <div v-if="v$.password.$error" class="error-tooltip">
-              <p>Введите пароль</p>
+              <p>{{ v$.password.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -73,7 +77,7 @@
 import { mapActions } from "vuex";
 import { reactive } from "@vue/composition-api";
 import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+import { required, helpers, minLength } from "@vuelidate/validators";
 
 export default {
   data() {
@@ -88,8 +92,20 @@ export default {
       password: "",
     });
     const rules = {
-      login: { required },
-      password: { required },
+      login: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
+      password: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Пароль должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
     };
 
     const v$ = useVuelidate(rules, state);
@@ -100,11 +116,13 @@ export default {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
-    async submitForm() {
-      const isFormCorrect = await this.v$.$validate();
-      // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
-      if (!isFormCorrect) return;
-      // actually submit form
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
     },
   },
 };

@@ -21,7 +21,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="login"
+              v-model.trim="state.login"
               :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
@@ -32,7 +32,7 @@
               src="@/assets/img/login-icon.svg"
             />
             <div v-if="v$.login.$error" class="error-tooltip">
-              <p>Введите логин</p>
+              <p>{{ v$.login.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -40,18 +40,14 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="mail"
+              v-model.trim="state.mail"
               :class="{ invalid: v$.mail.$error }"
             />
             <label class="input-label">Почтовый адрес</label>
 
-            <img
-              svg-inline
-              class="input-img"
-              src="@/assets/img/mail.svg"
-            />
+            <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
             <div v-if="v$.mail.$error" class="error-tooltip">
-              <p>Введите почтовый адрес</p>
+              <p>{{ v$.mail.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -59,8 +55,8 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="password"
-              :class="{ invalid: v$.password.$error }"
+              v-model.trim="state.password.password"
+              :class="{ invalid: v$.password.password.$error }"
             />
             <label class="input-label">Пароль</label>
 
@@ -69,8 +65,8 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
-            <div v-if="v$.password.$error" class="error-tooltip">
-              <p>Введите пароль</p>
+            <div v-if="v$.password.password.$error" class="error-tooltip">
+              <p>{{ v$.password.password.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -78,8 +74,8 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="repeatedPassword"
-              :class="{ invalid: v$.repeatedPassword.$error }"
+              v-model.trim="state.password.confirm"
+              :class="{ invalid: v$.password.confirm.$error }"
             />
             <label class="input-label">Повторите пароль</label>
 
@@ -88,8 +84,8 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
-            <div v-if="v$.repeatedPassword.$error" class="error-tooltip">
-              <p>Введите пароль повторно</p>
+            <div v-if="v$.password.confirm.$error" class="error-tooltip">
+              <p>{{ v$.password.confirm.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -116,29 +112,66 @@
 import { mapActions } from "vuex";
 import { reactive } from "@vue/composition-api";
 import useVuelidate from "@vuelidate/core";
-import { required, email } from "@vuelidate/validators";
+import {
+  required,
+  helpers,
+  email,
+  minLength,
+  sameAs,
+} from "@vuelidate/validators";
 
 export default {
   data() {
     return {
       login: "",
       mail: "",
-      password: "",
-      repeatedPassword: "",
+      password: {
+        password: "",
+        confirm: "",
+      },
     };
   },
   setup() {
     const state = reactive({
       login: "",
       mail: "",
-      password: "",
-      repeatedPassword: "",
+      password: {
+        password: "",
+        confirm: "",
+      },
     });
     const rules = {
-      login: { required },
-      mail: { required, email },
-      password: { required },
-      repeatedPassword: { required },
+      login: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
+      mail: {
+        required: helpers.withMessage("Введите значение", required),
+        email: helpers.withMessage("Некорректно введен почтовый адрес", email),
+      },
+      password: {
+        password: {
+          required: helpers.withMessage("Введите значение", required),
+          minLength: helpers.withMessage(
+            "Пароль должен содержать больше 6 символов",
+            minLength(6)
+          ),
+        },
+        confirm: {
+          required: helpers.withMessage("Введите значение", required),
+          minLength: helpers.withMessage(
+            "Пароль должен содержать больше 6 символов",
+            minLength(6)
+          ),
+          sameAs: helpers.withMessage(
+            "Пароли не совпадают",
+            sameAs("state.password.password")
+          ),
+        },
+      },
     };
 
     const v$ = useVuelidate(rules, state);
@@ -149,11 +182,13 @@ export default {
     ...mapActions("users", {
       addUser: "addUser",
     }),
-    async submitForm() {
-      const isFormCorrect = await this.v$.$validate();
-      // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
-      if (!isFormCorrect) return;
-      // actually submit form
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
     },
   },
 };
@@ -238,12 +273,21 @@ export default {
     color: $color-red;
   }
 }
-
+.invalidIcon {
+  position: absolute;
+  max-width: 26px;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  path {
+    fill: $color-main;
+  }
+}
 
 .error {
   &-tooltip {
     position: absolute;
-    right: -240px;
+    right: -250px;
     top: 50%;
     transform: translate(0, -50%);
     transition: all 2s ease-out;
@@ -252,16 +296,17 @@ export default {
     align-items: center;
 
     height: 49px;
-    width: 240px;
+    width: 250px;
     background: linear-gradient(
       to right,
-      rgb(235, 96, 96, 0.6),
-      rgb(141, 70, 70, 0.6)
+      rgb(235, 96, 96, 0.7),
+      rgb(141, 70, 70, 0.7)
     );
     color: #fff;
     font-size: 14px;
     border-radius: 10px;
     p {
+      text-align: left;
       margin-left: 8px;
     }
   }

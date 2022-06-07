@@ -19,8 +19,8 @@ export async function loadDzzArchive(formData) {
   console.log(data);
   return data;
 }
-export async function download(path) {
-  let data = await server.get('api/files/download', {params: {path}});
+export async function download(fileId) {
+  let data = await server.get('api/files/download', {params: {fileId}});
   console.log(data);
   return data;
 }

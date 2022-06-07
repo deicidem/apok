@@ -11,7 +11,7 @@ export async function all() {
       })
     }
       el.result.files.forEach(f => {
-        f.path = server.defaults.baseURL + "api/files/download?path=" + f.path
+        f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
       })
   });
   console.log(data);

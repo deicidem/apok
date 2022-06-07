@@ -17,7 +17,16 @@ export default {
     },
     getSelectable(state) {
       return state.selectable;
-    }
+    },
+    resultsMap(state) {
+      let resultsMap = {};
+
+      for (let i = 0; i < state.results.length; i++) {
+        let result = state.results[i];
+        resultsMap[result.id] = result;
+      }
+      return resultsMap;
+    },
   },
   mutations: {
     setResultProperty(state, data) {

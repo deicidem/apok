@@ -1,5 +1,5 @@
 <template>
-  <div class="data">
+  <div class="data" :class="{ active: getDataCardState }">
     <div class="data-content">
       <div class="data-title">Запланировать задачу</div>
       <div class="data-wrapper">
@@ -40,11 +40,14 @@
         <template v-if="activePlan != null">
           <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
             <template v-if="data.type == 1">
-              <div class="data-circle"></div>
+              <div class="data-circle" :class="`data-circle-${i + 1}`"></div>
               <div class="data-info">
                 <p class="data__subtitle">{{ data.title }}</p>
-                <p class="data__text" v-if="data.dzzIndex != null">
-                  {{ getResults[data.dzzIndex].name }}
+                <p class="data__text" v-if="data.file != null">
+                  {{ data.file.name }}
+                </p>
+                <p class="data__text" v-else-if="data.dzzIndex != null">
+                  {{ resultsMap[data.dzzIndex].name }}
                 </p>
                 <p class="data__text" v-else>Не выбрано</p>
               </div>
@@ -57,14 +60,14 @@
                   <img src="@/assets/img/choose.svg" />
                 </button>
 
-                <button class="button button-svg data-btn" @click="onUploadClick(i)">
 
+                <button class="button button-svg data-btn" @click="onUploadClick(i)">
                   <img src="@/assets/img/upload.svg" />
                 </button>
               </div>
             </template>
             <template v-else>
-              <div class="data-circle"></div>
+              <div class="data-circle hidden"></div>
               <div class="data-info">
                 <p class="data__subtitle">{{ data.title }}</p>
                 <p class="data__text" v-if="getActivePolygonJson != null">
@@ -78,7 +81,10 @@
                     <img src="@/assets/img/choose.svg" />
                   </button>
                 </router-link>
-                <button class="button button-svg data-btn">
+                <button
+                  class="button button-svg data-btn"
+                  
+                >
                   <img
                     svg-inline
                     class="icon icon-vector-o"
@@ -91,11 +97,14 @@
           </div>
         </template>
       </div>
-      <button @click="planNewTask(activePlanIndex)" class="button button-g data-start">
+      <button
+        @click="planNewTask(activePlanIndex)"
+        class="button button-g data-start"
+      >
         Начать
       </button>
     </div>
-    <div class="data-line">
+    <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
         <img src="@/assets/img/arrow-plan.svg" alt="" />
       </div>
@@ -114,7 +123,7 @@ export default {
       planPopup: {
         data: null,
         dataIndex: null,
-        visible: false
+        visible: false,
       },
       activePlanIndex: null,
       showSelect: false,
@@ -153,16 +162,18 @@ export default {
   computed: {
     ...mapGetters("plans", ["getPlans"]),
     ...mapGetters("map", ["getActivePolygonJson"]),
-    ...mapGetters("results", ["getSelectable", "getResults"]),
+    ...mapGetters("results", ["getSelectable", "getResults", "resultsMap"]),
+    ...mapGetters(["getDataCardState"]),
     activePlan() {
       return this.getPlans[this.activePlanIndex];
     },
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
-    ...mapActions("plans", ['setDataFile', 'planNewTask']),
+    ...mapActions("plans", ["setDataFile", "planNewTask"]),
+    ...mapActions(["setDataCardState"]),
     setPlanPopupData(i) {
-      this.$set(this.planPopup, 'data', this.activePlan.data[i])
+      this.$set(this.planPopup, "data", this.activePlan.data[i]);
     },
     startPlan() {
       let formData = new FormData();
@@ -173,8 +184,12 @@ export default {
       console.log(data);
     },
     onPopupClose(file) {
-      this.setDataFile({planIndex: this.activePlanIndex, dataIndex: this.planPopup.dataIndex, file})
-      this.planPopup.visible = false
+      this.setDataFile({
+        planIndex: this.activePlanIndex,
+        dataIndex: this.planPopup.dataIndex,
+        file,
+      });
+      this.planPopup.visible = false;
     },
     onUploadClick(i) {
       this.setPlanPopupData(i);
@@ -206,7 +221,7 @@ export default {
 <style lang="scss" scoped>
 .data {
   position: absolute;
-  left: calc(100% + 20px);
+  left: calc(100% + 30px);
   top: 37px;
 
   display: flex;
@@ -217,17 +232,30 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: $shadow-big;
+  transform: translateX(-100%);
   transition: all 0.3s ease-out;
-  // transform: translateX(calc(-100% + 10px));
-  translate: 0;
+  &.active {
+    transform: translateX(0);
+  }
   &-circle {
     margin-right: 10px;
     width: 22px;
     height: 22px;
     border-radius: 50%;
     background: #fff;
-    box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+    // box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
     transform: -20px;
+    box-shadow: $shadow-small;
+    &.hidden {
+      background: none;
+      box-shadow: none;
+    }
+    &-1 {
+      background: $gradient-b;
+    }
+    &-2 {
+      background: $gradient-p;
+    }
   }
   &-content {
     width: 100%;
@@ -241,6 +269,9 @@ export default {
     background-color: $color-main;
     display: flex;
     align-items: center;
+    * {
+      width: 30px;
+    }
   }
   &-title {
     color: #000;

@@ -13,21 +13,31 @@ import results from './modules/results'
 
 export default new Vuex.Store({
   state: {
-    sidebarActive: false
+    sidebarActive: false,
+    dataCardActive: false,
   },
   getters: {
     getSidebarState(state) {
       return state.sidebarActive;
+    },
+    getDataCardState(state) {
+      return state.dataCardActive;
     }
   },
   mutations: {
     setSidebarState(state, val) {
       state.sidebarActive = val;
+    },
+    setDataCardState(state, val) {
+      state.dataCardActive = val;
     }
   },
   actions: {
     setSidebarState(store, val) {
       store.commit('setSidebarState', val)
+    },
+    setDataCardState(store, val) {
+      store.commit('setDataCardState', val)
     },
   },
   modules: {

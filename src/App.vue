@@ -22,20 +22,20 @@ export default {
 
 <style lang="scss">
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 html,
 body {
+  padding: 0;
+  margin: 0;
   min-width: 1024px;
   width: 100%;
 
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
-  font-family: "Montserrat", sans-serif;
 
   overflow: visible;
   color: #c7c7c7;
@@ -58,6 +58,10 @@ img {
   display: block;
   object-fit: cover;
   width: 100%;
+}
+
+svg:focus {
+  outline: none;
 }
 
 .wrapper {

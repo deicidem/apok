@@ -16,15 +16,15 @@
           </div>
           <div class="preview-btns" v-if="activeView.type == 1">
             <button class="button button-white">Скачать</button>
-            <router-link to="/report">
-              <button class="button button-g">На весь экран</button>
+            <router-link to="/report" custom v-slot="{navigate}">
+              <button @click="navigate" class="button button-g">На весь экран</button>
             </router-link>
           </div>
           <div class="preview-btns" v-else>
             <button class="button button-white" v-if="this.activeView.active" @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Убрать с карты</button>
             <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Показать на карте</button>
-            <router-link to="/report">
-              <button class="button button-g">На весь экран</button>
+            <router-link to="/report" custom v-slot="{navigate}">
+              <button @click="navigate" class="button button-g">На весь экран</button>
             </router-link>
           </div>
         </div>
@@ -105,17 +105,19 @@ export default {
   &-picture {
     margin: 20px auto;
     img {
-      height: auto;
-      width: auto;
-      max-width: 450px;
-      max-height: 350px;
+      max-width: 100;
     }
   }
   &-btns {
     margin-top: 20px;
     display: flex;
-    button {
+    justify-content: space-between;
+    .button {
+      flex: 1 1 auto;
       margin-right: 20px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   &-wrapper {
@@ -125,7 +127,10 @@ export default {
     background: #fff;
     border-radius: 20px;
     box-shadow: $shadow-big;
-
+    &__main {
+      margin-right: 30px;
+      flex: 1 1 auto;
+    }
     &__nav {
       display: flex;
       margin-top: 10px;

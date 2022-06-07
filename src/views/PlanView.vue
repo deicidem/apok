@@ -24,22 +24,25 @@
         <div class="plan-wrapper__cards">
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Описание</div>
-            <div class="plan-wrapper__text" v-html="plan.description">
-            </div>
+            <div class="plan-wrapper__text" v-html="plan.description"></div>
           </div>
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Требования к данным</div>
             <div class="plan-table">
-                <div class="plan-table__item" v-for="(req, i) in plan.requirements" :key="i">
+              <div
+                class="plan-table__item"
+                v-for="(req, i) in plan.requirements"
+                :key="i"
+              >
                 <!-- <div class="plan-table__img">
                   <img src="@/assets/img/plan__data.svg" />
                 </div> -->
-                <p class="plan-table__subtitle">{{req.title}}:</p>
+                <p class="plan-table__subtitle">{{ req.title }}:</p>
                 <p class="plan-table__text">
                   {{ req.description }}
                 </p>
               </div>
-              
+
               <!-- <div class="plan-table__line"></div>
               <div class="plan-table__item">
                 <div class="plan-table__img">
@@ -135,6 +138,7 @@ export default {
   overflow: hidden;
   background: $gradient-w;
   &-title {
+    margin: 0;
     color: #000;
     font-weight: 400;
   }
@@ -179,6 +183,12 @@ export default {
     &__text {
       margin-top: 20px;
       color: #000;
+      p{
+        margin: 0;
+      }
+      ul{
+        margin: 0;
+      }
     }
     &__img {
       border-radius: 15px;
@@ -202,6 +212,7 @@ export default {
         margin-right: 6px;
       }
       &__subtitle {
+        margin: 0;
         font-size: 18px;
         color: $color-main;
       }
@@ -227,7 +238,7 @@ img {
     width: 40px;
   }
   p {
-    margin-left: 10px;
+    margin: 0 0 0 10px;
     color: $text-grey;
   }
 }
@@ -235,12 +246,12 @@ img {
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;
-    &-title{
+    &-title {
       font-size: 18px;
     }
-    &-wrapper{
+    &-wrapper {
       max-width: 1200px;
-      &__header{
+      &__header {
         max-width: 1200px;
       }
     }

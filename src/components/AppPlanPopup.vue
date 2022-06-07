@@ -9,14 +9,13 @@
           <p class="back-subtitle">Назад</p>
         </div>
 
-        <h2 class="popup-card__title">Задача: {{plan.title}}</h2>
-
+        <h2 class="popup-card__title">Задача: {{ plan.title }}</h2>
       </div>
 
       <div class="popup-card__wrapper">
         <div class="popup-card__info">
           <div class="info-title">
-            Описание директорий для пункта "{{data.title}}"
+            Описание директорий для пункта "{{ data.title }}"
           </div>
           <div class="info-table">
             <div class="info-table__item">
@@ -49,7 +48,7 @@
             Выбрано:
             <p class="popup-card__file">file.shp</p>
           </div>
-          <input type="file" name="a" ref="file" @change="onFileUpload">
+          <input type="file" name="a" ref="file" @change="onFileUpload" />
         </div>
       </div>
     </div>
@@ -58,18 +57,18 @@
 
 <script>
 export default {
-  props: ['plan', 'data'],
+  props: ["plan", "data"],
   data() {
     return {
-      file: null
-    }
+      file: null,
+    };
   },
   methods: {
     onFileUpload() {
       this.file = this.$refs.file.files[0];
     },
-  }
-}
+  },
+};
 </script>
 
 
@@ -79,12 +78,13 @@ export default {
   align-items: center;
   position: absolute;
   left: 0;
+  margin: 0;
   cursor: pointer;
   &-arrow {
     width: 40px;
   }
   p {
-    margin-left: 10px;
+    margin: 0 0 0 10px;
     color: $text-grey;
   }
 }
@@ -119,6 +119,7 @@ export default {
       justify-content: center;
     }
     &__title {
+      margin: 0;
       font-size: 20px;
       font-weight: 400;
       text-align: center;
@@ -133,7 +134,7 @@ export default {
     }
     &__info {
       width: 500px;
-      margin-top: 20px;
+      margin: 20px 0 0 0;
       padding: 20px;
 
       box-shadow: $shadow-small;
@@ -160,48 +161,46 @@ export default {
       align-items: center;
     }
     &__file {
-      margin-left: 10px;
+      margin: 0 0 0 10px;
 
       color: #000;
       font-size: 14px;
     }
-    &__info {
-      margin-left: 20px;
-      .info {
-        &-title {
-          color: $text-grey;
-          text-align: center;
+    .info {
+      &-title {
+        color: $text-grey;
+        text-align: center;
+      }
+      &-table {
+        &__item {
+          position: relative;
+
+          display: flex;
+          align-items: stretch;
+          margin-top: 20px;
         }
-        &-table {
-          &__item {
-            position: relative;
+        &__title {
+          margin: 0 10px 0 0;
+          width: 160px;
 
-            display: flex;
-            align-items: stretch;
-            margin-top: 20px;
-          }
-          &__title {
-            margin-right: 10px;
-            width: 160px;
+          color: $color-main;
+        }
+        &__wrapper {
+          display: flex;
+        }
+        &__vertical {
+          height: 100%;
+          margin-right: 10px;
 
-            color: $color-main;
-          }
-          &__wrapper {
-            display: flex;
-          }
-          &__vertical {
-            height: 100%;
-            margin-right: 10px;
+          border-left: 1px solid #ebf0f0;
+        }
+        &__text {
+          max-width: 460px;
+          margin-right: 10px;
+          margin: 0;
 
-            border-left: 1px solid #ebf0f0;
-          }
-          &__text {
-            max-width: 460px;
-            margin-right: 10px;
-
-            color: $text-grey;
-            font-size: 12px;
-          }
+          color: $text-grey;
+          font-size: 12px;
         }
       }
     }

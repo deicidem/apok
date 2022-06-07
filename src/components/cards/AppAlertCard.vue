@@ -100,11 +100,13 @@ export default {
     &__info {
       margin-left: 16px;
       h2 {
+        margin: 0;
         color: $text-grey;
         font-weight: 400;
         font-size: 14px;
       }
       p {
+        margin: 0;
         font-weight: 400;
         font-size: 12px;
       }

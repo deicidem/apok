@@ -66,6 +66,7 @@ export default {
   position: relative;
 
   padding: 10px;
+  margin: 0;
 
   font-size: 1.5rem;
   text-align: center;

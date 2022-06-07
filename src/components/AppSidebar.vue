@@ -190,6 +190,7 @@ export default {
     transform: translateX(0);
   }
   &-title {
+    margin: 0;
     padding: 5px;
 
     background: $gradient;

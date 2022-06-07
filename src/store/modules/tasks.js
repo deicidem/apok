@@ -18,6 +18,14 @@ export default {
     setTasks(state, items) {
       state.tasks = items;
     },
+    setTask(state, item) {
+      state.tasks.forEach((el, i) => {
+        if (el.id == item.id) {
+          state.tasks.splice(i, 1, item);
+        }
+        
+      })
+    },
     setTaskActive(state, data) {
       state.tasks[data.index].result.active = data.val;
     },
@@ -26,16 +34,36 @@ export default {
     }
   },
   actions: {
-    async load({commit}) {
+    async load({commit, dispatch}) {
       let tasks = await tasksApi.all();
       tasks.forEach(el => {
         el.result.active = false;
         el.result.views.forEach(el => {
           el.active = false;
         })
+        if (el.status != "Завершена") {
+          dispatch('setTimer', el.id)
+        }
       });
       commit('setTasks', tasks);
       return tasks;
+    },
+    async update({commit}, id) {
+      let task = await tasksApi.one(id);
+      task.result.active = false;
+      task.result.views.forEach(el => {
+        el.active = false;
+      })
+      commit('setTask', task);
+      return task;
+    },
+    async setTimer({dispatch}, id) {
+      let interval = setInterval(async () => {
+        let task = await dispatch('update', id);
+        if (task.status == "Завершена") {
+          clearInterval(interval);
+        }
+      }, 60000);
     },
     setTaskActive({commit}, data) {
       commit('setTaskActive', data);

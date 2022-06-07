@@ -18,7 +18,8 @@
   padding: 10px 20px;
   background: $gradient-w;
   border-radius: 10px;
-  border: 2px solid $color-red;
+  border: 2px solid #D84949;
+  box-shadow: $shadow-big;
   &-title {
     line-height: 1.5;
     color: #000;

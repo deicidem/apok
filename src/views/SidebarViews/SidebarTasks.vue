@@ -20,9 +20,14 @@
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
-              <td>{{ item.date }}</td>
-              <td class="green">{{ item.status }}</td>
-              <td class="green">Посмотреть результат</td>
+              <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
+              <td>{{ item.date.toLocaleDateString() }}</td>
+              <td>{{ item.status }}</td>
+              <td>
+                <button class="tasks-table__button">
+                  Посмотреть результат
+                </button>
+              </td>
             </tr>
             <tr>
               <td colspan="6"  class="td_preview">
@@ -113,6 +118,16 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-table__button {
+    font-size: 12px;
+    background: none;
+    border: none;
+    color: $color-main;
+    &:hover {
+      cursor: pointer;
+      color: $color-main-light;
+    }
+  }
   &__wrapper {
     background: #ffffff;
     box-shadow: $shadow-big;

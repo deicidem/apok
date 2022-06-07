@@ -1,7 +1,7 @@
 <template>
   <div class="error">
-    <h1>Ошибка 404</h1>
-    <h2>Страница не найдена</h2>
+    <h5 class="error-title">Ошибка 404</h5>
+    <div class="error-text">Страница не найдена</div>
   </div>
 </template>
 
@@ -11,23 +11,24 @@
 <style scoped lang="scss">
 .error {
   position: absolute;
-  right: 30px;
-  bottom: 30px;
+  right: 40px;
+  bottom: 40px;
   z-index: 10;
-  padding: 20px;
+  min-width: 420px;
+  padding: 10px 20px;
   background: $gradient-w;
   border-radius: 10px;
   border: 2px solid $color-red;
-  h1 {
+  &-title {
+    line-height: 1.5;
     color: #000;
-    font-weight: 400;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 18px;
   }
-  h2 {
+  &-text {
     color: $text-grey;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 </style>

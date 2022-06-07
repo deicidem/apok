@@ -21,7 +21,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.login"
+              v-model.trim="login"
               :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
@@ -40,7 +40,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.mail"
+              v-model.trim="mail"
               :class="{ invalid: v$.mail.$error }"
             />
             <label class="input-label">Почтовый адрес</label>
@@ -55,7 +55,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.password.password"
+              v-model.trim="password.password"
               :class="{ invalid: v$.password.password.$error }"
             />
             <label class="input-label">Пароль</label>
@@ -74,7 +74,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.password.confirm"
+              v-model.trim="password.confirm"
               :class="{ invalid: v$.password.confirm.$error }"
             />
             <label class="input-label">Повторите пароль</label>
@@ -110,7 +110,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import { reactive } from "@vue/composition-api";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -118,9 +117,11 @@ import {
   email,
   minLength,
   sameAs,
+
 } from "@vuelidate/validators";
 
 export default {
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       login: "",
@@ -131,16 +132,8 @@ export default {
       },
     };
   },
-  setup() {
-    const state = reactive({
-      login: "",
-      mail: "",
-      password: {
-        password: "",
-        confirm: "",
-      },
-    });
-    const rules = {
+  validations() {
+    return {
       login: {
         required: helpers.withMessage("Введите значение", required),
         minLength: helpers.withMessage(
@@ -168,15 +161,11 @@ export default {
           ),
           sameAs: helpers.withMessage(
             "Пароли не совпадают",
-            sameAs("state.password.password")
+            sameAs(this.password.password)
           ),
         },
       },
-    };
-
-    const v$ = useVuelidate(rules, state);
-
-    return { state, v$ };
+    }
   },
   methods: {
     ...mapActions("users", {

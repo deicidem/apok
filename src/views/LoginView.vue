@@ -20,7 +20,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.login"
+              v-model.trim="login"
               :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
@@ -39,7 +39,7 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="state.password"
+              v-model.trim="password"
               :class="{ invalid: v$.password.$error }"
             />
             <label class="input-label">Пароль</label>
@@ -75,23 +75,19 @@
 
 <script>
 import { mapActions } from "vuex";
-import { reactive } from "@vue/composition-api";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength } from "@vuelidate/validators";
 
 export default {
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       login: "",
       password: "",
     };
   },
-  setup() {
-    const state = reactive({
-      login: "",
-      password: "",
-    });
-    const rules = {
+  validations() {
+    return {
       login: {
         required: helpers.withMessage("Введите значение", required),
         minLength: helpers.withMessage(
@@ -106,11 +102,7 @@ export default {
           minLength(6)
         ),
       },
-    };
-
-    const v$ = useVuelidate(rules, state);
-
-    return { state, v$ };
+    }
   },
   methods: {
     ...mapActions("users", {

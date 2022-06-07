@@ -102,9 +102,7 @@
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="
-                item.selected.value ? `selected-${item.selected.type + 1}` : ''
-              "
+              :class="item.selected.value ? `selected-${item.selected.type + 1}` : ''"
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">

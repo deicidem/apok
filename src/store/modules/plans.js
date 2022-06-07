@@ -58,19 +58,28 @@ export default {
         let vectors = [];
         let files = [];
         let plan = store.getters.getPlans[i];
+        let links = {
+          dzzs: [],
+          params: [],
+          vectors: [],
+          files: []
+        };
         let planId = plan.id;
 
         plan.data.forEach(el => {
           if (el.file != null) {
             files.push(el.file);
+            links.files.push(el.id);
           } else if (el.dzzIndex != null) {
             dzzs.push(el.dzzIndex)
+            links.dzzs.push(el.id);
           } else {
             vectors.push(store.rootGetters['map/getActivePolygonJson']);
+            links.vectors.push(el.id);
           }
         })
-        console.log({dzzs, params, vectors, files, planId});
-        tasksApi.add({dzzs, params, vectors, files, planId}).catch((e) => {
+        console.log({dzzs, params, vectors, files, planId, links});
+        tasksApi.add({dzzs, params, vectors, files, planId, links}).catch((e) => {
           console.log(e);
         });
     }

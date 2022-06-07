@@ -134,7 +134,6 @@ export default {
         align-items: center;
         padding: 0;
         margin: 0;
-
         list-style: none;
       }
       .line {
@@ -145,14 +144,18 @@ export default {
         margin: 0 20px 0 0;
         list-style-type: none;
         position: relative;
-        &:first-child :after {
+        &::after {
+          content: "";
           display: block;
           height: 12px;
-          content: "";
           position: absolute;
-          top: 30%;
+          top: 50%;
+          transform: translateY(-50%);
           right: -10px;
-          border-right: 1px solid #000;
+          border-right: 1px solid $color-main;
+        }
+        &:last-child:after {
+          display: none;
         }
         button {
           padding: 0;

@@ -18,7 +18,8 @@ export async function all() {
   return data.tasks;
 }
 
-export async function add({planId, files, dzzs, vectors, params}) {
+export async function add({planId, files, dzzs, vectors, params, links}) {
+
   let formData = new FormData();
   formData.append('planId', planId);
 
@@ -28,9 +29,9 @@ export async function add({planId, files, dzzs, vectors, params}) {
   for (let i = 0; i < files.length; i++) {
     formData.append(`files[${i}]`, files[i]);
   }
-  // for (let i = 0; i < vectors.length; i++) {
-  //   formData.append(`vectors[${i}]`, vectors[i]);
-  // }
+  for (let i = 0; i < vectors.length; i++) {
+    formData.append(`vectors[${i}]`, vectors[i]);
+  }
   console.log(vectors);
   for (let i = 0; i < params.length; i++) {
     formData.append(`params[${i}]`, params[i]);
@@ -39,6 +40,9 @@ export async function add({planId, files, dzzs, vectors, params}) {
   {
     console.log(pair[0]+ ', '+ pair[1]); 
   }
+
+  formData.append('links', JSON.stringify(links));
+
   let data = await server.post('api/tasks', formData);
 
   console.log(data);

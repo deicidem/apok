@@ -1,12 +1,13 @@
 <template>
   <div class="sidebar_wrap" :class="active ? 'active' : ''">
-    <transition name="slide">
-      <div class="sidebar" v-show="active">
+    <!-- <transition name="slide"> -->
+      <div class="sidebar" :class="{active}">
+        <app-plan-data></app-plan-data>
         <div class="sidebar-content">
           <router-view> </router-view>
         </div>
       </div>
-    </transition>
+    <!-- </transition> -->
 
     <div class="sidebar-collapsed">
       <div
@@ -72,7 +73,6 @@
         <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
       </div>
     </div>
-    <app-plan-data></app-plan-data>
   </div>
 </template>
 
@@ -89,6 +89,7 @@ export default {
     return {
       isCollapse: false,
       isOpen: true,
+      cardDataClass: "",
     };
   },
   computed: {
@@ -183,7 +184,11 @@ export default {
 
   z-index: 5;
   box-shadow: $shadow-big;
-  overflow: hidden;
+  transition: transform 0.3s ease-out;
+  transform: translateX(-100%);
+  &.active {
+    transform: translateX(0);
+  }
   &-title {
     padding: 5px;
 
@@ -199,7 +204,7 @@ export default {
     height: 100%;
 
     background: #edecec;
-    transition: all 0.3s ease-out;
+    overflow: hidden;
   }
   &-open {
     margin-top: 6px;
@@ -237,7 +242,6 @@ export default {
     font-weight: 400;
     font-size: 14px;
     box-sizing: border-box;
-    line-height: 40px;
 
     color: #fff;
     transition: color 0.2s ease-out;

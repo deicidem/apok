@@ -6,7 +6,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.1.104/apok_backend_php/public',
+        target: 'http://192.168.1.104/apok_backend_php/public/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

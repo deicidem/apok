@@ -3,16 +3,19 @@
     <app-header></app-header>
     <div class="content">
       <router-view></router-view>
+      <app-error></app-error>
     </div>
   </div>
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader.vue";
+import AppError from "@/components/cards/AppError.vue";
 
 export default {
   components: {
     AppHeader,
+    AppError,
   },
 };
 </script>
@@ -58,6 +61,8 @@ img {
 }
 
 .wrapper {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -110,7 +115,7 @@ img {
   &:active {
     transition: all 0.1s ease-out;
     transform: translateY(1px);
-    box-shadow:  0 2px 4px rgba(#000, 0.1);
+    box-shadow: 0 2px 4px rgba(#000, 0.1);
   }
   &:hover:after {
     transform: translateX(-25%);
@@ -176,15 +181,13 @@ img {
     font-size: 12px;
     color: $color-main;
   }
-
-
   &-img {
     position: absolute;
     max-width: 26px;
     right: 20px;
     top: 50%;
     transform: translate(-50%, -50%);
-    path{
+    path {
       fill: $color-main;
     }
   }
@@ -257,10 +260,14 @@ img {
   flex-direction: column;
 }
 .__panel {
-  &::-webkit-scrollbar { width: 0; }
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 
-/* ie 10+ */
-  & { -ms-overflow-style: none; }
+  /* ie 10+ */
+  & {
+    -ms-overflow-style: none;
+  }
   width: 100%;
 }
 

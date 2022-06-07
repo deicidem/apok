@@ -60,10 +60,8 @@
                   <img src="@/assets/img/choose.svg" />
                 </button>
 
-                <button
-                  class="button button-svg data-btn"
-                  @click="onUploadClick(i)"
-                >
+
+                <button class="button button-svg data-btn" @click="onUploadClick(i)">
                   <img src="@/assets/img/upload.svg" />
                 </button>
               </div>

@@ -10,6 +10,7 @@
         </div>
 
         <h2 class="popup-card__title">Задача: {{plan.title}}</h2>
+
       </div>
 
       <div class="popup-card__wrapper">

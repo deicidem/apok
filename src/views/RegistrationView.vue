@@ -14,16 +14,15 @@
         <form
           class="form-wrapper"
           id="registration"
-          @submit="checkForm"
-          action="https://vuejs.org/"
+          @submit.prevent="submitForm()"
           method="post"
         >
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.login"
-              required
+              v-model.trim="state.login"
+              :class="{ invalid: v$.login.$error }"
             />
             <label class="input-label">Логин</label>
 
@@ -32,26 +31,32 @@
               class="input-img"
               src="@/assets/img/login-icon.svg"
             />
+            <div v-if="v$.login.$error" class="error-tooltip">
+              <p>{{ v$.login.$errors[0].$message }}</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.user"
-              required
+              v-model.trim="state.mail"
+              :class="{ invalid: v$.mail.$error }"
             />
             <label class="input-label">Почтовый адрес</label>
 
             <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
+            <div v-if="v$.mail.$error" class="error-tooltip">
+              <p>{{ v$.mail.$errors[0].$message }}</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.password"
-              required
+              v-model.trim="state.password.password"
+              :class="{ invalid: v$.password.password.$error }"
             />
             <label class="input-label">Пароль</label>
 
@@ -60,14 +65,17 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
+            <div v-if="v$.password.password.$error" class="error-tooltip">
+              <p>{{ v$.password.password.$errors[0].$message }}</p>
+            </div>
           </div>
 
           <div class="input-wrapper">
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model="user.password"
-              required
+              v-model.trim="state.password.confirm"
+              :class="{ invalid: v$.password.confirm.$error }"
             />
             <label class="input-label">Повторите пароль</label>
 
@@ -76,12 +84,19 @@
               class="input-img"
               src="@/assets/img/lock-icon.svg"
             />
+            <div v-if="v$.password.confirm.$error" class="error-tooltip">
+              <p>{{ v$.password.confirm.$errors[0].$message }}</p>
+            </div>
           </div>
 
-          <button @click="submit" class="button button-g form-wrapper__item">
+          <button
+            type="submit"
+            @click="submitForm()"
+            class="button button-g form-wrapper__item"
+          >
             Зарегистироваться
           </button>
-          
+
           <router-link to="/login">
             <button class="button button-white form-wrapper__item">
               Авторизоваться
@@ -95,40 +110,85 @@
 
 <script>
 import { mapActions } from "vuex";
+import { reactive } from "@vue/composition-api";
+import useVuelidate from "@vuelidate/core";
+import {
+  required,
+  helpers,
+  email,
+  minLength,
+  sameAs,
+} from "@vuelidate/validators";
+
 export default {
   data() {
     return {
-      errors: [],
-      user: {
-        mail: "",
-        login: "",
+      login: "",
+      mail: "",
+      password: {
         password: "",
-        passwordSecond: "",
+        confirm: "",
       },
     };
+  },
+  setup() {
+    const state = reactive({
+      login: "",
+      mail: "",
+      password: {
+        password: "",
+        confirm: "",
+      },
+    });
+    const rules = {
+      login: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
+      mail: {
+        required: helpers.withMessage("Введите значение", required),
+        email: helpers.withMessage("Некорректно введен почтовый адрес", email),
+      },
+      password: {
+        password: {
+          required: helpers.withMessage("Введите значение", required),
+          minLength: helpers.withMessage(
+            "Пароль должен содержать больше 6 символов",
+            minLength(6)
+          ),
+        },
+        confirm: {
+          required: helpers.withMessage("Введите значение", required),
+          minLength: helpers.withMessage(
+            "Пароль должен содержать больше 6 символов",
+            minLength(6)
+          ),
+          sameAs: helpers.withMessage(
+            "Пароли не совпадают",
+            sameAs("state.password.password")
+          ),
+        },
+      },
+    };
+
+    const v$ = useVuelidate(rules, state);
+
+    return { state, v$ };
   },
   methods: {
     ...mapActions("users", {
       addUser: "addUser",
     }),
-    submit() {
-      this.addUser(this.user);
-    },
-    checkForm(e) {
-      if (this.user.login && this.user.password) {
-        return true;
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
       }
-
-      this.errors = [];
-
-      if (!this.user.login) {
-        this.errors.push("Требуется указать логин.");
-      }
-      if (!this.user.password) {
-        this.errors.push("Требуется указать пароль.");
-      }
-
-      e.preventDefault();
     },
   },
 };
@@ -191,6 +251,63 @@ export default {
       margin: 10px auto;
 
       font-size: 16px;
+    }
+  }
+  &-error {
+    &__title {
+      color: $color-red;
+      font-size: 14px;
+    }
+    &__text {
+      color: $color-red;
+      font-size: 14px;
+    }
+  }
+}
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+}
+.invalidIcon {
+  position: absolute;
+  max-width: 26px;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  path {
+    fill: $color-main;
+  }
+}
+
+.error {
+  &-tooltip {
+    position: absolute;
+    right: -250px;
+    top: 50%;
+    transform: translate(0, -50%);
+    transition: all 2s ease-out;
+
+    display: flex;
+    align-items: center;
+
+    height: 49px;
+    width: 250px;
+    background: linear-gradient(
+      to right,
+      rgb(235, 96, 96, 0.7),
+      rgb(141, 70, 70, 0.7)
+    );
+    color: #fff;
+    font-size: 14px;
+    border-radius: 10px;
+    p {
+      text-align: left;
+      margin-left: 8px;
     }
   }
 }

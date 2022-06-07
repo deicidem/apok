@@ -72,7 +72,7 @@ export default {
   border: none;
   border-radius: 5px;
   background: $gradient-w;
-  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.15);
 
   cursor: pointer;
 }

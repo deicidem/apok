@@ -19,8 +19,8 @@
       ></div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/tasks">
-          <div class="sidebar-collapsed__img">
+        <router-link to="/main/tasks" custom v-slot="{navigate, isActive}">
+          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
             <img svg-inline src="@/assets/img/sidebar-task.svg" />
           </div>
         </router-link>
@@ -29,8 +29,8 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/plan">
-          <div class="sidebar-collapsed__img">
+        <router-link to="/main/plan" custom v-slot="{navigate, isActive}">
+          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
             <img svg-inline src="@/assets/img/sidebar-plan.svg" />
           </div>
         </router-link>
@@ -41,8 +41,8 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/search">
-          <div class="sidebar-collapsed__img">
+        <router-link to="/main/search" custom v-slot="{navigate, isActive}">
+          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
             <img svg-inline src="@/assets/img/sidebar-search.svg" />
           </div>
         </router-link>
@@ -51,12 +51,12 @@
       </div>
 
       <div class="sidebar-collapsed__item notification-wrapper" @click="open">
-        <router-link to="/main/alerts">
-          <div class="sidebar-collapsed__img">
+        <router-link to="/main/alerts" custom v-slot="{navigate, isActive}">
+          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
             <img svg-inline src="@/assets/img/sidebar-notification.svg" />
-          </div>
-          <div class="notification">
-            <div class="notification-number">{{ alerts.length }}</div>
+            <div class="notification">
+              <div class="notification-number">{{ alerts.length }}</div>
+            </div>
           </div>
         </router-link>
 
@@ -64,8 +64,8 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/person">
-          <div class="sidebar-collapsed__img">
+        <router-link to="/main/person" custom v-slot="{navigate, isActive}">
+          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
             <img svg-inline src="@/assets/img/sidebar-person.svg" />
           </div>
         </router-link>
@@ -302,8 +302,14 @@ export default {
       display: flex;
       margin-top: 2px;
       justify-content: center;
+      cursor: pointer;
       path {
         fill: $color-main;
+      }
+      &.active, &:hover, &:focus-visible {
+        path {
+          fill: $color-main-light;
+        }
       }
     }
     &__collapse {

@@ -1,24 +1,42 @@
 import server from "@/api/http";
 
+function fixTask(task) {
+  task.date = new Date(task.date);
+  if (task.result != null) {
+    task.result.views.forEach(v => {
+      v.previewPath = server.defaults.baseURL + "api/images?path=" + v.previewPath
+    })
+  }
+  task.result.files.forEach(f => {
+    f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
+  })
+}
+
 export async function all() {
   let res = await server.get('sanctum/csrf-cookie');
   console.log(res);
-  let {data} = await server.get('api/tasks');
+  let {
+    data
+  } = await server.get('api/tasks');
   data.tasks.forEach(el => {
-    if (el.result != null) {
-      el.result.views.forEach(v => {
-        v.previewPath = server.defaults.baseURL + "api/images?path=" + v.previewPath
-      })
-    }
-      el.result.files.forEach(f => {
-        f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
-      })
+    fixTask(el);
   });
   console.log(data);
   return data.tasks;
 }
-
-export async function add({planId, files, dzzs, vectors, params, links}) {
+export async function one(id) {
+  let {data} = await server.get('api/tasks/'+id);
+  fixTask(data.task);
+  return data.task;
+}
+export async function add({
+  planId,
+  files,
+  dzzs,
+  vectors,
+  params,
+  links
+}) {
 
   let formData = new FormData();
   formData.append('planId', planId);
@@ -36,9 +54,8 @@ export async function add({planId, files, dzzs, vectors, params, links}) {
   for (let i = 0; i < params.length; i++) {
     formData.append(`params[${i}]`, params[i]);
   }
-  for (var pair of formData.entries())
-  {
-    console.log(pair[0]+ ', '+ pair[1]); 
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
   }
 
   formData.append('links', JSON.stringify(links));

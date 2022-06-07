@@ -11,11 +11,7 @@
       <div class="form">
         <div class="form-title">Авторизация</div>
 
-        <form
-          class="form-wrapper"
-          @submit.prevent="submitForm()"
-          method= "POST"
-        >
+        <form class="form-wrapper" @submit.prevent="submitForm()" method="POST">
           <div class="input-wrapper">
             <input
               placeholder=" "
@@ -27,7 +23,10 @@
 
             <img
               svg-inline
-              class="input-img"
+              :class="{
+                invalidIcon: v$.login.$error,
+                'input-img': !v$.login.$error,
+              }"
               src="@/assets/img/login-icon.svg"
             />
             <div v-if="v$.login.$error" class="error-tooltip">
@@ -46,7 +45,10 @@
 
             <img
               svg-inline
-              class="input-img"
+              :class="{
+                invalidIcon: v$.password.$error,
+                'input-img': !v$.password.$error,
+              }"
               src="@/assets/img/lock-icon.svg"
             />
             <div v-if="v$.password.$error" class="error-tooltip">
@@ -75,8 +77,9 @@
 
 <script>
 import { mapActions } from "vuex";
+
 import useVuelidate from "@vuelidate/core";
-import { required, helpers, minLength } from "@vuelidate/validators";
+import { required, helpers } from "@vuelidate/validators";
 
 export default {
   setup: () => ({ v$: useVuelidate() }),
@@ -90,19 +93,11 @@ export default {
     return {
       login: {
         required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Логин должен содержать больше 6 символов",
-          minLength(6)
-        ),
       },
       password: {
         required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Пароль должен содержать больше 6 символов",
-          minLength(6)
-        ),
       },
-    }
+    };
   },
   methods: {
     ...mapActions("users", {
@@ -184,7 +179,23 @@ export default {
   &:not(:placeholder-shown) ~ label {
     color: $color-red;
   }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
 }
+.invalidIcon {
+  position: absolute;
+  max-width: 26px;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  path {
+    fill: $color-red;
+  }
+}
+
 .error {
   &-tooltip {
     position: absolute;

@@ -123,46 +123,62 @@
         class="search-zone__card search-zone__coordinates"
         v-show="searchZoneType == 2"
       >
-        <div class="coordinates-wrapper">
+        <form
+          class="coordinates-wrapper"
+          @submit.prevent="submitForm()"
+          method="POST"
+        >
           <div class="input-wrapper coordinates-inputs">
             <masked-input
-              required
               placeholder=" "
-              v-model="lat"
               class="input coordinates-input"
+              v-model="lat"
+              :class="{ invalid: v$.lat.$error }"
               :mask="inputMaskLat"
             />
             <label class="input-label coordinates-label"> Широта </label>
+
+            <div v-if="v$.lat.$error" class="error-tooltip">
+              <p>{{ v$.lat.$errors[0].$message }}</p>
+            </div>
           </div>
 
           <div class="input-wrapper coordinates-inputs">
             <masked-input
-              required
               placeholder=" "
-              v-model="lng"
               class="input coordinates-input"
+              v-model="lng"
+              :class="{ invalid: v$.lng.$error }"
               :mask="inputMaskLng"
             />
             <label class="input-label coordinates-label"> Долгота </label>
+
+            <div v-if="v$.lng.$error" class="error-tooltip">
+              <p>{{ v$.lng.$errors[0].$message }}</p>
+            </div>
           </div>
           <div class="input-wrapper coordinates-inputs">
             <input
-              required
               placeholder=" "
-              v-model="rad"
-              id="radius"
               class="input coordinates-input"
+              v-model="rad"
+              :class="{ invalid: v$.rad.$error }"
+              id="radius"
             />
             <label class="input-label coordinates-label"> Радиус (км) </label>
+
+            <div v-if="v$.rad.$error" class="error-tooltip">
+              <p>{{ v$.rad.$errors[0].$message }}</p>
+            </div>
           </div>
 
           <button
-            @click="createCircle"
+            @click="submitForm()"
             class="button button-g coordinates-wrapper__button"
           >
             Загрузить на карту
           </button>
-        </div>
+        </form>
         <button
           class="button button-r coordinates-wrapper__button"
           @click="removeCircle"
@@ -209,10 +225,15 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import MaskedInput from "vue-masked-input";
+import useVuelidate from "@vuelidate/core";
+import { required, helpers, minLength } from "@vuelidate/validators";
+// import {IMaskDirective} from 'vue-imask';
+
 export default {
   components: {
     MaskedInput,
   },
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       file: null,
@@ -244,6 +265,23 @@ export default {
       newCoord: {
         lat: "",
         lng: "",
+      },
+    };
+  },
+  validations() {
+    return {
+      lng: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
+      lat: {
+        required: helpers.withMessage("Введите значение", required),
+      },
+      rad: {
+        required: helpers.withMessage("Введите значение", required),
       },
     };
   },
@@ -350,6 +388,14 @@ export default {
         deg = -(+deg + min + sec);
       }
       return deg;
+    },
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
     },
   },
 };
@@ -605,6 +651,46 @@ label.active {
   }
   &__input {
     display: none;
+  }
+}
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
+}
+.error {
+  &-tooltip {
+    position: absolute;
+    left: 0;
+    bottom: calc(-100% - 20px);
+    // top: calc(-100% - 6px);
+    transition: all 2s ease-out;
+
+    display: flex;
+    align-items: center;
+
+    height: 35px;
+    width: 120px;
+    background: linear-gradient(
+      to right,
+      rgb(235, 96, 96, 0.7),
+      rgb(141, 70, 70, 0.7)
+    );
+    color: #fff;
+    font-size: 12px;
+    border-radius: 10px;
+    p {
+      margin-left: 12px;
+    }
   }
 }
 @media screen and (max-width: 1440px) {

@@ -1,17 +1,26 @@
 <template>
   <div class="auth-popup" v-on-clickaway="away">
     <div class="auth-popup__title">Авторизация</div>
+
     <form @submit.prevent="submitForm()" method="POST">
       <div class="input-wrapper">
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="state.login"
+          v-model.trim="login"
           :class="{ invalid: v$.login.$error }"
         />
         <label class="input-label">Логин</label>
 
-        <img svg-inline class="input-img" src="@/assets/img/login-icon.svg" />
+        <img
+          svg-inline
+          class="input-img"
+          :class="{
+            invalidIcon: v$.login.$error,
+            'input-img': !v$.login.$error,
+          }"
+          src="@/assets/img/login-icon.svg"
+        />
         <div v-if="v$.login.$error" class="error-tooltip">
           <p>{{ v$.login.$errors[0].$message }}</p>
         </div>
@@ -21,12 +30,20 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="state.password"
+          v-model.trim="password"
           :class="{ invalid: v$.password.$error }"
         />
         <label class="input-label">Пароль</label>
 
-        <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+        <img
+          svg-inline
+          class="input-img"
+          :class="{
+            invalidIcon: v$.password.$error,
+            'input-img': !v$.password.$error,
+          }"
+          src="@/assets/img/lock-icon.svg"
+        />
         <div v-if="v$.password.$error" class="error-tooltip">
           <p>{{ v$.password.$errors[0].$message }}</p>
         </div>
@@ -45,26 +62,20 @@
 
 <script>
 import { mixin as clickaway } from "vue-clickaway";
-import { reactive } from "@vue/composition-api";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 
 export default {
   mixins: [clickaway],
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
-      user: {
-        login: "",
-        password: "",
-      },
-    };
-  },
-  setup() {
-    const state = reactive({
       login: "",
       password: "",
-    });
-    const rules = {
+    };
+  },
+  validations() {
+    return {
       login: {
         required: helpers.withMessage("Введите значение", required),
       },
@@ -72,10 +83,6 @@ export default {
         required: helpers.withMessage("Введите значение", required),
       },
     };
-
-    const v$ = useVuelidate(rules, state);
-
-    return { state, v$ };
   },
   methods: {
     away() {
@@ -130,6 +137,21 @@ export default {
   &:not(:placeholder-shown) ~ label {
     color: $color-red;
   }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
+}
+.invalidIcon {
+  position: absolute;
+  max-width: 26px;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  path {
+    fill: $color-red;
+  }
 }
 .error {
   &-tooltip {
@@ -146,15 +168,14 @@ export default {
     width: 240px;
     background: linear-gradient(
       to right,
-      rgb(235, 96, 96, 0.6),
-      rgb(141, 70, 70, 0.6)
+      rgb(235, 96, 96, 0.8),
+      rgb(141, 70, 70, 0.8)
     );
     color: #fff;
     font-size: 14px;
     border-radius: 10px;
     p {
       margin-left: 8px;
-      text-align: right;
     }
   }
 }

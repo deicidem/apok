@@ -14,8 +14,8 @@ Vue.use(VueCompositionAPI)
 
 Vue.config.productionTip = false;
 store.dispatch('plans/load').then(async () => {
-  await store.dispatch('search/load');
-  await store.dispatch('tasks/load');
+  // await store.dispatch('search/load');
+  // await store.dispatch('tasks/load');
 }).then(() => {
   new Vue({
     router,

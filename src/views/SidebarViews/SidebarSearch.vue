@@ -84,7 +84,7 @@ export default {
     font-size: 20px;
     color: #000;
     font-weight: 400;
-    margin-bottom: 16px;
+    margin: 0 0 20px 0;
   }
   &-wrapper {
     padding: 30px;

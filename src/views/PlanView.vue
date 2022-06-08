@@ -14,6 +14,7 @@
         Подготовка к запуску задачи 452: {{ plan.title }}
       </h2>
 
+
       <button class="button button-g plan-wrapper__button">
         Запланировать задачу
       </button>
@@ -41,6 +42,7 @@
                   <p class="plan-table__text">
                     {{ req.description }}
                   </p>
+
                 </div>
               </div>
             </div>
@@ -119,6 +121,7 @@ export default {
   overflow: hidden;
   background: $gradient-w;
   &-title {
+    margin: 0;
     color: #000;
     font-weight: 400;
   }
@@ -170,6 +173,12 @@ export default {
     &__text {
       margin-top: 20px;
       color: #000;
+      p{
+        margin: 0;
+      }
+      ul{
+        margin: 0;
+      }
     }
     &__img {
       border-radius: 15px;
@@ -193,6 +202,7 @@ export default {
         margin-right: 6px;
       }
       &__subtitle {
+        margin: 0;
         font-size: 18px;
         color: $color-main;
       }
@@ -218,7 +228,7 @@ img {
     width: 40px;
   }
   p {
-    margin-left: 10px;
+    margin: 0 0 0 10px;
     color: $text-grey;
   }
 }

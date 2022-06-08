@@ -174,7 +174,7 @@ export default {
   &-item {
     position: relative;
     p {
-      margin-left: 4px;
+      margin: 0 auto 0 4px;
 
       color: #000;
       font-size: 0.875rem;

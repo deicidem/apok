@@ -10,6 +10,7 @@
 
 <style scoped lang="scss">
 .error {
+  display: none;
   position: absolute;
   right: 40px;
   bottom: 40px;

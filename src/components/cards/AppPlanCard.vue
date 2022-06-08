@@ -12,8 +12,8 @@
       </p>
 
       <div class="plan-item__buttons">
-        <router-link :to="'/plan/' + planid">
-          <button class="button button-white plan-item__button">Подробнее</button>
+        <router-link :to="'/plan/' + planid" custom v-slot="{navigate}">
+          <button @click="navigate" class="button button-white plan-item__button">Подробнее</button>
         </router-link>
 
         <button class="button button-g plan-item__button" @click="$emit('openPopup')">Запланировать</button>
@@ -47,35 +47,46 @@ export default {
     background: #fff;
     &__img {
       img {
+        min-height: 200px;
         height: 100%;
+        width: 200px;
+        object-position: center;
+        object-fit: cover;
       }
     }
     &__info {
-      padding: 10px 20px 10px 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 20px 15px 20px;
       h2 {
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 500;
 
         color: #000;
       }
       p {
+        flex: 1 1 auto;
         margin-top: 10px;
 
         font-weight: 400;
         font-size: 14px;
         line-height: 130%;
 
-        color: #616161;
+        color: #333;
       }
     }
     &__buttons {
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
-      margin-top: 30px;
+      justify-content: space-between;
+      margin-top: 20px;
     }
     &__button{
-      width: 160px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

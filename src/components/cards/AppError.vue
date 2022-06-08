@@ -22,6 +22,7 @@
   border: 2px solid #D84949;
   box-shadow: $shadow-big;
   &-title {
+    margin: 0;
     line-height: 1.5;
     color: #000;
     font-weight: 500;
@@ -31,6 +32,7 @@
     color: $text-grey;
     font-weight: 400;
     font-size: 14px;
+    margin: 10px auto 10px 0;
   }
 }
 </style>

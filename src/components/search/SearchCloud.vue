@@ -53,13 +53,14 @@ export default {
       color: $text-grey;
       p {
         color: #000000;
-        margin-left: 8px;
+        margin: 0 0 0 8px;
       }
     }
     &__wrapper {
       display: flex;
       justify-content: space-between;
       p {
+        margin: 0;
         font-size: 12px;
         color: #000;
       }

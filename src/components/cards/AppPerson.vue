@@ -100,6 +100,7 @@ export default {
       display: flex;
     }
     &__title {
+      margin: 0;
       color: $color-main;
       width: 80px;
     }

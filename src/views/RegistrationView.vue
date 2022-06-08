@@ -29,6 +29,10 @@
             <img
               svg-inline
               class="input-img"
+              :class="{
+                invalidIcon: v$.login.$error,
+                'input-img': !v$.login.$error,
+              }"
               src="@/assets/img/login-icon.svg"
             />
             <div v-if="v$.login.$error" class="error-tooltip">
@@ -45,7 +49,15 @@
             />
             <label class="input-label">Почтовый адрес</label>
 
-            <img svg-inline class="input-img" src="@/assets/img/mail.svg" />
+            <img
+              svg-inline
+              class="input-img"
+              :class="{
+                invalidIcon: v$.mail.$error,
+                'input-img': !v$.mail.$error,
+              }"
+              src="@/assets/img/mail.svg"
+            />
             <div v-if="v$.mail.$error" class="error-tooltip">
               <p>{{ v$.mail.$errors[0].$message }}</p>
             </div>
@@ -63,6 +75,10 @@
             <img
               svg-inline
               class="input-img"
+              :class="{
+                invalidIcon: v$.password.password.$error,
+                'input-img': !v$.password.password.$error,
+              }"
               src="@/assets/img/lock-icon.svg"
             />
             <div v-if="v$.password.password.$error" class="error-tooltip">
@@ -82,6 +98,10 @@
             <img
               svg-inline
               class="input-img"
+              :class="{
+                invalidIcon: v$.password.confirm.$error,
+                'input-img': !v$.password.confirm.$error,
+              }"
               src="@/assets/img/lock-icon.svg"
             />
             <div v-if="v$.password.confirm.$error" class="error-tooltip">
@@ -117,7 +137,6 @@ import {
   email,
   minLength,
   sameAs,
-
 } from "@vuelidate/validators";
 
 export default {
@@ -165,7 +184,7 @@ export default {
           ),
         },
       },
-    }
+    };
   },
   methods: {
     ...mapActions("users", {
@@ -212,7 +231,6 @@ export default {
     color: #fff;
   }
 }
-
 .form {
   margin: 10% auto;
   width: 400px;
@@ -261,6 +279,11 @@ export default {
   &:not(:placeholder-shown) ~ label {
     color: $color-red;
   }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
 }
 .invalidIcon {
   position: absolute;
@@ -269,10 +292,9 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   path {
-    fill: $color-main;
+    fill: $color-red;
   }
 }
-
 .error {
   &-tooltip {
     position: absolute;

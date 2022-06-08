@@ -116,7 +116,7 @@ export default {
           color: #000;
           font-size: 20px;
           img {
-            max-height: 60px;
+            height: 60px;
           }
         }
       }

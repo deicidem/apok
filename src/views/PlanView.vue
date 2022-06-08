@@ -1,73 +1,61 @@
 <template>
   <div class="plan" v-if="plan != null">
-    <vuescroll :ops="ops">
-      <div class="plan-wrapper__header">
-        <router-link to="/main/plan">
-          <div class="back">
-            <div class="back-arrow">
-              <img src="@/assets/img/arrow.svg" />
-            </div>
-            <p class="back-subtitle">Назад</p>
+    <div class="plan-wrapper__header">
+      <router-link to="/main/plan">
+        <div class="back">
+          <div class="back-arrow">
+            <img src="@/assets/img/arrow.svg" />
           </div>
-        </router-link>
+          <p class="back-subtitle">Назад</p>
+        </div>
+      </router-link>
 
-        <h2 class="plan-title">
-          Подготовка к запуску задачи 452: {{ plan.title }}
-        </h2>
+      <h2 class="plan-title">
+        Подготовка к запуску задачи 452: {{ plan.title }}
+      </h2>
 
-        <button class="button button-g plan-wrapper__button">
-          Запланировать задачу
-        </button>
-      </div>
-
-      <div class="plan-wrapper">
-        <div class="plan-wrapper__cards">
-          <div class="plan-wrapper__card">
-            <div class="plan-wrapper__title">Описание</div>
-            <div class="plan-wrapper__text" v-html="plan.description">
+      <button class="button button-g plan-wrapper__button">
+        Запланировать задачу
+      </button>
+    </div>
+    <div class="a">
+      <vuescroll :ops="ops">
+        <div class="plan-wrapper">
+          <div class="plan-wrapper__cards">
+            <div class="plan-wrapper__card">
+              <div class="plan-wrapper__title">Описание</div>
+              <div class="plan-wrapper__text" v-html="plan.description"></div>
+              <div class="plan-wrapper__text" v-html="plan.description"></div>
+              <div class="plan-wrapper__text" v-html="plan.description"></div>
+              <div class="plan-wrapper__text" v-html="plan.description"></div>
+              <div class="plan-wrapper__text" v-html="plan.description"></div>
             </div>
-          </div>
-          <div class="plan-wrapper__card">
-            <div class="plan-wrapper__title">Требования к данным</div>
-            <div class="plan-table">
-                <div class="plan-table__item" v-for="(req, i) in plan.requirements" :key="i">
-                <!-- <div class="plan-table__img">
+            <div class="plan-wrapper__card">
+              <div class="plan-wrapper__title">Требования к данным</div>
+              <div class="plan-table">
+                <div
+                  class="plan-table__item"
+                  v-for="(req, i) in plan.requirements"
+                  :key="i"
+                >
+                  <!-- <div class="plan-table__img">
                   <img src="@/assets/img/plan__data.svg" />
                 </div> -->
-                <p class="plan-table__subtitle">{{req.title}}:</p>
-                <p class="plan-table__text">
-                  {{ req.description }}
-                </p>
-              </div>
-              
-              <!-- <div class="plan-table__line"></div>
-              <div class="plan-table__item">
-                <div class="plan-table__img">
-                  <img src="@/assets/img/plan__season.svg" />
+                  <p class="plan-table__subtitle">{{ req.title }}:</p>
+                  <p class="plan-table__text">
+                    {{ req.description }}
+                  </p>
                 </div>
-                <p class="plan-table__subtitle">Сезон съемки:</p>
-                <p class="plan-table__text">{{ plan.requirements.time }}</p>
               </div>
-              <div class="plan-table__line"></div>
-              <div class="plan-table__item">
-                <div class="plan-table__img">
-                  <img src="@/assets/img/plan__cloud.svg" />
-                </div>
-                <p class="plan-table__subtitle">Облачность:</p>
-                <p class="plan-table__text">
-                  {{ plan.requirements.cloudiness }}
-                </p>
-              </div>
-              <div class="plan-table__line"></div> -->
             </div>
           </div>
-        </div>
 
-        <div class="plan-wrapper__img">
-          <img :src="plan.previewPath" />
+          <div class="plan-wrapper__img">
+            <img :src="plan.previewPath" />
+          </div>
         </div>
-      </div>
-    </vuescroll>
+      </vuescroll>
+    </div>
   </div>
 </template>
 
@@ -127,9 +115,9 @@ export default {
 
 <style lang="scss" scoped>
 .plan {
-  height: 900px;
+  height: 100%;
+  max-height: 100%;
   padding: 40px;
-
   box-shadow: $shadow-big;
   border-radius: 25px;
   overflow: hidden;
@@ -138,10 +126,17 @@ export default {
     color: #000;
     font-weight: 400;
   }
+  .a {
+    padding: 50px 0;
+    margin: 0 auto;
+    height: 100%;
+    max-width: 1700px;
+  }
   &-wrapper {
+    padding: 10px 50px;
+    margin: 0 auto;
     display: flex;
-    max-width: 1600px;
-    margin: 50px auto;
+    width: 100%;
     &__header {
       display: flex;
       justify-content: space-between;
@@ -235,12 +230,12 @@ img {
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;
-    &-title{
+    &-title {
       font-size: 18px;
     }
-    &-wrapper{
+    &-wrapper {
       max-width: 1200px;
-      &__header{
+      &__header {
         max-width: 1200px;
       }
     }

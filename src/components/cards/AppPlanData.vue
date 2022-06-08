@@ -230,7 +230,6 @@ export default {
 
   background: $gradient-w;
   border-radius: 20px;
-  overflow: hidden;
   box-shadow: $shadow-big;
   transform: translateX(-100%);
   transition: all 0.3s ease-out;
@@ -269,6 +268,8 @@ export default {
     background-color: $color-main;
     display: flex;
     align-items: center;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
     * {
       width: 30px;
     }
@@ -352,7 +353,7 @@ export default {
     min-height: 30px;
     min-width: 360px;
     width: 100%;
-    padding: 5px 5px 5px 10px;
+    padding: 5px 30px 5px 10px;
     border-radius: 5px;
     &:hover {
       border: 1px solid rgba($color-main, 0.5);
@@ -364,7 +365,6 @@ export default {
     position: absolute;
     top: calc(100% - 10px);
     width: 360px;
-    height: 70px;
     left: 10px;
     background: $gradient-w;
     box-shadow: $shadow-big;

@@ -59,12 +59,16 @@ export default {
       flex-direction: column;
       padding: 10px 20px 15px 20px;
       h2 {
+        margin: 0;
+        line-height: 1.5;
         font-size: 18px;
         font-weight: 500;
 
         color: #000;
       }
       p {
+        margin: 0;
+        line-height: 1.5;
         flex: 1 1 auto;
         margin-top: 10px;
 

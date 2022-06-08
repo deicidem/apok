@@ -35,13 +35,14 @@ export default {
 
 <style lang="scss">
 * {
-  padding: 0;
-  margin: 0;
+  
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
 html,
 body {
+  padding: 0;
+  margin: 0;
   min-width: 1024px;
   width: 100%;
 
@@ -69,6 +70,7 @@ a {
 img {
   display: block;
   object-fit: cover;
+  object-position: center;
   width: 100%;
 }
 

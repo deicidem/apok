@@ -3,7 +3,7 @@
     <div class="data-content">
       <div class="data-title">Запланировать задачу</div>
       <div class="data-wrapper">
-        <div class="data-item">
+        <div class="data-item select">
           <portal to="popup">
             <app-plan-popup
               :plan="activePlan"
@@ -13,7 +13,7 @@
             ></app-plan-popup>
           </portal>
           <div class="data-info">
-            <p class="data__subtitle">Задача:</p>
+            <h6 class="data__subtitle">Задача:</h6>
             <div
               class="data__text data__selected"
               @click="showSelect = !showSelect"
@@ -38,60 +38,82 @@
           </div>
         </div>
         <template v-if="activePlan != null">
-          <div class="data-item" v-for="(data, i) in activePlan.data" :key="i">
+          <div
+            class="data-item"
+            :class="{ dzz: data.type == 1 }"
+            v-for="(data, i) in activePlan.data"
+            :key="i"
+          >
             <template v-if="data.type == 1">
               <div class="data-circle" :class="`data-circle-${i + 1}`"></div>
               <div class="data-info">
-                <p class="data__subtitle">{{ data.title }}</p>
-                <p class="data__text" v-if="data.file != null">
-                  {{ data.file.name }}
-                </p>
-                <p class="data__text" v-else-if="data.dzzIndex != null">
-                  {{ resultsMap[data.dzzIndex].name }}
-                </p>
-                <p class="data__text" v-else>Не выбрано</p>
+                <h6 class="data__subtitle">{{ data.title }}</h6>
+                <div class="data-item__content">
+                  <div class="data__text" v-if="data.file != null">
+                    {{ data.file.name }}
+                  </div>
+                  <div class="data__text" v-else-if="data.dzzIndex != null">
+                    {{ resultsMap[data.dzzIndex].name }}
+                  </div>
+                  <div class="data__text" v-else>Не выбрано</div>
+                  <div class="data-btns">
+                    <button
+                      class="button button-svg data-btn"
+                      @click="selectDzz(i)"
+                    >
+                      <img src="@/assets/img/choose.svg" />
+                    </button>
+
+                    <button
+                      class="button button-svg data-btn"
+                      @click="onUploadClick(i)"
+                    >
+                      <img src="@/assets/img/upload.svg" />
+                    </button>
+                  </div>
+                </div>
               </div>
-
-              <div class="data-btns">
-                <button
-                  class="button button-svg data-btn"
-                  @click="selectDzz(i)"
-                >
-                  <img src="@/assets/img/choose.svg" />
-                </button>
-
-
-                <button class="button button-svg data-btn" @click="onUploadClick(i)">
-                  <img src="@/assets/img/upload.svg" />
-                </button>
+            </template>
+            <template v-else-if="data.type == 2">
+              <div class="data-circle hidden"></div>
+              <div class="data-info">
+                <h6 class="data__subtitle">{{ data.title }}</h6>
+                <div class="data-item__content">
+                  <div class="data__text" v-if="getActivePolygonJson != null">
+                    Выбрана
+                  </div>
+                  <div class="data__text" v-else>Не выбрана</div>
+                  <div class="data-btns">
+                  <router-link to="area" custom v-slot="{ navigate }">
+                    <button
+                      @click="navigate"
+                      class="button button-svg data-btn"
+                    >
+                      <img src="@/assets/img/choose.svg" />
+                    </button>
+                  </router-link>
+                  <button class="button button-svg data-btn">
+                    <img
+                      svg-inline
+                      class="icon icon-vector-o"
+                      src="@/assets/img/vector-o.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+                </div>
               </div>
             </template>
             <template v-else>
               <div class="data-circle hidden"></div>
               <div class="data-info">
-                <p class="data__subtitle">{{ data.title }}</p>
-                <p class="data__text" v-if="getActivePolygonJson != null">
-                  Выбрана
-                </p>
-                <p class="data__text" v-else>Не выбрана</p>
-              </div>
-              <div class="data-btns">
-                <router-link to="area" custom v-slot="{ navigate }">
-                  <button @click="navigate" class="button button-svg data-btn">
-                    <img src="@/assets/img/choose.svg" />
-                  </button>
-                </router-link>
-                <button
-                  class="button button-svg data-btn"
-                  
-                >
-                  <img
-                    svg-inline
-                    class="icon icon-vector-o"
-                    src="@/assets/img/vector-o.svg"
-                    alt=""
-                  />
-                </button>
+                <h6 class="data__subtitle">{{ data.title }}</h6>
+                <input
+                  required
+                  class="data__input"
+                  :value="data.text"
+                  @change="onParamChange($event, i)"
+                />
               </div>
             </template>
           </div>
@@ -170,10 +192,17 @@ export default {
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
-    ...mapActions("plans", ["setDataFile", "planNewTask"]),
+    ...mapActions("plans", ["setDataFile", "planNewTask", "changeText"]),
     ...mapActions(["setDataCardState"]),
     setPlanPopupData(i) {
       this.$set(this.planPopup, "data", this.activePlan.data[i]);
+    },
+    onParamChange(e, i) {
+      this.changeText({
+        dataIndex: i,
+        planIndex: this.activePlanIndex,
+        text: e.target.value,
+      });
     },
     startPlan() {
       let formData = new FormData();
@@ -235,15 +264,19 @@ export default {
   transition: all 0.3s ease-out;
   &.active {
     transform: translateX(0);
+    .data-close {
+      transform: rotate(0deg);
+    }
   }
   &-circle {
-    margin-right: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
     width: 22px;
     height: 22px;
     border-radius: 50%;
     background: #fff;
     // box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
-    transform: -20px;
     box-shadow: $shadow-small;
     &.hidden {
       background: none;
@@ -270,6 +303,10 @@ export default {
     align-items: center;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    cursor: pointer;
+    .data-close {
+      transform: rotate(180deg);
+    }
     * {
       width: 30px;
     }
@@ -277,20 +314,26 @@ export default {
   &-title {
     color: #000;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
     text-align: center;
     margin-bottom: 16px;
   }
   &-item {
     position: relative;
-    display: flex;
-    align-items: stretch;
     margin-bottom: 10px;
     width: 100%;
     background: $gradient-w;
     padding: 10px;
     box-shadow: $shadow-small;
     border-radius: 5px;
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &.dzz .data__subtitle {
+      padding-left: 30px;
+    }
   }
   &-arrowDown {
     position: absolute;
@@ -298,9 +341,10 @@ export default {
     top: 20%;
   }
   &__subtitle {
+    margin-top: 0;
     font-size: 12px;
     color: $text-grey;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   &__text {
     position: relative;
@@ -309,8 +353,20 @@ export default {
     text-align: left;
     color: #000;
   }
+  &__input {
+    border: 1px solid #dfdfdf;
+    background: #fff;
+    min-height: 30px;
+    min-width: 360px;
+    width: 100%;
+    padding: 5px 30px 5px 10px;
+    border-radius: 5px;
+    &:focus {
+      border: 1px solid rgba($color-main, 0.5);
+    }
+  }
   &-btns {
-    padding: 10px;
+    padding: 0px 10px;
     margin: 0 0 0 auto;
     display: flex;
     align-items: flex-end;
@@ -349,32 +405,36 @@ export default {
     margin: 10px 16px 0 auto;
   }
   &__selected {
+    background: #fff;
     border: 1px solid #dfdfdf;
     min-height: 30px;
     min-width: 360px;
     width: 100%;
     padding: 5px 30px 5px 10px;
     border-radius: 5px;
+    cursor: pointer;
     &:hover {
       border: 1px solid rgba($color-main, 0.5);
     }
   }
   &__select {
+    background: #fff;
     margin-top: 4px;
     z-index: 10;
     position: absolute;
     top: calc(100% - 10px);
     width: 360px;
     left: 10px;
-    background: $gradient-w;
+    background: #fff;
     box-shadow: $shadow-big;
     border-radius: 10px;
     &__item {
       position: relative;
-      padding: 5px 10px;
+      padding: 8px 10px;
       font-size: 12px;
       color: #000;
       transition: all 0.2s ease-out;
+      border-bottom: 1px solid #dfdfdf;
       cursor: pointer;
       &:last-child {
         border-bottom: none;

@@ -31,7 +31,7 @@
             </tr>
             <tr>
               <td colspan="6"  class="td_preview">
-                <app-preview v-show="item.result.active" v-if="item.result.files.length || item.result.views.length" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
+                <app-preview v-show="item.result.active" v-if="item.result != null" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
               </td>
             </tr>
           </tbody>

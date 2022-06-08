@@ -33,6 +33,9 @@ export default {
     setDataFile(state, data) {
       state.plans[data.planIndex].data[data.dataIndex].file = data.file;
     },
+    changeText(state, data) {
+      state.plans[data.planIndex].data[data.dataIndex].text = data.text;
+    }
   },
   actions: {
     async load({commit}) {
@@ -41,6 +44,7 @@ export default {
         el.data.forEach(d => {
           d.dzzIndex = null;
           d.file = null;
+          d.text = null;
         });
       });
       commit("setPlans", plans)
@@ -51,6 +55,9 @@ export default {
     },
     setDataFile(store, data) {
       store.commit('setDataFile', data);
+    },
+    changeText(store, data) {
+      store.commit('changeText', data);
     },
     async planNewTask(store, i) {
         let dzzs = [];
@@ -73,6 +80,9 @@ export default {
           } else if (el.dzzIndex != null) {
             dzzs.push(el.dzzIndex)
             links.dzzs.push(el.id);
+          } else if (el.text != null) {
+            params.push(el.text)
+            links.params.push(el.id);
           } else {
             vectors.push(store.rootGetters['map/getActivePolygonJson']);
             links.vectors.push(el.id);

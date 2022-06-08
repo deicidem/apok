@@ -25,10 +25,6 @@
             <div class="plan-wrapper__card">
               <div class="plan-wrapper__title">Описание</div>
               <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
             </div>
             <div class="plan-wrapper__card">
               <div class="plan-wrapper__title">Требования к данным</div>

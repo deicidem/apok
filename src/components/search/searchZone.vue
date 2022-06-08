@@ -138,9 +138,9 @@
             />
             <label class="input-label coordinates-label"> Широта </label>
 
-            <div v-if="v$.lat.$error" class="error-tooltip">
-              <p>{{ v$.lat.$errors[0].$message }}</p>
-            </div>
+            <p v-if="v$.lat.$error" class="error-tooltip">
+              {{ v$.lat.$errors[0].$message }}
+            </p>
           </div>
 
           <div class="input-wrapper coordinates-inputs">
@@ -153,9 +153,9 @@
             />
             <label class="input-label coordinates-label"> Долгота </label>
 
-            <div v-if="v$.lng.$error" class="error-tooltip">
-              <p>{{ v$.lng.$errors[0].$message }}</p>
-            </div>
+            <p v-if="v$.lng.$error" class="error-tooltip">
+              {{ v$.lng.$errors[0].$message }}
+            </p>
           </div>
           <div class="input-wrapper coordinates-inputs">
             <input
@@ -167,9 +167,9 @@
             />
             <label class="input-label coordinates-label"> Радиус (км) </label>
 
-            <div v-if="v$.rad.$error" class="error-tooltip">
-              <p>{{ v$.rad.$errors[0].$message }}</p>
-            </div>
+            <p v-if="v$.rad.$error" class="error-tooltip">
+              {{ v$.rad.$errors[0].$message }}
+            </p>
           </div>
 
           <button
@@ -670,27 +670,13 @@ label.active {
 .error {
   &-tooltip {
     position: absolute;
-    left: 0;
-    bottom: calc(-100% - 20px);
-    // top: calc(-100% - 6px);
+    bottom: -30px;
     transition: all 2s ease-out;
 
-    display: flex;
-    align-items: center;
-
-    height: 35px;
     width: 120px;
-    background: linear-gradient(
-      to right,
-      rgb(235, 96, 96, 0.7),
-      rgb(141, 70, 70, 0.7)
-    );
-    color: #fff;
+    color: $color-red;
     font-size: 12px;
     border-radius: 10px;
-    p {
-      margin-left: 12px;
-    }
   }
 }
 @media screen and (max-width: 1440px) {

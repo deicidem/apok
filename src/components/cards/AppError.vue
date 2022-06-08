@@ -1,7 +1,12 @@
 <template>
   <div class="error">
-    <h5 class="error-title">Ошибка 404</h5>
-    <div class="error-text">Страница не найдена</div>
+    <div class="error-wrapper">
+      <h5 class="error-title">Ошибка 404</h5>
+      <div class="error-text">Страница не найдена</div>
+      <div class="error-cross">
+        <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,8 +23,11 @@
   padding: 10px 20px;
   background: $gradient-w;
   border-radius: 10px;
-  border: 2px solid #D84949;
+  border: 2px solid #d84949;
   box-shadow: $shadow-big;
+  &-wrapper {
+    position: relative;
+  }
   &-title {
     margin: 0;
     line-height: 1.5;
@@ -32,6 +40,14 @@
     font-weight: 400;
     font-size: 14px;
     margin: 10px auto 10px 0;
+  }
+  &-cross {
+    position: absolute;
+    right: 0;
+    top: 0;
+    svg path {
+      fill: $color-red;
+    }
   }
 }
 </style>

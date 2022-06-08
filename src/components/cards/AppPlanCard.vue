@@ -48,6 +48,7 @@ export default {
     &__img {
       img {
         height: 100%;
+        width: 240px;
       }
     }
     &__info {

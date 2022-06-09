@@ -21,22 +21,45 @@
             <input
               placeholder=" "
               class="input input-withIcon"
-              v-model.trim="login"
-              :class="{ invalid: v$.login.$error }"
+              v-model.trim="firstName"
+              :class="{ invalid: v$.firstName.$error }"
             />
-            <label class="input-label">Логин</label>
+            <label class="input-label">Имя</label>
 
             <img
               svg-inline
               class="input-img"
               :class="{
-                invalidIcon: v$.login.$error,
-                'input-img': !v$.login.$error,
+                invalidIcon: v$.firstName.$error,
+                'input-img': !v$.firstName.$error,
               }"
               src="@/assets/img/login-icon.svg"
             />
-            <div v-if="v$.login.$error" class="error-tooltip">
-              <p>{{ v$.login.$errors[0].$message }}</p>
+            <div v-if="v$.firstName.$error" class="error-tooltip">
+              <p>{{ v$.firstName.$errors[0].$message }}</p>
+            </div>
+          </div>
+
+          <div class="input-wrapper">
+            <input
+              placeholder=" "
+              class="input input-withIcon"
+              v-model.trim="lastName"
+              :class="{ invalid: v$.lastName.$error }"
+            />
+            <label class="input-label">Фамилия</label>
+
+            <img
+              svg-inline
+              class="input-img"
+              :class="{
+                invalidIcon: v$.lastName.$error,
+                'input-img': !v$.lastName.$error,
+              }"
+              src="@/assets/img/login-icon.svg"
+            />
+            <div v-if="v$.lastName.$error" class="error-tooltip">
+              <p>{{ v$.lastName.$errors[0].$message }}</p>
             </div>
           </div>
 
@@ -111,7 +134,6 @@
 
           <button
             type="submit"
-            @click="submitForm()"
             class="button button-g form-wrapper__item"
           >
             Зарегистироваться
@@ -143,7 +165,8 @@ export default {
   setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
-      login: "",
+      firstName: "",
+      lastName: "",
       mail: "",
       password: {
         password: "",
@@ -153,11 +176,18 @@ export default {
   },
   validations() {
     return {
-      login: {
+      firstName: {
         required: helpers.withMessage("Введите значение", required),
         minLength: helpers.withMessage(
-          "Логин должен содержать больше 6 символов",
-          minLength(6)
+          "Логин должен содержать больше 1 символа",
+          minLength(1)
+        ),
+      },
+      lastName: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 1 символа",
+          minLength(1)
         ),
       },
       mail: {
@@ -189,11 +219,18 @@ export default {
   methods: {
     ...mapActions("users", {
       addUser: "addUser",
+      regUser: "regUser"
     }),
     submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
         console.log("Form successfully submitted");
+        this.regUser({
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.mail,
+          password: this.password
+        })
       } else {
         return;
       }

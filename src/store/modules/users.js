@@ -1,12 +1,9 @@
-import * as authApi from "@/api/auth";
+import * as userApi from "@/api/user";
 
 export default {
   namespaced: true,
   state: {
-    users: [{
-      login: "login",
-      password: "password"
-    }]
+    user: null
   },
   getters: {
     getUsers(state) {
@@ -14,30 +11,30 @@ export default {
     }
   },
   mutations: {
-    addUser(state, user) {
-      state.users.push(user);
+    setUser(state, user) {
+      state.user = user;
     }
   },
   actions: {
-    addUser(store, user) {
-      store.commit('addUser', user)
+    setUser(store, user) {
+      store.commit('setUser', user)
     },
-    async authorizeUser({state}, user) {
-      let foundUser = false;
-      for (let i = 0; i < state.users.length; i++) {
-        const u = state.users[i];
-        if (u.login == user.login && u.password == user.password) {
-          foundUser = true;
-        }
-      }
-      if (foundUser) {
-        console.log("Вы авторизованы");
-      } else {
-        console.log("Вы не авторизованы");
-      }
-      let res = await authApi.login(user.email, user.password);
+    async authorizeUser(store, user) {
+      let res = await userApi.login({email: user.email,password: user.password});
+      store.commit('setUser', res.data.user);
       return res;
     },
-
+    async regUser(store, user) {
+      let res = await userApi.register({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password.password,
+        password_confirmation: user.password.confirm
+      });
+      console.log(res);
+      store.commit('setUser', res.data.user);
+      return res;
+    },
   }
 }

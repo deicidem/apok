@@ -59,7 +59,6 @@
           <!-- <router-link to="/main"> -->
           <button
             class="button button-g form-wrapper__item"
-            @click="submitForm()"
           >
             Войти
           </button>
@@ -105,11 +104,11 @@ export default {
     }),
     submitForm() {
       this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("Form successfully submitted");
-      } else {
-        return;
-      }
+        if (!this.v$.$error) {
+          this.authorize({email: this.login, password: this.password})
+        } else {
+          return;
+        }
     },
   },
 };

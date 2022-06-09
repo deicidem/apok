@@ -22,3 +22,4 @@ Vue.config.productionTip = false;
     render: h => h(App)
   }).$mount('#app')
 // })
+

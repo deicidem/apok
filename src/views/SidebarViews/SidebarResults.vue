@@ -89,18 +89,30 @@
           <thead>
             <tr>
               <th></th>
-              <th v-for="(header, i) in headers" :key="i" @click="sortBy(header.key, i)">
+              <th
+                v-for="(header, i) in headers"
+                :key="i"
+                @click="sortBy(header.key, i)"
+              >
+                {{ header.title }}
                 <template v-if="header.active">
                   <span v-if="sortDir == 'asc'">
-                    <img svg-inline src="@/assets/img/sort-asc.svg" alt="сортировка">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-asc.svg"
+                      alt="сортировка"
+                    />
                   </span>
                   <span v-else>
-                    <img svg-inline src="@/assets/img/sort-desc.svg" alt="сортировка">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-desc.svg"
+                      alt="сортировка"
+                    />
                   </span>
                 </template>
-                {{header.title}}
-                </th>
-              
+              </th>
+
               <th></th>
             </tr>
           </thead>
@@ -108,7 +120,9 @@
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="item.selected.value ? `selected-${item.selected.type + 1}` : ''"
+              :class="
+                item.selected.value ? `selected-${item.selected.type + 1}` : ''
+              "
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">
@@ -229,7 +243,7 @@ export default {
     ...mapGetters("results", {
       results: "getResults",
       selectable: "getSelectable",
-      sortDir: "getSortDir"
+      sortDir: "getSortDir",
     }),
     cardData() {
       if (this.card.ind != null) {
@@ -246,7 +260,11 @@ export default {
       "addImage",
       "removeImage",
     ]),
-    ...mapActions("results", ["setResultProperty", "selectResult", "sortResultsBy"]),
+    ...mapActions("results", [
+      "setResultProperty",
+      "selectResult",
+      "sortResultsBy",
+    ]),
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;
@@ -426,7 +444,7 @@ export default {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: #FFF;
+    background: #fff;
     box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
   }
   .back {

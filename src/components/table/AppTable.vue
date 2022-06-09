@@ -47,7 +47,7 @@ table {
         border: none;
         font-size: 12px;
         color: $color-main;
-        padding: 10px;
+        padding: 8px;
         box-sizing: border-box;
       }
     }
@@ -63,9 +63,11 @@ table {
       border-bottom: none;
     }
     tr {
+      line-height: 17px;
       td {
         padding: 10px;
         max-width: 150px;
+        
       }
       .green {
         color: $color-main;

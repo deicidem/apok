@@ -9,14 +9,30 @@
               <th class="col-checkbox center">
                 <app-checkbox class="checkbox-big" @change="onCheck($event)" />
               </th>
-              <th v-for="(header, i) in headers" :key="i" @click="sortBy(header.key, i)">
+              <th
+                v-for="(header, i) in headers"
+                :key="i"
+                @click="sortBy(header.key, i)"
+                class="tasks-header"
+              >
                 <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'">asc</span>
-                  <span v-else>desc</span>
+                  <span v-if="sortDir == 'asc'" class="tasks-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-asc.svg"
+                      alt="сортировка"
+                    />
+                  </span>
+                  <span v-else class="tasks-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-desc.svg"
+                      alt="сортировка"
+                    />
+                  </span>
                 </template>
-                {{header.title}}
-                </th>
-
+                {{ header.title }}
+              </th>
             </tr>
           </thead>
 
@@ -147,7 +163,7 @@ export default {
     ...mapGetters("tasks", {
       tasks: "getTasks",
       headers: "getHeaders",
-      sortDir: "getSortDir"
+      sortDir: "getSortDir",
     }),
   },
   methods: {
@@ -175,6 +191,15 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-header {
+    position: relative;
+  }
+  &-sort {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
   &-table {
     &__button {
       text-align: left;

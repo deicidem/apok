@@ -37,6 +37,7 @@
           <div class="input-wrapper">
             <input
               placeholder=" "
+              type="password"
               class="input input-withIcon"
               v-model.trim="password"
               :class="{ invalid: v$.password.$error }"

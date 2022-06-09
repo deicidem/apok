@@ -638,7 +638,7 @@ label.active {
       color: #fff;
       line-height: 35px;
       text-align: center;
-
+      margin: 0;
       font-size: 16px;
       background: $gradient;
       width: 30px;

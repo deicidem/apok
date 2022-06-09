@@ -158,7 +158,6 @@ svg:focus {
       background: $gradient-w;
     }
     svg path {
-      fill: $color-main;
     }
   }
   &-r {

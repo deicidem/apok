@@ -11,7 +11,7 @@
       </router-link>
 
       <h2 class="plan-title">
-        Подготовка к запуску задачи 452: {{ plan.title }}
+        {{ plan.title }}
       </h2>
 
       <button class="button button-g plan-wrapper__button">

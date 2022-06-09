@@ -91,8 +91,12 @@
               <th></th>
               <th v-for="(header, i) in headers" :key="i" @click="sortBy(header.key, i)">
                 <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'">asc</span>
-                  <span v-else>desc</span>
+                  <span v-if="sortDir == 'asc'">
+                    <img svg-inline src="@/assets/img/sort-asc.svg" alt="сортировка">
+                  </span>
+                  <span v-else>
+                    <img svg-inline src="@/assets/img/sort-desc.svg" alt="сортировка">
+                  </span>
                 </template>
                 {{header.title}}
                 </th>

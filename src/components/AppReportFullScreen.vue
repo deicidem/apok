@@ -1,24 +1,24 @@
 <template>
   <div class="fullScreen">
     <vuescroll :ops="ops">
-    <div class="fullScreen-wrapper">
-      <router-link to="/main/tasks">
-        <div class="back">
-          <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+      <div class="fullScreen-wrapper">
+        <router-link to="/main/tasks">
+          <div class="back">
+            <div class="back-arrow">
+              <img src="@/assets/img/arrow.svg" alt="Назад" />
+            </div>
+            <p class="back-subtitle">Назад</p>
           </div>
-          <p class="back-subtitle">Назад</p>
-        </div>
-      </router-link>
+        </router-link>
 
-      <h2 class="fullScreen-title">Отчет</h2>
+        <h2 class="fullScreen-title">Отчет</h2>
 
-      <button class="button button-g fullScreen-button">Скачать</button>
-    </div>
+        <button class="button button-g fullScreen-button">Скачать</button>
+      </div>
 
-    <div class="fullScreen-report">
-      <img src="@/assets/img/report.png" />
-    </div>
+      <div class="fullScreen-report">
+        <img src="@/assets/img/report.png" />
+      </div>
     </vuescroll>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
       },
     };
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

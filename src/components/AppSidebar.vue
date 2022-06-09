@@ -1,12 +1,12 @@
 <template>
   <div class="sidebar_wrap" :class="active ? 'active' : ''">
     <!-- <transition name="slide"> -->
-      <div class="sidebar" :class="{active}">
-        <app-plan-data></app-plan-data>
-        <div class="sidebar-content">
-          <router-view> </router-view>
-        </div>
+    <div class="sidebar" :class="{ active }">
+      <app-plan-data></app-plan-data>
+      <div class="sidebar-content">
+        <router-view> </router-view>
       </div>
+    </div>
     <!-- </transition> -->
 
     <div class="sidebar-collapsed">
@@ -19,9 +19,17 @@
       ></div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/tasks" custom v-slot="{navigate, isActive}">
-          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
-            <img svg-inline src="@/assets/img/sidebar-task.svg" />
+        <router-link to="/main/tasks" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-task.svg"
+              alt="Мои задачи"
+            />
           </div>
         </router-link>
 
@@ -29,9 +37,17 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/plan" custom v-slot="{navigate, isActive}">
-          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
-            <img svg-inline src="@/assets/img/sidebar-plan.svg" />
+        <router-link to="/main/plan" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-plan.svg"
+              alt="Запланированные задачи"
+            />
           </div>
         </router-link>
 
@@ -41,9 +57,17 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/search" custom v-slot="{navigate, isActive}">
-          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
-            <img svg-inline src="@/assets/img/sidebar-search.svg" />
+        <router-link to="/main/search" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-search.svg"
+              alt="Поиск снимков"
+            />
           </div>
         </router-link>
 
@@ -51,9 +75,17 @@
       </div>
 
       <div class="sidebar-collapsed__item notification-wrapper" @click="open">
-        <router-link to="/main/alerts" custom v-slot="{navigate, isActive}">
-          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
-            <img svg-inline src="@/assets/img/sidebar-notification.svg" />
+        <router-link to="/main/alerts" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-notification.svg"
+              alt="Мои уведомления"
+            />
             <div class="notification">
               <div class="notification-number">{{ alerts.length }}</div>
             </div>
@@ -64,9 +96,17 @@
       </div>
 
       <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/person" custom v-slot="{navigate, isActive}">
-          <div @click="navigate" :class="{active: isActive}" class="sidebar-collapsed__img">
-            <img svg-inline src="@/assets/img/sidebar-person.svg" />
+        <router-link to="/main/person" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-person.svg"
+              alt="Личный кабинет"
+            />
           </div>
         </router-link>
 
@@ -307,7 +347,9 @@ export default {
       path {
         fill: $color-main;
       }
-      &.active, &:hover, &:focus-visible {
+      &.active,
+      &:hover,
+      &:focus-visible {
         path {
           fill: $color-main-light;
         }

@@ -9,7 +9,7 @@
             <input class="input input-withIcon" v-model="user.login" required />
             <label class="input-label">Логин</label>
 
-            <img class="input-img" src="@/assets/img/login-icon.svg" />
+            <img class="input-img" src="@/assets/img/login-icon.svg" alt="Логин"/>
           </div>
            <div class="input-wrapper">
             <input
@@ -19,7 +19,7 @@
             />
             <label class="input-label">Пароль</label>
 
-            <img class="input-img" src="@/assets/img/lock-icon.svg" />
+            <img class="input-img" src="@/assets/img/lock-icon.svg" alt="Пароль"/>
           </div>
         <a href="./index.html" class="user-box-button"><p>Войти</p></a>
         <a

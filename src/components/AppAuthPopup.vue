@@ -15,6 +15,7 @@
         <img
           svg-inline
           class="input-img"
+          alt="Логин"
           :class="{
             invalidIcon: v$.login.$error,
             'input-img': !v$.login.$error,
@@ -37,6 +38,7 @@
 
         <img
           svg-inline
+          alt="Пароль"
           class="input-img"
           :class="{
             invalidIcon: v$.password.$error,

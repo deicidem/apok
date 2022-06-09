@@ -22,7 +22,14 @@
               <td>{{ item.title }}</td>
               <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
               <td>{{ item.date.toLocaleDateString() }}</td>
-              <td>{{ item.status }}</td>
+              <!--  -->
+              <td v-if="!isNaN(+item.status)">
+                Выполняется: {{item.status}}%
+                <div class="tasks-table__progress" >
+                  <div class="tasks-table__progress__value" :style="{width: +item.status + '%'}"></div>
+                </div>
+              </td>
+              <td v-else>{{ item.status }}</td>
               <td>
                 <button class="tasks-table__button">
                   Посмотреть результат
@@ -118,14 +125,31 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  &-table__button {
+  &-table{
+    &__button {
+    text-align: left;
     font-size: 12px;
     background: none;
     border: none;
     color: $color-main;
-    &:hover {
-      cursor: pointer;
-      color: $color-main-light;
+      &:hover {
+        cursor: pointer;
+        color: $color-main-light;
+      }
+    }
+    &__progress {
+      margin-top: 3px;
+      width: 120px;
+      border-radius: 20px;
+      height: 10px;
+      background: $gradient-w;
+      box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+      overflow: hidden;
+      &__value {
+        width: 50%;
+        background: $gradient;
+        height: 100%;
+      }
     }
   }
   &__wrapper {

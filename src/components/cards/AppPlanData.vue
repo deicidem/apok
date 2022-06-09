@@ -3,7 +3,7 @@
     <div class="data-content">
       <div class="data-title">Запланировать задачу</div>
       <div class="data-wrapper">
-        <div class="data-item select">
+        <div class="data-item">
           <portal to="popup">
             <app-plan-popup
               :plan="activePlan"
@@ -58,14 +58,15 @@
                   <div class="data__text" v-else>Не выбрано</div>
                   <div class="data-btns">
                     <button
-                      class="button button-svg data-btn"
+                      class="button button-svg button-white data-btn"
+                      :class="getSelectable.dataIndex == i && getSelectable.planIndex == activePlanIndex && getSelectable.value ? 'button-g' : 'button-white'"
                       @click="selectDzz(i)"
                     >
-                      <img src="@/assets/img/choose.svg" />
+                      <img svg-inline src="@/assets/img/choose.svg" />
                     </button>
 
                     <button
-                      class="button button-svg data-btn"
+                      class="button button-svg button-white button-white data-btn"
                       @click="onUploadClick(i)"
                     >
                       <img src="@/assets/img/upload.svg" />
@@ -87,12 +88,12 @@
                   <router-link to="area" custom v-slot="{ navigate }">
                     <button
                       @click="navigate"
-                      class="button button-svg data-btn"
+                      class="button button-svg button-white button-white data-btn"
                     >
                       <img src="@/assets/img/choose.svg" />
                     </button>
                   </router-link>
-                  <button class="button button-svg data-btn">
+                  <button class="button button-svg button-white button-white data-btn">
                     <img
                       svg-inline
                       class="icon icon-vector-o"
@@ -319,10 +320,10 @@ export default {
     margin-bottom: 16px;
   }
   &-item {
+    background: #fff;
     position: relative;
     margin-bottom: 10px;
     width: 100%;
-    background: $gradient-w;
     padding: 10px;
     box-shadow: $shadow-small;
     border-radius: 5px;

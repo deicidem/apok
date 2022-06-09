@@ -145,6 +145,9 @@ svg:focus {
     &::after {
       background: $gradient;
     }
+    svg path {
+      fill: #fff;
+    }
   }
   &-white {
     color: $color-main;
@@ -154,15 +157,20 @@ svg:focus {
     &::after {
       background: $gradient-w;
     }
+    svg path {
+      fill: $color-main;
+    }
   }
   &-r {
     color: #fff;
     &::after {
       background: $gradient-r;
     }
+    svg path {
+      fill: #fff;
+    }
   }
   &-svg {
-    background: $gradient_w;
     width: 30px;
     height: 30px;
     padding: 7px;

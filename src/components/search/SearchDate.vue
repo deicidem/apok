@@ -72,20 +72,24 @@
             class="input-wrapper select-data"
             @click="selectActive = !selectActive"
           >
-            <input
-              placeholder=" "
-              type="text"
-              class="input"
-              :value="monthsValue"
-              readonly
-              required
-            />
-            <label class="input-label select-label">Выбрать месяцы:</label>
-            <img
-              svg-inline
-              class="select-img"
-              src="@/assets/img/arrow-down.svg"
-            />
+            <form @submit.prevent="submitForm()">
+              <input
+                placeholder=" "
+                type="text"
+                class="input"
+                :value="monthsValue"
+                readonly
+                required
+                :class="{ invalid: monthsValue == '' }"
+              />
+              <label class="input-label select-label">Выбрать месяцы:</label>
+              <img
+                svg-inline
+                class="select-img"
+                src="@/assets/img/arrow-down.svg"
+              />
+              <p v-if="monthsValue == ''" class="error-tooltip"></p>
+            </form>
           </div>
           <div class="select-options" v-show="selectActive">
             <label class="select-option">
@@ -129,14 +133,18 @@ import "vue-multiselect/dist/vue-multiselect.min.css";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
 
+import useVuelidate from "@vuelidate/core";
+
 export default {
   mixins: [clickaway],
   components: {
     DatePicker,
     AppCheckbox,
   },
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
+      month: "",
       ru: ru,
       from: "",
       to: "",
@@ -225,6 +233,14 @@ export default {
     },
     away() {
       this.selectActive = false;
+    },
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
     },
   },
   computed: {
@@ -353,7 +369,7 @@ label.active {
     right: 0;
   }
   &-data {
-    &:focus-within .input-label{
+    &:focus-within .input-label {
       top: -20px;
     }
     input {

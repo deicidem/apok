@@ -142,6 +142,9 @@ export default {
       fill: $color-red;
     }
   }
+  &:focus-visible {
+    border: 1px solid $color-red;
+  }
 }
 .invalidIcon {
   position: absolute;

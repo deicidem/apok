@@ -14,7 +14,6 @@
         Подготовка к запуску задачи 452: {{ plan.title }}
       </h2>
 
-
       <button class="button button-g plan-wrapper__button">
         Запланировать задачу
       </button>
@@ -46,7 +45,6 @@
                   <p class="plan-table__text">
                     {{ req.description }}
                   </p>
-
                 </div>
               </div>
             </div>
@@ -117,6 +115,8 @@ export default {
 
 <style lang="scss" scoped>
 .plan {
+  position: relative;
+
   height: 100%;
   max-height: 100%;
   padding: 40px;
@@ -177,10 +177,10 @@ export default {
     &__text {
       margin-top: 20px;
       color: #000;
-      p{
+      p {
         margin: 0;
       }
-      ul{
+      ul {
         margin: 0;
       }
     }
@@ -225,6 +225,10 @@ img {
   height: 100%;
 }
 .back {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+
   display: flex;
   align-items: center;
   cursor: pointer;

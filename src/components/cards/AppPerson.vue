@@ -4,33 +4,40 @@
     <div class="person-wrapper">
       <div class="person-wrapper__text">
         <div class="person-wrapper__information">
-          <div class="person-wrapper__editable">
-            <p class="person-wrapper__title">Имя</p>
+          <div
+            class="person-wrapper__editable"
+            v-for="(item, i) in user"
+            :key="i"
+          >
+            <p class="person-wrapper__title">{{ item.title }}</p>
             <div class="person-edit">
-              <div :contenteditable="editable" @blur="onEdit" :class="{editme, input: editable}" class="check">{{name}}</div>
-            </div>
-          </div>
-
-          <div class="person-wrapper__editable">
-            <p class="person-wrapper__title">Фамилия</p>
-            <div class="person-edit">
-              <div :contenteditable="editable" @blur="onEdit" :class="{editme, input: editable}" class="check">{{surname}}</div>
-            </div>
-          </div>
-
-          <div class="person-wrapper__editable">
-            <p class="person-wrapper__title">Почта</p>
-            <div class="person-edit">
-              <div :contenteditable="editable" @blur="onEdit" :class="{editme, input: editable}" class="check">{{mail}}</div>
+              <div
+                :contenteditable="item.editable && editable"
+                @blur="onEdit"
+                class="check"
+                :class="{ editme: item.editable && editable }"
+              >
+                {{ item.value }}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="person-wrapper__buttons">
-        <button class="button button-white person-wrapper__button" v-show="!editable" @click="editable = !editable">
+        <button
+          class="button button-white person-wrapper__button"
+          v-show="!editable"
+          @click="editable = !editable"
+        >
           Редактировать
         </button>
-        <button v-show="editable" @click="editable = !editable" class="button button-g person-wrapper__button">Готово</button>
+        <button
+          v-show="editable"
+          @click="editable = !editable"
+          class="button button-g person-wrapper__button"
+        >
+          Готово
+        </button>
         <button
           class="button button-g person-wrapper__button"
           @click="showPopup = true"
@@ -57,11 +64,25 @@ export default {
   },
   data() {
     return {
-      showPopup: false,
-      name: "Ann",
-      surname: "Afanaseva",
-      mail: "Ann@gmail.com",
+      user: [
+        {
+          title: "Имя",
+          value: "Ann",
+          editable: true,
+        },
+        {
+          title: "Фамилия",
+          value: "Afanaseva",
+          editable: true,
+        },
+        {
+          title: "Почта",
+          value: "Ann@mail.ru",
+          editable: false,
+        },
+      ],
       editable: false,
+      showPopup: false,
     };
   },
   methods: {
@@ -85,7 +106,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-width: 340px;
   }
   &-title {
     font-weight: 400;
@@ -102,6 +122,7 @@ export default {
     &__title {
       margin: 0;
       color: $color-main;
+      line-height: 30px;
       width: 80px;
     }
     &__info {
@@ -125,25 +146,33 @@ export default {
       display: flex;
       align-items: center;
       margin-bottom: 14px;
-      &:last-child{
+      &:last-child {
         margin-bottom: 0;
       }
     }
   }
 }
 .editme {
-  width: 100%;
-  padding: 3px;
-  border: 1px solid $text-grey-light;
-  color: $text-grey-light;
-  font-size: 14px;
-  width: 160px;
-  margin-left: 20px;
+  width: 200px;
+  height: 30px;
+
+  border-radius: 10px;
+  border: 1px solid rgb($text-grey, 0.2);
+  box-shadow: $shadow-small;
+  color: $color-main;
+  padding-left:10px;
+  &:focus-visible {
+    border: 1px solid $color-main;
+    outline: none;
+  }
 }
 .check {
   color: $text-grey;
   font-size: 14px;
-  margin-left: 20px;
+  margin-left: 30px;
+  padding-left:10px;
+  line-height: 30px;
+
   width: 200px;
 }
 </style>

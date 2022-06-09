@@ -124,19 +124,20 @@
         v-show="searchZoneType == 2"
       >
         <form
-          class="coordinates-wrapper"
+          class="coordinates-form"
           @submit.prevent="submitForm()"
           method="POST"
         >
           <div class="input-wrapper coordinates-inputs">
             <masked-input
               placeholder=" "
-              class="input coordinates-input"
-              v-model="lat"
+              class="input input-withIcon coordinates-input"
+              v-model.trim="lat"
               :class="{ invalid: v$.lat.$error }"
               :mask="inputMaskLat"
             />
             <label class="input-label coordinates-label"> Широта </label>
+            <p class="coordinates-input__letter" :class="{ invalidLetter: v$.lng.$error }">Ю</p>
 
             <p v-if="v$.lat.$error" class="error-tooltip">
               {{ v$.lat.$errors[0].$message }}
@@ -147,21 +148,23 @@
             <masked-input
               placeholder=" "
               class="input coordinates-input"
-              v-model="lng"
+              v-model.trim="lng"
               :class="{ invalid: v$.lng.$error }"
               :mask="inputMaskLng"
             />
             <label class="input-label coordinates-label"> Долгота </label>
+            <p class="coordinates-input__letter" :class="{ invalidLetter: v$.lng.$error }">В</p>
 
             <p v-if="v$.lng.$error" class="error-tooltip">
               {{ v$.lng.$errors[0].$message }}
             </p>
           </div>
+
           <div class="input-wrapper coordinates-inputs">
             <input
               placeholder=" "
               class="input coordinates-input"
-              v-model="rad"
+              v-model.trim="rad"
               :class="{ invalid: v$.rad.$error }"
               id="radius"
             />
@@ -171,20 +174,22 @@
               {{ v$.rad.$errors[0].$message }}
             </p>
           </div>
-
+        </form>
+        <div class="coordinates-wrapper">
           <button
             @click="submitForm()"
             class="button button-g coordinates-wrapper__button"
           >
             Загрузить на карту
           </button>
-        </form>
-        <button
-          class="button button-r coordinates-wrapper__button"
-          @click="removeCircle"
-        >
-          Убрать с карты
-        </button>
+
+          <button
+            class="button button-r coordinates-wrapper__button"
+            @click="removeCircle"
+          >
+            Убрать с карты
+          </button>
+        </div>
       </div>
 
       <div
@@ -226,7 +231,7 @@
 import { mapGetters, mapActions } from "vuex";
 import MaskedInput from "vue-masked-input";
 import useVuelidate from "@vuelidate/core";
-import { required, helpers, minLength } from "@vuelidate/validators";
+import { required, helpers, minLength, numeric } from "@vuelidate/validators";
 // import {IMaskDirective} from 'vue-imask';
 
 export default {
@@ -282,6 +287,7 @@ export default {
       },
       rad: {
         required: helpers.withMessage("Введите значение", required),
+        numeric: helpers.withMessage("Введите числовое значение", numeric),
       },
     };
   },
@@ -569,7 +575,7 @@ label.active {
   }
   &__coordinates {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
   }
   &__load {
     display: flex;
@@ -597,6 +603,10 @@ label.active {
   }
 }
 .coordinates {
+  &-form {
+    display: flex;
+    align-items: flex-start;
+  }
   &-inputs {
     margin-left: 16px;
     &:first-child {
@@ -613,21 +623,39 @@ label.active {
   }
   &-input {
     width: 120px;
+    height: 35px;
+    margin: 0;
     &:focus .coordinates-label,
     &:not(:placeholder-shown) ~ label {
       top: -20px;
       font-size: 12px;
     }
+    &__letter {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-radius: 0 10px 10px 0;
+      color: #fff;
+      line-height: 35px;
+      text-align: center;
+
+      font-size: 16px;
+      background: $gradient;
+      width: 30px;
+      height: 35px;
+    }
   }
   &-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    margin-left: 20px;
     &__button {
-      margin-top: 20px;
       margin-left: auto;
       max-width: 200px;
       width: 190px;
+      &:last-child {
+        margin-top: 20px;
+      }
     }
   }
 }
@@ -667,13 +695,16 @@ label.active {
     }
   }
 }
+.invalidLetter{
+  background: $gradient-r;
+}
 .error {
   &-tooltip {
-    position: absolute;
-    bottom: -30px;
     transition: all 2s ease-out;
 
     width: 120px;
+    margin-top: 6px;
+    line-height: 110%;
     color: $color-red;
     font-size: 12px;
     border-radius: 10px;

@@ -37,10 +37,12 @@ export default {
     async load({commit, dispatch}) {
       let tasks = await tasksApi.all();
       tasks.forEach(el => {
-        el.result.active = false;
-        el.result.views.forEach(el => {
-          el.active = false;
-        })
+        if (el.result != null) {
+          el.result.active = false;
+          el.result.views.forEach(el => {
+            el.active = false;
+          })
+        }
         if (el.status != "Завершена") {
           dispatch('setTimer', el.id)
         }
@@ -50,10 +52,12 @@ export default {
     },
     async update({commit}, id) {
       let task = await tasksApi.one(id);
-      task.result.active = false;
+      if (task.resul != null) {
+        task.result.active = false;
       task.result.views.forEach(el => {
         el.active = false;
       })
+      }
       commit('setTask', task);
       return task;
     },

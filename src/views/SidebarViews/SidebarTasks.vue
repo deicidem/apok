@@ -22,7 +22,14 @@
               <td>{{ item.title }}</td>
               <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
               <td>{{ item.date.toLocaleDateString() }}</td>
-              <td>{{ item.status }}</td>
+              <!--  -->
+              <td v-if="!isNaN(+item.status)">
+                Выполняется: {{item.status}}%
+                <div class="tasks-table__progress" >
+                  <div class="tasks-table__progress__value" :style="{width: +item.status + '%'}"></div>
+                </div>
+              </td>
+              <td v-else>{{ item.status }}</td>
               <td>
                 <button class="tasks-table__button">
                   Посмотреть результат
@@ -31,7 +38,7 @@
             </tr>
             <tr>
               <td colspan="6"  class="td_preview">
-                <app-preview v-show="item.result.active" v-if="item.result.files.length || item.result.views.length" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
+                <app-preview v-show="item.result.active" v-if="item.result != null" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
               </td>
             </tr>
           </tbody>
@@ -118,14 +125,32 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  &-table__button {
+  &-table{
+    &__button {
+    text-align: left;
     font-size: 12px;
     background: none;
     border: none;
     color: $color-main;
-    &:hover {
-      cursor: pointer;
-      color: $color-main-light;
+      &:hover {
+        cursor: pointer;
+        color: $color-main-light;
+      }
+    }
+    &__progress {
+      margin-top: 3px;
+      width: 120px;
+      border-radius: 20px;
+      height: 10px;
+      background: $gradient-w;
+      box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+      overflow: hidden;
+      &__value {
+        background-image: linear-gradient(to right, $color-main-dark, $color-main-light, $color-main-dark);
+        height: 100%;
+        background-size: 400%;
+        animation: progress 16s ease-out infinite;
+      }
     }
   }
   &__wrapper {
@@ -183,6 +208,15 @@ export default {
       border-radius: 50%;
       border: none;
     }
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position: 400%;
+  }
+  100% {
+    background-position: -400%;
   }
 }
 

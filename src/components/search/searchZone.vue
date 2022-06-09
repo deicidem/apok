@@ -52,7 +52,7 @@
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate(i)">
-                <button class="button button-svg">
+                <button class="button button-svg button-white">
                   <img inline-svg src="@/assets/img/trash.svg" />
                 </button>
               </td>
@@ -82,7 +82,7 @@
               <td class="col">
                 <button
                   @click="onAddCoordinate"
-                  class="button button-svg"
+                  class="button button-svg button-white"
                   type="white-g"
                 >
                   <img inline-svg src="@/assets/img/plus.svg" />

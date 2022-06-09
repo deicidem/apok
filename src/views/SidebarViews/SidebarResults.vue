@@ -108,7 +108,7 @@
               <td class="results-table__buttons">
                 <div class="results-circle"></div>
                 <button
-                  class="button button-svg results-button"
+                  class="button button-svg button-white results-button"
                   :class="results[i].polygonActive ? 'active' : ''"
                   @click="onPolygonButtonClick(i, item.id, item.geography)"
                 >
@@ -120,7 +120,7 @@
                   />
                 </button>
                 <button
-                  class="button button-svg results-button"
+                  class="button button-svg button-white results-button"
                   :class="results[i].imageActive ? 'active' : ''"
                   @click="
                     onImageButtonClick(
@@ -147,7 +147,7 @@
               <td>{{ item.cloudiness }}</td>
               <td class="results-table__buttons">
                 <button
-                  class="button button-svg results-button"
+                  class="button button-svg button-white results-button"
                   :class="results[i].cardActive ? 'active' : ''"
                   @click="onCardButtonClick(i)"
                 >

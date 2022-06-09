@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <button @click="$emit('delete')" class="button button-svg">
+    <button @click="$emit('delete')" class="button button-svg button-white">
       <img inline-svg src="@/assets/img/trash.svg" />
     </button>
   </div>

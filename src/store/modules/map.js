@@ -254,12 +254,8 @@ export default {
     addImage(store, image) {
       let p1 = L.latLng(image.bounds[1], image.bounds[0]);
       let p2 = L.latLng(image.bounds[3], image.bounds[2]);
-      console.log(p1);
-      console.log(p2);
       let bounds = L.latLngBounds(p1, p2);
-      console.log(bounds);
       let center = bounds.getCenter();
-      console.log(center);
 
       store.commit('setCenter', center);
       store.commit('setBounds', bounds);

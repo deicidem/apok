@@ -146,9 +146,10 @@ export default {
       box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
       overflow: hidden;
       &__value {
-        width: 50%;
-        background: $gradient;
+        background-image: linear-gradient(to right, $color-main-dark, $color-main-light, $color-main-dark);
         height: 100%;
+        background-size: 400%;
+        animation: progress 16s ease-out infinite;
       }
     }
   }
@@ -207,6 +208,15 @@ export default {
       border-radius: 50%;
       border: none;
     }
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position: 400%;
+  }
+  100% {
+    background-position: -400%;
   }
 }
 

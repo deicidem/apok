@@ -4,7 +4,8 @@ export default {
   namespaced: true,
   state: {
     tasks: setTasks(),
-    headers: ["Номер", "Задача", "Дата добавления", "Статус", "Результат"]
+    currentSort: null,
+    currentSortDir: 'asc'
   },
   getters: {
     getTasks(state) {
@@ -12,6 +13,9 @@ export default {
     },
     getHeaders(state) {
       return state.headers;
+    },
+    getSortDir(state) {
+      return state.currentSortDir;
     }
   },
   mutations: {
@@ -31,6 +35,24 @@ export default {
     },
     setTaskViewActive(state, data) {
       state.tasks[data.taskIndex].result.views[data.viewIndex].active = data.val;
+    },
+    sortTasksBy(state, key) {
+      if (state.currentSort == key) {
+        state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.currentSort = key;
+        state.currentSortDir = 'asc';
+      }
+      
+      state.tasks.sort((a, b) => {
+        let modifier = 1;
+        if(state.currentSortDir === 'desc') modifier = -1;
+        if(a[state.currentSort]==null) return 1 * modifier;
+        if(b[state.currentSort]==null) return -1 * modifier;
+        if(a[state.currentSort] < b[state.currentSort]) return -1 * modifier;
+        if(a[state.currentSort] > b[state.currentSort]) return 1 * modifier;
+        return 0;
+      })
     }
   },
   actions: {
@@ -52,7 +74,7 @@ export default {
     },
     async update({commit}, id) {
       let task = await tasksApi.one(id);
-      if (task.resul != null) {
+      if (task.result != null) {
         task.result.active = false;
       task.result.views.forEach(el => {
         el.active = false;
@@ -75,7 +97,9 @@ export default {
     setTaskViewActive({commit}, data) {
       commit('setTaskViewActive', data);
     },
-    
+    sortTasksBy(store, key) {
+      store.commit('sortTasksBy', key)
+    }
   }
 }
 

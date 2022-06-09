@@ -9,12 +9,19 @@
               <th class="col-checkbox center">
                 <app-checkbox class="checkbox-big" @change="onCheck($event)" />
               </th>
-              <th v-for="(h, i) in headers" :key="i">{{ h }}</th>
+              <th v-for="(header, i) in headers" :key="i" @click="sortBy(header.key, i)">
+                <template v-if="header.active">
+                  <span v-if="sortDir == 'asc'">asc</span>
+                  <span v-else>desc</span>
+                </template>
+                {{header.title}}
+                </th>
+
             </tr>
           </thead>
 
           <tbody v-for="(item, i) in tasks" :key="item.id">
-            <tr @click="setTaskActive({index: i, val: !item.result.active})">
+            <tr @click="showResult(i, item)">
               <td class="col-checkbox center">
                 <app-checkbox :mini="true" @change="onCheck($event)" />
               </td>
@@ -24,21 +31,30 @@
               <td>{{ item.date.toLocaleDateString() }}</td>
               <!--  -->
               <td v-if="!isNaN(+item.status)">
-                Выполняется: {{item.status}}%
-                <div class="tasks-table__progress" >
-                  <div class="tasks-table__progress__value" :style="{width: +item.status + '%'}"></div>
+                Выполняется: {{ item.status }}%
+                <div class="tasks-table__progress">
+                  <div
+                    class="tasks-table__progress__value"
+                    :style="{ width: +item.status + '%' }"
+                  ></div>
                 </div>
               </td>
               <td v-else>{{ item.status }}</td>
               <td>
-                <button class="tasks-table__button">
+                <button class="tasks-table__button" v-if="item.result != null">
                   Посмотреть результат
                 </button>
               </td>
             </tr>
             <tr>
-              <td colspan="6"  class="td_preview">
-                <app-preview v-show="item.result.active" v-if="item.result != null" :views="item.result.views" :files="item.result.files" :taskIndex="i"></app-preview>
+              <td colspan="6" class="td_preview">
+                <app-preview
+                  v-show="item.result.active"
+                  v-if="item.result != null"
+                  :views="item.result.views"
+                  :files="item.result.files"
+                  :taskIndex="i"
+                ></app-preview>
               </td>
             </tr>
           </tbody>
@@ -69,6 +85,33 @@ export default {
   },
   data() {
     return {
+      headers: [
+        {
+          title: "Номер",
+          key: "id",
+          active: false,
+        },
+        {
+          title: "Задача",
+          key: "title",
+          active: false,
+        },
+        {
+          title: "Дата добавления",
+          key: "date",
+          active: false,
+        },
+        {
+          title: "Статус",
+          key: "status",
+          active: false,
+        },
+        {
+          title: "Результат",
+          key: "result",
+          active: false,
+        },
+      ],
       reportType: false,
       pictureType: false,
       ops: {
@@ -104,19 +147,26 @@ export default {
     ...mapGetters("tasks", {
       tasks: "getTasks",
       headers: "getHeaders",
+      sortDir: "getSortDir"
     }),
   },
   methods: {
-    ...mapActions("tasks", ['setTaskActive']),
+    ...mapActions("tasks", ["setTaskActive", "sortTasksBy"]),
     onCheck(val) {
       console.log(val);
     },
-    showResult() {
-      this.reportType = !this.reportType;
-      this.pictureType = !this.pictureType;
+    sortBy(key, ind) {
+      this.headers.forEach((el, i) => {
+        el.active = i == ind;
+      });
+      this.sortTasksBy(key);
+    },
+    showResult(i, task) {
+      if (task.result != null) {
+        this.setTaskActive({ index: i, val: !task.result.active });
+      }
     },
   },
-
 };
 </script>
 
@@ -125,13 +175,13 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
-  &-table{
+  &-table {
     &__button {
-    text-align: left;
-    font-size: 12px;
-    background: none;
-    border: none;
-    color: $color-main;
+      text-align: left;
+      font-size: 12px;
+      background: none;
+      border: none;
+      color: $color-main;
       &:hover {
         cursor: pointer;
         color: $color-main-light;
@@ -140,14 +190,22 @@ export default {
     &__progress {
       margin-top: 3px;
       width: 120px;
-      border-radius: 20px;
+      border-radius: 3px;
       height: 10px;
       background: $gradient-w;
       box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
       overflow: hidden;
       &__value {
-        background-image: linear-gradient(to right, $color-main-dark, $color-main-light, $color-main-dark);
+        border-radius: 3px;
         height: 100%;
+        background-image: linear-gradient(
+          to right,
+          $color-main-dark,
+          $color-main-light,
+          $color-main-dark
+        );
+        transition: width 0.3s ease-out;
+        box-shadow: $shadow-small;
         background-size: 400%;
         animation: progress 16s ease-out infinite;
       }

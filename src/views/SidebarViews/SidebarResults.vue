@@ -89,12 +89,14 @@
           <thead>
             <tr>
               <th></th>
-              <th>Идентификатор</th>
-              <th>Виток</th>
-              <th>Маршрут</th>
-              <th>Аппарат</th>
-              <th>Дата съемки</th>
-              <th>Облачность</th>
+              <th v-for="(header, i) in headers" :key="i" @click="sortBy(header.key, i)">
+                <template v-if="header.active">
+                  <span v-if="sortDir == 'asc'">asc</span>
+                  <span v-else>desc</span>
+                </template>
+                {{header.title}}
+                </th>
+              
               <th></th>
             </tr>
           </thead>
@@ -179,6 +181,38 @@ export default {
   },
   data() {
     return {
+      headers: [
+        {
+          title: "Идентификатор",
+          key: "name",
+          active: false,
+        },
+        {
+          title: "Виток",
+          key: "round",
+          active: false,
+        },
+        {
+          title: "Маршрут",
+          key: "route",
+          active: false,
+        },
+        {
+          title: "Аппарат",
+          key: "name",
+          active: false,
+        },
+        {
+          title: "Дата съемки",
+          key: "date",
+          active: false,
+        },
+        {
+          title: "Облачность",
+          key: "cloudiness",
+          active: false,
+        },
+      ],
       loaded: false,
       buttons: [],
       card: {
@@ -191,6 +225,7 @@ export default {
     ...mapGetters("results", {
       results: "getResults",
       selectable: "getSelectable",
+      sortDir: "getSortDir"
     }),
     cardData() {
       if (this.card.ind != null) {
@@ -207,7 +242,13 @@ export default {
       "addImage",
       "removeImage",
     ]),
-    ...mapActions("results", ["setResultProperty", "selectResult"]),
+    ...mapActions("results", ["setResultProperty", "selectResult", "sortResultsBy"]),
+    sortBy(key, ind) {
+      this.headers.forEach((el, i) => {
+        el.active = i == ind;
+      });
+      this.sortResultsBy(key);
+    },
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {
         this.removeGeoJsonPolygon(id);

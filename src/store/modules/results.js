@@ -9,7 +9,9 @@ export default {
       value: false,
       planIndex: null,
       dataIndex: null
-    }
+    },
+    currentSort: null,
+    currentSortDir: 'asc'
   },
   getters: {
     getResults(state) {
@@ -27,6 +29,9 @@ export default {
       }
       return resultsMap;
     },
+    getSortDir(state) {
+      return state.currentSortDir;
+    }
   },
   mutations: {
     setResultProperty(state, data) {
@@ -54,6 +59,24 @@ export default {
           resultSelected.value = data.value;
           resultSelected.type = data.type;
         }
+    },
+    sortResultsBy(state, key) {
+      if (state.currentSort == key) {
+        state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.currentSort = key;
+        state.currentSortDir = 'asc';
+      }
+      
+      state.results.sort((a, b) => {
+        let modifier = 1;
+        if(state.currentSortDir === 'desc') modifier = -1;
+        if(a[state.currentSort]==null) return 1 * modifier;
+        if(b[state.currentSort]==null) return -1 * modifier;
+        if(a[state.currentSort] < b[state.currentSort]) return -1 * modifier;
+        if(a[state.currentSort] > b[state.currentSort]) return 1 * modifier;
+        return 0;
+      })
     },
     setSelectable(state, selectable) {
       state.selectable = selectable;
@@ -121,6 +144,9 @@ export default {
           store.commit('selectResult', {index: el.dzzIndex, type: i, value: true});
         }
       })
+    },
+    sortResultsBy(store, key) {
+      store.commit('sortResultsBy', key)
     }
   },
 

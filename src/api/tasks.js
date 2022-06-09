@@ -13,24 +13,11 @@ function fixTask(task) {
 }
 
 export async function all() {
-  return await server.get('sanctum/csrf-cookie').then(async () => {
-    let data = await server.post('api/login', {
-          email: "test@example.com",
-          password: "password"
-        }, {
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        console.log(data);
-  }).then(async() => {
-    let {
-      data
-    } = await server.get('api/tasks');
+  return await server.get('sanctum/csrf-cookie').then(async() => {
+    let { data } = await server.get('api/tasks');
     data.tasks.forEach(el => {
       fixTask(el);
     });
-    console.log(data);
     return data.tasks;
   });
 }

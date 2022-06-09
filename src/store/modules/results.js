@@ -1,4 +1,4 @@
-import router from "@/router";
+// import router from "@/router";
 
 export default {
   namespaced: true,
@@ -127,7 +127,7 @@ export default {
       dispatch('map/clearGeoJsons', true, {
         root: true
       });
-      router.push('/main/results');
+      // router.push('/main/results');
     },
     setResultProperty(store, data) {
       store.commit('setResultProperty', data);

@@ -225,7 +225,9 @@ export default {
     needUpdateBounds(b, a) {
       if (b) {
         this.$refs.map.fitBounds(this.bounds);
-        this.setNeedUpdateBounds(false);
+        setTimeout(() => {
+          
+        },1000)
       }
       return a;
     }

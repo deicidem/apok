@@ -26,10 +26,6 @@
             <div class="plan-wrapper__card">
               <div class="plan-wrapper__title">Описание</div>
               <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
             </div>
             <div class="plan-wrapper__card">
               <div class="plan-wrapper__title">Требования к данным</div>
@@ -139,6 +135,7 @@ export default {
     padding: 10px 50px;
     margin: 0 auto;
     display: flex;
+    align-items: flex-start;
     width: 100%;
     &__header {
       display: flex;
@@ -156,7 +153,7 @@ export default {
     &__cards {
       display: flex;
       flex-direction: column;
-      max-width: 65%;
+      max-width: 60%;
     }
     &__card {
       margin-bottom: 30px;
@@ -185,10 +182,15 @@ export default {
       }
     }
     &__img {
+      background: #fff;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: $shadow-big;
       margin-left: 30px;
+      img {
+        object-fit: cover;
+        object-position: center;
+      }
     }
     .plan-table {
       margin-top: 20px;
@@ -220,9 +222,6 @@ export default {
       }
     }
   }
-}
-img {
-  height: 100%;
 }
 .back {
   display: flex;

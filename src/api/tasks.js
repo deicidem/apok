@@ -6,10 +6,10 @@ function fixTask(task) {
     task.result.views.forEach(v => {
       v.previewPath = server.defaults.baseURL + "api/images?path=" + v.previewPath
     })
+    task.result.files.forEach(f => {
+      f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
+    })
   }
-  task.result.files.forEach(f => {
-    f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
-  })
 }
 
 export async function all() {
@@ -50,15 +50,15 @@ export async function add({
   for (let i = 0; i < vectors.length; i++) {
     formData.append(`vectors[${i}]`, vectors[i]);
   }
-  console.log(vectors);
   for (let i = 0; i < params.length; i++) {
     formData.append(`params[${i}]`, params[i]);
   }
+
+  formData.append('links', JSON.stringify(links));
+
   for (var pair of formData.entries()) {
     console.log(pair[0] + ', ' + pair[1]);
   }
-
-  formData.append('links', JSON.stringify(links));
 
   let data = await server.post('api/tasks', formData);
 

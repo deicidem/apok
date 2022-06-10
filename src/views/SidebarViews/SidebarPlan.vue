@@ -11,8 +11,8 @@
           :img="plan.previewPath"
           :text="plan.excerpt"
           :title="plan.title"
-          :index="i"
-          @openPopup="planPopup = true"
+          :isAuth="isAuth"
+          @select="selectPlan(i)"
         ></app-plan-card>
       </div>
       <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
@@ -23,7 +23,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import AppPlanCard from "@/components/cards/AppPlanCard.vue";
 // import AppPlanPopup from "@/components/AppPlanPopup.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
@@ -37,37 +37,14 @@ export default {
   data() {
     return {
       planPopup: false,
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
     };
+  },
+  methods: {
+    ...mapActions('plans', ['selectPlan'])
   },
   computed: {
     ...mapGetters(["scrollOps"]),
+    ...mapGetters('users', ["isAuth"]),
     ...mapGetters("plans", {
       plans: "getPlans",
     }),

@@ -6,8 +6,11 @@ export default {
     user: null
   },
   getters: {
-    getUsers(state) {
-      return state.users;
+    getUser(state) {
+      return state.user;
+    },
+    isAuth(state) {
+      return state.user != null;
     }
   },
   mutations: {
@@ -20,21 +23,23 @@ export default {
       store.commit('setUser', user)
     },
     async authorizeUser(store, user) {
-      let res = await userApi.login({email: user.email,password: user.password});
-      store.commit('setUser', res.data.user);
-      return res;
+      await userApi.login({email: user.email,password: user.password});
+      store.dispatch('auth');
     },
     async regUser(store, user) {
-      let res = await userApi.register({
+      await userApi.register({
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         password: user.password.password,
         password_confirmation: user.password.confirm
       });
-      console.log(res);
-      store.commit('setUser', res.data.user);
-      return res;
+      store.dispatch('auth');
     },
+    async auth(store) {
+      let {data} = await userApi.auth();
+      store.commit('setUser', data.user);
+      return data;
+    }
   }
 }

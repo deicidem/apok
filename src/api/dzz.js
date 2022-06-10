@@ -17,11 +17,11 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
     params[`satelites[${i}]`] = satelites[i];    
   }
   console.log(params);
-  let result = await server.get('api/dzzs', {params});
+  let result = await server.get('dzzs', {params});
   console.log(result);
   result.data.dzzs.forEach(el => {
     if (el.geography != null && el.previewPath != null) {
-      el.previewPath = server.defaults.baseURL + "api/images?path=" + el.previewPath
+      el.previewPath = server.defaults.baseURL + "images?path=" + el.previewPath
     }
   });
   console.log(result.data);

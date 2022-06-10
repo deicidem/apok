@@ -9,7 +9,7 @@ export default {
     },
     cloudiness: {
       from: 0,
-      to: 100
+      to: 20
     },
     spacecrafts: setupSpacecrafts(),
     spacecraftsSelected: [],

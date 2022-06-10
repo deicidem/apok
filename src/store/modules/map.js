@@ -270,10 +270,13 @@ export default {
       let p1 = L.latLng(image.bounds[1], image.bounds[0]);
       let p2 = L.latLng(image.bounds[3], image.bounds[2]);
       let bounds = L.latLngBounds(p1, p2);
-      let center = bounds.getCenter();
-      store.commit('setCenter', center);
-      store.commit('setBounds', bounds);
-      store.commit('setNeedUpdateBounds', true)
+      if (image.fitBounds) {
+        let center = bounds.getCenter();
+        store.commit('setCenter', center);
+        store.commit('setBounds', bounds);
+        console.log(image);
+        store.commit('setNeedUpdateBounds', true)
+      }
       image.bounds = bounds;
       store.commit('addViewImage', image)
     },

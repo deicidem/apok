@@ -13,9 +13,16 @@ Vue.use(VueCompositionAPI)
 
 Vue.config.productionTip = false;
 store.dispatch('plans/load').then(async () => {
-  await store.dispatch('search/load');
-  await store.dispatch('tasks/load');
+  return store.dispatch('search/load');
+}).then(()=> {
+  return store.dispatch('users/auth');
 }).then(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+}).catch(() => {
   new Vue({
     router,
     store,

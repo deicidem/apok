@@ -4,25 +4,23 @@ function fixTask(task) {
   task.date = new Date(task.date);
   if (task.result != null) {
     task.result.views.forEach(v => {
-      v.previewPath = server.defaults.baseURL + "api/images?path=" + v.previewPath
+      v.previewPath = server.defaults.baseURL + "images?path=" + v.previewPath
     })
     task.result.files.forEach(f => {
-      f.path = server.defaults.baseURL + "api/files/download?fileId=" + f.id
+      f.path = server.defaults.baseURL + "files/download?fileId=" + f.id
     })
   }
 }
 
 export async function all() {
-  return await server.get('sanctum/csrf-cookie').then(async() => {
-    let { data } = await server.get('api/tasks');
+    let { data } = await server.get('tasks');
     data.tasks.forEach(el => {
       fixTask(el);
     });
     return data.tasks;
-  });
 }
 export async function one(id) {
-  let {data} = await server.get('api/tasks/'+id);
+  let {data} = await server.get('tasks/'+id);
   fixTask(data.task);
   return data.task;
 }
@@ -53,11 +51,7 @@ export async function add({
 
   formData.append('links', JSON.stringify(links));
 
-  for (var pair of formData.entries()) {
-    console.log(pair[0] + ', ' + pair[1]);
-  }
-
-  let data = await server.post('api/tasks', formData);
+  let data = await server.post('tasks', formData);
 
   console.log(data);
   return data.tasks;

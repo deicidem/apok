@@ -22,7 +22,7 @@
           </div>
           <div class="preview-btns" v-else>
             <button class="button button-white" v-if="this.activeView.active" @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Убрать с карты</button>
-            <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Показать на карте</button>
+            <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox, activeView.fitBounds)">Показать на карте</button>
             <router-link to="/report" custom v-slot="{navigate}">
               <button @click="navigate" class="button button-g">На весь экран</button>
             </router-link>
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions('map', ['addViewImage', 'removeViewImage']),
-    ...mapActions('tasks', ['setTaskViewActive']),
+    ...mapActions('tasks', ['setTaskViewActive', 'setTaskViewFitBounds']),
     showResult() {
       this.reportType = !this.reportType;
       this.pictureType = !this.pictureType;
@@ -67,7 +67,7 @@ export default {
     download(path) {
       filesApi.download(path);
     },
-    onImageButtonClick(id, img, bounds) {
+    onImageButtonClick(id, img, bounds, fitBounds) {
       if (this.views[this.activeViewIndex].active) {
         this.removeViewImage(id);
         this.setTaskViewActive({
@@ -76,12 +76,17 @@ export default {
           val: false
         });
       } else {
-        this.addViewImage({ id, img, bounds });
+        this.addViewImage({ id, img, bounds, fitBounds});
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
           val: true
-        })
+        });
+        this.setTaskViewFitBounds({
+          taskIndex: this.taskIndex,
+          viewIndex: this.activeViewIndex,
+          val: false
+        });
       }
     },
   },

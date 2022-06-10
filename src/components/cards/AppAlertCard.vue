@@ -67,7 +67,7 @@ export default {
     background: #fff;
     box-shadow: $shadow-big;
     &__task {
-      color: $color-main;
+      color: $text-green;
     }
     &__access {
       color: $text-plum;
@@ -130,7 +130,7 @@ export default {
   border-radius: 50%;
 }
 .task {
-  background: $gradient;
+  background: $gradient-g;
 }
 .access {
   background: $gradient-p;

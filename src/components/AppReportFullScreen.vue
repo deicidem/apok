@@ -1,12 +1,11 @@
 <template>
   <div class="fullScreen">
-
     <vuescroll :ops="scrollOps">
       <div class="fullScreen-wrapper">
         <router-link to="/main/tasks">
           <div class="back">
             <div class="back-arrow">
-              <img src="@/assets/img/arrow.svg" alt="Назад" />
+              <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
             </div>
             <p class="back-subtitle">Назад</p>
           </div>
@@ -27,7 +26,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components: {
     vuescroll,
@@ -66,9 +65,8 @@ export default {
 
   computed: {
     ...mapGetters(["scrollOps"]),
-  }
-}
-
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -110,16 +108,18 @@ export default {
   }
 }
 .back {
+  margin-bottom: 0px;
   display: flex;
   align-items: center;
-  position: absolute;
   cursor: pointer;
   &-arrow {
-    width: 40px;
+    svg path {
+      fill: $color-main;
+    }
   }
-  p {
-    margin-left: 10px;
-    color: $text-grey;
+  &-subtitle {
+    margin: 0 0 0 10px;
+    color: $color-main;
   }
 }
 </style>

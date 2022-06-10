@@ -5,7 +5,7 @@
         <router-link to="/main/tasks">
           <div class="back">
             <div class="back-arrow">
-              <img src="@/assets/img/arrow.svg" />
+              <img src="@/assets/img/arrow.svg" alt="Закрыть" />
             </div>
             <p class="back-subtitle">Назад</p>
           </div>
@@ -67,7 +67,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped lang="scss">
 .fullScreen {

@@ -7,7 +7,7 @@
       <router-link to="/main/search">
         <div class="back">
           <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+            <img src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>

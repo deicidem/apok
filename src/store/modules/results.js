@@ -38,11 +38,9 @@ export default {
       state.results[data.index][data.property] = data.value;
     },
     setResults(state, results) {
-
       state.results = results;
     },
     selectResult(state, data) {
-        console.log(data);
         let resultSelected = state.results[data.index].selected;
 
         if (resultSelected.value == data.value && resultSelected.type != data.type) {

@@ -1,7 +1,7 @@
 <template>
   <div class="plan">
     <h2 class="sidebar-title">Запланировать задачу</h2>
-    <vuescroll :ops="ops">
+    <vuescroll :ops="scrollOps">
       <div class="plan-wrapper">
         <app-plan-card
           class="plan-card"
@@ -11,6 +11,7 @@
           :img="plan.previewPath"
           :text="plan.excerpt"
           :title="plan.title"
+          :index="i"
           @openPopup="planPopup = true"
         ></app-plan-card>
       </div>
@@ -66,6 +67,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["scrollOps"]),
     ...mapGetters("plans", {
       plans: "getPlans",
     }),

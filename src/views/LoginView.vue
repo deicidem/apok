@@ -3,7 +3,7 @@
     <div class="container">
       <div class="back">
         <div class="back-arrow">
-          <img src="@/assets/img/arrow-w.svg" />
+          <img svg-inline src="@/assets/img/arrow-w.svg" alt="Назад"/>
         </div>
         <p class="back-subtitle">Назад</p>
       </div>
@@ -28,6 +28,7 @@
                 'input-img': !v$.login.$error,
               }"
               src="@/assets/img/login-icon.svg"
+              alt="Логин"
             />
             <div v-if="v$.login.$error" class="error-tooltip">
               <p>{{ v$.login.$errors[0].$message }}</p>
@@ -58,11 +59,7 @@
           </div>
 
           <!-- <router-link to="/main"> -->
-          <button
-            class="button button-g form-wrapper__item"
-          >
-            Войти
-          </button>
+          <button class="button button-g form-wrapper__item">Войти</button>
           <!-- </router-link> -->
           <router-link to="/registration">
             <button class="button button-white form-wrapper__item">
@@ -105,17 +102,32 @@ export default {
     }),
     submitForm() {
       this.v$.$validate();
-        if (!this.v$.$error) {
-          this.authorize({email: this.login, password: this.password})
-        } else {
-          return;
-        }
+      if (!this.v$.$error) {
+        this.authorize({ email: this.login, password: this.password });
+      } else {
+        return;
+      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.back {
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &-arrow {
+    svg path {
+      fill: $color-main;
+    }
+  }
+  &-subtitle {
+    margin: 0 0 0 10px;
+    color: $color-main;
+  }
+}
 .authorize {
   position: absolute;
   top: 0;
@@ -132,19 +144,6 @@ export default {
   background-size: cover;
   .button-router {
     margin: 0 auto;
-  }
-  .back {
-    margin: 40px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &-arrow {
-      width: 30px;
-    }
-    p {
-      margin-left: 10px;
-      color: #fff;
-    }
   }
   .form {
     background: $gradient-w;

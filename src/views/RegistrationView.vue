@@ -3,7 +3,7 @@
     <div class="container">
       <div class="back">
         <div class="back-arrow">
-          <img src="@/assets/img/arrow-w.svg" />
+          <img svg-inline src="@/assets/img/arrow-w.svg" alt="Назад" />
         </div>
         <p class="back-subtitle">Назад</p>
       </div>
@@ -132,10 +132,7 @@
             </div>
           </div>
 
-          <button
-            type="submit"
-            class="button button-g form-wrapper__item"
-          >
+          <button type="submit" class="button button-g form-wrapper__item">
             Зарегистироваться
           </button>
 
@@ -219,7 +216,7 @@ export default {
   methods: {
     ...mapActions("users", {
       addUser: "addUser",
-      regUser: "regUser"
+      regUser: "regUser",
     }),
     submitForm() {
       this.v$.$validate();
@@ -229,8 +226,8 @@ export default {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.mail,
-          password: this.password
-        })
+          password: this.password,
+        });
       } else {
         return;
       }
@@ -256,16 +253,18 @@ export default {
   background-size: cover;
 }
 .back {
+  margin-bottom: 0px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin: 40px;
   &-arrow {
-    width: 30px;
+    svg path {
+      fill: $color-main;
+    }
   }
-  p {
-    margin-left: 10px;
-    color: #fff;
+  &-subtitle {
+    margin: 0 0 0 10px;
+    color: $color-main;
   }
 }
 .form {

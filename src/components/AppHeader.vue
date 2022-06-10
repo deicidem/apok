@@ -7,9 +7,9 @@
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
-            <router-link to="/"
-              ><img src="@/assets/img/logo.svg"
-            /></router-link>
+            <router-link to="/">
+              <img src="@/assets/img/logo.svg" alt="Логотип"/>
+            </router-link>
           </li>
           <li class="header-nav__item">
             <router-link to="/tutorial">Руководства пользователя</router-link>
@@ -24,7 +24,7 @@
             ref="showUser"
             class="button button-svg button-white header-menu__button"
           >
-            <img src="@/assets/img/login-icon.svg" />
+            <img src="@/assets/img/login-icon.svg" alt="Логин"/>
           </button>
         </div>
       </div>

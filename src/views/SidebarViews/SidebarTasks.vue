@@ -20,14 +20,14 @@
                     <img
                       svg-inline
                       src="@/assets/img/sort-asc.svg"
-                      alt="сортировка"
+                      alt="Сортировка"
                     />
                   </span>
                   <span v-else class="tasks-sort">
                     <img
                       svg-inline
                       src="@/assets/img/sort-desc.svg"
-                      alt="сортировка"
+                      alt="Сортировка"
                     />
                   </span>
                 </template>

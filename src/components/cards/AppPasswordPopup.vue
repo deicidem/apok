@@ -9,25 +9,27 @@
       </div>
       <div class="password-popup__wrapper">
         <div class="input-wrapper">
-          <input required placeholder=" " class="input input-withIcon" />
+          <input required placeholder=" " v-model="currentPassword" class="input input-withIcon" />
           <label class="input-label">Текущий пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
         <div class="input-wrapper">
-          <input required placeholder=" " class="input input-withIcon" />
+          <input required placeholder=" " v-model="password" class="input input-withIcon" />
           <label class="input-label">Новый пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
         <div class="input-wrapper">
-          <input required placeholder=" " class="input input-withIcon" />
+          <input required placeholder=" " v-model="passwordConfirmation" class="input input-withIcon" />
           <label class="input-label">Подтвердить пароль</label>
 
           <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
         </div>
         <div class="password-popup__button">
-          <button class="button button-g password-popup__btn">
+          <button class="button button-g password-popup__btn" @click="$emit('submit', {
+            currentPassword, password, passwordConfirmation
+          })">
             Подтвердить
           </button>
         </div>
@@ -35,6 +37,18 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+        currentPassword: "",
+        password: "",
+        passwordConfirmation: ""
+    }
+  }
+}
+</script>
 
 <style scoped lang="scss">
 .password-popup {

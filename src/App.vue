@@ -116,6 +116,7 @@ svg:focus {
   overflow: hidden;
   color: #fff;
   &:disabled {
+    cursor: default;
     color: #fff;
     background: rgb(189, 189, 189)
 

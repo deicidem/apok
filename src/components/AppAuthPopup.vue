@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <button class="button button-g auth-button" @click="submitForm()">
+      <button class="button button-g auth-button" >
         Войти
       </button>
 
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { mixin as clickaway } from "vue-clickaway";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
@@ -87,16 +88,19 @@ export default {
     };
   },
   methods: {
+    ...mapActions("users", {
+      authorize: "authorizeUser",
+    }),
     away() {
       this.$emit("close");
     },
     submitForm() {
       this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("Form successfully submitted");
-      } else {
-        return;
-      }
+        if (!this.v$.$error) {
+          this.authorize({email: this.login, password: this.password})
+        } else {
+          return;
+        }
     },
   },
 };

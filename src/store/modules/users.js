@@ -40,6 +40,18 @@ export default {
       let {data} = await userApi.auth();
       store.commit('setUser', data.user);
       return data;
+    },
+    async updateUser(store, data) {
+      await userApi.update(data);
+      return await store.dispatch('auth');
+    },
+    async updatePassword(store, data) {
+      await userApi.updatePassword({email: store.getters.getUser.email, ...data});
+      return await store.dispatch('auth');
+    },
+    async logout(store) {
+      await userApi.logout();
+      store.commit('setUser', null);
     }
   }
 }

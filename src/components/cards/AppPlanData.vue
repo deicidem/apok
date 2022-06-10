@@ -62,14 +62,14 @@
                       :class="getSelectable.dataIndex == i && getSelectable.planIndex == activePlanIndex && getSelectable.value ? 'button-g' : 'button-white'"
                       @click="selectDzz(i)"
                     >
-                      <img svg-inline src="@/assets/img/choose.svg" />
+                      <img svg-inline src="@/assets/img/choose.svg" alt="Выбрать"/>
                     </button>
 
                     <button
                       class="button button-svg button-white button-white data-btn"
                       @click="onUploadClick(i)"
                     >
-                      <img src="@/assets/img/upload.svg" />
+                      <img svg-inline src="@/assets/img/upload.svg" alt="Загрузить"/>
                     </button>
                   </div>
                 </div>

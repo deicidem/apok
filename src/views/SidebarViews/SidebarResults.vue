@@ -15,7 +15,7 @@
       <portal to="popup-card">
         <div class="card" v-if="card.ind != null" v-show="card.active">
           <div class="card-close" @click="onCardClose()">
-            <img svg-inline src="@/assets/img/cross.svg" alt="" />
+            <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
           </div>
           <div class="card-title">Информация по объекту</div>
           <div class="card-img">
@@ -135,9 +135,8 @@
                 >
                   <img
                     svg-inline
-                    class="icon icon-vector-o"
                     src="@/assets/img/vector-o.svg"
-                    alt=""
+                    alt="Вектор"
                   />
                 </button>
                 <button
@@ -154,9 +153,8 @@
                 >
                   <img
                     svg-inline
-                    class="icon icon-img"
-                    src="@/assets/img/img.svg"
-                    alt=""
+                    src="@/assets/img/image.svg"
+                    alt="Изображение"
                   />
                 </button>
               </td>
@@ -174,9 +172,8 @@
                 >
                   <img
                     svg-inline
-                    class="icon icon-open"
-                    src="@/assets/img/open.svg"
-                    alt=""
+                    src="@/assets/img/results-info.svg"
+                    alt="Информация по объекту"
                   />
                 </button>
               </td>
@@ -407,10 +404,11 @@ export default {
     cursor: pointer;
     svg path {
       transition: all 0.1s ease-out;
+      fill: $color-main;
     }
     &:hover {
       svg path {
-        fill: #000;
+        fill: $color-main-dark;
       }
     }
   }
@@ -548,15 +546,9 @@ export default {
     align-items: center;
     justify-content: center;
     &.active {
-      background: $gradient;
-      svg * {
-        stroke: #fff;
-      }
-      .icon-open {
-        path {
-          fill: #fff;
-          stroke: none;
-        }
+      background-color: $color-main;
+      svg path {
+        fill: #FFF;
       }
     }
     &:first-child {

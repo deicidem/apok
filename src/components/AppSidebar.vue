@@ -18,7 +18,7 @@
         @click="toggleSidebar()"
       ></div>
 
-      <div v-if="isAuth" class="sidebar-collapsed__item" @click="open">
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/tasks" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
@@ -74,7 +74,7 @@
         <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
       </div>
 
-      <div v-if="isAuth" class="sidebar-collapsed__item notification-wrapper" @click="open">
+      <div v-show="isAuth" class="sidebar-collapsed__item notification-wrapper" @click="open">
         <router-link to="/main/alerts" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
@@ -95,7 +95,7 @@
         <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
       </div>
 
-      <div v-if="isAuth" class="sidebar-collapsed__item" @click="open">
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/person" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"

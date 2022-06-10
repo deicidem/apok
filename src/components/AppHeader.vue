@@ -8,7 +8,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/logo.svg" alt="Логотип"/>
+              <img src="@/assets/img/logo.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">
@@ -17,14 +17,22 @@
         </ul>
       </nav>
       <div class="header-menu">
-        <div class="header-menu__text" v-if="isAuth">Добро пожаловать, {{getUser.first_name}}!</div>
+        <div class="header-menu__text" v-if="isAuth">
+          Добро пожаловать, {{ getUser.first_name }}!
+        </div>
         <div class="header-menu__buttons">
           <button
             @click="showUser = true"
             ref="showUser"
             class="button button-svg button-white header-menu__button"
           >
-            <img src="@/assets/img/login-icon.svg" alt="Логин"/>
+            <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
+          </button>
+          <button
+            class="button button-svg button-white header-menu__button"
+            @click="logout"
+          >
+            <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
           </button>
         </div>
       </div>
@@ -34,7 +42,7 @@
 
 <script>
 import AppAuthPopup from "@/components/AppAuthPopup";
-import {mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     AppAuthPopup,
@@ -45,6 +53,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("users", ["logout"]),
     closeUser($event) {
       if (
         this.$refs.showUser.isEqualNode($event.target) ||
@@ -59,8 +68,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('users', ['getUser', 'isAuth'])
-  }
+    ...mapGetters("users", ["getUser", "isAuth"]),
+  },
 };
 </script>
 
@@ -142,8 +151,13 @@ export default {
       margin-right: 20px;
       width: 40px;
       height: 40px;
-      img {
-        max-width: 100%;
+      svg path {
+        fill: $color-main;
+      }
+      &:hover {
+        svg path {
+          fill: $color-main-dark;
+        }
       }
       // На IE 11 не работает
       @supports (background-clip: text) {

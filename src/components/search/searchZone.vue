@@ -1,230 +1,258 @@
 <template>
   <div class="search-zone">
-    <h2 class="search__title">Зона интереса</h2>
+    <h2 class="search-title">Зона интереса</h2>
+    <nav class="search-zone__nav">
+      <ul>
+        <li>
+          <button
+            @click="changeZoneType(1)"
+            :class="searchZoneType == 1 ? 'active' : ''"
+          >
+            Задать полигон
+          </button>
+        </li>
+        <li class="line"></li>
+        <li>
+          <button
+            @click="changeZoneType(2)"
+            :class="searchZoneType == 2 ? 'active' : ''"
+          >
+            Круглая зона
+          </button>
+        </li>
+        <li class="line"></li>
+        <li>
+          <button
+            @click="changeZoneType(3)"
+            :class="searchZoneType == 3 ? 'active' : ''"
+          >
+            Загрузить файл
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-    <label class="search-zone__input">
-      <app-radio value="screen" v-model="areaType"></app-radio>
-      <span class="text">Видимая область экрана</span>
-    </label>
-    <label class="search-zone__input">
-      <app-radio value="manual" v-model="areaType"></app-radio>
-      <span class="text">Задать вручную</span>
-    </label>
-    <template v-if="areaType == 'screen'">
-      <div class="search-zone__screen__buttons">
-        <app-button
-          class="search-zone__screen__button"
-          @click="
-            setScreenPolygon([
-              [0, 0],
-              [0, 0],
-            ])
-          "
-          type="red"
-          >Убрать с карты</app-button
-        >
-        <app-button
-          class="search-zone__screen__button"
-          @click="
-            setScreenPolygon(getBounds);
-            setZoom(getZoom - 1);
-          "
-          >Показать на карте</app-button
-        >
-      </div>
-    </template>
-    <template v-else>
-      <nav class="search-zone__nav">
-        <ul>
-          <li>
-            <button
-              @click="searchZoneType = 1"
-              :class="searchZoneType == 1 ? 'active' : ''"
-            >
-              Задать полигон
-            </button>
-          </li>
-          <li class="line"></li>
-          <li>
-            <button
-              @click="searchZoneType = 2"
-              :class="searchZoneType == 2 ? 'active' : ''"
-            >
-              Круглая зона
-            </button>
-          </li>
-          <li class="line"></li>
-          <li>
-            <button
-              @click="searchZoneType = 3"
-              :class="searchZoneType == 3 ? 'active' : ''"
-            >
-              Загрузить файл
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      <div
-        class="search-zone__card search-zone__main"
-        v-show="searchZoneType == 1"
-      >
-        <div class="search-zone__table">
-          <table>
-            <thead>
-              <tr>
-                <!-- <th class="col"><input type="checkbox" /></th> -->
-                <th class="number">№</th>
-                <th>Широта</th>
-                <th>Долгота</th>
-                <th class="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-                <!-- <td class="col"><input type="checkbox" /></td> -->
-                <td class="number">{{ i + 1 }}</td>
-                <td>{{ coord.lat }}</td>
-                <td>{{ coord.lng }}</td>
-                <td class="col delete" @click="deleteCoordinate(i)">
-                  <app-button class="col-item__trash" type="white-r">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </app-button>
-                </td>
-              </tr>
-              <tr>
-                <td class="number"></td>
-                <td class="zone-table__input__td">
-                  <div class="zone-table__input__wrapper">
-                    <masked-input
-                      class="zone-table__input"
-                      v-model="newCoord.lat"
-                      :mask="inputMaskLat"
-                      :placeholder="placeholderLat"
-                    />
-                  </div>
-                </td>
-                <td class="zone-table__input__td">
-                  <div class="zone-table__input__wrapper">
-                    <masked-input
-                      class="zone-table__input"
-                      v-model="newCoord.lng"
-                      :mask="inputMaskLng"
-                      :placeholder="placeholderLng"
-                    />
-                  </div>
-                </td>
-                <td>
-                  <app-button
-                    @click="onAddCoordinate"
-                    class="col-item__plus"
-                    type="white-g"
-                  >
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                  </app-button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="search-zone__buttons">
-          <app-button
-            v-if="!getDrawable"
-            class="search-zone__button"
-            @click="setPolygonDrawable(true)"
-            >Использовать карту</app-button
-          >
-          <app-button
-            v-else
-            class="search-zone__button"
-            type="white"
-            @click="setPolygonDrawable(false)"
-            >Сохранить полигон</app-button
-          >
-          <app-button class="search-zone__button" type="white"
-            >Прописать координаты</app-button
-          >
-          <app-button
-            @click="clearCoordinates()"
-            class="search-zone__button"
-            type="red"
-            >Очистить координаты</app-button
-          >
-        </div>
+    <div
+      class="search-zone__card search-zone__main"
+      v-show="searchZoneType == 1"
+    >
+      <div class="search-zone__table">
+        <table>
+          <thead>
+            <tr>
+              <th class="number">№</th>
+              <th>Широта</th>
+              <th>Долгота</th>
+              <th class="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
+              <td class="number">{{ i + 1 }}</td>
+              <td>{{ coord.lat }}</td>
+              <td>{{ coord.lng }}</td>
+              <td class="col delete" @click="deleteCoordinate(i)">
+                <button class="button button-svg ">
+                  <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="number"></td>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lat"
+                    :mask="inputMaskLat"
+                    :placeholder="placeholderLat"
+                  />
+                </div>
+              </td>
+              <td class="zone-table__input__td">
+                <div class="zone-table__input__wrapper">
+                  <masked-input
+                    class="zone-table__input"
+                    v-model="newCoord.lng"
+                    :mask="inputMaskLng"
+                    :placeholder="placeholderLng"
+                  />
+                </div>
+              </td>
+              <td class="col">
+                <button
+                  @click="onAddCoordinate"
+                  class="button button-svg button-white zone-table__plus"
+                  type="white-g"
+                >
+                  <img svg-inline src="@/assets/img/plus.svg" alt="Добавить" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
+      <div class="search-zone__buttons">
+        <button
+          class="button search-zone__button"
+          :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
+          @click="setAreaPolygonDrawable(!getAreaPolygonDrawable)"
+        >
+          <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
+          <span v-else> Сохранить полигон </span>
+        </button>
+
+        <button
+          class="button button-white search-zone__button"
+          @click="selectScreenArea"
+        >
+          Видимая область
+        </button>
+        <button
+          @click="clearCoordinates()"
+          class="button button-r search-zone__button"
+        >
+          Очистить координаты
+        </button>
+      </div>
+    </div>
+
+    <div>
       <div
         class="search-zone__card search-zone__coordinates"
         v-show="searchZoneType == 2"
       >
-        <div class="coordinates-wrapper">
-          <app-input
-            v-model="lat"
-            label="Широта"
-            class="coordinates-wrapper__input"
-            :mask="inputMaskLat"
-            :placeholder="placeholderLat"
-          ></app-input>
-          <app-input
-            v-model="lng"
-            label="Долгота"
-            class="coordinates-wrapper__input"
-            :mask="inputMaskLng"
-            :placeholder="placeholderLng"
-          ></app-input>
-          <app-input
-            v-model="rad"
-            label="Радиус (км)"
-            class="coordinates-wrapper__input"
-          ></app-input>
-
-          <app-button @click="createCircle" class="coordinates-wrapper__button"
-            >Загрузить на карту</app-button
-          >
-        </div>
-        <app-button class="coordinates-wrapper__button" type="red"
-          >Убрать с карты</app-button
+        <form
+          class="coordinates-form"
+          @submit.prevent="submitForm()"
+          method="POST"
         >
+          <div class="input-wrapper coordinates-inputs">
+            <masked-input
+              placeholder=" "
+              class="input input-withIcon coordinates-input"
+              v-model.trim="lat"
+              :class="{ invalid: v$.lat.$error }"
+              :mask="inputMaskLat"
+            />
+            <label class="input-label coordinates-label"> Широта </label>
+            <p
+              class="coordinates-input__letter"
+              :class="{ invalidLetter: v$.lng.$error }"
+            >
+              Ю
+            </p>
+
+            <p v-if="v$.lat.$error" class="error-tooltip">
+              {{ v$.lat.$errors[0].$message }}
+            </p>
+          </div>
+
+          <div class="input-wrapper coordinates-inputs">
+            <masked-input
+              placeholder=" "
+              class="input coordinates-input"
+              v-model.trim="lng"
+              :class="{ invalid: v$.lng.$error }"
+              :mask="inputMaskLng"
+            />
+            <label class="input-label coordinates-label"> Долгота </label>
+            <p
+              class="coordinates-input__letter"
+              :class="{ invalidLetter: v$.lng.$error }"
+            >
+              В
+            </p>
+
+            <p v-if="v$.lng.$error" class="error-tooltip">
+              {{ v$.lng.$errors[0].$message }}
+            </p>
+          </div>
+
+          <div class="input-wrapper coordinates-inputs">
+            <input
+              placeholder=" "
+              class="input coordinates-input"
+              v-model.trim="rad"
+              :class="{ invalid: v$.rad.$error }"
+              id="radius"
+            />
+            <label class="input-label coordinates-label"> Радиус (км) </label>
+
+            <p v-if="v$.rad.$error" class="error-tooltip">
+              {{ v$.rad.$errors[0].$message }}
+            </p>
+          </div>
+        </form>
+        <div class="coordinates-wrapper">
+          <button
+            @click="submitForm()"
+            class="button button-g coordinates-wrapper__button"
+          >
+            Загрузить на карту
+          </button>
+
+          <button
+            class="button button-r coordinates-wrapper__button"
+            @click="removeCircle"
+          >
+            Убрать с карты
+          </button>
+        </div>
       </div>
 
       <div
         class="search-zone__card search-zone__load"
         v-show="searchZoneType == 3"
       >
-        <div class="load-wrapper">
-          <app-button type="white-g">Загрузить файл</app-button>
-          <span class="load-wrapper__name">POLYGON.shp</span>
-        </div>
+        <label class="load-wrapper">
+          <input
+            @change="onFileUpload"
+            class="load-wrapper__input"
+            ref="file"
+            type="file"
+            name="file"
+          />
+          <span class="button button-white load-wrapper__button"
+            >Загрузить файл</span
+          >
+          <span class="load-wrapper__name">{{
+            file == null ? "не выбран" : file.name
+          }}</span>
+        </label>
         <div class="load-wrapper__buttons">
-          <app-button class="load-wrapper__button"
-            >Показать на карте</app-button
+          <button
+            class="button button-g load-wrapper__button"
+            @click="sendFile()"
           >
-          <app-button class="load-wrapper__button" type="red"
-            >Удалить</app-button
-          >
+            Показать на карте
+          </button>
+          <button class="button button-r load-wrapper__button" type="red">
+            Удалить
+          </button>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import AppButton from "@/components/controls/AppButton.vue";
-import AppRadio from "@/components/controls/AppRadio.vue";
-import AppInput from "@/components/controls/AppInput.vue";
 import MaskedInput from "vue-masked-input";
+import useVuelidate from "@vuelidate/core";
+import { required, helpers, minLength, numeric } from "@vuelidate/validators";
+// import {IMaskDirective} from 'vue-imask';
+
 export default {
   components: {
-    AppInput,
     MaskedInput,
-    AppButton,
-    AppRadio,
   },
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
-      areaType: "screen",
+      file: null,
+      areaType: null,
       inputMaskLat: {
         pattern: `111°11'11" N`,
         formatCharacters: {
@@ -255,10 +283,29 @@ export default {
       },
     };
   },
+  validations() {
+    return {
+      lng: {
+        required: helpers.withMessage("Введите значение", required),
+        minLength: helpers.withMessage(
+          "Логин должен содержать больше 6 символов",
+          minLength(6)
+        ),
+      },
+      lat: {
+        required: helpers.withMessage("Введите значение", required),
+      },
+      rad: {
+        required: helpers.withMessage("Введите значение", required),
+        numeric: helpers.withMessage("Введите числовое значение", numeric),
+      },
+    };
+  },
   computed: {
     ...mapGetters("map", [
-      "getPolygonArea",
-      "getDrawable",
+      "getAreaPolygon",
+      "getCirclePolygon",
+      "getAreaPolygonDrawable",
       "getFormattedCoordinates",
       "getBounds",
       "getZoom",
@@ -269,19 +316,39 @@ export default {
       "addCoordinate",
       "changeCoordinate",
       "deleteCoordinate",
-      "setPolygonDrawable",
+      "setAreaPolygonDrawable",
+      "setAreaPolygonActive",
+      "setCirclePolygonActive",
       "clearCoordinates",
       "setCirclePolygon",
       "setCenter",
       "setZoom",
-      "setScreenPolygon",
+      "setFilePolygon",
+      "setFilePolygonActive",
     ]),
-    showScreenPolygon() {
-      this.setScreenPolygon([
-        [this.getBounds._northEast.lat, this.getBounds._northEast.lng],
-        [this.getBounds._southWest.lat, this.getBounds._southWest.lng],
-      ]);
+    selectScreenArea() {
+      this.clearCoordinates();
+      this.addCoordinate(this.getBounds.getNorthEast());
+      this.addCoordinate(this.getBounds.getNorthWest());
+      this.addCoordinate(this.getBounds.getSouthWest());
+      this.addCoordinate(this.getBounds.getSouthEast());
       this.setZoom(this.getZoom - 1);
+    },
+    onFileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+    sendFile() {
+      this.setFilePolygon(this.file);
+    },
+    changeZoneType(type) {
+      this.searchZoneType = type;
+      if (this.searchZoneType == 1) {
+        this.setAreaPolygonActive();
+      } else if (this.searchZoneType == 2) {
+        this.setCirclePolygonActive();
+      } else {
+        this.setFilePolygonActive();
+      }
     },
     createCircle() {
       let lat = this.parseCoords(this.lat);
@@ -289,6 +356,9 @@ export default {
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
       this.setCenter([lng, lat]);
+    },
+    removeCircle() {
+      this.setCirclePolygon(null);
     },
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
@@ -335,22 +405,61 @@ export default {
       }
       return deg;
     },
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+label.active {
+  top: -20px;
+  font-size: 12px;
+  color: $color-main;
+}
 .number {
   max-width: 40px;
   text-align: center !important;
 }
-.search__title {
-  font-size: 20px;
-  color: #000;
-  font-weight: 400;
+.zone-table {
+  &__input {
+    display: block;
+    flex: 1;
+    width: 120px;
+    margin: 0;
+    padding: 6px;
+
+    font-family: inherit;
+    border: none;
+    line-height: 1.5;
+    &__td {
+      padding: 0;
+    }
+    &__wrapper {
+      display: flex;
+      height: 100%;
+    }
+  }
+  &__plus {
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
+  }
 }
 .search-zone {
   padding: 20px;
+
   box-shadow: $shadow-small;
   border-radius: 10px;
   background: $gradient-w;
@@ -365,33 +474,37 @@ export default {
   &__input {
     display: flex;
     align-items: center;
-    color: $text-grey;
-    padding-top: 10px;
+    margin-bottom: 10px;
+
+    color: #000;
   }
   &__nav {
-    margin-top: 10px;
     display: flex;
+    margin-top: 10px;
     ul {
       display: flex;
       align-items: center;
-      list-style: none;
       padding: 0;
       margin: 0;
+
+      list-style: none;
     }
     .line {
-      border-left: 1px solid $color-main;
       height: 12px;
+
+      border-left: 1px solid $color-main;
     }
     li {
       margin: 4px;
       list-style-type: none;
       button {
-        background: none;
-        color: #000;
-        font-family: inherit;
-        border: none;
         padding: 0;
         margin: 0;
+
+        font-family: inherit;
+        border: none;
+        background: none;
+        color: #000;
         cursor: pointer;
         &:hover {
           color: $color-main;
@@ -407,6 +520,7 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     padding: 15px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
@@ -414,29 +528,13 @@ export default {
   &__card {
     margin-top: 14px;
     padding: 20px;
+
     box-shadow: $shadow-big;
     border-radius: 10px;
     background: #fff;
   }
   &__table {
     flex: 1;
-    .zone-table__input {
-      display: block;
-      width: 120px;
-      font-family: inherit;
-      flex: 1;
-      border: none;
-      margin: 0;
-      line-height: 1.5;
-      padding: 6px;
-      &__td {
-        padding: 0;
-      }
-      &__wrapper {
-        height: 100%;
-        display: flex;
-      }
-    }
     .input-label {
       font-size: 8px;
     }
@@ -453,19 +551,23 @@ export default {
         }
         th {
           width: 130px;
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: #000000;
           padding: 0 6px 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: #000000;
           box-sizing: border-box;
         }
         td {
-          text-align: left;
-          border: none;
-          font-size: 12px;
-          color: $color-main-dark;
           padding: 6px;
+
+          text-align: left;
+          font-size: 12px;
+
+          border: none;
+          color: $color-main;
           box-sizing: border-box;
         }
         .col {
@@ -476,6 +578,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -483,6 +586,7 @@ export default {
               width: 30px;
               height: 30px;
               padding: 0;
+
               font-size: 1rem;
               border-radius: 10px;
             }
@@ -493,45 +597,11 @@ export default {
   }
   &__coordinates {
     display: flex;
-    flex-direction: column;
-    .coordinates-wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      &__input {
-        margin-right: 20px;
-        width: 120px;
-      }
-      &__button {
-        margin-top: 20px;
-        margin-left: auto;
-        max-width: 200px;
-        width: 190px;
-      }
-    }
+    align-items: flex-start;
   }
   &__load {
     display: flex;
     align-items: flex-start;
-    .load-wrapper {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      &__buttons {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-      }
-      &__button {
-        margin-bottom: 10px;
-        width: 180px;
-      }
-      &__name {
-        margin-left: 20px;
-        font-size: 12px;
-        color: #000;
-      }
-    }
   }
   &__buttons {
     display: flex;
@@ -540,6 +610,7 @@ export default {
   }
   &__button {
     margin: 10px 0;
+    width: 230px;
     height: 35px;
   }
   &__edit__input {
@@ -548,8 +619,138 @@ export default {
     margin: 0 !important;
     padding: 0;
     height: 20px !important;
+
     font-size: 10px;
     border-radius: 0 !important;
+  }
+}
+.coordinates {
+  &-form {
+    display: flex;
+    align-items: flex-start;
+  }
+  &-inputs {
+    margin-left: 16px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:focus-within .coordinates-label {
+      top: -20px;
+      font-size: 12px;
+    }
+  }
+  &-label {
+    top: 8px;
+    left: -10px;
+  }
+  &-input {
+    width: 120px;
+    height: 35px;
+    margin: 0;
+    &:focus .coordinates-label,
+    &:not(:placeholder-shown) ~ label {
+      top: -20px;
+      font-size: 12px;
+    }
+    &__letter {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-radius: 0 10px 10px 0;
+      color: #fff;
+      line-height: 35px;
+      text-align: center;
+      margin: 0;
+      font-size: 16px;
+      background: $gradient;
+      width: 30px;
+      height: 35px;
+    }
+  }
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    &__button {
+      margin-left: auto;
+      max-width: 200px;
+      width: 190px;
+      &:last-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+.load-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  &__button {
+    margin-bottom: 10px;
+    width: 180px;
+  }
+  &__name {
+    margin-left: 20px;
+    font-size: 14px;
+    color: #000;
+  }
+  &__input {
+    display: none;
+  }
+}
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
+}
+.invalidLetter {
+  background: $gradient-r;
+}
+.error {
+  &-tooltip {
+    transition: all 2s ease-out;
+
+    width: 120px;
+    margin-top: 6px;
+    line-height: 110%;
+    color: $color-red;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search-zone {
+    padding: 14px;
+    &__input {
+      span {
+        font-size: 0.875rem;
+      }
+    }
+  }
+  .search-zone__card {
+    padding: 10px;
+  }
+  .coordinates-wrapper__input {
+    width: 94px;
+    margin-right: 10px;
+    padding: 7px 10px;
+  }
+  .coordinates-wrapper__button {
+    margin-top: 10px;
   }
 }
 </style>

@@ -7,9 +7,9 @@
       <router-link to="/main/search">
         <div class="back">
           <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" alt="Назад" />
+            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
-          <p class="back-subtitle">Назад</p>
+          <div class="back-subtitle">Назад</div>
         </div>
       </router-link>
       <portal to="popup-card">
@@ -93,17 +93,18 @@
                 v-for="(header, i) in headers"
                 :key="i"
                 @click="sortBy(header.key, i)"
+                class="results-table__header"
               >
                 {{ header.title }}
                 <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'">
+                  <span v-if="sortDir == 'asc'" class="results-table__sort">
                     <img
                       svg-inline
                       src="@/assets/img/sort-asc.svg"
                       alt="сортировка"
                     />
                   </span>
-                  <span v-else>
+                  <span v-else class="results-table__sort">
                     <img
                       svg-inline
                       src="@/assets/img/sort-desc.svg"
@@ -362,6 +363,21 @@ export default {
 </script>
 
 <style lang="scss">
+.back {
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &-arrow {
+    svg path {
+      fill: $color-main;
+    }
+  }
+  &-subtitle {
+    margin: 0 0 0 10px;
+    color: $color-main;
+  }
+}
 .card {
   z-index: 11;
   position: absolute;
@@ -450,19 +466,6 @@ export default {
     background: #fff;
     box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
   }
-  .back {
-    margin-bottom: 0px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &-arrow {
-      width: 30px;
-    }
-    p {
-      margin-left: 10px;
-      color: $color-main;
-    }
-  }
   &-wrapper {
     background: #ffffff;
     box-shadow: $shadow-big;
@@ -470,6 +473,18 @@ export default {
     overflow: hidden;
   }
   &-table {
+    &__header {
+      position: relative;
+    }
+    &__sort {
+      position: absolute;
+      left: 0;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      svg path {
+        fill: $color-main;
+      }
+    }
     .selectable {
       tr {
         position: relative;

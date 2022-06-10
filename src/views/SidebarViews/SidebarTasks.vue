@@ -196,9 +196,12 @@ export default {
   }
   &-sort {
     position: absolute;
-    left: -10px;
-    top: 50%;
+    left: 0;
+    top: 60%;
     transform: translate(-50%, -50%);
+    svg path{
+      fill: $color-main;
+    }
   }
   &-table {
     &__button {

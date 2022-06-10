@@ -2,11 +2,19 @@
   <div class="preview">
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
+        <div class="preview-wrapper__cross">
+          <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
+        </div>
         <div class="preview-wrapper__title">Предпросмотр</div>
         <nav class="preview-wrapper__nav">
           <ul>
             <li v-for="(view, i) in views" :key="i">
-              <button @click="setActiveView(i)" :class="{active: i == activeViewIndex}">{{view.title}}</button>
+              <button
+                @click="setActiveView(i)"
+                :class="{ active: i == activeViewIndex }"
+              >
+                {{ view.title }}
+              </button>
             </li>
           </ul>
         </nav>
@@ -16,15 +24,43 @@
           </div>
           <div class="preview-btns" v-if="activeView.type == 1">
             <button class="button button-white">Скачать</button>
-            <router-link to="/report" custom v-slot="{navigate}">
-              <button @click="navigate" class="button button-g">На весь экран</button>
+            <router-link to="/report" custom v-slot="{ navigate }">
+              <button @click="navigate" class="button button-g">
+                На весь экран
+              </button>
             </router-link>
           </div>
           <div class="preview-btns" v-else>
-            <button class="button button-white" v-if="this.activeView.active" @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Убрать с карты</button>
-            <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Показать на карте</button>
-            <router-link to="/report" custom v-slot="{navigate}">
-              <button @click="navigate" class="button button-g">На весь экран</button>
+            <button
+              class="button button-white"
+              v-if="this.activeView.active"
+              @click="
+                onImageButtonClick(
+                  activeView.id,
+                  activeView.previewPath,
+                  activeView.geography.bbox
+                )
+              "
+            >
+              Убрать с карты
+            </button>
+            <button
+              class="button button-g"
+              v-else
+              @click="
+                onImageButtonClick(
+                  activeView.id,
+                  activeView.previewPath,
+                  activeView.geography.bbox
+                )
+              "
+            >
+              Показать на карте
+            </button>
+            <router-link to="/report" custom v-slot="{ navigate }">
+              <button @click="navigate" class="button button-g">
+                На весь экран
+              </button>
             </router-link>
           </div>
         </div>
@@ -33,7 +69,7 @@
         <div class="preview-wrapper__title">Файлы</div>
         <ul class="preview-wrapper__list">
           <li v-for="(file, i) in files" :key="i">
-            <a :href="file.path" target="_blank" download>{{file.name}}</a>
+            <a :href="file.path" target="_blank" download>{{ file.name }}</a>
           </li>
         </ul>
       </div>
@@ -42,21 +78,21 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 import * as filesApi from "@/api/files";
 export default {
-  props: ['files', 'views', 'taskIndex'],
+  props: ["files", "views", "taskIndex"],
   data() {
     return {
       reportType: false,
       pictureType: false,
       activeViewIndex: 0,
-      viewStates: []
-    }
+      viewStates: [],
+    };
   },
   methods: {
-    ...mapActions('map', ['addViewImage', 'removeViewImage']),
-    ...mapActions('tasks', ['setTaskViewActive']),
+    ...mapActions("map", ["addViewImage", "removeViewImage"]),
+    ...mapActions("tasks", ["setTaskViewActive"]),
     showResult() {
       this.reportType = !this.reportType;
       this.pictureType = !this.pictureType;
@@ -73,29 +109,29 @@ export default {
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
-          val: false
+          val: false,
         });
       } else {
         this.addViewImage({ id, img, bounds });
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
-          val: true
-        })
+          val: true,
+        });
       }
     },
   },
   computed: {
     activeView() {
-      return this.views[this.activeViewIndex]
-    }
+      return this.views[this.activeViewIndex];
+    },
   },
   mounted() {
     this.setActiveView(0);
     for (let i = 0; i < this.views.length; i++) {
-      this.viewStates.push({active: false})
+      this.viewStates.push({ active: false });
     }
-  }
+  },
 };
 </script>
 
@@ -121,12 +157,21 @@ export default {
     }
   }
   &-wrapper {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 20px;
     background: #fff;
     border-radius: 20px;
     box-shadow: $shadow-big;
+    &__cross{
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      svg path{
+        fill: $color-main;
+      }
+    }
     &__list {
       margin: 0;
       padding: 0;

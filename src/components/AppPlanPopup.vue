@@ -4,7 +4,7 @@
       <div class="popup-card__header">
         <div class="back" @click="$emit('close', file)">
           <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" alt="Назад" />
+            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -43,12 +43,15 @@
           </div>
         </div>
         <div class="popup-card__buttons">
-          <button class="button button-g">Загрузить</button>
+          <button class="button button-g">
+            Загрузить
+            <input type="file" name="a" ref="file" @change="onFileUpload" />
+          </button>
           <div class="popup-card__text">
-            Выбрано:
-            <p class="popup-card__file">file.shp</p>
+            
+            <p v-if="file!=null" class="popup-card__file">{{file.name}}</p>
+            <p v-else>Не выбрано</p>
           </div>
-          <input type="file" name="a" ref="file" @change="onFileUpload" />
         </div>
       </div>
     </div>
@@ -74,18 +77,20 @@ export default {
 
 <style lang="scss" scoped>
 .back {
-  display: flex;
-  align-items: center;
   position: absolute;
   left: 0;
-  margin: 0;
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   &-arrow {
-    width: 40px;
+    svg path {
+      fill: $color-main;
+    }
   }
-  p {
+  &-subtitle {
     margin: 0 0 0 10px;
-    color: $text-grey;
+    color: $color-main;
   }
 }
 .plan-popup {
@@ -111,11 +116,17 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
-
+    input[type="file"] {
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
     &__header {
       position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
     }
     &__title {
@@ -124,6 +135,7 @@ export default {
       font-weight: 400;
       text-align: center;
       color: $text-grey;
+      max-width: 700px;
     }
     &__wrapper {
       display: flex;

@@ -265,12 +265,14 @@ export default {
       "selectResult",
       "sortResultsBy",
     ]),
+
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;
       });
       this.sortResultsBy(key);
     },
+
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {
         this.removeGeoJsonPolygon(id);
@@ -288,9 +290,9 @@ export default {
         });
       }
     },
+
     select(i, selected) {
       if (this.selectable.value) {
-        console.log(i);
         this.selectResult({
           index: i,
           value: !selected,
@@ -298,6 +300,7 @@ export default {
         });
       }
     },
+
     onImageButtonClick(ind, id, img, bounds) {
       if (this.results[ind].imageActive) {
         this.removeImage(id);

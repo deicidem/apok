@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <h2 class="sidebar-title">Выбор зоны интереса</h2>
-    <vuescroll :ops="ops">
+    <vuescroll :ops="scrollOps">
       <div class="search-wrapper">
         <div class="search-content">
           <search-zone></search-zone>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex"
+import {mapGetters, mapActions} from "vuex"
 
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
@@ -26,6 +26,9 @@ export default {
   },
   methods: {
     ...mapActions('search', ['search'])
+  },
+  computed: {
+    ...mapGetters(["scrollOps"]),
   },
   data() {
     return {

@@ -31,7 +31,7 @@
       </div>
       <div class="preview-wrapper__files">
         <div class="preview-wrapper__title">Файлы</div>
-        <ul>
+        <ul class="preview-wrapper__list">
           <li v-for="(file, i) in files" :key="i">
             <a :href="file.path" target="_blank" download>{{file.name}}</a>
           </li>
@@ -127,6 +127,10 @@ export default {
     background: #fff;
     border-radius: 20px;
     box-shadow: $shadow-big;
+    &__list {
+      margin: 0;
+      padding: 0;
+    }
     &__main {
       margin-right: 30px;
       flex: 1 1 auto;

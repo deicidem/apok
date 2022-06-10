@@ -4,7 +4,8 @@ import * as tasksApi from '@/api/tasks';
 export default {
   namespaced: true,
   state: {
-    plans:  null
+    plans:  null,
+    activePlanIndex: null
   },
   getters: {
     getPlans(state) {
@@ -21,6 +22,9 @@ export default {
     },
     plan: (state, getters) => (id) => {
       return getters.plansMap[id];
+    },
+    activePlanIndex(state) {
+      return state.activePlanIndex;
     }
   },
   mutations: {
@@ -35,6 +39,9 @@ export default {
     },
     changeText(state, data) {
       state.plans[data.planIndex].data[data.dataIndex].text = data.text;
+    },
+    setActivePlanIndex(state, i) {
+      state.activePlanIndex = i;
     }
   },
   actions: {
@@ -52,6 +59,10 @@ export default {
     },
     setDataObject(store, data) {
       store.commit('setDataObject', data);
+    },
+    selectPlan(store, data) {
+      store.commit('setActivePlanIndex', data);
+      store.dispatch('results/resetResultSelection', { planIndex: data }, {root: true})
     },
     setDataFile(store, data) {
       store.commit('setDataFile', data);

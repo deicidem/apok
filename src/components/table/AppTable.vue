@@ -43,7 +43,6 @@ table {
     box-shadow: $shadow-small;
     tr {
       th {
-        word-break: break-all;
         text-align: left;
         border: none;
         font-size: 12px;
@@ -66,10 +65,8 @@ table {
     tr {
       line-height: 17px;
       td {
-        word-break: break-all;
         padding: 10px;
         max-width: 150px;
-        
       }
       .green {
         color: $color-main;

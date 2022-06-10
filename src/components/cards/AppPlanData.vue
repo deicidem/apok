@@ -148,52 +148,24 @@ export default {
         dataIndex: null,
         visible: false,
       },
-      activePlanIndex: null,
       showSelect: false,
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
     };
   },
   components: {
     AppPlanPopup,
   },
   computed: {
-    ...mapGetters("plans", ["getPlans"]),
+    ...mapGetters("plans", ["getPlans", "activePlanIndex"]),
     ...mapGetters("map", ["getActivePolygonJson"]),
     ...mapGetters("results", ["getSelectable", "getResults", "resultsMap"]),
-    ...mapGetters(["getDataCardState"]),
+    ...mapGetters(["getDataCardState", "scrollOps"]),
     activePlan() {
       return this.getPlans[this.activePlanIndex];
     },
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
-    ...mapActions("plans", ["setDataFile", "planNewTask", "changeText"]),
+    ...mapActions("plans", ["setDataFile", "planNewTask", "changeText", "selectPlan"]),
     ...mapActions(["setDataCardState"]),
     setPlanPopupData(i) {
       this.$set(this.planPopup, "data", this.activePlan.data[i]);
@@ -240,9 +212,8 @@ export default {
       // }
     },
     onSelect(index) {
-      this.activePlanIndex = index;
+      this.selectPlan(index);
       this.showSelect = false;
-      this.resetResultSelection({ planIndex: index });
     },
   },
 };

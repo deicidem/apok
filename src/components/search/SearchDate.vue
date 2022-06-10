@@ -72,7 +72,6 @@
             class="input-wrapper select-data"
             @click="selectActive = !selectActive"
           >
-            <form @submit.prevent="submitForm()">
               <input
                 placeholder=" "
                 type="text"
@@ -88,8 +87,6 @@
                 class="select-img"
                 src="@/assets/img/arrow-down.svg"
               />
-              <p v-if="monthsValue == ''" class="error-tooltip"></p>
-            </form>
           </div>
           <div class="select-options" v-show="selectActive">
             <label class="select-option">

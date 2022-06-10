@@ -32,7 +32,7 @@
         </div>
 
         <div class="search-date__arrow">
-          <img src="@/assets/img/arrow.svg" />
+          <img  svg-inline src="@/assets/img/arrow.svg" />
         </div>
 
         <div class="input-wrapper search-date__input">
@@ -330,9 +330,8 @@ label.active {
       max-height: 40px;
       margin: 0 20px;
       transform: rotate(180deg);
-      img {
-        width: 100%;
-        max-height: 34px;
+      svg path{
+        fill: $color-main;
       }
     }
     &__background {

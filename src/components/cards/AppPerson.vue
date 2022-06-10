@@ -6,14 +6,14 @@
         <div class="person-wrapper__information">
           <div
             class="person-wrapper__editable"
-            v-for="(item, i) in user"
-            :key="i"
+            v-for="(item, key) in user"
+            :key="key"
           >
             <p class="person-wrapper__title">{{ item.title }}</p>
             <div class="person-edit">
               <div
                 :contenteditable="item.editable && editable"
-                @blur="onEdit"
+                @blur="onEdit($event, key)"
                 class="check"
                 :class="{ editme: item.editable && editable }"
               >
@@ -33,7 +33,7 @@
         </button>
         <button
           v-show="editable"
-          @click="editable = !editable"
+          @click="onEditDone"
           class="button button-g person-wrapper__button"
         >
           Готово
@@ -50,6 +50,7 @@
       <app-password-popup
         v-show="showPopup"
         @close="showPopup = false"
+        @submit="updatePassword"
       ></app-password-popup>
     </portal>
   </div>
@@ -57,40 +58,56 @@
 
 <script>
 import AppPasswordPopup from "@/components/cards/AppPasswordPopup.vue";
-
+import {mapGetters, mapActions} from "vuex";
 export default {
   components: {
     AppPasswordPopup,
   },
   data() {
     return {
-      user: [
-        {
+      user: {
+        firstName: {
           title: "Имя",
           value: "Ann",
           editable: true,
         },
-        {
+        lastName: {
           title: "Фамилия",
           value: "Afanaseva",
           editable: true,
         },
-        {
+        email: {
           title: "Почта",
           value: "Ann@mail.ru",
           editable: false,
         },
-      ],
+      },
       editable: false,
       showPopup: false,
     };
   },
+  computed: {
+    ...mapGetters("users", ["getUser"])
+  },
   methods: {
-    onEdit(evt) {
-      var newName = evt.target.innerHTML;
-      this.name = newName;
+    ...mapActions("users", ["updateUser", "updatePassword"]),
+    onEditDone() {
+      this.editable = false;
+      this.updateUser({
+        firstName: this.user.firstName.value,
+        lastName: this.user.lastName.value,
+        email: this.user.email.value,
+        })
+    },
+    onEdit(evt, key) {
+      this.user[key].value = evt.target.innerText;
     },
   },
+  mounted() {
+    this.user.firstName.value = this.getUser.first_name;
+    this.user.lastName.value = this.getUser.last_name;
+    this.user.email.value = this.getUser.email;
+  }
 };
 </script>
 

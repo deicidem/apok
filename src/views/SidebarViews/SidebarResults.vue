@@ -293,10 +293,12 @@ export default {
     },
 
     select(i, selected) {
+      console.log(selected);
       if (this.selectable.value) {
         this.selectResult({
           index: i,
-          value: !selected,
+          value: this.selectable.value,
+          selected: !selected,
           type: this.selectable.type,
         });
       }

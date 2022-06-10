@@ -16,7 +16,7 @@
           <button @click="navigate" class="button button-white plan-item__button">Подробнее</button>
         </router-link>
 
-        <button class="button button-g plan-item__button" @click="selectPlan(index)">Запланировать</button>
+        <button :disabled="!isAuth" class="button button-g plan-item__button" @click="$emit('select')">Запланировать</button>
 
       </div>
     </div>
@@ -24,18 +24,14 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
 export default {
   props: {
     img: String,
     title: String,
     text: String,
     planid: Number,
-    index: Number
+    isAuth: Boolean
   },
-  methods: {
-    ...mapActions("plans", ["selectPlan"]),
-  }
 };
 </script>
 

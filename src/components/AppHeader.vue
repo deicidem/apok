@@ -17,7 +17,7 @@
         </ul>
       </nav>
       <div class="header-menu">
-        <div class="header-menu__text">Добро пожаловать!</div>
+        <div class="header-menu__text" v-if="isAuth">Добро пожаловать, {{getUser.first_name}}!</div>
         <div class="header-menu__buttons">
           <button
             @click="showUser = true"
@@ -34,7 +34,7 @@
 
 <script>
 import AppAuthPopup from "@/components/AppAuthPopup";
-
+import {mapGetters} from "vuex";
 export default {
   components: {
     AppAuthPopup,
@@ -58,6 +58,9 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapGetters('users', ['getUser', 'isAuth'])
+  }
 };
 </script>
 

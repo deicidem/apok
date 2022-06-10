@@ -1,9 +1,9 @@
 <template>
-  <div class="tasks">
+  <div class="tasks" >
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
-        <app-table>
+        <app-table v-if="tasks != null">
           <thead>
             <tr>
               <th class="col-checkbox center">
@@ -167,7 +167,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("tasks", ["setTaskActive", "sortTasksBy"]),
+    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load"]),
     onCheck(val) {
       console.log(val);
     },
@@ -183,6 +183,9 @@ export default {
       }
     },
   },
+  async mounted() {
+    await this.load()
+  }
 };
 </script>
 

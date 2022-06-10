@@ -3,7 +3,7 @@ import * as tasksApi from "@/api/tasks";
 export default {
   namespaced: true,
   state: {
-    tasks: setTasks(),
+    tasks: null,
     currentSort: null,
     currentSortDir: 'asc'
   },
@@ -36,6 +36,9 @@ export default {
     setTaskViewActive(state, data) {
       state.tasks[data.taskIndex].result.views[data.viewIndex].active = data.val;
     },
+    setTaskViewFitBounds(state, data) {
+      state.tasks[data.taskIndex].result.views[data.viewIndex].fitBounds = data.val;
+    },
     sortTasksBy(state, key) {
       if (state.currentSort == key) {
         state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
@@ -61,8 +64,11 @@ export default {
       tasks.forEach(el => {
         if (el.result != null) {
           el.result.active = false;
-          el.result.views.forEach(el => {
-            el.active = false;
+          el.result.views.forEach(e => {
+            if (e.type != 1) {
+              e.fitBounds = true;
+            }
+            e.active = false;
           })
         }
         if (el.status != "Завершена") {
@@ -76,9 +82,12 @@ export default {
       let task = await tasksApi.one(id);
       if (task.result != null) {
         task.result.active = false;
-      task.result.views.forEach(el => {
-        el.active = false;
-      })
+        task.result.views.forEach(el => {
+          if (el.type != 1) {
+            el.fitBounds = true;
+          }
+          el.active = false;
+        })
       }
       commit('setTask', task);
       return task;
@@ -97,69 +106,11 @@ export default {
     setTaskViewActive({commit}, data) {
       commit('setTaskViewActive', data);
     },
+    setTaskViewFitBounds({commit}, data) {
+      commit('setTaskViewFitBounds', data);
+    },
     sortTasksBy(store, key) {
       store.commit('sortTasksBy', key)
     }
   }
-}
-
-function setTasks() {
-  return [
-    {
-      id: 1,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: true
-    },
-    {
-      id: 2,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: false
-    },
-    {
-      id: 3,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: true
-    },
-    {
-      id: 4,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: false
-    },
-    {
-      id: 5,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: true
-    },
-    {
-      id: 6,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: true
-    },
-    {
-      id: 7,
-      title: 'Формирование температурных карт',
-      date: '2017-03-06 16:17:35',
-      status: 'Завершено',
-      result: 'https://gptl.ru/',
-      delete: true
-    },
-  ]
 }

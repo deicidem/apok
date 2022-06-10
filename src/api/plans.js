@@ -9,10 +9,10 @@ export async function all() {
   //     password: "password"
   //   });
   //   console.log(data);
-    let res = await server.get('api/plans');
+    let res = await server.get('plans');
     console.log(res);
     res.data.plans.forEach(el => {
-      el.previewPath = server.defaults.baseURL + "api/images?path=" + el.previewPath
+      el.previewPath = server.defaults.baseURL + "images?path=" + el.previewPath
     });
     return res.data.plans;
   // })

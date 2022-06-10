@@ -1,23 +1,24 @@
 import server from "@/api/http";
 
+export async function auth() {
+  return server.get('csrf-cookie')
+    .then(()=>server.get('user/auth'));
+}
+
 export async function login({email, password}) {
-  return server.post('api/login', {
+  return server.post('login', {
     email,
     password,
     remember: true
-  }).then(() => {
-    return server.get('api/user/auth');
   });
 }
 
 export async function register({firstName, lastName, email, password, password_confirmation}) {
-  return server.post('api/register', {
+  return server.post('register', {
     firstName,
     lastName,
     email,
     password,
     password_confirmation
-  }).then(() => {
-    return server.get('api/user/auth');
   });
 }

@@ -42,10 +42,15 @@ export default {
     },
     selectResult(state, data) {
         let resultSelected = state.results[data.index].selected;
-
-        if (resultSelected.value == data.value && resultSelected.type != data.type) {
-          console.log("Снимок уже выбран");
-          return;
+        
+        if (resultSelected.value == data.value) {
+          if (resultSelected.type != data.type) {
+            console.log("Снимок уже выбран");
+            return data.value;
+          }
+          resultSelected.value = false;
+          resultSelected.type = null;
+          return false;
         } else {
           state.results.forEach(el => {
             if (el.selected.value == true && el.selected.type == data.type) {
@@ -53,10 +58,11 @@ export default {
               el.selected.type = null;
             }
           })
-
           resultSelected.value = data.value;
           resultSelected.type = data.type;
+          return data.value
         }
+        
     },
     sortResultsBy(state, key) {
       if (state.currentSort == key) {
@@ -88,7 +94,11 @@ export default {
   actions: {
     selectResult(store, data) {
       store.commit('selectResult', data);
-      if (data.value) {
+      let resultSelected = store.getters.getResults[data.index].selected;
+      if (resultSelected.value) {
+        if (resultSelected.type != data.type) {
+          return;
+        }
         store.dispatch('plans/setDataObject', {
           planIndex: store.getters.getSelectable.planIndex,
           dzzIndex: store.getters.getResults[data.index].id,
@@ -139,7 +149,12 @@ export default {
       } 
       store.rootGetters['plans/getPlans'][data.planIndex].data.forEach((el, i) => {
         if (el.dzzIndex != null) {
-          store.commit('selectResult', {index: el.dzzIndex, type: i, value: true});
+          for (let j = 0; j < store.getters.getResults.length; j++) {
+            if (store.getters.getResults[j].id == el.dzzIndex) {
+              store.commit('selectResult', {index: j, type: i, value: true});
+              break;
+            }
+          }
         }
       })
     },

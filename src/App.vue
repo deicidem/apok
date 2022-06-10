@@ -115,7 +115,13 @@ svg:focus {
   z-index: 1;
   overflow: hidden;
   color: #fff;
-  &::after {
+  &:disabled {
+    color: #fff;
+    background: rgb(189, 189, 189)
+
+  }
+  &:not(:disabled) {
+    &::after {
     content: "";
     position: absolute;
     height: 100%;
@@ -140,6 +146,7 @@ svg:focus {
   }
   &:active:after {
     transform: translateX(-75%);
+  }
   }
   &-g {
     &::after {

@@ -1,7 +1,7 @@
 <template>
   <div class="alert">
     <h2 class="sidebar-title">Мои уведомления</h2>
-    <vuescroll :ops="ops">
+    <vuescroll :ops="scrollOps">
       <div class="alert-wrapper">
         <app-alert-card
           v-for="(alert, i) in alerts"
@@ -31,6 +31,7 @@ export default {
     ...mapGetters("alerts", {
       alerts: "getAlerts",
     }),
+    ...mapGetters(["scrollOps"]),
   },
   methods: {
     ...mapActions("alerts", ["deleteAlert"]),

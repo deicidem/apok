@@ -1,7 +1,23 @@
 // ___TEXT___
+
+//Green
 $color-main-dark: #488589;
 $color-main: #6BA2A6;
 $color-main-light: #90C0C4;
+$color-main-white: #f6f9fa;
+
+//Purple
+// $color-main-dark: #56678C;
+// $color-main: #899CC5;
+// $color-main-light: #9AAED9;
+// $color-main-white: #f0f2f7;
+
+//Pink
+// $color-main-dark: #754363;
+// $color-main: #a4698e;
+// $color-main-light: #d38fba;
+// $color-main-white: #f7ecf3;
+
 $text-grey: #333333;
 $text-grey-light: #AAAAAA;
 
@@ -11,10 +27,12 @@ $text-blue: #547ba4;
 
 // ___BACKGROUND___
 $gradient: linear-gradient(88.64deg, $color-main-light 0%, $color-main-dark 100%); // Main gradient
-$gradient-w: linear-gradient(101.61deg, #ffffff 0%, #f6f9fa 100%); // White gradient
+$gradient-w: linear-gradient(101.61deg, #ffffff 0%, $color-main-white 100%); // White gradient
 $gradient-r: linear-gradient(91.36deg, #F07A7A 0%, #A54949 100%); // Red gradient
-$gradient-b: linear-gradient(88.64deg, $text-blue 0%, #7571a3 100%); // Purple gradient
-$gradient-p: linear-gradient(88.64deg, $text-plum 0%, #a85a75 100%); // Blue gradient
+// $gradient-b: linear-gradient(88.64deg, $text-blue 0%, #7571a3 100%); // Purple gradient
+// $gradient-p: linear-gradient(88.64deg, $text-plum 0%, #a85a75 100%); // Blue gradient
+$gradient-b: linear-gradient(101.61deg, #9AAED9 0%, #56678C 100%); // Purple gradient
+$gradient-p: linear-gradient(101.61deg, #d38fba 0%, #754363 100%); // Blue gradient
 $color-red: #a24b4b;
 $shadow-big: 0px 4px 10px rgba(0, 0, 0, 0.15);
 $shadow-small: 0px 2px 4px rgba(0, 0, 0, 0.15);

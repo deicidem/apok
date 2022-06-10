@@ -19,7 +19,7 @@
       </button>
     </div>
     <div class="a">
-      <vuescroll :ops="ops">
+      <vuescroll :ops="scrollOps">
         <div class="plan-wrapper">
           <div class="plan-wrapper__cards">
             <div class="plan-wrapper__card">
@@ -58,7 +58,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-
+import {mapGetters} from "vuex";
 export default {
   data() {
     return {
@@ -92,6 +92,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["scrollOps"]),
     id() {
       return +this.$route.params.id;
     },

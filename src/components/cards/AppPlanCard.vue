@@ -16,7 +16,7 @@
           <button @click="navigate" class="button button-white plan-item__button">Подробнее</button>
         </router-link>
 
-        <button class="button button-g plan-item__button" @click="$emit('openPopup')">Запланировать</button>
+        <button class="button button-g plan-item__button" @click="selectPlan(index)">Запланировать</button>
 
       </div>
     </div>
@@ -24,13 +24,18 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 export default {
   props: {
     img: String,
     title: String,
     text: String,
     planid: Number,
+    index: Number
   },
+  methods: {
+    ...mapActions("plans", ["selectPlan"]),
+  }
 };
 </script>
 

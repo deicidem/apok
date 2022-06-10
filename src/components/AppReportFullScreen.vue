@@ -1,6 +1,6 @@
 <template>
   <div class="fullScreen">
-    <vuescroll :ops="ops">
+    <vuescroll :ops="scrollOps">
     <div class="fullScreen-wrapper">
       <router-link to="/main/tasks">
         <div class="back">
@@ -26,7 +26,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-
+import {mapGetters} from "vuex";
 export default {
   components: {
     vuescroll,
@@ -62,6 +62,9 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters(["scrollOps"]),
+  }
 }
 </script>
 
@@ -81,6 +84,7 @@ export default {
     margin: 30px auto;
   }
   &-title {
+    margin: 0;
     color: #000;
     font-weight: 400;
   }

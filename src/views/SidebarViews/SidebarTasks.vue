@@ -1,7 +1,7 @@
 <template>
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
-    <vuescroll :ops="ops">
+    <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
         <app-table>
           <thead>
@@ -160,9 +160,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["scrollOps"]),
     ...mapGetters("tasks", {
       tasks: "getTasks",
-      headers: "getHeaders",
       sortDir: "getSortDir",
     }),
   },

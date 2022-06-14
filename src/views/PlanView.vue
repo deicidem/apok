@@ -4,7 +4,7 @@
       <router-link to="/main/plan">
         <div class="back">
           <div class="back-arrow">
-            <img src="@/assets/img/arrow.svg" />
+            <img svg-inline src="@/assets/img/arrow.svg" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -225,19 +225,18 @@ export default {
   }
 }
 .back {
-  position: absolute;
-  top: 40px;
-  left: 30px;
-
+  margin-bottom: 0px;
   display: flex;
   align-items: center;
   cursor: pointer;
   &-arrow {
-    width: 40px;
+    svg path {
+      fill: $color-main;
+    }
   }
-  p {
+  &-subtitle {
     margin: 0 0 0 10px;
-    color: $text-grey;
+    color: $color-main;
   }
 }
 

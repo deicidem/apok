@@ -21,83 +21,83 @@
           />
           <p>{{ series.name }}</p>
         </div>
-          <div class="accordion-item__body" v-show="spacecraftsShow[i].show">
-            <div
-              class="accordion-item__content"
-              v-for="(sc, j) in series.models"
-              :key="sc.id"
-            >
-              <div class="accordion-item__header" @click="updateShow(i, j)">
-                <div
-                  v-bind:class="{
-                    'accordion-item__close': !spacecraftsShow[i].children[j].show,
-                    'accordion-item__open': spacecraftsShow[i].children[j].show,
-                  }"
-                ></div>
-                <app-checkbox
-                  :mini="true"
-                  :modelValue="sc.checked"
-                  @change="
-                    selectSpacecraft({
-                      seriesInd: i,
-                      scInd: j,
-                      checked: $event,
-                      pss: $event,
-                      mss: $event,
-                    })
-                  "
-                />
-                <p>{{ sc.name }}</p>
-              </div>
-
+        <div class="accordion-item__body" v-show="spacecraftsShow[i].show">
+          <div
+            class="accordion-item__content"
+            v-for="(sc, j) in series.models"
+            :key="sc.id"
+          >
+            <div class="accordion-item__header" @click="updateShow(i, j)">
               <div
-                class="accordion-item__body"
-                v-show="spacecraftsShow[i].children[j].show"
-              >
-                <div class="accordion-item__content">
-                  <label class="accordion-item__header">
-                    <app-checkbox
-                      :mini="true"
-                      :modelValue="sc.mss"
-                      @change="
-                        selectSpacecraft({
-                          seriesInd: i,
-                          scInd: j,
-                          checked: $event || sc.pss,
-                          pss: sc.pss,
-                          mss: $event,
-                        })
-                      "
-                    />
-                    <div class="accordion-item__img">
-                      <img src="@/assets/img/spektr.svg" />
-                    </div>
-                    <p>Многоспектральная съемка</p>
-                  </label>
+                v-bind:class="{
+                  'accordion-item__close': !spacecraftsShow[i].children[j].show,
+                  'accordion-item__open': spacecraftsShow[i].children[j].show,
+                }"
+              ></div>
+              <app-checkbox
+                :mini="true"
+                :modelValue="sc.checked"
+                @change="
+                  selectSpacecraft({
+                    seriesInd: i,
+                    scInd: j,
+                    checked: $event,
+                    pss: $event,
+                    mss: $event,
+                  })
+                "
+              />
+              <p>{{ sc.name }}</p>
+            </div>
 
-                  <label class="accordion-item__header">
-                    <app-checkbox
-                      :mini="true"
-                      :modelValue="sc.pss"
-                      @change="
-                        selectSpacecraft({
-                          seriesInd: i,
-                          scInd: j,
-                          checked: $event || sc.mss,
-                          pss: $event,
-                          mss: sc.mss,
-                        })
-                      "
-                    />
-                    <div class="accordion-item__img">
-                      <img src="@/assets/img/panhrom.svg" />
-                    </div>
-                    <p>Панхроматическая съемка</p>
-                  </label>
-                </div>
+            <div
+              class="accordion-item__body"
+              v-show="spacecraftsShow[i].children[j].show"
+            >
+              <div class="accordion-item__content">
+                <label class="accordion-item__header">
+                  <app-checkbox
+                    :mini="true"
+                    :modelValue="sc.mss"
+                    @change="
+                      selectSpacecraft({
+                        seriesInd: i,
+                        scInd: j,
+                        checked: $event || sc.pss,
+                        pss: sc.pss,
+                        mss: $event,
+                      })
+                    "
+                  />
+                  <div class="accordion-item__img">
+                    <img src="@/assets/img/spektr.svg" />
+                  </div>
+                  <p>Многоспектральная съемка</p>
+                </label>
+
+                <label class="accordion-item__header">
+                  <app-checkbox
+                    :mini="true"
+                    :modelValue="sc.pss"
+                    @change="
+                      selectSpacecraft({
+                        seriesInd: i,
+                        scInd: j,
+                        checked: $event || sc.mss,
+                        pss: $event,
+                        mss: sc.mss,
+                      })
+                    "
+                  />
+                  <div class="accordion-item__img">
+                    <img src="@/assets/img/panhrom.svg" />
+                  </div>
+                  <p>Панхроматическая съемка</p>
+                </label>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>

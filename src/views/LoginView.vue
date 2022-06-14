@@ -57,7 +57,11 @@
               <p>{{ v$.password.$errors[0].$message }}</p>
             </div>
           </div>
-
+          
+          <div class="remember">
+            <app-checkbox></app-checkbox>
+            <p class="remember-text">Запомнить меня</p>
+          </div>
           <!-- <router-link to="/main"> -->
           <button class="button button-g form-wrapper__item">Войти</button>
           <!-- </router-link> -->
@@ -77,8 +81,10 @@ import { mapActions } from "vuex";
 
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
+import AppCheckbox from '../components/controls/AppCheckbox.vue';
 
 export default {
+  components: { AppCheckbox },
   setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
@@ -126,6 +132,16 @@ export default {
   &-subtitle {
     margin: 0 0 0 10px;
     color: $color-main;
+  }
+}
+.remember{
+  display: flex;
+  margin: 0 auto;
+  width: 300px;
+  &-text{
+    margin-left: 10px;
+    color: $text-grey;
+    font-size: 14px;
   }
 }
 .authorize {

@@ -48,8 +48,7 @@
             <input type="file" name="a" ref="file" @change="onFileUpload" />
           </button>
           <div class="popup-card__text">
-            
-            <p v-if="file!=null" class="popup-card__file">{{file.name}}</p>
+            <p v-if="file != null" class="popup-card__file">{{ file.name }}</p>
             <p v-else>Не выбрано</p>
           </div>
         </div>

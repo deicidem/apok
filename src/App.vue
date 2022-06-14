@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-      <app-header @click="height()" ref="header"></app-header>
+    <app-header @click="height()" ref="header"></app-header>
     <div class="content" :style="height">
       <router-view></router-view>
       <app-error></app-error>
@@ -35,7 +35,6 @@ export default {
 
 <style lang="scss">
 * {
-  
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
@@ -118,36 +117,35 @@ svg:focus {
   &:disabled {
     cursor: default;
     color: #fff;
-    background: rgb(189, 189, 189)
-
+    background: rgb(189, 189, 189);
   }
   &:not(:disabled) {
     &::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 200%;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: all 0.2s ease-out;
-    z-index: -1;
-  }
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 10px rgba(#000, 0.3);
-  }
-  &:active {
-    transition: all 0.1s ease-out;
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px rgba(#000, 0.1);
-  }
-  &:hover:after {
-    transform: translateX(-25%);
-  }
-  &:active:after {
-    transform: translateX(-75%);
-  }
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 200%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.2s ease-out;
+      z-index: -1;
+    }
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 10px rgba(#000, 0.3);
+    }
+    &:active {
+      transition: all 0.1s ease-out;
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(#000, 0.1);
+    }
+    &:hover:after {
+      transform: translateX(-25%);
+    }
+    &:active:after {
+      transform: translateX(-75%);
+    }
   }
   &-g {
     &::after {
@@ -158,15 +156,8 @@ svg:focus {
     }
   }
   &-white {
+    background: $gradient-w;
     color: $color-main;
-    &:hover {
-      color: $color-main-light;
-    }
-    &::after {
-      background: $gradient-w;
-    }
-    svg path {
-    }
   }
   &-r {
     color: #fff;
@@ -181,8 +172,13 @@ svg:focus {
     width: 30px;
     height: 30px;
     padding: 7px;
-    img {
-      max-width: 16px;
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
     }
   }
 }

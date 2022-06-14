@@ -195,16 +195,12 @@ export default {
         password: {
           required: helpers.withMessage("Введите значение", required),
           minLength: helpers.withMessage(
-            "Пароль должен содержать больше 6 символов",
-            minLength(6)
+            "Пароль должен содержать больше 8 символов",
+            minLength(8)
           ),
         },
         confirm: {
           required: helpers.withMessage("Введите значение", required),
-          minLength: helpers.withMessage(
-            "Пароль должен содержать больше 6 символов",
-            minLength(6)
-          ),
           sameAs: helpers.withMessage(
             "Пароли не совпадают",
             sameAs(this.password.password)

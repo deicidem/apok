@@ -156,13 +156,8 @@ svg:focus {
     }
   }
   &-white {
+    background: $gradient-w;
     color: $color-main;
-    &:hover {
-      color: $color-main-light;
-    }
-    &::after {
-      background: $gradient-w;
-    }
   }
   &-r {
     color: #fff;

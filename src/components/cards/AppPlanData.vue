@@ -58,18 +58,32 @@
                   <div class="data__text" v-else>Не выбрано</div>
                   <div class="data-btns">
                     <button
-                      class="button button-svg button-white data-btn"
-                      :class="getSelectable.dataIndex == i && getSelectable.planIndex == activePlanIndex && getSelectable.value ? 'button-g' : 'button-white'"
+                      class="button button-svg data-btn"
+                      :class="
+                        getSelectable.dataIndex == i &&
+                        getSelectable.planIndex == activePlanIndex &&
+                        getSelectable.value
+                          ? 'data-btn-g'
+                          : 'button-svg'
+                      "
                       @click="selectDzz(i)"
                     >
-                      <img svg-inline src="@/assets/img/choose.svg" alt="Выбрать"/>
+                      <img
+                        svg-inline
+                        src="@/assets/img/choose.svg"
+                        alt="Выбрать"
+                      />
                     </button>
 
                     <button
-                      class="button button-svg button-white button-white data-btn"
+                      class="button button-svg data-btn"
                       @click="onUploadClick(i)"
                     >
-                      <img svg-inline src="@/assets/img/upload.svg" alt="Загрузить"/>
+                      <img
+                        svg-inline
+                        src="@/assets/img/upload.svg"
+                        alt="Загрузить"
+                      />
                     </button>
                   </div>
                 </div>
@@ -85,23 +99,23 @@
                   </div>
                   <div class="data__text" v-else>Не выбрана</div>
                   <div class="data-btns">
-                  <router-link to="area" custom v-slot="{ navigate }">
-                    <button
-                      @click="navigate"
-                      class="button button-svg button-white button-white data-btn"
-                    >
-                      <img src="@/assets/img/choose.svg" />
+                    <router-link to="area" custom v-slot="{ navigate }">
+                      <button
+                        @click="navigate"
+                        class="button button-svg data-btn"
+                      >
+                        <img src="@/assets/img/choose.svg" />
+                      </button>
+                    </router-link>
+                    <button class="button button-svg data-btn">
+                      <img
+                        svg-inline
+                        class="icon icon-vector-o"
+                        src="@/assets/img/vector-o.svg"
+                        alt=""
+                      />
                     </button>
-                  </router-link>
-                  <button class="button button-svg button-white button-white data-btn">
-                    <img
-                      svg-inline
-                      class="icon icon-vector-o"
-                      src="@/assets/img/vector-o.svg"
-                      alt=""
-                    />
-                  </button>
-                </div>
+                  </div>
                 </div>
               </div>
             </template>
@@ -165,7 +179,12 @@ export default {
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
-    ...mapActions("plans", ["setDataFile", "planNewTask", "changeText", "selectPlan"]),
+    ...mapActions("plans", [
+      "setDataFile",
+      "planNewTask",
+      "changeText",
+      "selectPlan",
+    ]),
     ...mapActions(["setDataCardState"]),
     setPlanPopupData(i) {
       this.$set(this.planPopup, "data", this.activePlan.data[i]);
@@ -333,8 +352,10 @@ export default {
     width: 100%;
     padding: 5px 30px 5px 10px;
     border-radius: 5px;
-    &:focus {
+    &:focus,
+    &:focus-visible {
       border: 1px solid rgba($color-main, 0.5);
+      outline: none;
     }
   }
   &-btns {
@@ -351,11 +372,19 @@ export default {
   &-btn {
     position: relative;
     margin-right: 10px;
+
+    background: $gradient-w;
     &:hover .data-tooltiptext {
       display: block;
     }
     &:last-child {
       margin: 0;
+    }
+    &-g {
+      background: $color-main;
+      svg path {
+        fill: #fff;
+      }
     }
   }
   &-tooltiptext {

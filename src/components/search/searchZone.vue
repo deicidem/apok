@@ -52,7 +52,7 @@
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate(i)">
-                <button class="button button-svg ">
+                <button class="button button-white zone-table__trash">
                   <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                 </button>
               </td>
@@ -83,7 +83,6 @@
                 <button
                   @click="onAddCoordinate"
                   class="button button-svg button-white zone-table__plus"
-                  type="white-g"
                 >
                   <img svg-inline src="@/assets/img/plus.svg" alt="Добавить" />
                 </button>
@@ -455,6 +454,11 @@ label.active {
         fill: $color-main-dark;
       }
     }
+  }
+  &__trash {
+    width: 30px;
+    height: 30px;
+    padding: 7px;
   }
 }
 .search-zone {

@@ -287,8 +287,10 @@ svg:focus {
 .__vuescroll {
   display: flex;
   flex-direction: column;
+
 }
 .__panel {
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     width: 0;
   }
@@ -298,6 +300,10 @@ svg:focus {
     -ms-overflow-style: none;
   }
   width: 100%;
+}
+
+.__bar-is-vertical {
+  background: $color-main !important;
 }
 
 /*______________________________________*/

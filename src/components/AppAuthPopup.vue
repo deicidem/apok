@@ -51,9 +51,7 @@
         </div>
       </div>
 
-      <button class="button button-g auth-button" >
-        Войти
-      </button>
+      <button class="button button-g auth-button">Войти</button>
 
       <router-link to="/registration">
         <button class="button button-white auth-button">Регистрация</button>
@@ -96,11 +94,11 @@ export default {
     },
     submitForm() {
       this.v$.$validate();
-        if (!this.v$.$error) {
-          this.authorize({email: this.login, password: this.password})
-        } else {
-          return;
-        }
+      if (!this.v$.$error) {
+        this.authorize({ email: this.login, password: this.password });
+      } else {
+        return;
+      }
     },
   },
 };
@@ -185,6 +183,16 @@ export default {
     border-radius: 10px;
     p {
       margin-left: 8px;
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .auth {
+    &-wrapper {
+      position: absolute;
+
+      top: 140px;
+      right: 40px;
     }
   }
 }

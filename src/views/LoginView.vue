@@ -3,7 +3,7 @@
     <div class="container">
       <div class="back">
         <div class="back-arrow">
-          <img svg-inline src="@/assets/img/arrow-w.svg" alt="Назад"/>
+          <img svg-inline src="@/assets/img/arrow-w.svg" alt="Назад" />
         </div>
         <p class="back-subtitle">Назад</p>
       </div>
@@ -57,7 +57,7 @@
               <p>{{ v$.password.$errors[0].$message }}</p>
             </div>
           </div>
-          
+
           <div class="remember">
             <app-checkbox></app-checkbox>
             <p class="remember-text">Запомнить меня</p>
@@ -81,7 +81,7 @@ import { mapActions } from "vuex";
 
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
-import AppCheckbox from '../components/controls/AppCheckbox.vue';
+import AppCheckbox from "../components/controls/AppCheckbox.vue";
 
 export default {
   components: { AppCheckbox },
@@ -134,11 +134,11 @@ export default {
     color: $color-main;
   }
 }
-.remember{
+.remember {
   display: flex;
   margin: 0 auto;
   width: 300px;
-  &-text{
+  &-text {
     margin-left: 10px;
     color: $text-grey;
     font-size: 14px;
@@ -210,7 +210,6 @@ export default {
     fill: $color-red;
   }
 }
-
 .error {
   &-tooltip {
     position: absolute;
@@ -237,4 +236,5 @@ export default {
     }
   }
 }
+
 </style>

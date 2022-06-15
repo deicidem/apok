@@ -59,7 +59,7 @@
           </div>
 
           <div class="remember">
-            <app-checkbox></app-checkbox>
+            <app-checkbox :model-value="remember" @change="remember = $event"></app-checkbox>
             <p class="remember-text">Запомнить меня</p>
           </div>
           <!-- <router-link to="/main"> -->
@@ -90,6 +90,7 @@ export default {
     return {
       login: "",
       password: "",
+      remember: false
     };
   },
   validations() {
@@ -109,7 +110,7 @@ export default {
     submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.authorize({ email: this.login, password: this.password });
+        this.authorize({ email: this.login, password: this.password, remember: this.remember});
       } else {
         return;
       }

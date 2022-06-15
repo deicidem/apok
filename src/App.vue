@@ -156,7 +156,9 @@ svg:focus {
     }
   }
   &-white {
-    background: $gradient-w;
+    &::after {
+      background: $gradient-w;
+    }
     color: $color-main;
   }
   &-r {

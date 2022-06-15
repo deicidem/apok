@@ -79,7 +79,7 @@ export default {
         email: {
           title: "Почта",
           value: "Ann@mail.ru",
-          editable: false,
+          editable: true,
         },
       },
       editable: false,

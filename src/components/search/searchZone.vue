@@ -52,8 +52,8 @@
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate(i)">
-                <button class="button button-svg button-white">
-                  <img inline-svg src="@/assets/img/trash.svg" />
+                <button class="button button-white zone-table__trash">
+                  <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                 </button>
               </td>
             </tr>
@@ -82,10 +82,9 @@
               <td class="col">
                 <button
                   @click="onAddCoordinate"
-                  class="button button-svg button-white"
-                  type="white-g"
+                  class="button button-svg button-white zone-table__plus"
                 >
-                  <img inline-svg src="@/assets/img/plus.svg" />
+                  <img svg-inline src="@/assets/img/plus.svg" alt="Добавить" />
                 </button>
               </td>
             </tr>
@@ -137,7 +136,12 @@
               :mask="inputMaskLat"
             />
             <label class="input-label coordinates-label"> Широта </label>
-            <p class="coordinates-input__letter" :class="{ invalidLetter: v$.lng.$error }">Ю</p>
+            <p
+              class="coordinates-input__letter"
+              :class="{ invalidLetter: v$.lng.$error }"
+            >
+              Ю
+            </p>
 
             <p v-if="v$.lat.$error" class="error-tooltip">
               {{ v$.lat.$errors[0].$message }}
@@ -153,7 +157,12 @@
               :mask="inputMaskLng"
             />
             <label class="input-label coordinates-label"> Долгота </label>
-            <p class="coordinates-input__letter" :class="{ invalidLetter: v$.lng.$error }">В</p>
+            <p
+              class="coordinates-input__letter"
+              :class="{ invalidLetter: v$.lng.$error }"
+            >
+              В
+            </p>
 
             <p v-if="v$.lng.$error" class="error-tooltip">
               {{ v$.lng.$errors[0].$message }}
@@ -417,6 +426,41 @@ label.active {
   max-width: 40px;
   text-align: center !important;
 }
+.zone-table {
+  &__input {
+    display: block;
+    flex: 1;
+    width: 120px;
+    margin: 0;
+    padding: 6px;
+
+    font-family: inherit;
+    border: none;
+    line-height: 1.5;
+    &__td {
+      padding: 0;
+    }
+    &__wrapper {
+      display: flex;
+      height: 100%;
+    }
+  }
+  &__plus {
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
+  }
+  &__trash {
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+  }
+}
 .search-zone {
   padding: 20px;
 
@@ -495,24 +539,6 @@ label.active {
   }
   &__table {
     flex: 1;
-    .zone-table__input {
-      display: block;
-      flex: 1;
-      width: 120px;
-      margin: 0;
-      padding: 6px;
-
-      font-family: inherit;
-      border: none;
-      line-height: 1.5;
-      &__td {
-        padding: 0;
-      }
-      &__wrapper {
-        display: flex;
-        height: 100%;
-      }
-    }
     .input-label {
       font-size: 8px;
     }
@@ -695,7 +721,7 @@ label.active {
     }
   }
 }
-.invalidLetter{
+.invalidLetter {
   background: $gradient-r;
 }
 .error {

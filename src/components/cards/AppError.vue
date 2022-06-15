@@ -49,6 +49,11 @@
     svg path {
       fill: $color-red;
     }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
   }
 }
 </style>

@@ -32,7 +32,7 @@
         </div>
 
         <div class="search-date__arrow">
-          <img src="@/assets/img/arrow.svg" />
+          <img svg-inline src="@/assets/img/arrow.svg" />
         </div>
 
         <div class="input-wrapper search-date__input">
@@ -72,21 +72,21 @@
             class="input-wrapper select-data"
             @click="selectActive = !selectActive"
           >
-              <input
-                placeholder=" "
-                type="text"
-                class="input"
-                :value="monthsValue"
-                readonly
-                required
-                :class="{ invalid: monthsValue == '' }"
-              />
-              <label class="input-label select-label">Выбрать месяцы:</label>
-              <img
-                svg-inline
-                class="select-img"
-                src="@/assets/img/arrow-down.svg"
-              />
+            <input
+              placeholder=" "
+              type="text"
+              class="input"
+              :value="monthsValue"
+              readonly
+              required
+              :class="{ invalid: monthsValue == '' }"
+            />
+            <label class="input-label select-label">Выбрать месяцы:</label>
+            <img
+              svg-inline
+              class="select-img"
+              src="@/assets/img/arrow-down.svg"
+            />
           </div>
           <div class="select-options" v-show="selectActive">
             <label class="select-option">
@@ -330,9 +330,8 @@ label.active {
       max-height: 40px;
       margin: 0 20px;
       transform: rotate(180deg);
-      img {
-        width: 100%;
-        max-height: 34px;
+      svg path {
+        fill: $color-main;
       }
     }
     &__background {
@@ -364,6 +363,14 @@ label.active {
     top: 50%;
     transform: translate(-50%, -50%);
     right: 0;
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
   }
   &-data {
     &:focus-within .input-label {

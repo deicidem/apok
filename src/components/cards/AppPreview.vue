@@ -31,12 +31,37 @@
             </router-link>
           </div>
           <div class="preview-btns" v-else>
-
-            <button class="button button-white" v-if="this.activeView.active" @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox)">Убрать с карты</button>
-            <button class="button button-g"  v-else @click="onImageButtonClick(activeView.id, activeView.previewPath, activeView.geography.bbox, activeView.fitBounds)">Показать на карте</button>
-            <router-link to="/report" custom v-slot="{navigate}">
-              <button @click="navigate" class="button button-g">На весь экран</button>
-
+            <button
+              class="button button-white"
+              v-if="this.activeView.active"
+              @click="
+                onImageButtonClick(
+                  activeView.id,
+                  activeView.previewPath,
+                  activeView.geography.bbox
+                )
+              "
+            >
+              Убрать с карты
+            </button>
+            <button
+              class="button button-g"
+              v-else
+              @click="
+                onImageButtonClick(
+                  activeView.id,
+                  activeView.previewPath,
+                  activeView.geography.bbox,
+                  activeView.fitBounds
+                )
+              "
+            >
+              Показать на карте
+            </button>
+            <router-link to="/report" custom v-slot="{ navigate }">
+              <button @click="navigate" class="button button-g">
+                На весь экран
+              </button>
             </router-link>
           </div>
         </div>
@@ -67,9 +92,8 @@ export default {
     };
   },
   methods: {
-
-    ...mapActions('map', ['addViewImage', 'removeViewImage']),
-    ...mapActions('tasks', ['setTaskViewActive', 'setTaskViewFitBounds']),
+    ...mapActions("map", ["addViewImage", "removeViewImage"]),
+    ...mapActions("tasks", ["setTaskViewActive", "setTaskViewFitBounds"]),
 
     showResult() {
       this.reportType = !this.reportType;
@@ -90,18 +114,17 @@ export default {
           val: false,
         });
       } else {
-        this.addViewImage({ id, img, bounds, fitBounds});
+        this.addViewImage({ id, img, bounds, fitBounds });
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
 
-          val: true
+          val: true,
         });
         this.setTaskViewFitBounds({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
-          val: false
-
+          val: false,
         });
       }
     },
@@ -149,12 +172,17 @@ export default {
     background: #fff;
     border-radius: 20px;
     box-shadow: $shadow-big;
-    &__cross{
+    &__cross {
       position: absolute;
       right: 14px;
       top: 14px;
-      svg path{
+      svg path {
         fill: $color-main;
+      }
+      &:hover {
+        svg path {
+          fill: $color-main-dark;
+        }
       }
     }
     &__list {

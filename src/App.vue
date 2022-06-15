@@ -283,11 +283,25 @@ svg:focus {
     }
   }
 }
+/*_____________________tooltiptext_____________*/
+.tooltiptext {
+  position: absolute;
+  bottom: 120%;
+  right: calc(0px - 10px);
+
+  display: none;
+  padding: 2px 5px;
+
+  color: $color-main;
+  font-size: 10px;
+  background: $gradient-w;
+  border-radius: 6px;
+  box-shadow: $shadow-small;
+}
 /*_____________________vueScroll______________*/
 .__vuescroll {
   display: flex;
   flex-direction: column;
-
 }
 .__panel {
   scrollbar-width: none;
@@ -301,7 +315,6 @@ svg:focus {
   }
   width: 100%;
 }
-
 .__bar-is-vertical {
   background: $color-main !important;
 }

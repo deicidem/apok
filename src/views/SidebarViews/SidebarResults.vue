@@ -560,13 +560,13 @@ export default {
       margin-right: 0;
     }
   }
-  // .icon {
-  //   width: 15px;
-  //   height: 15px;
-  //   &-vector-o {
-  //     width: 20px;
-  //     height: 20px;
-  //   }
-  // }
+  .icon {
+    width: 15px;
+    height: 15px;
+    &-vector-o {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 </style>

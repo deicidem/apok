@@ -12,7 +12,6 @@ Vue.use(VueCompositionAPI)
 
 
 Vue.config.productionTip = false;
-
 store.dispatch('plans/load').then(async () => {
   return store.dispatch('search/load');
 }).then(()=> {
@@ -22,14 +21,28 @@ store.dispatch('plans/load').then(async () => {
   new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    mounted() {
+      let params = new URLSearchParams(window.location.search);
+      if (params.has('emailUrl')) {
+        let url = new URLSearchParams(window.location.search).get('emailUrl');
+        store.dispatch('users/verifyEmail', url);
+      }
+    }
   }).$mount('#app')
 
 }).catch(() => {
   new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    mounted() {
+      let params = new URLSearchParams(window.location.search);
+      if (params.has('emailUrl')) {
+        let url = new URLSearchParams(window.location.search).get('emailUrl');
+        store.dispatch('users/verifyEmail', url);
+      }
+    }
   }).$mount('#app')
 })
 

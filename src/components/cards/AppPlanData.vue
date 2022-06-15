@@ -338,10 +338,14 @@ export default {
     }
   }
   &-arrowDown {
+    display: flex;
     position: absolute;
-    right: 10px;
-    svg path{
+    right: 6px;
+    top: 50%;
+    transform: translate(0, -50%);
+    svg path {
       fill: $color-main;
+      vertical-align: middle;
     }
   }
   &__subtitle {
@@ -385,10 +389,10 @@ export default {
   &-btn {
     position: relative;
     background: $gradient-w;
-    margin-left: 10px;
+
     &__wrapper {
       position: relative;
-
+      margin-left: 10px;
       &:hover .tooltiptext {
         display: block;
       }

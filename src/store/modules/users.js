@@ -52,6 +52,10 @@ export default {
     async logout(store) {
       await userApi.logout();
       store.commit('setUser', null);
+    },
+    async verifyEmail(store, url) {
+      let res = await userApi.verifyEmail(url);
+      console.log(res);
     }
   }
 }

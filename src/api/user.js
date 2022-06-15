@@ -41,3 +41,6 @@ export async function updatePassword({email, currentPassword, password, password
     password_confirmation: passwordConfirmation
   });
 }
+export async function verifyEmail(url) {
+  return server.get(url);
+}

@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar_wrap" :class="active ? 'active' : ''">
     <!-- <transition name="slide"> -->
-      <div class="sidebar" :class="{active}">
-        <app-plan-data v-if="isAuth"></app-plan-data>
-        <div class="sidebar-content">
-          <router-view> </router-view>
-        </div>
+    <div class="sidebar" :class="{ active }">
+      <app-plan-data v-if="isAuth"></app-plan-data>
+      <div class="sidebar-content">
+        <router-view> </router-view>
+      </div>
     </div>
     <!-- </transition> -->
 
@@ -74,7 +74,11 @@
         <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
       </div>
 
-      <div v-show="isAuth" class="sidebar-collapsed__item notification-wrapper" @click="open">
+      <div
+        v-show="isAuth"
+        class="sidebar-collapsed__item notification-wrapper"
+        @click="open"
+      >
         <router-link to="/main/alerts" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
@@ -112,6 +116,24 @@
 
         <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
       </div>
+
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/files" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/files.svg"
+              alt="Личный кабинет"
+            />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Мои файлы</div>
+      </div>
     </div>
   </div>
 </template>
@@ -137,7 +159,7 @@ export default {
     ...mapGetters("alerts", {
       alerts: "getAlerts",
     }),
-    ...mapGetters("users", ["isAuth"])
+    ...mapGetters("users", ["isAuth"]),
   },
   methods: {
     ...mapActions(["setSidebarState"]),

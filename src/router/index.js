@@ -43,6 +43,10 @@ const routes = [
         component: () => import('../views/SidebarViews/SidebarPerson')
       },
       {
+        path: 'files',
+        component: () => import('../views/SidebarViews/SidebarFiles')
+      },
+      {
         path: 'area',
         component: () => import('../views/SidebarViews/SidebarArea')
       }

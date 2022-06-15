@@ -57,34 +57,39 @@
                   </div>
                   <div class="data__text" v-else>Не выбрано</div>
                   <div class="data-btns">
-                    <button
-                      class="button button-svg data-btn"
-                      :class="
-                        getSelectable.dataIndex == i &&
-                        getSelectable.planIndex == activePlanIndex &&
-                        getSelectable.value
-                          ? 'data-btn-g'
-                          : 'button-svg'
-                      "
-                      @click="selectDzz(i)"
-                    >
-                      <img
-                        svg-inline
-                        src="@/assets/img/choose.svg"
-                        alt="Выбрать"
-                      />
-                    </button>
-
-                    <button
-                      class="button button-svg data-btn"
-                      @click="onUploadClick(i)"
-                    >
-                      <img
-                        svg-inline
-                        src="@/assets/img/upload.svg"
-                        alt="Загрузить"
-                      />
-                    </button>
+                    <div class="data-btn__wrapper">
+                      <button
+                        class="button button-svg data-btn"
+                        :class="
+                          getSelectable.dataIndex == i &&
+                          getSelectable.planIndex == activePlanIndex &&
+                          getSelectable.value
+                            ? 'data-btn-g'
+                            : 'button-svg'
+                        "
+                        @click="selectDzz(i)"
+                      >
+                        <img
+                          svg-inline
+                          src="@/assets/img/choose.svg"
+                          alt="Выбрать"
+                        />
+                      </button>
+                      <div class="tooltiptext">Выбрать</div>
+                    </div>
+                    <div class="data-btn__wrapper">
+                      <button
+                        class="button button-svg data-btn"
+                        @click="onUploadClick(i)"
+                      >
+                        <img
+                          svg-inline
+                          src="@/assets/img/upload.svg"
+                          alt="Загрузить"
+                        />
+                      </button>
+                      <div class="tooltiptext">Загрузить</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -99,22 +104,28 @@
                   </div>
                   <div class="data__text" v-else>Не выбрана</div>
                   <div class="data-btns">
-                    <router-link to="area" custom v-slot="{ navigate }">
-                      <button
-                        @click="navigate"
-                        class="button button-svg data-btn"
-                      >
-                        <img src="@/assets/img/choose.svg" />
+                    <div class="data-btn__wrapper">
+                      <router-link to="area" custom v-slot="{ navigate }">
+                        <button
+                          @click="navigate"
+                          class="button button-svg data-btn"
+                        >
+                          <img src="@/assets/img/choose.svg" alt="Выбрать" />
+                        </button>
+                      </router-link>
+                      <div class="tooltiptext">Выбрать</div>
+                    </div>
+                    <div class="data-btn__wrapper">
+                      <button class="button button-svg data-btn">
+                        <img
+                          svg-inline
+                          class="icon icon-vector-o"
+                          src="@/assets/img/vector-o.svg"
+                          alt="Загрузить"
+                        />
                       </button>
-                    </router-link>
-                    <button class="button button-svg data-btn">
-                      <img
-                        svg-inline
-                        class="icon icon-vector-o"
-                        src="@/assets/img/vector-o.svg"
-                        alt=""
-                      />
-                    </button>
+                      <div class="tooltiptext">Загрузить</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -143,7 +154,7 @@
     </div>
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
-        <img src="@/assets/img/arrow-plan.svg" alt="" />
+        <img src="@/assets/img/arrow-plan.svg" alt="Закрыть" />
       </div>
     </div>
   </div>
@@ -329,7 +340,9 @@ export default {
   &-arrowDown {
     position: absolute;
     right: 10px;
-    top: 20%;
+    svg path{
+      fill: $color-main;
+    }
   }
   &__subtitle {
     margin-top: 0;
@@ -371,14 +384,14 @@ export default {
   }
   &-btn {
     position: relative;
-    margin-right: 10px;
-
     background: $gradient-w;
-    &:hover .data-tooltiptext {
-      display: block;
-    }
-    &:last-child {
-      margin: 0;
+    margin-left: 10px;
+    &__wrapper {
+      position: relative;
+
+      &:hover .tooltiptext {
+        display: block;
+      }
     }
     &-g {
       background: $color-main;
@@ -386,20 +399,6 @@ export default {
         fill: #fff;
       }
     }
-  }
-  &-tooltiptext {
-    position: absolute;
-    bottom: 110%;
-    right: calc(0px - 6px);
-
-    display: none;
-    padding: 2px 5px;
-
-    color: $color-main;
-    font-size: 10px;
-    background: $gradient-w;
-    border-radius: 6px;
-    box-shadow: $shadow-small;
   }
   &-start {
     width: 200px;

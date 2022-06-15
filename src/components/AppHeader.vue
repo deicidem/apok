@@ -21,19 +21,25 @@
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
         <div class="header-menu__buttons">
-          <button
-            @click="showUser = true"
-            ref="showUser"
-            class="button button-svg button-white header-menu__button"
-          >
-            <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
-          </button>
-          <button
-            class="button button-svg button-white header-menu__button"
-            @click="logout"
-          >
-            <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
-          </button>
+          <div class="header-menu__button-wrapper">
+            <button
+              @click="showUser = true"
+              ref="showUser"
+              class="button button-svg button-white header-menu__button"
+            >
+              <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
+            </button>
+            <div class="tooltiptext-header">Авторизоваться</div>
+          </div>
+          <div class="header-menu__button-wrapper">
+            <button
+              class="button button-svg button-white header-menu__button"
+              @click="logout"
+            >
+              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
+            </button>
+            <div class="tooltiptext-header">Выйти</div>
+          </div>
         </div>
       </div>
     </div>
@@ -100,6 +106,21 @@ export default {
 .search-box {
   display: none;
 }
+.tooltiptext-header {
+  position: absolute;
+  bottom: 100%;
+  right: 60%;
+  transform: translate(50%, -50%);
+
+  display: none;
+  padding: 2px 5px;
+
+  color: $color-main;
+  font-size: 12px;
+  background: $gradient-w;
+  border-radius: 6px;
+  box-shadow: $shadow-small;
+}
 .header {
   z-index: 10;
   position: relative;
@@ -151,6 +172,12 @@ export default {
       margin-right: 20px;
       width: 40px;
       height: 40px;
+      &-wrapper {
+        position: relative;
+        &:hover .tooltiptext-header {
+          display: block;
+        }
+      }
       svg path {
         fill: $color-main;
       }

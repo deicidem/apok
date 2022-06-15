@@ -266,7 +266,6 @@ svg:focus {
 }
 
 /*_____________________pagination_____________*/
-
 .vs-pagination {
   &--active a {
     color: $color-main !important;

@@ -82,11 +82,9 @@
               :class="{ invalid: monthsValue == '' }"
             />
             <label class="input-label select-label">Выбрать месяцы:</label>
-            <img
-              svg-inline
-              class="select-img"
-              src="@/assets/img/arrow-down.svg"
-            />
+            <div class="select-img">
+              <img svg-inline src="@/assets/img/arrow-down.svg" />
+            </div>
           </div>
           <div class="select-options" v-show="selectActive">
             <label class="select-option">
@@ -361,15 +359,10 @@ label.active {
   &-img {
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
     right: 0;
+    transform: translate(-50%, -50%);
     svg path {
       fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
     }
   }
   &-data {

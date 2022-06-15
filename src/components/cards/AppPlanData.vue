@@ -340,7 +340,9 @@ export default {
   &-arrowDown {
     position: absolute;
     right: 10px;
-    top: 20%;
+    svg path{
+      fill: $color-main;
+    }
   }
   &__subtitle {
     margin-top: 0;

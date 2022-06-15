@@ -1,5 +1,5 @@
 <template>
-  <div class="tasks" >
+  <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
@@ -57,8 +57,15 @@
               </td>
               <td v-else>{{ item.status }}</td>
               <td>
-                <button class="tasks-table__button" v-if="item.result != null">
-                  Посмотреть результат
+                <button
+                  v-if="item.result != null"
+                  class="button button-svg tasks-button"
+                >
+                  <img
+                    svg-inline
+                    src="@/assets/img/results-info.svg"
+                    alt="Изображение"
+                  />
                 </button>
               </td>
             </tr>
@@ -184,8 +191,8 @@ export default {
     },
   },
   async mounted() {
-    await this.load()
-  }
+    await this.load();
+  },
 };
 </script>
 
@@ -202,7 +209,7 @@ export default {
     left: 0;
     top: 60%;
     transform: translate(-50%, -50%);
-    svg path{
+    svg path {
       fill: $color-main;
     }
   }
@@ -252,6 +259,21 @@ export default {
       height: inherit;
       overflow-x: auto;
       margin-top: 0px;
+    }
+  }
+  &-button {
+    margin-top: 10px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: $gradient-w;
+    &.active {
+      background: $color-main;
+      svg path {
+        fill: #fff;
+      }
     }
   }
   .green {

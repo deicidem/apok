@@ -128,35 +128,41 @@
             >
               <td class="results-table__buttons">
                 <div class="results-circle"></div>
-                <button
-                  class="button button-svg results-button"
-                  :class="results[i].polygonActive ? 'active' : ''"
-                  @click="onPolygonButtonClick(i, item.id, item.geography)"
-                >
-                  <img
-                    svg-inline
-                    src="@/assets/img/vector-o.svg"
-                    alt="Вектор"
-                  />
-                </button>
-                <button
-                  class="button button-svg results-button"
-                  :class="results[i].imageActive ? 'active' : ''"
-                  @click="
-                    onImageButtonClick(
-                      i,
-                      item.id,
-                      item.previewPath,
-                      item.geography == null ? null : item.geography.bbox
-                    )
-                  "
-                >
-                  <img
-                    svg-inline
-                    src="@/assets/img/image.svg"
-                    alt="Изображение"
-                  />
-                </button>
+                <div class="results-table__button">
+                  <button
+                    class="button button-svg results-button"
+                    :class="results[i].polygonActive ? 'active' : ''"
+                    @click="onPolygonButtonClick(i, item.id, item.geography)"
+                  >
+                    <img
+                      svg-inline
+                      src="@/assets/img/vector-o.svg"
+                      alt="Вектор"
+                    />
+                  </button>
+                  <div class="tooltiptext noWordbreak">Вектор</div>
+                </div>
+                <div class="results-table__button">
+                  <button
+                    class="button button-svg results-button"
+                    :class="results[i].imageActive ? 'active' : ''"
+                    @click="
+                      onImageButtonClick(
+                        i,
+                        item.id,
+                        item.previewPath,
+                        item.geography == null ? null : item.geography.bbox
+                      )
+                    "
+                  >
+                    <img
+                      svg-inline
+                      src="@/assets/img/image.svg"
+                      alt="Изображение"
+                    />
+                  </button>
+                  <div class="tooltiptext noWordbreak">Изображение</div>
+                </div>
               </td>
               <td>{{ item.name }}</td>
               <td>{{ item.round }}</td>
@@ -165,17 +171,20 @@
               <td>{{ item.date }}</td>
               <td>{{ item.cloudiness }}</td>
               <td class="results-table__buttons">
-                <button
-                  class="button button-svg results-button"
-                  :class="results[i].cardActive ? 'active' : ''"
-                  @click="onCardButtonClick(i)"
-                >
-                  <img
-                    svg-inline
-                    src="@/assets/img/results-info.svg"
-                    alt="Информация по объекту"
-                  />
-                </button>
+                <div class="results-table__button">
+                  <button
+                    class="button button-svg results-button"
+                    :class="results[i].cardActive ? 'active' : ''"
+                    @click="onCardButtonClick(i)"
+                  >
+                    <img
+                      svg-inline
+                      src="@/assets/img/results-info.svg"
+                      alt="Информация по объекту"
+                    />
+                  </button>
+                  <div class="tooltiptext noWordbreak">Подробнее</div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -454,6 +463,9 @@ export default {
     min-width: 230px;
   }
 }
+.noWordbreak {
+  word-break: normal;
+}
 .results {
   &-content {
     padding: 10px 30px;
@@ -538,9 +550,15 @@ export default {
       align-items: center;
       justify-content: center;
     }
+    &__button {
+      position: relative;
+      margin-right: 10px;
+      &:hover .tooltiptext {
+        display: block;
+      }
+    }
   }
   &-button {
-    margin: 0 5px;
     padding: 0;
     display: flex;
     align-items: center;

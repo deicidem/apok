@@ -56,7 +56,7 @@
                 </div>
               </td>
               <td v-else>{{ item.status }}</td>
-              <td>
+              <td :class="{ 'td-results': item.result != null }">
                 <button
                   v-if="item.result != null"
                   class="button button-svg tasks-button"
@@ -67,13 +67,12 @@
                     alt="Изображение"
                   />
                 </button>
+                <div class="tasks-table__tooltiptext">Посмотреть результат</div>
               </td>
             </tr>
-            <tr>
+            <tr v-show="item.result.active" v-if="item.result != null">
               <td colspan="6" class="td_preview">
                 <app-preview
-                  v-show="item.result.active"
-                  v-if="item.result != null"
                   :views="item.result.views"
                   :files="item.result.files"
                   :taskIndex="i"
@@ -110,7 +109,7 @@ export default {
     return {
       headers: [
         {
-          title: "Номер",
+          title: "№",
           key: "id",
           active: false,
         },
@@ -197,6 +196,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.td-results {
+  position: relative;
+  &:hover .tasks-table__tooltiptext {
+    display: block;
+  }
+}
 .tasks {
   display: flex;
   flex-direction: column;
@@ -248,13 +253,30 @@ export default {
         animation: progress 16s ease-out infinite;
       }
     }
+    &__tooltiptext {
+      position: absolute;
+      bottom: 90%;
+      left: 50%;
+      z-index: 10;
+
+      display: none;
+      padding: 2px 5px;
+      text-align: center;
+      line-height: 130%;
+      color: $color-main;
+      font-size: 10px;
+      background: $gradient-w;
+      border-radius: 6px;
+      box-shadow: $shadow-small;
+      transform: translateX(-50%);
+    }
   }
   &__wrapper {
     background: #ffffff;
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    margin: 20px;
+    margin: 30px;
     &-table {
       height: inherit;
       overflow-x: auto;
@@ -262,7 +284,7 @@ export default {
     }
   }
   &-button {
-    margin-top: 10px;
+    margin: auto;
     padding: 0;
     display: flex;
     align-items: center;
@@ -281,9 +303,6 @@ export default {
   }
   .col-checkbox {
     width: 40px;
-  }
-  .col-id {
-    width: 70px;
   }
   .center {
     text-align: center;

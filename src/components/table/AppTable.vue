@@ -66,7 +66,7 @@ table {
       line-height: 17px;
       td {
         padding: 10px;
-        max-width: 150px;
+        max-width: 260px;
       }
       .green {
         color: $color-main;

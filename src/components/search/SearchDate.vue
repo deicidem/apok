@@ -361,6 +361,7 @@ label.active {
     top: 50%;
     right: 0;
     transform: translate(-50%, -50%);
+    display: flex;
     svg path {
       fill: $color-main;
     }

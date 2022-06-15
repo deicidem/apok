@@ -3,7 +3,8 @@ import * as userApi from "@/api/user";
 export default {
   namespaced: true,
   state: {
-    user: null
+    user: null,
+    files: null,
   },
   getters: {
     getUser(state) {
@@ -11,19 +12,26 @@ export default {
     },
     isAuth(state) {
       return state.user != null;
+    },
+    getFiles(state){
+      return state.files;
     }
   },
   mutations: {
     setUser(state, user) {
       state.user = user;
+    },
+    setFiles(state, files) {
+      state.files = files;
     }
   },
   actions: {
     setUser(store, user) {
+      console.log(user);
       store.commit('setUser', user)
     },
     async authorizeUser(store, user) {
-      await userApi.login({email: user.email,password: user.password});
+      await userApi.login({email: user.email,password: user.password, remember: user.remember});
       store.dispatch('auth');
     },
     async regUser(store, user) {
@@ -36,9 +44,12 @@ export default {
       });
       store.dispatch('auth');
     },
+    async setCookie() {
+      return await userApi.setCookie();
+    },
     async auth(store) {
       let {data} = await userApi.auth();
-      store.commit('setUser', data.user);
+      store.dispatch('setUser', data.user);
       return data;
     },
     async updateUser(store, data) {
@@ -51,7 +62,12 @@ export default {
     },
     async logout(store) {
       await userApi.logout();
-      store.commit('setUser', null);
+      store.dispatch('setUser', null);
+    },
+    async loadFiles(store) {
+      let {data} = await userApi.getFiles();
+      await userApi.deleteFiles([data.files[0].id])
+      store.commit('setFiles', data.files)
     },
     async verifyEmail(store, url) {
       let res = await userApi.verifyEmail(url);

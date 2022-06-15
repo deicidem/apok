@@ -12,10 +12,15 @@ Vue.use(VueCompositionAPI)
 
 
 Vue.config.productionTip = false;
-store.dispatch('plans/load').then(async () => {
+
+store.dispatch('users/setCookie').then(async () => {
+  return store.dispatch('plans/load');
+}).then(()=> {
   return store.dispatch('search/load');
 }).then(()=> {
   return store.dispatch('users/auth');
+}).then(()=> {
+  // return store.dispatch('users/loadFiles');
 }).then(() => {
 
   new Vue({

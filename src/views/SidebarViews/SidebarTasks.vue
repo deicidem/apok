@@ -58,15 +58,13 @@
               <td v-else>{{ item.status }}</td>
               <td>
                 <button class="tasks-table__button" v-if="item.result != null">
-                  Посмотреть результат
+                  Смотреть
                 </button>
               </td>
             </tr>
-            <tr>
+            <tr v-show="item.result.active" v-if="item.result != null">
               <td colspan="6" class="td_preview">
                 <app-preview
-                  v-show="item.result.active"
-                  v-if="item.result != null"
                   :views="item.result.views"
                   :files="item.result.files"
                   :taskIndex="i"
@@ -103,7 +101,7 @@ export default {
     return {
       headers: [
         {
-          title: "Номер",
+          title: "№",
           key: "id",
           active: false,
         },
@@ -247,7 +245,7 @@ export default {
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    margin: 20px;
+    margin: 30px;
     &-table {
       height: inherit;
       overflow-x: auto;
@@ -259,9 +257,6 @@ export default {
   }
   .col-checkbox {
     width: 40px;
-  }
-  .col-id {
-    width: 70px;
   }
   .center {
     text-align: center;

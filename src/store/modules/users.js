@@ -5,6 +5,8 @@ export default {
   state: {
     user: null,
     files: null,
+    currentSort: null,
+    currentSortDir: 'asc'
   },
   getters: {
     getUser(state) {
@@ -23,9 +25,30 @@ export default {
     },
     setFiles(state, files) {
       state.files = files;
+    },
+    sortFilesBy(state, key) {
+      if (state.currentSort == key) {
+        state.currentSortDir = state.currentSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.currentSort = key;
+        state.currentSortDir = 'asc';
+      }
+      
+      state.files.sort((a, b) => {
+        let modifier = 1;
+        if(state.currentSortDir === 'desc') modifier = -1;
+        if(a[state.currentSort]==null) return 1 * modifier;
+        if(b[state.currentSort]==null) return -1 * modifier;
+        if(a[state.currentSort] < b[state.currentSort]) return -1 * modifier;
+        if(a[state.currentSort] > b[state.currentSort]) return 1 * modifier;
+        return 0;
+      })
     }
   },
   actions: {
+    sortFilesBy(store, key) {
+      store.commit('sortFilesBy', key)
+    },
     setUser(store, user) {
       console.log(user);
       store.commit('setUser', user)
@@ -66,7 +89,6 @@ export default {
     },
     async loadFiles(store) {
       let {data} = await userApi.getFiles();
-      await userApi.deleteFiles([data.files[0].id])
       store.commit('setFiles', data.files)
     },
     async verifyEmail(store, url) {

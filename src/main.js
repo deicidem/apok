@@ -20,7 +20,7 @@ store.dispatch('users/setCookie').then(async () => {
 }).then(()=> {
   return store.dispatch('users/auth');
 }).then(()=> {
-  // return store.dispatch('users/loadFiles');
+  return store.dispatch('users/loadFiles');
 }).then(() => {
 
   new Vue({

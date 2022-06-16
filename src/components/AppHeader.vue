@@ -1,6 +1,6 @@
 <template>
   <header class="header" @click="closeUser">
-    <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
+    <h1 class="title">Комплексная тематическая обработка данных космической съемки</h1>
     <div class="header-items">
       <app-auth-popup v-show="showUser" class="auth-wrapper" ref="authPopup">
       </app-auth-popup>
@@ -8,7 +8,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/logo.svg" alt="Логотип" />
+              <img src="@/assets/img/катод.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">

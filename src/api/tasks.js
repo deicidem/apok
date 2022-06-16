@@ -52,7 +52,6 @@ export async function add({
   formData.append('links', JSON.stringify(links));
 
   let data = await server.post('tasks', formData);
-
   console.log(data);
   return data.tasks;
 }

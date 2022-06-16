@@ -9,21 +9,44 @@
               <th class="col-checkbox center">
                 <app-checkbox class="checkbox-big" @change="onCheck($event)" />
               </th>
-              <th>Имя файла</th>
-              <th>Тип файла</th>
-              <th>Дата добавления</th>
+              <th
+                v-for="(header, i) in headers"
+                :key="i"
+                @click="sortBy(header.key, i)"
+                class="tasks-header"
+              >
+                <template v-if="header.active">
+                  <span v-if="sortDir == 'asc'" class="tasks-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-asc.svg"
+                      alt="Сортировка"
+                    />
+                  </span>
+                  <span v-else class="tasks-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-desc.svg"
+                      alt="Сортировка"
+                    />
+                  </span>
+                </template>
+                {{ header.title }}
+              </th>
               <th></th>
             </tr>
           </thead>
 
           <tbody>
-            <tr>
+            <tr v-for="(item) in files" :key="item.id">
               <td class="col-checkbox center">
                 <app-checkbox :mini="true" @change="onCheck($event)" />
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.type }}</td>
+              <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
+              <td>{{ item.date.toLocaleDateString() }}</td>
             </tr>
           </tbody>
         </table>
@@ -51,13 +74,18 @@ export default {
     return {
       headers: [
         {
-          title: "Номер",
+          title: "№",
           key: "id",
           active: false,
         },
         {
-          title: "Задача",
-          key: "title",
+          title: "Имя",
+          key: "name",
+          active: false,
+        },
+        {
+          title: "Тип",
+          key: "type",
           active: false,
         },
         {
@@ -65,63 +93,24 @@ export default {
           key: "date",
           active: false,
         },
-        {
-          title: "Статус",
-          key: "status",
-          active: false,
-        },
-        {
-          title: "Результат",
-          key: "result",
-          active: false,
-        },
       ],
-      reportType: false,
-      pictureType: false,
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
     };
   },
   computed: {
     ...mapGetters(["scrollOps"]),
-    ...mapGetters("tasks", {
-      tasks: "getTasks",
+    ...mapGetters("users", {
+      files: "getFiles",
       sortDir: "getSortDir",
     }),
   },
   methods: {
-    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load"]),
+    ...mapActions("users", ["sortFilesBy", "loadFiles"]),
     onCheck(val) {
       console.log(val);
     },
   },
   async mounted() {
-    await this.load();
+    await this.loadFiles();
   },
 };
 </script>
@@ -184,7 +173,7 @@ export default {
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    margin: 20px;
+    margin: 30px;
     &-table {
       height: inherit;
       overflow-x: auto;
@@ -196,9 +185,6 @@ export default {
   }
   .col-checkbox {
     width: 40px;
-  }
-  .col-id {
-    width: 70px;
   }
   .center {
     text-align: center;

@@ -22,13 +22,13 @@
         </div>
         <div class="header-menu__buttons">
           <div class="header-menu__button-wrapper">
-            <button
-              @click="showUser = true"
-              ref="showUser"
-              class="button button-svg button-white header-menu__button"
-            >
-              <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
-            </button>
+            <router-link to="/login">
+              <button
+                class="button button-svg button-white header-menu__button"
+              >
+                <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
+              </button>
+            </router-link>
             <div class="tooltiptext-header">Авторизоваться</div>
           </div>
           <div class="header-menu__button-wrapper">
@@ -47,12 +47,8 @@
 </template>
 
 <script>
-import AppAuthPopup from "@/components/AppAuthPopup";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  components: {
-    AppAuthPopup,
-  },
   data() {
     return {
       showUser: false,
@@ -60,18 +56,6 @@ export default {
   },
   methods: {
     ...mapActions("users", ["logout"]),
-    closeUser($event) {
-      if (
-        this.$refs.showUser.isEqualNode($event.target) ||
-        this.$refs.showUser.contains($event.target) ||
-        this.$refs.authPopup.$el.contains($event.target)
-      ) {
-        return;
-      }
-      if (this.showUser) {
-        this.showUser = false;
-      }
-    },
   },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),

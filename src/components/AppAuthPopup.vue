@@ -1,8 +1,7 @@
 <template>
-  <div class="auth-popup" v-on-clickaway="away">
-    <div class="auth-popup__title">Авторизация</div>
-
-    <form @submit.prevent="submitForm()" method="POST">
+  <div class="form">
+    <div class="form-title">Авторизация</div>
+    <form class="form-wrapper" @submit.prevent="submitForm()" method="POST">
       <div class="input-wrapper">
         <input
           placeholder=" "
@@ -14,13 +13,12 @@
 
         <img
           svg-inline
-          class="input-img"
-          alt="Логин"
           :class="{
             invalidIcon: v$.login.$error,
             'input-img': !v$.login.$error,
           }"
           src="@/assets/img/login-icon.svg"
+          alt="Логин"
         />
         <div v-if="v$.login.$error" class="error-tooltip">
           <p>{{ v$.login.$errors[0].$message }}</p>
@@ -30,6 +28,7 @@
       <div class="input-wrapper">
         <input
           placeholder=" "
+          type="password"
           class="input input-withIcon"
           v-model.trim="password"
           :class="{ invalid: v$.password.$error }"
@@ -38,8 +37,6 @@
 
         <img
           svg-inline
-          alt="Пароль"
-          class="input-img"
           :class="{
             invalidIcon: v$.password.$error,
             'input-img': !v$.password.$error,
@@ -51,10 +48,20 @@
         </div>
       </div>
 
-      <button class="button button-g auth-button">Войти</button>
-
+      <div class="remember">
+        <app-checkbox
+          :model-value="remember"
+          @change="remember = $event"
+        ></app-checkbox>
+        <p class="remember-text">Запомнить меня</p>
+      </div>
+      <!-- <router-link to="/main"> -->
+      <button class="button button-g form-wrapper__item">Войти</button>
+      <!-- </router-link> -->
       <router-link to="/registration">
-        <button class="button button-white auth-button">Регистрация</button>
+        <button class="button button-white form-wrapper__item">
+          Регистрация
+        </button>
       </router-link>
     </form>
   </div>
@@ -62,17 +69,19 @@
 
 <script>
 import { mapActions } from "vuex";
-import { mixin as clickaway } from "vue-clickaway";
+
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
+import AppCheckbox from "../components/controls/AppCheckbox.vue";
 
 export default {
-  mixins: [clickaway],
+  components: { AppCheckbox },
   setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       login: "",
       password: "",
+      remember: false,
     };
   },
   validations() {
@@ -89,13 +98,14 @@ export default {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
-    away() {
-      this.$emit("close");
-    },
     submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.authorize({ email: this.login, password: this.password });
+        this.authorize({
+          email: this.login,
+          password: this.password,
+          remember: this.remember,
+        });
       } else {
         return;
       }
@@ -105,32 +115,56 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.auth {
-  &-popup {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 30px;
-    width: 400px;
+.remember {
+  display: flex;
+  margin: 0 auto;
+  width: 300px;
+  &-text {
+    margin-left: 10px;
+    color: $text-grey;
+    font-size: 14px;
+  }
+}
+.authorize {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
-    box-shadow: $shadow-small;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+
+  background: url("@/assets/img/authorize__background.png");
+  background-size: cover;
+  .button-router {
+    margin: 0 auto;
+  }
+  .form {
     background: $gradient-w;
-    &__title {
+    margin: 30px 0 0 0;
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: $shadow-big;
+    margin: 16% auto;
+    &-title {
       text-align: center;
       font-size: 20px;
-      margin-bottom: 20px;
       color: #000;
+      margin-bottom: 20px;
     }
-  }
-  &-input {
-    margin-top: 20px;
-  }
-  &-button {
-    margin: 10px auto;
-    height: 40px;
-    width: 300px;
-    font-size: 16px;
+    &-wrapper {
+      &__item {
+        width: 300px;
+        height: 40px;
+        margin: 10px auto;
+        font-size: 16px;
+      }
+    }
   }
 }
 .invalid {
@@ -146,9 +180,6 @@ export default {
       fill: $color-red;
     }
   }
-  &:focus-visible {
-    border: 1px solid $color-red;
-  }
 }
 .invalidIcon {
   position: absolute;
@@ -163,7 +194,7 @@ export default {
 .error {
   &-tooltip {
     position: absolute;
-    left: -240px;
+    right: -240px;
     top: 50%;
     transform: translate(0, -50%);
     transition: all 2s ease-out;
@@ -175,24 +206,14 @@ export default {
     width: 240px;
     background: linear-gradient(
       to right,
-      rgb(235, 96, 96, 0.8),
-      rgb(141, 70, 70, 0.8)
+      rgb(235, 96, 96, 0.6),
+      rgb(141, 70, 70, 0.6)
     );
     color: #fff;
     font-size: 14px;
     border-radius: 10px;
     p {
       margin-left: 8px;
-    }
-  }
-}
-@media screen and (max-width: 1440px) {
-  .auth {
-    &-wrapper {
-      position: absolute;
-
-      top: 140px;
-      right: 40px;
     }
   }
 }

@@ -1,120 +1,21 @@
 <template>
   <section class="authorize">
-    <div class="container">
-      <div class="back">
-        <div class="back-arrow">
-          <img svg-inline src="@/assets/img/arrow-w.svg" alt="Назад" />
-        </div>
-        <p class="back-subtitle">Назад</p>
-      </div>
-
-      <div class="form">
-        <div class="form-title">Авторизация</div>
-
-        <form class="form-wrapper" @submit.prevent="submitForm()" method="POST">
-          <div class="input-wrapper">
-            <input
-              placeholder=" "
-              class="input input-withIcon"
-              v-model.trim="login"
-              :class="{ invalid: v$.login.$error }"
-            />
-            <label class="input-label">Логин</label>
-
-            <img
-              svg-inline
-              :class="{
-                invalidIcon: v$.login.$error,
-                'input-img': !v$.login.$error,
-              }"
-              src="@/assets/img/login-icon.svg"
-              alt="Логин"
-            />
-            <div v-if="v$.login.$error" class="error-tooltip">
-              <p>{{ v$.login.$errors[0].$message }}</p>
-            </div>
-          </div>
-
-          <div class="input-wrapper">
-            <input
-              placeholder=" "
-              type="password"
-              class="input input-withIcon"
-              v-model.trim="password"
-              :class="{ invalid: v$.password.$error }"
-            />
-            <label class="input-label">Пароль</label>
-
-            <img
-              svg-inline
-              :class="{
-                invalidIcon: v$.password.$error,
-                'input-img': !v$.password.$error,
-              }"
-              src="@/assets/img/lock-icon.svg"
-            />
-            <div v-if="v$.password.$error" class="error-tooltip">
-              <p>{{ v$.password.$errors[0].$message }}</p>
-            </div>
-          </div>
-
-          <div class="remember">
-            <app-checkbox :model-value="remember" @change="remember = $event"></app-checkbox>
-            <p class="remember-text">Запомнить меня</p>
-          </div>
-          <!-- <router-link to="/main"> -->
-          <button class="button button-g form-wrapper__item">Войти</button>
-          <!-- </router-link> -->
-          <router-link to="/registration">
-            <button class="button button-white form-wrapper__item">
-              Регистрация
-            </button>
-          </router-link>
-        </form>
-      </div>
-    </div>
+    <app-auth-popup></app-auth-popup>
   </section>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 
-import useVuelidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
-import AppCheckbox from "../components/controls/AppCheckbox.vue";
+import AppAuthPopup from "../components/AppAuthPopup.vue";
 
 export default {
-  components: { AppCheckbox },
-  setup: () => ({ v$: useVuelidate() }),
-  data() {
-    return {
-      login: "",
-      password: "",
-      remember: false
-    };
-  },
-  validations() {
-    return {
-      login: {
-        required: helpers.withMessage("Введите значение", required),
-      },
-      password: {
-        required: helpers.withMessage("Введите значение", required),
-      },
-    };
-  },
+  components: { AppAuthPopup },
+
   methods: {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
-    submitForm() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        this.authorize({ email: this.login, password: this.password, remember: this.remember});
-      } else {
-        return;
-      }
-    },
   },
 };
 </script>
@@ -237,5 +138,4 @@ export default {
     }
   }
 }
-
 </style>

@@ -1,9 +1,7 @@
 <template>
-  <header class="header" @click="closeUser">
+  <header class="header">
     <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
     <div class="header-items">
-      <app-auth-popup v-show="showUser" class="auth-wrapper" ref="authPopup">
-      </app-auth-popup>
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -49,11 +47,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      showUser: false,
-    };
-  },
   methods: {
     ...mapActions("users", ["logout"]),
   },

@@ -1,6 +1,16 @@
 <template>
   <div class="search">
-    <h2 class="sidebar-title">Поиск снимков</h2>
+    <div class="sidebar-title">
+      Поиск снимков
+      <router-link to="/main/results">
+        <div class="search-result">
+          <p class="search-back__subtitle">Результат</p>
+          <div class="search-back__arrow">
+            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
+          </div>
+        </div>
+      </router-link>
+    </div>
     <vuescroll :ops="scrollOps">
       <div class="search-wrapper">
         <div class="search-content">
@@ -11,7 +21,9 @@
         </div>
         <div class="search-buttons">
           <button class="button button-r">Очистить</button>
-          <button class="button button-g" @click="search">Запросить данные</button>
+          <button class="button button-g" @click="search">
+            Запросить данные
+          </button>
         </div>
       </div>
     </vuescroll>
@@ -19,7 +31,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex"
+import { mapGetters, mapActions } from "vuex";
 
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
@@ -39,7 +51,7 @@ export default {
     SearchZone,
   },
   methods: {
-    ...mapActions('search', ['search'])
+    ...mapActions("search", ["search"]),
   },
   computed: {
     ...mapGetters(["scrollOps"]),
@@ -83,6 +95,29 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-result {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  &-back {
+    &__subtitle {
+      font-size: 12px;
+      margin: 0;
+    }
+    &__arrow {
+      transform: rotate(180deg);
+      margin: 0;
+      margin-left: 8px;
+      line-height: 1;
+      svg path {
+        fill: #fff;
+      }
+    }
+  }
   &-title {
     font-size: 20px;
     color: #000;

@@ -253,6 +253,7 @@ export default {
     transform: translateX(0);
   }
   &-title {
+    position: relative;
     margin: 0;
     padding: 5px;
 

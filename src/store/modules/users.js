@@ -17,6 +17,9 @@ export default {
     },
     getFiles(state){
       return state.files;
+    },
+    getSortDir(state) {
+      return state.currentSortDir;
     }
   },
   mutations: {
@@ -25,6 +28,9 @@ export default {
     },
     setFiles(state, files) {
       state.files = files;
+    },
+    selectFile(state, data) {
+      state.files[data.index].selected = data.value;
     },
     sortFilesBy(state, key) {
       if (state.currentSort == key) {
@@ -52,6 +58,9 @@ export default {
     setUser(store, user) {
       console.log(user);
       store.commit('setUser', user)
+    },
+    selectFile(store, data) {
+      store.commit('selectFile', data);
     },
     async authorizeUser(store, user) {
       await userApi.login({email: user.email,password: user.password, remember: user.remember});
@@ -89,11 +98,21 @@ export default {
     },
     async loadFiles(store) {
       let {data} = await userApi.getFiles();
+      data.files.forEach(el => {
+        el.selected = false;
+      })
       store.commit('setFiles', data.files)
     },
     async verifyEmail(store, url) {
       let res = await userApi.verifyEmail(url);
       console.log(res);
-    }
+    },
+    async deleteFiles({commit, getters}) {
+      let ids = getters.getFiles.map(el => {
+        if (el.selected) return el.id;
+      });
+      let res = await userApi.deleteFiles(ids);
+      console.log(res, commit);
+    },
   }
 }

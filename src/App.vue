@@ -134,6 +134,9 @@ svg:focus {
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 2px 10px rgba(#000, 0.3);
+      & + .tooltiptext {
+        display: block;
+      }
     }
     &:active {
       transition: all 0.1s ease-out;
@@ -294,8 +297,12 @@ svg:focus {
   display: none;
   padding: 2px 5px;
 
+  text-align: center;
+  word-break: normal;
+
   color: $color-main;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1.3;
   background: $gradient-w;
   border-radius: 6px;
   box-shadow: $shadow-small;

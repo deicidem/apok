@@ -29,7 +29,7 @@
             >
               <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
             </button>
-            <div class="tooltiptext-header">Авторизоваться</div>
+            <div class="tooltiptext">Авторизоваться</div>
           </div>
           <div class="header-menu__button-wrapper">
             <button
@@ -38,7 +38,7 @@
             >
               <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
             </button>
-            <div class="tooltiptext-header">Выйти</div>
+            <div class="tooltiptext">Выйти</div>
           </div>
         </div>
       </div>
@@ -106,22 +106,6 @@ export default {
 .search-box {
   display: none;
 }
-.tooltiptext-header {
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-
-  display: none;
-  padding: 2px 5px;
-
-  color: $color-main;
-  font-size: 12px;
-  background: $gradient-w;
-  border-radius: 6px;
-  box-shadow: $shadow-small;
-}
 .header {
   z-index: 10;
   position: relative;
@@ -175,9 +159,6 @@ export default {
       &-wrapper {
         position: relative;
         margin-right: 20px;
-        &:hover .tooltiptext-header {
-          display: block;
-        }
       }
       svg path {
         fill: $color-main;

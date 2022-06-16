@@ -7,7 +7,7 @@
           <thead>
             <tr>
               <th class="col-checkbox center">
-                <app-checkbox class="checkbox-big" @change="onCheck($event)" />
+                <app-checkbox class="checkbox-big" :modelValue="allSelected" @change="selectAll($event)" />
               </th>
               <th
                 v-for="(header, i) in headers"
@@ -39,7 +39,7 @@
           <tbody v-for="(item, i) in tasks" :key="item.id">
             <tr @click="showResult(i, item)">
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" @change="onCheck($event)" />
+                <app-checkbox :mini="true" :model-value="item.selected" @change="selectTask({index: i, value: $event})" />
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -56,7 +56,10 @@
                 </div>
               </td>
               <td v-else>{{ item.status }}</td>
-              <td :class="{ 'td-results': item.result != null }">
+              <td  >
+                <div :class="{ 'td-results': item.result != null }">
+                  
+                
                 <button
                   v-if="item.result != null"
                   class="button button-svg tasks-button"
@@ -67,11 +70,12 @@
                     alt="Изображение"
                   />
                 </button>
-                <div class="tasks-table__tooltiptext">Посмотреть результат</div>
+                <div class="tooltiptext">Посмотреть результат</div>
+                </div>
               </td>
             </tr>
-            <tr v-show="item.result.active" v-if="item.result != null">
-              <td colspan="6" class="td_preview">
+            <tr class="tr_preview" v-show="item.result.active" v-if="item.result != null">
+              <td colspan="6" >
                 <app-preview
                   :views="item.result.views"
                   :files="item.result.files"
@@ -81,7 +85,12 @@
             </tr>
           </tbody>
         </app-table>
+         <div class="tasks-buttons">
+          <button class="button button-r" @click="deleteTasks">Удалить выбранное</button>
+          <button class="button button-g">Добавить в избранное</button>
+        </div>
       </div>
+      
       <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
     </vuescroll>
   </div>
@@ -136,33 +145,6 @@ export default {
       ],
       reportType: false,
       pictureType: false,
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
     };
   },
   computed: {
@@ -171,11 +153,23 @@ export default {
       tasks: "getTasks",
       sortDir: "getSortDir",
     }),
+    allSelected() {
+      let res = true
+      for (let i = 0; i < this.tasks.length; i++) {
+        if (!this.tasks[i].selected) {
+          res = false;
+          break;
+        }
+      }
+      return res;
+    }
   },
   methods: {
-    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load"]),
-    onCheck(val) {
-      console.log(val);
+    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load", "selectTask", "deleteTasks"]),
+    selectAll(val) {
+      for (let i = 0; i < this.tasks.length; i++) {
+        this.selectTask({index: i, value: val})        
+      }
     },
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
@@ -198,14 +192,26 @@ export default {
 <style lang="scss" scoped>
 .td-results {
   position: relative;
-  &:hover .tasks-table__tooltiptext {
-    display: block;
-  }
 }
 .tasks {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    .button {
+      width: auto;
+      margin-right: 30px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .tr_preview {
+    border: none;
+  }
   &-header {
     position: relative;
   }
@@ -253,29 +259,8 @@ export default {
         animation: progress 16s ease-out infinite;
       }
     }
-    &__tooltiptext {
-      position: absolute;
-      bottom: 90%;
-      left: 50%;
-      z-index: 10;
-
-      display: none;
-      padding: 2px 5px;
-      text-align: center;
-      line-height: 130%;
-      color: $color-main;
-      font-size: 10px;
-      background: $gradient-w;
-      border-radius: 6px;
-      box-shadow: $shadow-small;
-      transform: translateX(-50%);
-    }
   }
   &__wrapper {
-    background: #ffffff;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    overflow: hidden;
     margin: 30px;
     &-table {
       height: inherit;

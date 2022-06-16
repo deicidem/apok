@@ -108,9 +108,10 @@ export default {
 }
 .tooltiptext-header {
   position: absolute;
-  bottom: 100%;
-  right: 60%;
-  transform: translate(50%, -50%);
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 
   display: none;
   padding: 2px 5px;
@@ -169,11 +170,11 @@ export default {
       align-items: center;
     }
     &__button {
-      margin-right: 20px;
       width: 40px;
       height: 40px;
       &-wrapper {
         position: relative;
+        margin-right: 20px;
         &:hover .tooltiptext-header {
           display: block;
         }

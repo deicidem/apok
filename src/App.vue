@@ -288,7 +288,8 @@ svg:focus {
 .tooltiptext {
   position: absolute;
   bottom: 120%;
-  right: calc(0px - 10px);
+  left: 50%;
+  z-index: 10;
 
   display: none;
   padding: 2px 5px;
@@ -298,6 +299,7 @@ svg:focus {
   background: $gradient-w;
   border-radius: 6px;
   box-shadow: $shadow-small;
+  transform: translateX(-50%);
 }
 /*_____________________vueScroll______________*/
 .__vuescroll {

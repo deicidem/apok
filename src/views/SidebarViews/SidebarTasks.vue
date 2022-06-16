@@ -1,5 +1,5 @@
 <template>
-  <div class="tasks" >
+  <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
     <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
@@ -56,10 +56,18 @@
                 </div>
               </td>
               <td v-else>{{ item.status }}</td>
-              <td>
-                <button class="tasks-table__button" v-if="item.result != null">
-                  Смотреть
+              <td :class="{ 'td-results': item.result != null }">
+                <button
+                  v-if="item.result != null"
+                  class="button button-svg tasks-button"
+                >
+                  <img
+                    svg-inline
+                    src="@/assets/img/results-info.svg"
+                    alt="Изображение"
+                  />
                 </button>
+                <div class="tasks-table__tooltiptext">Посмотреть результат</div>
               </td>
             </tr>
             <tr v-show="item.result.active" v-if="item.result != null">
@@ -182,12 +190,18 @@ export default {
     },
   },
   async mounted() {
-    await this.load()
-  }
+    await this.load();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.td-results {
+  position: relative;
+  &:hover .tasks-table__tooltiptext {
+    display: block;
+  }
+}
 .tasks {
   display: flex;
   flex-direction: column;
@@ -200,7 +214,7 @@ export default {
     left: 0;
     top: 60%;
     transform: translate(-50%, -50%);
-    svg path{
+    svg path {
       fill: $color-main;
     }
   }
@@ -239,6 +253,23 @@ export default {
         animation: progress 16s ease-out infinite;
       }
     }
+    &__tooltiptext {
+      position: absolute;
+      bottom: 90%;
+      left: 50%;
+      z-index: 10;
+
+      display: none;
+      padding: 2px 5px;
+      text-align: center;
+      line-height: 130%;
+      color: $color-main;
+      font-size: 10px;
+      background: $gradient-w;
+      border-radius: 6px;
+      box-shadow: $shadow-small;
+      transform: translateX(-50%);
+    }
   }
   &__wrapper {
     background: #ffffff;
@@ -250,6 +281,21 @@ export default {
       height: inherit;
       overflow-x: auto;
       margin-top: 0px;
+    }
+  }
+  &-button {
+    margin: auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: $gradient-w;
+    &.active {
+      background: $color-main;
+      svg path {
+        fill: #fff;
+      }
     }
   }
   .green {

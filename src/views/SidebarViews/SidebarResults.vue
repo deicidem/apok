@@ -31,7 +31,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Идентификатор</td>
+                  <td class="dzz-name">Идентификатор</td>
                   <td>{{ cardData.name }}</td>
                 </tr>
                 <tr>
@@ -140,7 +140,7 @@
                       alt="Вектор"
                     />
                   </button>
-                  <div class="tooltiptext noWordbreak">Вектор</div>
+                  <div class="tooltiptext">Вектор</div>
                 </div>
                 <div class="results-table__button">
                   <button
@@ -161,12 +161,12 @@
                       alt="Изображение"
                     />
                   </button>
-                  <div class="tooltiptext noWordbreak">Изображение</div>
+                  <div class="tooltiptext">Изображение</div>
                 </div>
               </td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.round }}</td>
-              <td>{{ item.route }}</td>
+              <td class="dzz-name">{{ item.name }}</td>
+              <!-- <td>{{ item.round }}</td>
+              <td>{{ item.route }}</td> -->
               <td>Аппарат</td>
               <td>{{ item.date }}</td>
               <td>{{ item.cloudiness }}</td>
@@ -183,7 +183,7 @@
                       alt="Информация по объекту"
                     />
                   </button>
-                  <div class="tooltiptext noWordbreak">Подробнее</div>
+                  <div class="tooltiptext">Подробнее</div>
                 </div>
               </td>
             </tr>
@@ -212,16 +212,16 @@ export default {
           key: "name",
           active: false,
         },
-        {
-          title: "Виток",
-          key: "round",
-          active: false,
-        },
-        {
-          title: "Маршрут",
-          key: "route",
-          active: false,
-        },
+        // {
+        //   title: "Виток",
+        //   key: "round",
+        //   active: false,
+        // },
+        // {
+        //   title: "Маршрут",
+        //   key: "route",
+        //   active: false,
+        // },
         {
           title: "Аппарат",
           key: "name",
@@ -371,6 +371,25 @@ export default {
 </script>
 
 <style lang="scss">
+.back {
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &-arrow {
+    svg path {
+      fill: $color-main;
+    }
+  }
+  &-subtitle {
+    margin: 0 0 0 10px;
+    color: $color-main;
+  }
+}
+.dzz-name {
+  word-break: break-all;
+}
+
 .card {
   z-index: 11;
   position: absolute;
@@ -430,7 +449,6 @@ export default {
       font-size: 12px;
     }
     td {
-      word-break: break-all;
       padding: 10px 10px 10px 0;
       font-size: 12px;
     }
@@ -447,9 +465,6 @@ export default {
     margin-top: 15px;
     min-width: 230px;
   }
-}
-.noWordbreak {
-  word-break: normal;
 }
 .results {
   &-back {
@@ -475,18 +490,12 @@ export default {
     padding: 10px 30px;
   }
   &-circle {
-    margin-right: 10px;
+    margin-right: 15px;
     width: 22px;
     height: 22px;
     border-radius: 50%;
     background: #fff;
     box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
-  }
-  &-wrapper {
-    background: #ffffff;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    overflow: hidden;
   }
   &-table {
     &__header {
@@ -540,25 +549,18 @@ export default {
     tbody {
       background: none;
     }
-    td,
-    th {
-      word-break: break-all;
-    }
 
-    * {
-      font-size: 10px !important;
-    }
     &__buttons {
-      padding: 10px !important;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     &__button {
       position: relative;
-      margin-right: 10px;
-      &:hover .tooltiptext {
-        display: block;
+      margin-right: 15px;
+      &:last-child {
+        margin-right: 0;
       }
     }
   }

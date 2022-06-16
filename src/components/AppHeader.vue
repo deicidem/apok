@@ -1,12 +1,13 @@
 <template>
-  <header class="header">
-    <h1 class="title">Автоматизация процессов оценки качества данных ДЗЗ</h1>
+  <header class="header" @click="closeUser">
+    <h1 class="title">Комплексная тематическая обработка данных космической съемки</h1>
+
     <div class="header-items">
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/logo.svg" alt="Логотип" />
+              <img src="@/assets/img/катод.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">
@@ -20,6 +21,7 @@
         </div>
         <div class="header-menu__buttons">
           <div class="header-menu__button-wrapper">
+
             <router-link to="/login">
               <button
                 class="button button-svg button-white header-menu__button"
@@ -28,6 +30,7 @@
               </button>
             </router-link>
             <div class="tooltiptext-header">Авторизоваться</div>
+
           </div>
           <div class="header-menu__button-wrapper">
             <button
@@ -36,7 +39,7 @@
             >
               <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
             </button>
-            <div class="tooltiptext-header">Выйти</div>
+            <div class="tooltiptext">Выйти</div>
           </div>
         </div>
       </div>
@@ -82,22 +85,6 @@ export default {
 }
 .search-box {
   display: none;
-}
-.tooltiptext-header {
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-
-  display: none;
-  padding: 2px 5px;
-
-  color: $color-main;
-  font-size: 12px;
-  background: $gradient-w;
-  border-radius: 6px;
-  box-shadow: $shadow-small;
 }
 .header {
   z-index: 10;
@@ -152,9 +139,6 @@ export default {
       &-wrapper {
         position: relative;
         margin-right: 20px;
-        &:hover .tooltiptext-header {
-          display: block;
-        }
       }
       svg path {
         fill: $color-main;

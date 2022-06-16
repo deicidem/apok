@@ -52,7 +52,11 @@ export async function verifyEmail(url) {
 }
 
 export async function getFiles() {
-  return await server.get('user/files')
+  let data = await server.get('user/files');
+  data.data.files.forEach(el => {
+    el.date = new Date(el.date);
+  })
+  return data;
 }
 
 export async function deleteFiles(filesIds) {
@@ -61,4 +65,5 @@ export async function deleteFiles(filesIds) {
     params[`filesIds[${i}]`] = filesIds[i];    
   }
   return await server.delete('user/files', {params})
+  
 }

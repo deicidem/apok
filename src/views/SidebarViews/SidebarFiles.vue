@@ -1,32 +1,59 @@
 <template>
-  <div class="tasks">
+  <div class="files">
     <h2 class="sidebar-title">Мои файлы</h2>
     <vuescroll :ops="scrollOps">
-      <div class="tasks__wrapper">
-        <table>
+      <div class="files__wrapper">
+        <app-table>
           <thead>
             <tr>
               <th class="col-checkbox center">
-                <app-checkbox class="checkbox-big" @change="onCheck($event)" />
+                <app-checkbox :model-value="allSelected" class="checkbox-big" @change="selectAll" />
               </th>
-              <th>Имя файла</th>
-              <th>Тип файла</th>
-              <th>Дата добавления</th>
+              <th
+                v-for="(header, i) in headers"
+                :key="i"
+                @click="sortBy(header.key, i)"
+                class="files-header"
+              >
+                <template v-if="header.active">
+                  <span v-if="sortDir == 'asc'" class="files-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-asc.svg"
+                      alt="Сортировка"
+                    />
+                  </span>
+                  <span v-else class="files-sort">
+                    <img
+                      svg-inline
+                      src="@/assets/img/sort-desc.svg"
+                      alt="Сортировка"
+                    />
+                  </span>
+                </template>
+                {{ header.title }}
+              </th>
               <th></th>
             </tr>
           </thead>
 
           <tbody>
-            <tr>
+            <tr v-for="(item, i) in files" :key="item.id">
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" @change="onCheck($event)" />
+                <app-checkbox :mini="true" :model-value="item.selected" @change="selectFile({index: i, value: $event})" />
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.type }}</td>
+              <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
+              <td>{{ item.date.toLocaleDateString() }}</td>
             </tr>
           </tbody>
-        </table>
+        </app-table>
+        <div class="files-buttons">
+          <button class="button button-r" @click="deleteFiles">Удалить выбранное</button>
+          <button class="button button-g">Добавить в избранное</button>
+        </div>
       </div>
       <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
     </vuescroll>
@@ -37,6 +64,7 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
+import AppTable from "@/components/table/AppTable";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
@@ -44,6 +72,7 @@ export default {
   name: "SidebarTasks",
   components: {
     AppCheckbox,
+    AppTable,
     vuescroll,
     // VsPagination,
   },
@@ -51,13 +80,18 @@ export default {
     return {
       headers: [
         {
-          title: "Номер",
+          title: "№",
           key: "id",
           active: false,
         },
         {
-          title: "Задача",
-          key: "title",
+          title: "Имя",
+          key: "name",
+          active: false,
+        },
+        {
+          title: "Тип",
+          key: "type",
           active: false,
         },
         {
@@ -65,72 +99,69 @@ export default {
           key: "date",
           active: false,
         },
-        {
-          title: "Статус",
-          key: "status",
-          active: false,
-        },
-        {
-          title: "Результат",
-          key: "result",
-          active: false,
-        },
       ],
-      reportType: false,
-      pictureType: false,
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
     };
   },
   computed: {
     ...mapGetters(["scrollOps"]),
-    ...mapGetters("tasks", {
-      tasks: "getTasks",
+    ...mapGetters("users", {
+      files: "getFiles",
       sortDir: "getSortDir",
     }),
+    allSelected() {
+      let res = true
+      for (let i = 0; i < this.files.length; i++) {
+        if (!this.files[i].selected) {
+          res = false;
+          break;
+        }
+      }
+      return res;
+    }
   },
   methods: {
-    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load"]),
+    ...mapActions("users", ["sortFilesBy", "loadFiles", "deleteFiles", "selectFile"]),
+    selectAll(val) {
+      for (let i = 0; i < this.files.length; i++) {
+        this.selectFile({index: i, value: val})        
+      }
+    },
+    sortBy(key, ind) {
+      this.headers.forEach((el, i) => {
+        el.active = i == ind;
+      });
+      this.sortFilesBy(key);
+    },
     onCheck(val) {
       console.log(val);
     },
   },
   async mounted() {
-    await this.load();
+    await this.loadFiles();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.tasks {
+.td-results {
+  position: relative;
+}
+.files {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  &-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    .button {
+      width: auto;
+      margin-right: 30px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
   &-header {
     position: relative;
   }
@@ -180,15 +211,26 @@ export default {
     }
   }
   &__wrapper {
-    background: #ffffff;
-    box-shadow: $shadow-big;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 20px;
+    margin: 30px;
     &-table {
       height: inherit;
       overflow-x: auto;
       margin-top: 0px;
+    }
+  }
+  &-button {
+    margin: auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: $gradient-w;
+    &.active {
+      background: $color-main;
+      svg path {
+        fill: #fff;
+      }
     }
   }
   .green {
@@ -196,9 +238,6 @@ export default {
   }
   .col-checkbox {
     width: 40px;
-  }
-  .col-id {
-    width: 70px;
   }
   .center {
     text-align: center;
@@ -236,45 +275,34 @@ export default {
     }
   }
 }
-table {
-  width: 100%;
-  table-layout: auto;
-  border-collapse: collapse;
 
-  thead {
-    background: $gradient-w;
-    box-shadow: $shadow-small;
-    tr {
-      th {
-        text-align: left;
-        border: none;
-        font-size: 12px;
-        color: $color-main;
-        padding: 8px;
-        box-sizing: border-box;
-      }
-    }
+@keyframes progress {
+  0% {
+    background-position: 400%;
   }
-  tbody {
-    text-align: left;
-    font-size: 12px;
-    color: #384342;
-    vertical-align: top;
-    line-height: 150%;
-    border-bottom: 1px solid rgba(71, 109, 112, 0.3);
-    &:last-child {
-      border-bottom: none;
-    }
-    tr {
-      line-height: 17px;
-      td {
-        padding: 10px;
-        max-width: 150px;
-      }
-    }
+  100% {
+    background-position: -400%;
   }
 }
 
 @media screen and (max-width: 1440px) {
+  .files {
+    &__wrapper {
+      margin: 20px;
+    }
+    th,
+    td {
+      padding: 6px 10px;
+      line-height: 130%;
+
+      font-weight: 400;
+    }
+    .col-checkbox {
+      width: 24px;
+    }
+    .col-id {
+      width: 40px;
+    }
+  }
 }
 </style>

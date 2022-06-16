@@ -1,17 +1,17 @@
 <template>
   <div class="results">
-    <h2 class="sidebar-title">
+    <div class="sidebar-title">
       Результаты поиска: {{ results.length }} найдено
-    </h2>
-    <div class="results-content">
       <router-link to="/main/search">
-        <div class="back">
-          <div class="back-arrow">
+        <div class="results-back">
+          <div class="results-back__arrow">
             <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
-          <div class="back-subtitle">Назад</div>
+          <div class="results-back__subtitle">Назад</div>
         </div>
       </router-link>
+    </div>
+    <div class="results-content">
       <portal to="popup-card">
         <div class="card" v-if="card.ind != null" v-show="card.active">
           <div class="card-close" @click="onCardClose()">
@@ -389,6 +389,7 @@ export default {
 .dzz-name {
   word-break: break-all;
 }
+
 .card {
   z-index: 11;
   position: absolute;
@@ -466,6 +467,25 @@ export default {
   }
 }
 .results {
+  &-back {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &__arrow {
+      line-height: 1;
+      svg path {
+        fill: #FFF;
+      }
+    }
+    &__subtitle {
+      margin-left: 10px;
+      color: #FFF;
+      font-size: 12px;
+    }
+  }
   &-content {
     padding: 10px 30px;
   }

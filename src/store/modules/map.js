@@ -93,46 +93,46 @@ export default {
     },
   },
   mutations: {
-    setActivePolygon(state, polygon) {
+    setActivePolygon(state, {polygon}) {
       state.activePolygon = polygon;
     },
-    addСoordinate(state, coord) {
-      state.areaPolygon.geometry.push(coord);
+    addСoordinate(state, {coordinate}) {
+      state.areaPolygon.geometry.push(coordinate);
     },
-    deleteCoordinate(state, i) {
-      state.areaPolygon.geometry.splice(i, 1);
+    deleteCoordinate(state, {index}) {
+      state.areaPolygon.geometry.splice(index, 1);
     },
-    changeCoordinate(state, data) {
+    changeCoordinate(state, {id, latlng}) {
       let polygon = [...state.areaPolygon.geometry];
-      polygon[data.id] = data.latlng;
+      polygon[id] = latlng;
       state.areaPolygon.geometry = [...polygon];
     },
-    setAreaPolygonDrawable(state, val) {
-      state.areaPolygon.drawable = val;
+    setAreaPolygonDrawable(state, {value}) {
+      state.areaPolygon.drawable = value;
     },
-    setAreaPolygonActive(state, val) {
-      state.areaPolygon.active = val;
+    setAreaPolygonActive(state, {value}) {
+      state.areaPolygon.active = value;
     },
-    setCirclePolygonActive(state, val) {
-      state.circlePolygon.active = val;
+    setCirclePolygonActive(state, {value}) {
+      state.circlePolygon.active = value;
     },
-    setFilePolygonActive(state, val) {
-      state.filePolygon.active = val;
+    setFilePolygonActive(state, {value}) {
+      state.filePolygon.active = value;
     },
     clearCoordinates(state) {
       state.areaPolygon.geometry = [];
     },
-    setZoom(state, value) {
+    setZoom(state, {value}) {
       state.zoom = value;
     },
-    setCenter(state, value) {
-      state.center = value;
+    setCenter(state, {coordinate}) {
+      state.center = coordinate;
     },
     setCirclePolygon(state, data) {
       state.circlePolygon.geometry = data
     },
-    setFilePolygon(state, data) {
-      state.filePolygon.geometry = data
+    setFilePolygon(state, file) {
+      state.filePolygon.geometry = file
     },
     addGeoJsonPolygon(state, polygon) {
       if (polygon.json == null) {
@@ -156,21 +156,21 @@ export default {
       
       state.viewImages.push(image);
     },
-    removeGeoJsonPolygon(state, id) {
+    removeGeoJsonPolygon(state, {id}) {
       state.geoJsonPolygons.forEach((el, i) => {
         if (el.id === id) {
           state.geoJsonPolygons.splice(i, 1);
         }
       })
     },
-    removeImage(state, id) {
+    removeImage(state, {id}) {
       state.images.forEach((el, i) => {
         if (el.id === id) {
           state.images.splice(i, 1);
         }
       })
     },
-    removeViewImage(state, id) {
+    removeViewImage(state, {id}) {
       state.viewImages.forEach((el, i) => {
         if (el.id === id) {
           state.viewImages.splice(i, 1);
@@ -186,114 +186,117 @@ export default {
     clearGeoJsons(state) {
       state.geoJsonPolygons = [];
     },
-    setScreenPolygon(state, polygon) {
+    setScreenPolygon(state, {polygon}) {
       state.screenPolygon.geometry = polygon;
     },
-    setBounds(state, bounds) {
+    setBounds(state, {bounds}) {
       state.bounds = bounds;
     },
-    setNeedUpdateBounds(state, needUpdateBounds) {
-      state.needUpdateBounds = needUpdateBounds;
+    setNeedUpdateBounds(state, {value}) {
+      state.needUpdateBounds = value;
     }
   },
   actions: {
-    addCoordinate(store, i) {
-      store.commit('addСoordinate', i)
+    addCoordinate({commit}, payload) {
+      commit('addСoordinate', payload)
     },
-    changeCoordinate(store, data) {
-      store.commit('changeCoordinate', {...data})
+    changeCoordinate({commit}, payload) {
+      commit('changeCoordinate', payload)
     },
-    deleteCoordinate(store, i) {
-      store.commit('deleteCoordinate', i);
+    deleteCoordinate({commit}, payload) {
+      commit('deleteCoordinate', payload);
     },
-    setAreaPolygonDrawable(store, val) {
-      store.commit('setAreaPolygonDrawable', val);
+    setAreaPolygonDrawable({commit}, payload) {
+      commit('setAreaPolygonDrawable', payload);
     },
-    setAreaPolygonActive(store) {
-      store.commit('setAreaPolygonActive',   true);
-      store.commit('setCirclePolygonActive', false);
-      store.commit('setFilePolygonActive',   false);
+    setAreaPolygonActive({commit}) {
+      commit('setAreaPolygonActive',   {value: true});
+      commit('setCirclePolygonActive', {value: false});
+      commit('setFilePolygonActive',   {value: false});
     },
-    setCirclePolygonActive(store) {
-      store.commit('setAreaPolygonActive',   false);
-      store.commit('setCirclePolygonActive', true);
-      store.commit('setFilePolygonActive',   false);
+    setCirclePolygonActive({commit}) {
+      commit('setAreaPolygonActive',   {value: false});
+      commit('setCirclePolygonActive', {value: true});
+      commit('setFilePolygonActive',   {value: false});
     },
-    setFilePolygonActive(store) {
-      store.commit('setAreaPolygonActive',   false);
-      store.commit('setCirclePolygonActive', false);
-      store.commit('setFilePolygonActive',   true);
+    setFilePolygonActive({commit}) {
+      commit('setAreaPolygonActive',   {value: false});
+      commit('setCirclePolygonActive', {value: false});
+      commit('setFilePolygonActive',   {value: true});
     },
-    clearCoordinates(store) {
-      store.commit('clearCoordinates');
+    clearCoordinates({commit}) {
+      commit('clearCoordinates');
     },
-    clearImages(store) {
-      store.commit('clearImages');
+    clearImages({commit}) {
+      commit('clearImages');
     },
-    clearGeoJsons(store) {
-      store.commit('clearGeoJsons');
+    clearGeoJsons({commit}) {
+      commit('clearGeoJsons');
     },
-    setZoom(store, value) {
-      store.commit('setZoom', value);
+    setZoom({commit}, payload) {
+      commit('setZoom', payload);
     },
-    setCenter(store, value) {
-      store.commit('setCenter', value);
+    setCenter({commit}, payload) {
+      commit('setCenter', payload);
     },
-    setCirclePolygon(store, data) {
-      store.commit('setCirclePolygon', data)
+    setCirclePolygon({commit}, payload) {
+      commit('setCirclePolygon', payload)
     },
-    removeCirclePolygon(store) {
-      store.commit('setCirclePolygon', null)
+    removeCirclePolygon({commit}) {
+      commit('setCirclePolygon', {data: null})
     },
-    addGeoJsonPolygon(store, polygon) {
-      store.commit('addGeoJsonPolygon', polygon)
+    addGeoJsonPolygon({commit}, payload) {
+      commit('addGeoJsonPolygon', payload)
     },
-    removeGeoJsonPolygon(store, id) {
-      store.commit('removeGeoJsonPolygon', id)
+    removeGeoJsonPolygon({commit}, payload) {
+      commit('removeGeoJsonPolygon', payload)
     },
-    addImage(store, image) {
+    addImage({commit}, payload) {
+      let image = payload;
       let p1 = L.latLng(image.bounds[1], image.bounds[0]);
       let p2 = L.latLng(image.bounds[3], image.bounds[2]);
       let bounds = L.latLngBounds(p1, p2);
       let center = bounds.getCenter();
 
-      store.commit('setCenter', center);
-      store.commit('setBounds', bounds);
-      store.commit('setNeedUpdateBounds', true)
+      commit('setCenter', {coordinate: center});
+      commit('setBounds', {bounds});
+      commit('setNeedUpdateBounds', {value: true})
       image.bounds = bounds;
-      store.commit('addImage', image)
+      commit('addImage', image)
     },
-    removeImage(store, id) {
-      store.commit('removeImage', id)
+    removeImage({commit}, payload) {
+      commit('removeImage', payload)
     },
-    addViewImage(store, image) {
+    addViewImage({commit}, payload) {
+      let image = payload;
       let p1 = L.latLng(image.bounds[1], image.bounds[0]);
       let p2 = L.latLng(image.bounds[3], image.bounds[2]);
       let bounds = L.latLngBounds(p1, p2);
+
       if (image.fitBounds) {
         let center = bounds.getCenter();
-        store.commit('setCenter', center);
-        store.commit('setBounds', bounds);
-        console.log(image);
-        store.commit('setNeedUpdateBounds', true)
+        commit('setCenter', {coordinate: center});
+        commit('setBounds', {bounds});
+        commit('setNeedUpdateBounds', {value: true})
       }
+
       image.bounds = bounds;
-      store.commit('addViewImage', image)
+      commit('addViewImage', image)
     },
-    removeViewImage(store, id) {
-      store.commit('removeViewImage', id)
+    removeViewImage({commit}, payload) {
+      commit('removeViewImage', payload)
     },
-    setBounds(store, bounds) {
-      store.commit('setBounds', bounds)
+    setBounds({commit}, payload) {
+      commit('setBounds', payload)
     },
-    setNeedUpdateBounds(store, needUpdateBounds) {
-      store.commit('setNeedUpdateBounds', needUpdateBounds)
+    setNeedUpdateBounds({commit}, payload) {
+      commit('setNeedUpdateBounds', payload)
     },
-    async setFilePolygon(store, file) {
+    async setFilePolygon({commit}, payload) {
       let formData = new FormData();
-      formData.append('file', file);
-      let data = await filesApi.getPolygon(formData);
-      store.commit('setFilePolygon', data.data.file)
+      formData.append('file', payload.file);
+      let {data} = await filesApi.getPolygon(formData);
+      commit('setFilePolygon', {file: data.file})
     }
   }
 }

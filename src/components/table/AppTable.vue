@@ -44,7 +44,9 @@ table {
   thead {
     background: $gradient-w;
     position: relative;
+    z-index: 1;
     &::after {
+      z-index: -1;
       content: '';
       position: absolute;
       width: 100%;

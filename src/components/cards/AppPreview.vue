@@ -107,7 +107,7 @@ export default {
     },
     onImageButtonClick(id, img, bounds, fitBounds) {
       if (this.views[this.activeViewIndex].active) {
-        this.removeViewImage(id);
+        this.removeViewImage({id});
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,

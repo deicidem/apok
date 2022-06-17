@@ -49,6 +49,9 @@ export default {
         if(a[state.currentSort] > b[state.currentSort]) return 1 * modifier;
         return 0;
       })
+    },
+    removeFile(state, index) {
+      state.files.splice(index, 1);
     }
   },
   actions: {
@@ -102,17 +105,27 @@ export default {
         el.selected = false;
       })
       store.commit('setFiles', data.files)
+      return data;
     },
     async verifyEmail(store, url) {
       let res = await userApi.verifyEmail(url);
       console.log(res);
     },
-    async deleteFiles({commit, getters}) {
-      let ids = getters.getFiles.map(el => {
-        if (el.selected) return el.id;
+    async deleteFiles({ commit, getters}) {
+      let ids = [];
+      for (let i = 0; i < getters.getFiles.length; i++) {
+        if (getters.getFiles[i].selected) {
+          ids.push(getters.getFiles[i].id);
+        } 
+      }
+      let {data} = await userApi.deleteFiles(ids);
+      data.deleted.forEach(el => {
+        if (!el.delete) {
+          console.log(el);
+        }
       });
-      let res = await userApi.deleteFiles(ids);
-      console.log(res, commit);
+      // await dispatch('loadFiles');
+      console.log(commit);
     },
   }
 }

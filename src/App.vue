@@ -106,7 +106,7 @@ svg:focus {
   font-family: inherit;
   text-align: center;
   font-size: 0.875rem;
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
   box-shadow: $shadow_small;
   transition: all 0.2s ease-out;
@@ -201,7 +201,7 @@ svg:focus {
 
   font-size: 14px;
 
-  border-radius: 10px;
+  border-radius: 7px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;

@@ -1,5 +1,5 @@
 <template>
-  <header class="header" @click="closeUser">
+  <header class="header" >
     <h1 class="title">Комплексная тематическая обработка данных космической съемки</h1>
 
     <div class="header-items">
@@ -22,14 +22,15 @@
         <div class="header-menu__buttons">
           <div class="header-menu__button-wrapper">
 
-            <router-link to="/login">
+            <router-link to="/login" custom v-slot="{navigate}">
               <button
                 class="button button-svg button-white header-menu__button"
+                @click="navigate"
               >
                 <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
               </button>
             </router-link>
-            <div class="tooltiptext-header">Авторизоваться</div>
+            <div class="tooltiptext">Авторизоваться</div>
 
           </div>
           <div class="header-menu__button-wrapper">

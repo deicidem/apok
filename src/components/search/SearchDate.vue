@@ -302,11 +302,11 @@ label.active {
     &__wrapper {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
     }
     &__inputs {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
     }
     &__label {
       left: 0;
@@ -325,6 +325,7 @@ label.active {
       }
     }
     &__arrow {
+      display: flex;
       max-height: 40px;
       margin: 0 20px;
       transform: rotate(180deg);
@@ -439,7 +440,7 @@ label.active {
 }
 .vdp-datepicker {
   input {
-    width: 160px;
+    width: 180px;
     height: 34px;
     color: $text-grey;
   }

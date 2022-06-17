@@ -10,13 +10,20 @@
     <!-- </transition> -->
 
     <div class="sidebar-collapsed">
-      <div
-        v-bind:class="{
-          'sidebar-collapsed__collapse': isCollapse,
-          'sidebar-collapsed__open': isOpen,
-        }"
-        @click="toggleSidebar()"
-      ></div>
+      <div @click="toggleSidebar()" class="sidebar-collapsed__img">
+        <img
+          v-if="isCollapse"
+          svg-inline
+          src="@/assets/img/sidebar-collapse.svg"
+          alt="Развернуть"
+        />
+        <img
+          v-else
+          svg-inline
+          src="@/assets/img/sidebar-open.svg"
+          alt="Скрыть"
+        />
+      </div>
 
       <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/tasks" custom v-slot="{ navigate, isActive }">
@@ -100,6 +107,20 @@
       </div>
 
       <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/files" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img svg-inline src="@/assets/img/files.svg" alt="Личный кабинет" />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Мои файлы</div>
+      </div>
+
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
         <router-link to="/main/person" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
@@ -115,24 +136,6 @@
         </router-link>
 
         <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
-      </div>
-
-      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/files" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <img
-              svg-inline
-              src="@/assets/img/files.svg"
-              alt="Личный кабинет"
-            />
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Мои файлы</div>
       </div>
     </div>
   </div>
@@ -365,7 +368,7 @@ export default {
     &__img {
       width: 31px;
       display: flex;
-      margin-top: 2px;
+      margin-top: 6px;
       justify-content: center;
       cursor: pointer;
       path {

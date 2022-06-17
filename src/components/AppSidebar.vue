@@ -124,11 +124,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/files.svg"
-              alt="Личный кабинет"
-            />
+            <img svg-inline src="@/assets/img/files.svg" alt="Личный кабинет" />
           </div>
         </router-link>
 

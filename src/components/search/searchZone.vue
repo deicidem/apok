@@ -51,8 +51,8 @@
               <td class="number">{{ i + 1 }}</td>
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
-              <td class="col delete" @click="deleteCoordinate({index: i})">
-                <button class="button button-white zone-table__trash">
+              <td class="col delete" @click="deleteCoordinate({ index: i })">
+                <button class="button button-svg-r button-white">
                   <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                 </button>
               </td>
@@ -82,7 +82,7 @@
               <td class="col">
                 <button
                   @click="onAddCoordinate"
-                  class="button button-svg button-white zone-table__plus"
+                  class="button button-svg button-white"
                 >
                   <img svg-inline src="@/assets/img/plus.svg" alt="Добавить" />
                 </button>
@@ -96,7 +96,7 @@
         <button
           class="button search-zone__button"
           :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
-          @click="setAreaPolygonDrawable({value: !getAreaPolygonDrawable})"
+          @click="setAreaPolygonDrawable({ value: !getAreaPolygonDrawable })"
         >
           <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
           <span v-else> Сохранить полигон </span>
@@ -327,11 +327,11 @@ export default {
     ]),
     selectScreenArea() {
       this.clearCoordinates();
-      this.addCoordinate({coordinate: this.getBounds.getNorthEast()});
-      this.addCoordinate({coordinate: this.getBounds.getNorthWest()});
-      this.addCoordinate({coordinate: this.getBounds.getSouthWest()});
-      this.addCoordinate({coordinate: this.getBounds.getSouthEast()});
-      this.setZoom({value: this.getZoom - 1});
+      this.addCoordinate({ coordinate: this.getBounds.getNorthEast() });
+      this.addCoordinate({ coordinate: this.getBounds.getNorthWest() });
+      this.addCoordinate({ coordinate: this.getBounds.getSouthWest() });
+      this.addCoordinate({ coordinate: this.getBounds.getSouthEast() });
+      this.setZoom({ value: this.getZoom - 1 });
     },
     onFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -354,7 +354,7 @@ export default {
       let lng = this.parseCoords(this.lng);
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
-      this.setCenter({coordinate: [lng, lat]});
+      this.setCenter({ coordinate: [lng, lat] });
     },
     removeCircle() {
       this.setCirclePolygon(null);
@@ -362,7 +362,7 @@ export default {
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
       let lng = this.parseCoords(this.newCoord.lng);
-      this.addCoordinate({coordinate: { lat, lng }});
+      this.addCoordinate({ coordinate: { lat, lng } });
     },
     parseCoords(coord) {
       let str = coord;
@@ -444,21 +444,6 @@ label.active {
       display: flex;
       height: 100%;
     }
-  }
-  &__plus {
-    svg path {
-      fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
-  }
-  &__trash {
-    width: 30px;
-    height: 30px;
-    padding: 7px;
   }
 }
 .search-zone {

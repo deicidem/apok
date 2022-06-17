@@ -2,12 +2,12 @@
   <div class="results">
     <div class="sidebar-title">
       Результаты поиска: {{ results.length }} найдено
-      <router-link to="/main/search">
-        <div class="results-back">
+      <router-link to="/main/search" custom v-slot="{navigate}">
+        <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
             <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
-          <div class="results-back__subtitle">Назад</div>
+          <span class="results-back__subtitle">Назад</span>
         </div>
       </router-link>
     </div>
@@ -282,7 +282,7 @@ export default {
 
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {
-        this.removeGeoJsonPolygon(id);
+        this.removeGeoJsonPolygon({id});
         this.setResultProperty({
           index: ind,
           property: "polygonActive",
@@ -312,7 +312,7 @@ export default {
 
     onImageButtonClick(ind, id, img, bounds) {
       if (this.results[ind].imageActive) {
-        this.removeImage(id);
+        this.removeImage({id});
         this.setResultProperty({
           index: ind,
           property: "imageActive",
@@ -469,13 +469,17 @@ export default {
 .results {
   &-back {
     position: absolute;
-    top: 6px;
-    left: 10px;
+    top: 50%;
+    left: 30px;
     display: flex;
     align-items: center;
+    transform: translateY(-50%);
     cursor: pointer;
     &__arrow {
-      line-height: 1;
+      height: 23px;
+      svg {
+        height: 100%;
+      }
       svg path {
         fill: #FFF;
       }
@@ -483,11 +487,11 @@ export default {
     &__subtitle {
       margin-left: 10px;
       color: #FFF;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
-  &-content {
-    padding: 10px 30px;
+  &-wrapper {
+    margin: 30px;
   }
   &-circle {
     margin-right: 15px;

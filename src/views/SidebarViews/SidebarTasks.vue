@@ -154,7 +154,7 @@ export default {
       sortDir: "getSortDir",
     }),
     allSelected() {
-      let res = true
+      let res = true;
       for (let i = 0; i < this.tasks.length; i++) {
         if (!this.tasks[i].selected) {
           res = false;
@@ -167,6 +167,7 @@ export default {
   methods: {
     ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load", "selectTask", "deleteTasks"]),
     selectAll(val) {
+      console.log(1);
       for (let i = 0; i < this.tasks.length; i++) {
         this.selectTask({index: i, value: val})        
       }

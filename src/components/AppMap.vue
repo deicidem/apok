@@ -1,7 +1,7 @@
 <template>
   <l-map
     ref="map"
-    @update:zoom="setZoom($event)"
+    @update:zoom="setZoom({value: $event})"
     @update:center="updateCenter($event)"
     @update:bounds="updateBounds($event)"
     @click="onClick($event)"
@@ -169,10 +169,10 @@ export default {
     ]),
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();
-      this.setCenter(center);
+      this.setCenter({coordinate: center});
     },
     updateBounds(bounds) {
-      this.setBounds(bounds);
+      this.setBounds({bounds});
     },
     // Добавление маркеров
     onClick($event) {
@@ -180,18 +180,18 @@ export default {
         this.drawable &&
         $event.originalEvent.target.classList.contains("vue2leaflet-map")
       ) {
-        this.addCoordinate($event.latlng);
+        this.addCoordinate({coordinate: $event.latlng});
       }
     },
     // Изменение размеров полигона
     handleMarkerDragEnd($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({ latlng: $event.target._latlng, id });
+        this.changeCoordinate({id, latlng: $event.target._latlng});
       }
     },
     handleMarkerDrag($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({ latlng: $event.latlng, id });
+        this.changeCoordinate({id, latlng: $event.latlng});
       }
     },
     // Сохранение файла
@@ -225,9 +225,6 @@ export default {
     needUpdateBounds(b, a) {
       if (b) {
         this.$refs.map.fitBounds(this.bounds);
-        setTimeout(() => {
-          
-        },1000)
       }
       return a;
     }

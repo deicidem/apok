@@ -30,6 +30,9 @@ export default {
         
       })
     },
+    removeTask(state, index) {
+      state.tasks.splice(index, 1);
+    },
     selectTask(state, data) {
       state.tasks[data.index].selected = data.value;
     },
@@ -105,11 +108,15 @@ export default {
         }
       }, 60000);
     },
-    async deleteTasks({commit, getters}) {
-      let ids = getters.getTasks.map(el => {
-        if (el.selected) return el.id;
-      });
+    async deleteTasks({dispatch, commit, getters}) {
+      let ids = [];
+      for (let i = 0; i < getters.getTasks.length; i++) {
+        if (getters.getTasks[i].selected) {
+          ids.push(getters.getTasks[i].id);
+        } 
+      }
       let res = await tasksApi.deleteTasks(ids);
+      await dispatch('load');
       console.log(res, commit);
     },
     selectTask({commit}, data) {

@@ -186,8 +186,15 @@ svg:focus {
       }
     }
   }
+  &-svg-r {
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+    svg path {
+      fill: $color-red;
+    }
+  }
 }
-
 // ____________________input__________________
 .input:active .input-label {
   display: block;
@@ -269,7 +276,6 @@ svg:focus {
   -webkit-transition: 0.3s ease all;
   pointer-events: none;
 }
-
 /*_____________________pagination_____________*/
 .vs-pagination {
   &--active a {
@@ -328,7 +334,6 @@ svg:focus {
 .__bar-is-vertical {
   background: $color-main !important;
 }
-
 /*______________________________________*/
 @media screen and (max-width: 1440px) {
   .button {

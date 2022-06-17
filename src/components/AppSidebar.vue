@@ -251,7 +251,7 @@ export default {
   &-title {
     position: relative;
     margin: 0;
-    padding: 5px;
+    padding: 6px;
 
     background: $gradient;
     color: #fff;

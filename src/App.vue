@@ -106,7 +106,7 @@ svg:focus {
   font-family: inherit;
   text-align: center;
   font-size: 0.875rem;
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
   box-shadow: $shadow_small;
   transition: all 0.2s ease-out;
@@ -134,6 +134,9 @@ svg:focus {
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 2px 10px rgba(#000, 0.3);
+      & + .tooltiptext {
+        display: block;
+      }
     }
     &:active {
       transition: all 0.1s ease-out;
@@ -198,7 +201,7 @@ svg:focus {
 
   font-size: 14px;
 
-  border-radius: 10px;
+  border-radius: 7px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;
@@ -294,8 +297,12 @@ svg:focus {
   display: none;
   padding: 2px 5px;
 
+  text-align: center;
+  word-break: normal;
+
   color: $color-main;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1.3;
   background: $gradient-w;
   border-radius: 6px;
   box-shadow: $shadow-small;

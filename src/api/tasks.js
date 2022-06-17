@@ -24,6 +24,16 @@ export async function one(id) {
   fixTask(data.task);
   return data.task;
 }
+
+export async function deleteTasks(ids) {
+  let params = {};
+  for (let i = 0; i < ids.length; i++) {
+    params[`ids[${i}]`] = ids[i];    
+  }
+  return await server.delete('tasks', {params})
+}
+
+
 export async function add({
   planId,
   files,
@@ -52,7 +62,6 @@ export async function add({
   formData.append('links', JSON.stringify(links));
 
   let data = await server.post('tasks', formData);
-
   console.log(data);
   return data.tasks;
 }

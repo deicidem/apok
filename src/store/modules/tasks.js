@@ -30,6 +30,12 @@ export default {
         
       })
     },
+    removeTask(state, index) {
+      state.tasks.splice(index, 1);
+    },
+    selectTask(state, data) {
+      state.tasks[data.index].selected = data.value;
+    },
     setTaskActive(state, data) {
       state.tasks[data.index].result.active = data.val;
     },
@@ -62,6 +68,7 @@ export default {
     async load({commit, dispatch}) {
       let tasks = await tasksApi.all();
       tasks.forEach(el => {
+        el.selected = false;
         if (el.result != null) {
           el.result.active = false;
           el.result.views.forEach(e => {
@@ -80,6 +87,7 @@ export default {
     },
     async update({commit}, id) {
       let task = await tasksApi.one(id);
+      task.selected = false;
       if (task.result != null) {
         task.result.active = false;
         task.result.views.forEach(el => {
@@ -99,6 +107,20 @@ export default {
           clearInterval(interval);
         }
       }, 60000);
+    },
+    async deleteTasks({dispatch, commit, getters}) {
+      let ids = [];
+      for (let i = 0; i < getters.getTasks.length; i++) {
+        if (getters.getTasks[i].selected) {
+          ids.push(getters.getTasks[i].id);
+        } 
+      }
+      let res = await tasksApi.deleteTasks(ids);
+      await dispatch('load');
+      console.log(res, commit);
+    },
+    selectTask({commit}, data) {
+      commit('selectTask', data);
     },
     setTaskActive({commit}, data) {
       commit('setTaskActive', data);

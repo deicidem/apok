@@ -393,9 +393,7 @@ export default {
     &__wrapper {
       position: relative;
       margin-left: 10px;
-      &:hover .tooltiptext {
-        display: block;
-      }
+      
     }
     &-g {
       background: $color-main;

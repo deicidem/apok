@@ -51,7 +51,7 @@
               <td class="number">{{ i + 1 }}</td>
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
-              <td class="col delete" @click="deleteCoordinate(i)">
+              <td class="col delete" @click="deleteCoordinate({index: i})">
                 <button class="button button-white zone-table__trash">
                   <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                 </button>
@@ -96,7 +96,7 @@
         <button
           class="button search-zone__button"
           :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
-          @click="setAreaPolygonDrawable(!getAreaPolygonDrawable)"
+          @click="setAreaPolygonDrawable({value: !getAreaPolygonDrawable})"
         >
           <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
           <span v-else> Сохранить полигон </span>
@@ -327,11 +327,11 @@ export default {
     ]),
     selectScreenArea() {
       this.clearCoordinates();
-      this.addCoordinate(this.getBounds.getNorthEast());
-      this.addCoordinate(this.getBounds.getNorthWest());
-      this.addCoordinate(this.getBounds.getSouthWest());
-      this.addCoordinate(this.getBounds.getSouthEast());
-      this.setZoom(this.getZoom - 1);
+      this.addCoordinate({coordinate: this.getBounds.getNorthEast()});
+      this.addCoordinate({coordinate: this.getBounds.getNorthWest()});
+      this.addCoordinate({coordinate: this.getBounds.getSouthWest()});
+      this.addCoordinate({coordinate: this.getBounds.getSouthEast()});
+      this.setZoom({value: this.getZoom - 1});
     },
     onFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -354,7 +354,7 @@ export default {
       let lng = this.parseCoords(this.lng);
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
-      this.setCenter([lng, lat]);
+      this.setCenter({coordinate: [lng, lat]});
     },
     removeCircle() {
       this.setCirclePolygon(null);
@@ -362,7 +362,7 @@ export default {
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
       let lng = this.parseCoords(this.newCoord.lng);
-      this.addCoordinate({ lat, lng });
+      this.addCoordinate({coordinate: { lat, lng }});
     },
     parseCoords(coord) {
       let str = coord;

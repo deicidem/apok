@@ -2,10 +2,10 @@
   <div class="search">
     <div class="sidebar-title">
       Поиск снимков
-      <router-link to="/main/results">
-        <div class="search-result">
-          <p class="search-back__subtitle">Результат</p>
-          <div class="search-back__arrow">
+      <router-link to="/main/results" custom v-slot="{navigate}">
+        <div class="search-result" @click="navigate">
+          <span class="search-result__subtitle">Результат</span>
+          <div class="search-result__arrow">
             <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
           </div>
         </div>
@@ -58,33 +58,7 @@ export default {
   },
   data() {
     return {
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
+
     };
   },
 };
@@ -97,25 +71,26 @@ export default {
   max-height: 100%;
   &-result {
     position: absolute;
-    top: 2px;
-    right: 10px;
+    top: 50%;
+    right: 30px;
     display: flex;
     align-items: center;
+    transform: translateY(-50%);
     cursor: pointer;
-  }
-  &-back {
-    &__subtitle {
-      font-size: 12px;
-      margin: 0;
-    }
     &__arrow {
+      height: 23px;
       transform: rotate(180deg);
-      margin: 0;
-      margin-left: 8px;
-      line-height: 1;
-      svg path {
-        fill: #fff;
+      svg {
+        height: 100%;;
       }
+      svg path {
+        fill: #FFF;
+      }
+    }
+    &__subtitle {
+      margin-right: 10px;
+      color: #FFF;
+      font-size: 14px;
     }
   }
   &-title {

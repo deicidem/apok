@@ -14,10 +14,12 @@
         <p :class="'alert-item__' + [theme]">Посмотреть результат</p>
       </div>
     </div>
-
-    <button @click="$emit('delete')" class="button button-svg-r button-white">
-      <img svg-inline src="@/assets/img/trash.svg" />
-    </button>
+    <div class="alert-delete">
+      <button @click="$emit('delete')" class="button button-svg-r button-white">
+        <img svg-inline src="@/assets/img/trash.svg" />
+      </button>
+      <div class="tooltiptext tooltiptext-r">Удалить</div>
+    </div>
   </div>
 </template>
 
@@ -120,6 +122,11 @@ export default {
       font-size: 20px;
       border-radius: 10px;
     }
+  }
+  &-delete {
+    position: relative;
+    display: flex;
+    justify-content: center;
   }
 }
 .unread {

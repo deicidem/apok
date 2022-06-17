@@ -114,11 +114,11 @@ export default {
       dispatch
     }) {
       let params = {
-        startDate: new Date("2021-04-22"),
+        startDate: new Date("2010-04-22"),
         endDate: new Date("2022-08-30"),
         startCloudiness: 0,
         endCloudiness: 100,
-        months: [3, 4, 5, 6, 7, 8],
+        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         satelites: [1, 2, 3, 4, 5, 6]
       }
       let results = await dzzApi.all(params);

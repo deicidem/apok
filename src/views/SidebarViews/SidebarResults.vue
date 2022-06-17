@@ -31,8 +31,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="dzz-name">Идентификатор</td>
-                  <td>{{ cardData.name }}</td>
+                  <td>Идентификатор</td>
+                  <td class="dzz-name">{{ cardData.name }}</td>
                 </tr>
                 <tr>
                   <td>Виток</td>
@@ -42,17 +42,17 @@
                   <td>Маршрут</td>
                   <td>{{ cardData.route }}</td>
                 </tr>
-                <!-- <tr>
+                <tr>
                   <td>Аппарат</td>
-                  <td>{{ cardData.scName }}</td>
-                </tr> -->
+                  <td>{{ cardData.satelite }}</td>
+                </tr>
                 <tr>
                   <td>Дата съемки</td>
                   <td>{{ cardData.date }}</td>
                 </tr>
                 <tr>
                   <td>Облачность</td>
-                  <td>{{ cardData.cloudiness }}</td>
+                  <td>{{ cardData.cloudiness }}%</td>
                 </tr>
               </tbody>
             </table>
@@ -167,9 +167,9 @@
               <td class="dzz-name">{{ item.name }}</td>
               <!-- <td>{{ item.round }}</td>
               <td>{{ item.route }}</td> -->
-              <td>Аппарат</td>
+              <td>{{ item.satelite }}</td>
               <td>{{ item.date }}</td>
-              <td>{{ item.cloudiness }}</td>
+              <td>{{ item.cloudiness }}%</td>
               <td class="results-table__buttons">
                 <div class="results-table__button">
                   <button
@@ -371,6 +371,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .back {
   margin-bottom: 0px;
   display: flex;
@@ -449,6 +450,7 @@ export default {
       font-size: 12px;
     }
     td {
+      vertical-align: top;
       padding: 10px 10px 10px 0;
       font-size: 12px;
     }

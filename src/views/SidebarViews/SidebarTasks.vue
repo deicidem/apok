@@ -7,7 +7,11 @@
           <thead>
             <tr>
               <th class="col-checkbox center">
-                <app-checkbox class="checkbox-big" :modelValue="allSelected" @change="selectAll($event)" />
+                <app-checkbox
+                  class="checkbox-big"
+                  :modelValue="allSelected"
+                  @change="selectAll($event)"
+                />
               </th>
               <th
                 v-for="(header, i) in headers"
@@ -39,7 +43,11 @@
           <tbody v-for="(item, i) in tasks" :key="item.id">
             <tr @click="showResult(i, item)">
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" :model-value="item.selected" @change="selectTask({index: i, value: $event})" />
+                <app-checkbox
+                  :mini="true"
+                  :model-value="item.selected"
+                  @change="selectTask({ index: i, value: $event })"
+                />
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
@@ -56,26 +64,28 @@
                 </div>
               </td>
               <td v-else>{{ item.status }}</td>
-              <td  >
+              <td>
                 <div :class="{ 'td-results': item.result != null }">
-                  
-                
-                <button
-                  v-if="item.result != null"
-                  class="button button-svg tasks-button"
-                >
-                  <img
-                    svg-inline
-                    src="@/assets/img/results-info.svg"
-                    alt="Изображение"
-                  />
-                </button>
-                <div class="tooltiptext">Посмотреть результат</div>
+                  <button
+                    v-if="item.result != null"
+                    class="button button-svg tasks-button"
+                  >
+                    <img
+                      svg-inline
+                      src="@/assets/img/results-info.svg"
+                      alt="Изображение"
+                    />
+                  </button>
+                  <div class="tooltiptext">Посмотреть результат</div>
                 </div>
               </td>
             </tr>
-            <tr class="tr_preview" v-show="item.result.active" v-if="item.result != null">
-              <td colspan="6" >
+            <tr
+              class="tr_preview"
+              v-show="item.result.active"
+              v-if="item.result != null"
+            >
+              <td colspan="6">
                 <app-preview
                   :views="item.result.views"
                   :files="item.result.files"
@@ -85,12 +95,14 @@
             </tr>
           </tbody>
         </app-table>
-         <div class="tasks-buttons">
-          <button class="button button-r" @click="deleteTasks">Удалить выбранное</button>
+        <div class="tasks-buttons">
+          <button class="button button-r" @click="deleteTasks">
+            Удалить выбранное
+          </button>
           <button class="button button-g">Добавить в избранное</button>
         </div>
       </div>
-      
+
       <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
     </vuescroll>
   </div>
@@ -162,14 +174,20 @@ export default {
         }
       }
       return res;
-    }
+    },
   },
   methods: {
-    ...mapActions("tasks", ["setTaskActive", "sortTasksBy", "load", "selectTask", "deleteTasks"]),
+    ...mapActions("tasks", [
+      "setTaskActive",
+      "sortTasksBy",
+      "load",
+      "selectTask",
+      "deleteTasks",
+    ]),
     selectAll(val) {
       console.log(1);
       for (let i = 0; i < this.tasks.length; i++) {
-        this.selectTask({index: i, value: val})        
+        this.selectTask({ index: i, value: val });
       }
     },
     sortBy(key, ind) {

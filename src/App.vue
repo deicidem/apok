@@ -115,12 +115,20 @@ svg:focus {
   overflow: hidden;
   color: #fff;
   &:disabled {
+    &:before {
+      content: '';
+      display: block;
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: rgba(#eee, 0.65);
+    }
     cursor: default;
-    color: #fff;
-    background: rgb(189, 189, 189);
   }
-  &:not(:disabled) {
-    &::after {
+  &::after {
       content: "";
       position: absolute;
       height: 100%;
@@ -130,7 +138,8 @@ svg:focus {
       transform: translateX(-50%);
       transition: all 0.2s ease-out;
       z-index: -1;
-    }
+  }
+  &:not(:disabled) {
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 2px 10px rgba(#000, 0.3);

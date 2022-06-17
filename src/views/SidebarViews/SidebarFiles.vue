@@ -45,8 +45,18 @@
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.type }}</td>
-              <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
               <td>{{ item.date.toLocaleDateString() }}</td>
+              <td>
+                <div class="table-button__wrapper">
+                  <button
+                    class="button button-svg-red"
+                    :disabled="item.deletable"
+                  >
+                    <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
+                  </button>
+                  <div class="tooltiptext">Удалить</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </app-table>
@@ -143,8 +153,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.td-results {
+.table-button__wrapper {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 .files {
   display: flex;

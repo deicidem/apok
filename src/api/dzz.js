@@ -6,7 +6,7 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
     endDate: endDate.toJSON(),
     startCloudiness,
     endCloudiness,
-    polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[22.543945,49.181422],[26.367188,38.753909],[35.771484,36.773942],[41.923828,59.355532],[22.543945,49.181422]]]}}'
+    polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[163.300781,85.051129],[-4.921875,85.051129],[-4.921875,-13.410994],[163.300781,-13.410994],[163.300781,85.051129]]]}}'
   }
   console.log(polygon);
   for (let i = 0; i < months.length; i++) {

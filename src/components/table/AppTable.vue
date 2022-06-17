@@ -90,7 +90,7 @@ table {
       line-height: 17px;
       td {
         padding: 10px;
-        max-width: 240px;
+        max-width: 210px;
       }
       .green {
         color: $color-main;

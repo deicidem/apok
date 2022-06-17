@@ -89,8 +89,9 @@ export default {
 
       border-radius: 4px !important;
       background: $gradient;
+      box-shadow: $shadow-small !important;
       &-focus {
-        box-shadow: $shadow-big !important;
+        box-shadow: $shadow-small !important;
       }
     }
     &-tooltip-inner {

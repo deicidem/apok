@@ -116,7 +116,7 @@ svg:focus {
   color: #fff;
   &:disabled {
     &:before {
-      content: '';
+      content: "";
       display: block;
       top: 0;
       left: 0;
@@ -129,15 +129,15 @@ svg:focus {
     cursor: default;
   }
   &::after {
-      content: "";
-      position: absolute;
-      height: 100%;
-      width: 200%;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      transition: all 0.2s ease-out;
-      z-index: -1;
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.2s ease-out;
+    z-index: -1;
   }
   &:not(:disabled) {
     &:hover {
@@ -322,7 +322,11 @@ svg:focus {
   border-radius: 6px;
   box-shadow: $shadow-small;
   transform: translateX(-50%);
+  &-r{
+    color: $color-red;
+  }
 }
+
 /*_____________________vueScroll______________*/
 .__vuescroll {
   display: flex;

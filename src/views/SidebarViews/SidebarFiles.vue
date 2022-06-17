@@ -49,12 +49,12 @@
               <td>
                 <div class="table-button__wrapper">
                   <button
-                    class="button button-svg-red"
+                    class="button button-white button-svg-r"
                     :disabled="item.deletable"
                   >
                     <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                   </button>
-                  <div class="tooltiptext">Удалить</div>
+                  <div class="tooltiptext tooltiptext-r">Удалить</div>
                 </div>
               </td>
             </tr>

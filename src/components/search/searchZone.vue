@@ -55,6 +55,7 @@
                 <button class="button button-svg-r button-white">
                   <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
                 </button>
+                <div class="tooltiptext tooltiptext-r">Удалить</div>
               </td>
             </tr>
             <tr>
@@ -80,12 +81,18 @@
                 </div>
               </td>
               <td class="col">
-                <button
-                  @click="onAddCoordinate"
-                  class="button button-svg button-white"
-                >
-                  <img svg-inline src="@/assets/img/plus.svg" alt="Добавить" />
-                </button>
+                <div class="zone-table__delete">
+                  <button
+                    @click="onAddCoordinate"
+                    class="button button-svg button-white"
+                  >
+                    <img
+                      svg-inline
+                      src="@/assets/img/plus.svg"
+                      alt="Добавить"
+                    />
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -445,6 +452,9 @@ label.active {
       height: 100%;
     }
   }
+}
+.delete {
+  position: relative;
 }
 .search-zone {
   padding: 20px;

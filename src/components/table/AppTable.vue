@@ -42,7 +42,6 @@ table {
   box-shadow: $shadow-big;
   padding-bottom: 10px;
   thead {
-    background: $gradient-w;
     position: relative;
     z-index: 1;
     &::after {
@@ -55,7 +54,7 @@ table {
       left: 0;
       display: block;
       box-shadow: $shadow-small;
-      background: none;
+      background: $gradient-w;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }

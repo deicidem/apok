@@ -36,37 +36,6 @@ export default {
   methods: {
     ...mapActions("alerts", ["deleteAlert"]),
   },
-  data() {
-    return {
-      ops: {
-        vuescroll: {
-          mode: "native",
-          sizeStrategy: "percent",
-          detectResize: true,
-          wheelScrollDuration: 500,
-        },
-        scrollPanel: {
-          scrollingX: false,
-          speed: 300,
-          easing: "easeOutQuad",
-        },
-        rail: {
-          background: "#000",
-          opacity: 0.1,
-          size: "6px",
-          specifyBorderRadius: false,
-          gutterOfEnds: null,
-          gutterOfSide: "2px",
-          keepShow: false,
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "#6BA2A6",
-        },
-      },
-    };
-  },
   components: {
     vuescroll,
     AppAlertCard,

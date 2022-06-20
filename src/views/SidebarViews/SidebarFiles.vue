@@ -1,13 +1,18 @@
 <template>
   <div class="files">
     <h2 class="sidebar-title">Мои файлы</h2>
+    <app-delete-confirm ref="deleteConfirm"></app-delete-confirm>
     <vuescroll :ops="scrollOps">
       <div class="files__wrapper">
         <app-table>
           <thead>
             <tr>
               <th class="col-checkbox center">
-                <app-checkbox :model-value="allSelected" class="checkbox-big" @change="selectAll" />
+                <app-checkbox
+                  :model-value="allSelected"
+                  class="checkbox-big"
+                  @change="selectAll"
+                />
               </th>
               <th
                 v-for="(header, i) in headers"
@@ -40,28 +45,45 @@
           <tbody>
             <tr v-for="(item, i) in files" :key="item.id">
               <td class="col-checkbox center">
-                <app-checkbox :mini="true" :model-value="item.selected" @change="selectFile({index: i, value: $event})" />
+                <app-checkbox
+                  :mini="true"
+                  :model-value="item.selected"
+                  @change="selectFile({ index: i, value: $event })"
+                />
               </td>
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.type }}</td>
               <td>{{ item.date.toLocaleDateString() }}</td>
               <td>
-                <div class="table-button__wrapper">
+                <div class="button__wrapper">
                   <button
                     class="button button-white button-svg-r"
-                    :disabled="item.deletable"
+                    :disabled="!item.deletable"
+                    @click="onDelete(i)"
                   >
-                    <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
+                    <img
+                      svg-inline
+                      src="@/assets/img/trash.svg"
+                      alt="Удалить"
+                    />
                   </button>
-                  <div class="tooltiptext tooltiptext-r">Удалить</div>
+                  <span class="tooltiptext tooltiptext-r" v-if="!item.deletable">
+                    Файл используется
+                  </span>
                 </div>
               </td>
             </tr>
           </tbody>
         </app-table>
         <div class="files-buttons">
-          <button class="button button-r" @click="deleteFiles">Удалить выбранное</button>
+          <button
+            class="button button-r"
+            :disabled="deleteBanchDisabled"
+            @click="onDeleteBanch"
+          >
+            Удалить выбранное
+          </button>
           <button class="button button-g">Добавить в избранное</button>
         </div>
       </div>
@@ -75,15 +97,17 @@ import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
 import AppTable from "@/components/table/AppTable";
+import AppDeleteConfirm from "@/components/cards/AppDeleteConfirm";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
 export default {
-  name: "SidebarTasks",
+  name: "SidebarFiles",
   components: {
     AppCheckbox,
     AppTable,
     vuescroll,
+    AppDeleteConfirm,
     // VsPagination,
   },
   data() {
@@ -119,7 +143,7 @@ export default {
       sortDir: "getSortDir",
     }),
     allSelected() {
-      let res = true
+      let res = true;
       for (let i = 0; i < this.files.length; i++) {
         if (!this.files[i].selected) {
           res = false;
@@ -127,13 +151,65 @@ export default {
         }
       }
       return res;
-    }
+    },
+    deleteBanchDisabled() {
+      if (this.files == null) {
+        return false;
+      }
+      let isNotDeletableSelected = false;
+      let cnt = 0;
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i].selected) {
+          if (!this.files[i].deletable) {
+            isNotDeletableSelected = true;
+            break;
+          }
+          cnt++;
+        }
+      }
+      if (isNotDeletableSelected || cnt == 0) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
-    ...mapActions("users", ["sortFilesBy", "loadFiles", "deleteFiles", "selectFile"]),
+    ...mapActions("users", [
+      "sortFilesBy",
+      "loadFiles",
+      "deleteFiles",
+      "selectFile",
+      "deleteFile",
+    ]),
+    async onDelete(i) {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить этот файл?",
+        message:
+          "Удаление этого файла приведет к потере всех связанных с ним данных.",
+      });
+      if (ok) {
+        console.log("You have successfully delete this page.");
+        this.deleteFile(i);
+      } else {
+        console.log("You chose not to delete this page. Doing nothing now.");
+      }
+    },
+    async onDeleteBanch() {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить эти файлы?",
+        message:
+          "Удаление этих файлов приведет к потере всех связанных с ними данных.",
+      });
+      if (ok) {
+        console.log("You have successfully delete this page.");
+        this.deleteFiles();
+      } else {
+        console.log("You chose not to delete this page. Doing nothing now.");
+      }
+    },
     selectAll(val) {
       for (let i = 0; i < this.files.length; i++) {
-        this.selectFile({index: i, value: val})        
+        this.selectFile({ index: i, value: val });
       }
     },
     sortBy(key, ind) {

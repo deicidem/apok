@@ -1,4 +1,5 @@
 import * as userApi from "@/api/user";
+import * as filesApi from "@/api/files";
 
 export default {
   namespaced: true,
@@ -52,6 +53,14 @@ export default {
     },
     removeFile(state, index) {
       state.files.splice(index, 1);
+    },
+    removeFileById(state, id) {
+      for (let i = 0; i < state.files.length; i++) {
+        if (state.files[i].id == id) {
+          state.files.splice(i, 1);
+        }
+        break;
+      }
     }
   },
   actions: {
@@ -100,7 +109,7 @@ export default {
       store.dispatch('setUser', null);
     },
     async loadFiles(store) {
-      let {data} = await userApi.getFiles();
+      let {data} = await filesApi.getUserFiles();
       data.files.forEach(el => {
         el.selected = false;
       })
@@ -111,19 +120,33 @@ export default {
       let res = await userApi.verifyEmail(url);
       console.log(res);
     },
-    async deleteFiles({ commit, getters}) {
+    async deleteFiles({ commit, dispatch,  getters}) {
       let ids = [];
       for (let i = 0; i < getters.getFiles.length; i++) {
         if (getters.getFiles[i].selected) {
           ids.push(getters.getFiles[i].id);
         } 
       }
-      let {data} = await userApi.deleteFiles(ids);
+      let {data} = await filesApi.deleteUserFiles(ids);
       data.deleted.forEach(el => {
         if (!el.delete) {
           console.log(el);
         }
       });
+      await dispatch('loadFiles');
+      console.log(commit);
+    },
+    async deleteFile({commit, getters}, i) {
+      let id = getters.getFiles[i].id;
+      let {status} = await filesApi.deleteUserFile(id);
+      if (status == 200) {
+        commit('removeFile', i);
+      }
+      // data.deleted.forEach(el => {
+      //   if (!el.delete) {
+      //     console.log(el);
+      //   }
+      // });
       // await dispatch('loadFiles');
       console.log(commit);
     },

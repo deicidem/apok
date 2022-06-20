@@ -55,6 +55,7 @@ table {
       left: 0;
       display: block;
       box-shadow: $shadow-small;
+      background: $gradient-w;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }

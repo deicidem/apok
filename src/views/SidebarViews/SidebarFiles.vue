@@ -68,10 +68,9 @@
                       alt="Удалить"
                     />
                   </button>
-                  <span class="tooltiptext" v-if="!item.deletable">
+                  <span class="tooltiptext tooltiptext-r" v-if="!item.deletable">
                     Файл используется
                   </span>
-                  <span class="tooltiptext" v-else>Удалить</span>
                 </div>
               </td>
             </tr>

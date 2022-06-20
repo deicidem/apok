@@ -2,7 +2,7 @@
   <div class="results">
     <div class="sidebar-title">
       Результаты поиска: {{ results.length }} найдено
-      <router-link to="/main/search" custom v-slot="{navigate}">
+      <router-link to="/main/search" custom v-slot="{ navigate }">
         <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
             <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
@@ -13,75 +13,23 @@
     </div>
     <div class="results-content">
       <portal to="popup-card">
-        <div class="card" v-if="card.ind != null" v-show="card.active">
-          <div class="card-close" @click="onCardClose()">
-            <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
-          </div>
-          <div class="card-title">Информация по объекту</div>
-          <div class="card-img">
-            <img :src="cardData.previewPath" alt="" />
-          </div>
-          <div class="card-table__wrapper">
-            <table class="card-table">
-              <thead>
-                <tr>
-                  <th>Характеристика</th>
-                  <th>Значение</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Идентификатор</td>
-                  <td class="dzz-name">{{ cardData.name }}</td>
-                </tr>
-                <tr>
-                  <td>Виток</td>
-                  <td>{{ cardData.round }}</td>
-                </tr>
-                <tr>
-                  <td>Маршрут</td>
-                  <td>{{ cardData.route }}</td>
-                </tr>
-                <tr>
-                  <td>Аппарат</td>
-                  <td>{{ cardData.satelite }}</td>
-                </tr>
-                <tr>
-                  <td>Дата съемки</td>
-                  <td>{{ cardData.date }}</td>
-                </tr>
-                <tr>
-                  <td>Облачность</td>
-                  <td>{{ cardData.cloudiness }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-buttons">
-            <button
-              class="button button-g card-button"
-              @click="
-                onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
-              "
-            >
-              Скрыть контур
-            </button>
-            <button
-              class="button button-white card-button"
-              type="white"
-              @click="
-                onImageButtonClick(
-                  card.ind,
-                  cardData.id,
-                  cardData.previewPath,
-                  cardData.geography.bbox
-                )
-              "
-            >
-              Показать изображение
-            </button>
-          </div>
-        </div>
+        <app-info-popup
+          :cardData="cardData"
+          @cardClose="onCardClose()"
+          @PolygonButtonClick="
+            onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
+          "
+          @ImageButtonClick="
+            onImageButtonClick(
+              card.ind,
+              cardData.id,
+              cardData.previewPath,
+              cardData.geography.bbox
+            )
+          "
+          v-if="card.ind != null"
+          v-show="card.active"
+        ></app-info-popup>
       </portal>
 
       <div class="results-wrapper">
@@ -198,10 +146,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
+import AppInfoPopup from "@/components/cards/AppInfoPopup";
 // import VsPagination from "@vuesimple/vs-pagination";
+
 export default {
   components: {
     AppTable,
+    AppInfoPopup,
     // VsPagination,
   },
   data() {
@@ -282,7 +233,7 @@ export default {
 
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {
-        this.removeGeoJsonPolygon({id});
+        this.removeGeoJsonPolygon({ id });
         this.setResultProperty({
           index: ind,
           property: "polygonActive",
@@ -312,7 +263,7 @@ export default {
 
     onImageButtonClick(ind, id, img, bounds) {
       if (this.results[ind].imageActive) {
-        this.removeImage({id});
+        this.removeImage({ id });
         this.setResultProperty({
           index: ind,
           property: "imageActive",
@@ -371,7 +322,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .back {
   margin-bottom: 0px;
   display: flex;
@@ -390,7 +340,6 @@ export default {
 .dzz-name {
   word-break: break-all;
 }
-
 .card {
   z-index: 11;
   position: absolute;
@@ -483,12 +432,12 @@ export default {
         height: 100%;
       }
       svg path {
-        fill: #FFF;
+        fill: #fff;
       }
     }
     &__subtitle {
       margin-left: 10px;
-      color: #FFF;
+      color: #fff;
       font-size: 14px;
     }
   }

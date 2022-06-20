@@ -48,6 +48,12 @@
         class="button button-g card-button"
         @click="$emit('PolygonButtonClick')"
       >
+        Показать контур
+      </button>
+      <button
+        class="button button-g card-button"
+        @click="$emit('PolygonButtonClick')"
+      >
         Скрыть контур
       </button>
       <button

@@ -14,6 +14,7 @@
     <div class="results-content">
       <portal to="popup-card">
         <app-info-popup
+          :results="results"
           :cardData="cardData"
           @cardClose="onCardClose()"
           @PolygonButtonClick="

@@ -1,6 +1,7 @@
 <template>
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
+    <app-delete-confirm ref="deleteConfirm"></app-delete-confirm>
     <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
         <app-table v-if="tasks != null">
@@ -37,11 +38,12 @@
                 </template>
                 {{ header.title }}
               </th>
+              <th></th>
             </tr>
           </thead>
 
           <tbody v-for="(item, i) in tasks" :key="item.id">
-            <tr @click="showResult(i, item)">
+            <tr>
               <td class="col-checkbox center">
                 <app-checkbox
                   :mini="true"
@@ -65,18 +67,35 @@
               </td>
               <td v-else>{{ item.status }}</td>
               <td>
-                <div :class="{ 'td-results': item.result != null }">
-                  <button
-                    v-if="item.result != null"
-                    class="button button-svg tasks-button"
-                  >
-                    <img
-                      svg-inline
-                      src="@/assets/img/results-info.svg"
-                      alt="Изображение"
-                    />
-                  </button>
-                  <div class="tooltiptext">Посмотреть результат</div>
+                <div class="tasks-table__buttons">
+                  <div class="button__wrapper">
+                    <button
+                      v-if="item.result != null"
+                      @click="showResult(i, item)"
+                      class="button button-svg tasks-button"
+                    >
+                      <img
+                        svg-inline
+                        src="@/assets/img/results-info.svg"
+                        alt="Изображение"
+                      />
+                    </button>
+                    <span class="tooltiptext">Посмотреть результат</span>
+                  </div>
+                  <div class="button__wrapper">
+                    <button
+                      class="button button-white button-svg-r"
+                      :disabled="!item.deletable"
+                      @click="onDelete(i)"
+                    >
+                      <img
+                        svg-inline
+                        src="@/assets/img/trash.svg"
+                        alt="Удалить"
+                      />
+                    </button>
+                    <span class="tooltiptext">Удалить</span>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -96,7 +115,11 @@
           </tbody>
         </app-table>
         <div class="tasks-buttons">
-          <button class="button button-r" @click="deleteTasks">
+          <button
+            class="button button-r"
+            :disabled="deleteBanchDisabled"
+            @click="onDeleteBanch"
+          >
             Удалить выбранное
           </button>
           <button class="button button-g">Добавить в избранное</button>
@@ -112,19 +135,21 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
-import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppPreview from "@/components/cards/AppPreview";
+import AppDeleteConfirm from "@/components/cards/AppDeleteConfirm";
+import { mapGetters, mapActions } from "vuex";
+import AppCheckbox from "@/components/controls/AppCheckbox";
 
 export default {
   name: "SidebarTasks",
   components: {
-    AppTable,
     AppCheckbox,
+    AppTable,
     vuescroll,
-    AppPreview,
+    AppDeleteConfirm,
     // VsPagination,
+    AppPreview,
   },
   data() {
     return {
@@ -149,11 +174,7 @@ export default {
           key: "status",
           active: false,
         },
-        {
-          title: "Результат",
-          key: "result",
-          active: false,
-        },
+        
       ],
       reportType: false,
       pictureType: false,
@@ -175,6 +196,26 @@ export default {
       }
       return res;
     },
+    deleteBanchDisabled() {
+      if (this.tasks == null) {
+        return false;
+      }
+      let isNotDeletableSelected = false;
+      let cnt = 0;
+      for (let i = 0; i < this.tasks.length; i++) {
+        if (this.tasks[i].selected) {
+          if (!this.tasks[i].deletable) {
+            isNotDeletableSelected = true;
+            break;
+          }
+          cnt++;
+        }
+      }
+      if (isNotDeletableSelected || cnt == 0) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
     ...mapActions("tasks", [
@@ -183,6 +224,7 @@ export default {
       "load",
       "selectTask",
       "deleteTasks",
+      "deleteTask",
     ]),
     selectAll(val) {
       console.log(1);
@@ -201,6 +243,32 @@ export default {
         this.setTaskActive({ index: i, val: !task.result.active });
       }
     },
+    async onDelete(i) {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить эту задачу?",
+        message:
+          "Удаление этой задачи приведет к потере всех связанных с ней данных.",
+      });
+      if (ok) {
+        console.log("You have successfully delete this page.");
+        this.deleteTask(i);
+      } else {
+        console.log("You chose not to delete this page. Doing nothing now.");
+      }
+    },
+    async onDeleteBanch() {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить эти задачи?",
+        message:
+          "Удаление этих задач приведет к потере всех связанных с ними данных.",
+      });
+      if (ok) {
+        console.log("You have successfully delete this page.");
+        this.deleteTasks();
+      } else {
+        console.log("You chose not to delete this page. Doing nothing now.");
+      }
+    },
   },
   async mounted() {
     await this.load();
@@ -209,9 +277,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.td-results {
-  position: relative;
-}
 .tasks {
   display: flex;
   flex-direction: column;
@@ -244,6 +309,10 @@ export default {
     }
   }
   &-table {
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
+    }
     &__button {
       text-align: left;
       font-size: 12px;
@@ -256,7 +325,7 @@ export default {
       }
     }
     &__progress {
-      margin-top: 3px;
+      margin-top: 5px;
       width: 120px;
       border-radius: 3px;
       height: 10px;

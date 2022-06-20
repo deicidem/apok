@@ -57,7 +57,7 @@
                   </div>
                   <div class="data__text" v-else>Не выбрано</div>
                   <div class="data-btns">
-                    <div class="data-btn__wrapper">
+                    <div class="button__wrapper data-btn__wrapper">
                       <button
                         class="button button-svg data-btn"
                         :class="
@@ -75,9 +75,9 @@
                           alt="Выбрать"
                         />
                       </button>
-                      <div class="tooltiptext">Выбрать</div>
+                      <span class="tooltiptext">Выбрать</span>
                     </div>
-                    <div class="data-btn__wrapper">
+                    <div class="button__wrapper data-btn__wrapper">
                       <button
                         class="button button-svg data-btn"
                         @click="onUploadClick(i)"
@@ -88,7 +88,7 @@
                           alt="Загрузить"
                         />
                       </button>
-                      <div class="tooltiptext">Загрузить</div>
+                      <span class="tooltiptext">Загрузить</span>
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@
                   </div>
                   <div class="data__text" v-else>Не выбрана</div>
                   <div class="data-btns">
-                    <div class="data-btn__wrapper">
+                    <div class="button__wrapper data-btn__wrapper">
                       <router-link to="area" custom v-slot="{ navigate }">
                         <button
                           @click="navigate"
@@ -113,9 +113,9 @@
                           <img src="@/assets/img/choose.svg" alt="Выбрать" />
                         </button>
                       </router-link>
-                      <div class="tooltiptext">Выбрать</div>
+                      <span class="tooltiptext">Выбрать</span>
                     </div>
-                    <div class="data-btn__wrapper">
+                    <div class="button__wrapper data-btn__wrapper">
                       <button class="button button-svg data-btn">
                         <img
                           svg-inline
@@ -124,7 +124,7 @@
                           alt="Загрузить"
                         />
                       </button>
-                      <div class="tooltiptext">Загрузить</div>
+                      <span class="tooltiptext">Загрузить</span>
                     </div>
                   </div>
                 </div>

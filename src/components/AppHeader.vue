@@ -20,7 +20,7 @@
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
         <div class="header-menu__buttons">
-          <div class="header-menu__button-wrapper">
+          <div class="button__wrapper header-menu__button-wrapper">
 
             <router-link to="/login" custom v-slot="{navigate}">
               <button
@@ -30,17 +30,17 @@
                 <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
               </button>
             </router-link>
-            <div class="tooltiptext">Авторизоваться</div>
+            <span class="tooltiptext">Авторизоваться</span>
 
           </div>
-          <div class="header-menu__button-wrapper">
+          <div class="button__wrapper header-menu__button-wrapper">
             <button
               class="button button-svg button-white header-menu__button"
               @click="logout"
             >
               <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
             </button>
-            <div class="tooltiptext">Выйти</div>
+            <span class="tooltiptext">Выйти</span>
           </div>
         </div>
       </div>

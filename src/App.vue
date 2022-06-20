@@ -92,6 +92,8 @@ svg:focus {
   background: #dfdfdf;
 }
 
+
+
 /*_____________________button_________________*/
 .button {
   position: relative;
@@ -114,6 +116,15 @@ svg:focus {
   z-index: 1;
   overflow: hidden;
   color: #fff;
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &:hover + .tooltiptext {
+    display: block;
+  }
   &:disabled {
     &:before {
       content: '';
@@ -143,9 +154,7 @@ svg:focus {
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 2px 10px rgba(#000, 0.3);
-      & + .tooltiptext {
-        display: block;
-      }
+      
     }
     &:active {
       transition: all 0.1s ease-out;

@@ -24,3 +24,24 @@ export async function download(fileId) {
   console.log(data);
   return data;
 }
+
+export async function getUserFiles() {
+  let data = await server.get('user/files');
+  data.data.files.forEach(el => {
+    el.date = new Date(el.date);
+  })
+  return data;
+}
+
+export async function deleteUserFiles(filesIds) {
+  let params = {};
+  for (let i = 0; i < filesIds.length; i++) {
+    params[`filesIds[${i}]`] = filesIds[i];    
+  }
+  return await server.delete('user/files', {params});
+  
+}
+
+export async function deleteUserFile(id) {
+  return await server.delete('files/'+id);
+}

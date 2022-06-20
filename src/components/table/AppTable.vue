@@ -42,10 +42,10 @@ table {
   box-shadow: $shadow-big;
   padding-bottom: 10px;
   thead {
-    background: $gradient-w;
     position: relative;
     z-index: 1;
     &::after {
+      background: $gradient-w;
       z-index: -1;
       content: '';
       position: absolute;
@@ -55,7 +55,6 @@ table {
       left: 0;
       display: block;
       box-shadow: $shadow-small;
-      background: none;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }

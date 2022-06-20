@@ -77,7 +77,7 @@
             >
               <td class="results-table__buttons">
                 <div class="results-circle"></div>
-                <div class="results-table__button">
+                <div class="button__wrapper results-table__button">
                   <button
                     class="button button-svg results-button"
                     :class="results[i].polygonActive ? 'active' : ''"
@@ -89,9 +89,9 @@
                       alt="Вектор"
                     />
                   </button>
-                  <div class="tooltiptext">Вектор</div>
+                  <span class="tooltiptext">Границы</span>
                 </div>
-                <div class="results-table__button">
+                <div class="button__header results-table__button">
                   <button
                     class="button button-svg results-button"
                     :class="results[i].imageActive ? 'active' : ''"
@@ -110,7 +110,7 @@
                       alt="Изображение"
                     />
                   </button>
-                  <div class="tooltiptext">Изображение</div>
+                  <span class="tooltiptext">Изображение</span>
                 </div>
               </td>
               <td class="dzz-name">{{ item.name }}</td>
@@ -120,7 +120,7 @@
               <td>{{ item.date }}</td>
               <td>{{ item.cloudiness }}%</td>
               <td class="results-table__buttons">
-                <div class="results-table__button">
+                <div class="button__wrapper results-table__button">
                   <button
                     class="button button-svg results-button"
                     :class="results[i].cardActive ? 'active' : ''"
@@ -132,7 +132,7 @@
                       alt="Информация по объекту"
                     />
                   </button>
-                  <div class="tooltiptext">Подробнее</div>
+                  <span class="tooltiptext">Подробнее</span>
                 </div>
               </td>
             </tr>

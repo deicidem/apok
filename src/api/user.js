@@ -51,19 +51,3 @@ export async function verifyEmail(url) {
   return await server.get(url);
 }
 
-export async function getFiles() {
-  let data = await server.get('user/files');
-  data.data.files.forEach(el => {
-    el.date = new Date(el.date);
-  })
-  return data;
-}
-
-export async function deleteFiles(filesIds) {
-  let params = {};
-  for (let i = 0; i < filesIds.length; i++) {
-    params[`filesIds[${i}]`] = filesIds[i];    
-  }
-  return await server.delete('user/files', {params})
-  
-}

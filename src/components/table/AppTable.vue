@@ -45,6 +45,7 @@ table {
     position: relative;
     z-index: 1;
     &::after {
+      background: $gradient-w;
       z-index: -1;
       content: '';
       position: absolute;

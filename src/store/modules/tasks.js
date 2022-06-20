@@ -119,6 +119,14 @@ export default {
       await dispatch('load');
       console.log(res, commit);
     },
+    
+    async deleteTask({commit, getters}, i) {
+      let id = getters.getTasks[i].id;
+      let {status} = await tasksApi.deleteUserTask(id);
+      if (status == 200) {
+        commit('removeTask', i);
+      }
+    },
     selectTask({commit}, data) {
       commit('selectTask', data);
     },

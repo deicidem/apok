@@ -33,6 +33,9 @@ export async function deleteTasks(ids) {
   return await server.delete('tasks', {params})
 }
 
+export async function deleteUserTask(id) {
+  return await server.delete('tasks/'+id);
+}
 
 export async function add({
   planId,

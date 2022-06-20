@@ -2,7 +2,7 @@
   <div class="results">
     <div class="sidebar-title">
       Результаты поиска: {{ results.length }} найдено
-      <router-link to="/main/search" custom v-slot="{navigate}">
+      <router-link to="/main/search" custom v-slot="{ navigate }">
         <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
             <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
@@ -13,7 +13,23 @@
     </div>
     <div class="results-content">
       <portal to="popup-card">
-        <app-info-popup v-if="card.ind != null" v-show="card.active"></app-info-popup>
+        <app-info-popup
+          :cardData="cardData"
+          @cardClose="onCardClose()"
+          @PolygonButtonClick="
+            onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
+          "
+          @ImageButtonClick="
+            onImageButtonClick(
+              card.ind,
+              cardData.id,
+              cardData.previewPath,
+              cardData.geography.bbox
+            )
+          "
+          v-if="card.ind != null"
+          v-show="card.active"
+        ></app-info-popup>
       </portal>
 
       <div class="results-wrapper">
@@ -187,13 +203,13 @@ export default {
       selectable: "getSelectable",
       sortDir: "getSortDir",
     }),
-    // cardData() {
-    //   if (this.card.ind != null) {
-    //     return this.results[this.card.ind];
-    //   } else {
-    //     return null;
-    //   }
-    // },
+    cardData() {
+      if (this.card.ind != null) {
+        return this.results[this.card.ind];
+      } else {
+        return null;
+      }
+    },
   },
   methods: {
     ...mapActions("map", [
@@ -217,7 +233,7 @@ export default {
 
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {
-        this.removeGeoJsonPolygon({id});
+        this.removeGeoJsonPolygon({ id });
         this.setResultProperty({
           index: ind,
           property: "polygonActive",
@@ -247,7 +263,7 @@ export default {
 
     onImageButtonClick(ind, id, img, bounds) {
       if (this.results[ind].imageActive) {
-        this.removeImage({id});
+        this.removeImage({ id });
         this.setResultProperty({
           index: ind,
           property: "imageActive",
@@ -306,7 +322,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .back {
   margin-bottom: 0px;
   display: flex;
@@ -325,7 +340,6 @@ export default {
 .dzz-name {
   word-break: break-all;
 }
-
 .card {
   z-index: 11;
   position: absolute;
@@ -418,12 +432,12 @@ export default {
         height: 100%;
       }
       svg path {
-        fill: #FFF;
+        fill: #fff;
       }
     }
     &__subtitle {
       margin-left: 10px;
-      color: #FFF;
+      color: #fff;
       font-size: 14px;
     }
   }

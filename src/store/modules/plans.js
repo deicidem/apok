@@ -4,7 +4,7 @@ import * as tasksApi from '@/api/tasks';
 export default {
   namespaced: true,
   state: {
-    plans:  null,
+    plans: null,
     activePlanIndex: null
   },
   getters: {
@@ -45,7 +45,7 @@ export default {
     }
   },
   actions: {
-    async load({commit}) {
+    async load({ commit }) {
       let plans = await plansApi.all();
       plans.forEach(el => {
         el.data.forEach(d => {
@@ -62,7 +62,7 @@ export default {
     },
     selectPlan(store, data) {
       store.commit('setActivePlanIndex', data);
-      store.dispatch('results/resetResultSelection', { planIndex: data }, {root: true})
+      store.dispatch('results/resetResultSelection', { planIndex: data }, { root: true })
     },
     setDataFile(store, data) {
       store.commit('setDataFile', data);
@@ -71,38 +71,38 @@ export default {
       store.commit('changeText', data);
     },
     async planNewTask(store, i) {
-        let dzzs = [];
-        let params = [];
-        let vectors = [];
-        let files = [];
-        let plan = store.getters.getPlans[i];
-        let links = {
-          dzzs: [],
-          params: [],
-          vectors: [],
-          files: []
-        };
-        let planId = plan.id;
+      let dzzs = [];
+      let params = [];
+      let vectors = [];
+      let files = [];
+      let plan = store.getters.getPlans[i];
+      let links = {
+        dzzs: [],
+        params: [],
+        vectors: [],
+        files: []
+      };
+      let planId = plan.id;
 
-        plan.data.forEach(el => {
-          if (el.file != null) {
-            files.push(el.file);
-            links.files.push(el.id);
-          } else if (el.dzzIndex != null) {
-            dzzs.push(el.dzzIndex)
-            links.dzzs.push(el.id);
-          } else if (el.text != null) {
-            params.push(el.text)
-            links.params.push(el.id);
-          } else {
-            vectors.push(store.rootGetters['map/getActivePolygonJson']);
-            links.vectors.push(el.id);
-          }
-        })
-        console.log({dzzs, params, vectors, files, planId, links});
-        tasksApi.add({dzzs, params, vectors, files, planId, links}).catch((e) => {
-          console.log(e);
-        });
+      plan.data.forEach(el => {
+        if (el.file != null) {
+          files.push(el.file);
+          links.files.push(el.id);
+        } else if (el.dzzIndex != null) {
+          dzzs.push(el.dzzIndex)
+          links.dzzs.push(el.id);
+        } else if (el.text != null) {
+          params.push(el.text)
+          links.params.push(el.id);
+        } else {
+          vectors.push(store.rootGetters['map/getActivePolygonJson']);
+          links.vectors.push(el.id);
+        }
+      })
+      console.log({ dzzs, params, vectors, files, planId, links });
+      tasksApi.add({ dzzs, params, vectors, files, planId, links }).catch((e) => {
+        console.log(e);
+      });
     }
   }
 }

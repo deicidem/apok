@@ -110,7 +110,11 @@
                           @click="navigate"
                           class="button button-svg data-btn"
                         >
-                          <img src="@/assets/img/choose.svg" alt="Выбрать" />
+                          <img
+                            svg-inline
+                            src="@/assets/img/choose.svg"
+                            alt="Выбрать"
+                          />
                         </button>
                       </router-link>
                       <div class="tooltiptext">Выбрать</div>
@@ -393,7 +397,6 @@ export default {
     &__wrapper {
       position: relative;
       margin-left: 10px;
-      
     }
     &-g {
       background: $color-main;

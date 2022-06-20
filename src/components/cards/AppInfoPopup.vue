@@ -1,11 +1,11 @@
 <template>
-  <div class="card" >
-    <div class="card-close" @click="onCardClose()">
+  <div class="card">
+    <div class="card-close" @click="$emit('cardClose')">
       <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
     </div>
     <div class="card-title">Информация по объекту</div>
     <div class="card-img">
-      <img :src="cardData.previewPath" alt="" />
+      <img :src="cardData.previewPath" alt="Информация" />
     </div>
     <div class="card-table__wrapper">
       <table class="card-table">
@@ -46,21 +46,13 @@
     <div class="card-buttons">
       <button
         class="button button-g card-button"
-        @click="onPolygonButtonClick(card.ind, cardData.id, cardData.geography)"
+        @click="$emit('PolygonButtonClick')"
       >
         Скрыть контур
       </button>
       <button
         class="button button-white card-button"
-        type="white"
-        @click="
-          onImageButtonClick(
-            card.ind,
-            cardData.id,
-            cardData.previewPath,
-            cardData.geography.bbox
-          )
-        "
+        @click="$emit('ImageButtonClick')"
       >
         Показать изображение
       </button>
@@ -78,27 +70,7 @@ export default {
       },
     };
   },
-  computed: {
-    cardData() {
-      if (this.card.ind != null) {
-        return this.results[this.card.ind];
-      } else {
-        return null;
-      }
-    },
-  },
-  methods: {
-
-    onImageButtonClick() {
-      
-    },
-    onCardButtonClick() {
-      
-    },
-    onCardClose() {
-      
-    },
-  },
+  props: ["cardData"],
 };
 </script>
 

@@ -66,7 +66,7 @@ export default {
     padding: 10px 15px;
 
     border-radius: 10px;
-    background: #fff;
+    background: $white;
     box-shadow: $shadow-big;
     &__task {
       color: $text-green;

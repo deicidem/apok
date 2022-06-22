@@ -47,21 +47,21 @@
       </div>
     </div>
     <portal to="password-popup">
-      <app-password-popup
+      <user-change-password-form
         v-show="showPopup"
         @close="showPopup = false"
         @submit="updatePassword"
-      ></app-password-popup>
+      ></user-change-password-form>
     </portal>
   </div>
 </template>
 
 <script>
-import AppPasswordPopup from "@/components/cards/AppPasswordPopup.vue";
-import {mapGetters, mapActions} from "vuex";
+import UserChangePasswordForm from "@/components/user/UserChangePasswordForm";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
-    AppPasswordPopup,
+    UserChangePasswordForm,
   },
   data() {
     return {
@@ -82,32 +82,35 @@ export default {
           editable: true,
         },
       },
+
       editable: false,
       showPopup: false,
     };
   },
   computed: {
-    ...mapGetters("users", ["getUser"])
+    ...mapGetters("users", ["getUser"]),
+  },
+  mounted() {
+    this.user.firstName.value = this.getUser.first_name;
+    this.user.lastName.value = this.getUser.last_name;
+    this.user.email.value = this.getUser.email;
   },
   methods: {
     ...mapActions("users", ["updateUser", "updatePassword"]),
+
     onEditDone() {
       this.editable = false;
       this.updateUser({
         firstName: this.user.firstName.value,
         lastName: this.user.lastName.value,
         email: this.user.email.value,
-        })
+      });
     },
+
     onEdit(evt, key) {
       this.user[key].value = evt.target.innerText;
     },
   },
-  mounted() {
-    this.user.firstName.value = this.getUser.first_name;
-    this.user.lastName.value = this.getUser.last_name;
-    this.user.email.value = this.getUser.email;
-  }
 };
 </script>
 
@@ -117,7 +120,7 @@ export default {
   padding: 20px;
 
   border-radius: 10px;
-  background: #fff;
+  background: $white;
   box-shadow: $shadow-big;
   &-edit {
     display: flex;
@@ -127,7 +130,7 @@ export default {
   &-title {
     font-weight: 400;
     font-size: 1.25rem;
-    color: #000;
+    color: $black;
     margin-bottom: 20px;
   }
   &-wrapper {
@@ -143,7 +146,7 @@ export default {
       width: 80px;
     }
     &__info {
-      color: #000;
+      color: $black;
       margin-bottom: 14px;
       font-size: 14px;
       &:last-child {
@@ -177,7 +180,7 @@ export default {
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;
-  padding-left:10px;
+  padding-left: 10px;
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
@@ -187,7 +190,7 @@ export default {
   color: $text-grey;
   font-size: 14px;
   margin-left: 30px;
-  padding-left:10px;
+  padding-left: 10px;
   line-height: 30px;
 
   width: 200px;

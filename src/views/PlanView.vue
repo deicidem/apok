@@ -92,7 +92,7 @@ export default {
   background: $gradient-w;
   &-title {
     margin: 0;
-    color: #000;
+    color: $black;
     font-weight: 400;
   }
   .a {
@@ -132,18 +132,18 @@ export default {
       box-shadow: $shadow-big;
       border-radius: 10px;
       overflow: hidden;
-      background: #fff;
+      background: $white;
       &:last-child {
         margin-bottom: 0;
       }
     }
     &__title {
       font-size: 1.25rem;
-      color: #000;
+      color: $black;
     }
     &__text {
       margin-top: 20px;
-      color: #000;
+      color: $black;
       p {
         margin: 0;
       }
@@ -152,7 +152,7 @@ export default {
       }
     }
     &__img {
-      background: #fff;
+      background: $white;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: $shadow-big;

@@ -40,7 +40,7 @@ export default {
   cursor: pointer;
 }
 .button-content {
-  color: #fff;
+  color: $white;
 }
 .white {
   .button-content {
@@ -77,7 +77,7 @@ export default {
 }
 
 .red {
-  color: #fff;
+  color: $white;
   background: $gradient_r;
 }
 </style>

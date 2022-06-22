@@ -13,7 +13,7 @@
     </div>
     <div class="results-content">
       <portal to="popup-card">
-        <app-info-popup
+        <result-info
           :cardData="cardData"
           @cardClose="onCardClose()"
           @PolygonButtonClick="
@@ -29,7 +29,7 @@
           "
           v-if="card.ind != null"
           v-show="card.active"
-        ></app-info-popup>
+        ></result-info>
       </portal>
 
       <div class="results-wrapper">
@@ -146,13 +146,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
-import AppInfoPopup from "@/components/cards/AppInfoPopup";
+import ResultInfo from "@/components/results/ResultInfo.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
   components: {
     AppTable,
-    AppInfoPopup,
+    ResultInfo,
     // VsPagination,
   },
   data() {
@@ -344,7 +344,7 @@ export default {
   z-index: 11;
   position: absolute;
   width: 300px;
-  background: #000;
+  background: $black;
   top: 20px;
   right: 20px;
   background: $gradient-w;
@@ -377,19 +377,19 @@ export default {
   }
   &-title {
     font-size: 16px;
-    color: #000;
+    color: $black;
     margin-bottom: 15px;
   }
   &-img {
     width: 200px;
     margin-bottom: 20px;
-    border: 1px solid #000;
+    border: 1px solid $black;
   }
   &-table {
     &__wrapper {
       flex: 1;
     }
-    color: #000;
+    color: $black;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
@@ -432,12 +432,12 @@ export default {
         height: 100%;
       }
       svg path {
-        fill: #fff;
+        fill: $white;
       }
     }
     &__subtitle {
       margin-left: 10px;
-      color: #fff;
+      color: $white;
       font-size: 14px;
     }
   }
@@ -449,8 +449,8 @@ export default {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: #fff;
-    box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+    background: $white;
+    box-shadow: inset 1px 1px 3px rgba($black, 0.15);
   }
   &-table {
     &__header {
@@ -529,7 +529,7 @@ export default {
     &.active {
       background: $color-main;
       svg path {
-        fill: #fff;
+        fill: $white;
       }
     }
     &:first-child {

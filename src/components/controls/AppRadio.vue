@@ -74,7 +74,7 @@ export default {
 
   border-radius: 50%;
   opacity: 1;
-  background: #fff;
+  background: $white;
 
   transition: 0.1s ease-out;
 }

@@ -90,7 +90,7 @@ export default {
 
   font-size: 14px;
   border-radius: 5px;
-  color: #fff;
+  color: $white;
   background: $gradient;
   opacity: 0;
 

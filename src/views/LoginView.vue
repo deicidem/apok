@@ -7,7 +7,7 @@
 <script>
 import { mapActions } from "vuex";
 
-import AppAuthPopup from "../components/AppAuthPopup.vue";
+import AppAuthPopup from "../components/auth/LoginForm.vue";
 
 export default {
   components: { AppAuthPopup },
@@ -53,7 +53,8 @@ export default {
   z-index: 1;
 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -71,11 +72,10 @@ export default {
     border-radius: 10px;
     border: none;
     box-shadow: $shadow-big;
-    margin: 16% auto;
     &-title {
       text-align: center;
       font-size: 20px;
-      color: #000;
+      color: $black;
       margin-bottom: 20px;
     }
     &-wrapper {
@@ -130,7 +130,7 @@ export default {
       rgb(235, 96, 96, 0.6),
       rgb(141, 70, 70, 0.6)
     );
-    color: #fff;
+    color: $white;
     font-size: 14px;
     border-radius: 10px;
     p {

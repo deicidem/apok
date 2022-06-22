@@ -259,6 +259,7 @@ export default {
     return {
       file: null,
       areaType: null,
+
       inputMaskLat: {
         pattern: `111°11'11" N`,
         formatCharacters: {
@@ -269,6 +270,7 @@ export default {
         },
       },
       placeholderLat: "000°00'00\" N",
+
       inputMaskLng: {
         pattern: `111°11'11" E`,
         formatCharacters: {
@@ -279,6 +281,7 @@ export default {
         },
       },
       placeholderLng: "000°00'00\" W",
+
       lng: "",
       lat: "",
       rad: "",
@@ -332,6 +335,7 @@ export default {
       "setFilePolygon",
       "setFilePolygonActive",
     ]),
+
     selectScreenArea() {
       this.clearCoordinates();
       this.addCoordinate({ coordinate: this.getBounds.getNorthEast() });
@@ -340,12 +344,15 @@ export default {
       this.addCoordinate({ coordinate: this.getBounds.getSouthEast() });
       this.setZoom({ value: this.getZoom - 1 });
     },
+
     onFileUpload() {
       this.file = this.$refs.file.files[0];
     },
+
     sendFile() {
       this.setFilePolygon(this.file);
     },
+
     changeZoneType(type) {
       this.searchZoneType = type;
       if (this.searchZoneType == 1) {
@@ -356,6 +363,7 @@ export default {
         this.setFilePolygonActive();
       }
     },
+
     createCircle() {
       let lat = this.parseCoords(this.lat);
       let lng = this.parseCoords(this.lng);
@@ -363,14 +371,17 @@ export default {
       this.setCirclePolygon({ radius, center: { lng, lat } });
       this.setCenter({ coordinate: [lng, lat] });
     },
+
     removeCircle() {
       this.setCirclePolygon(null);
     },
+
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
       let lng = this.parseCoords(this.newCoord.lng);
       this.addCoordinate({ coordinate: { lat, lng } });
     },
+
     parseCoords(coord) {
       let str = coord;
       let deg = "";
@@ -411,6 +422,7 @@ export default {
       }
       return deg;
     },
+
     submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -475,7 +487,7 @@ label.active {
     align-items: center;
     margin-bottom: 10px;
 
-    color: #000;
+    color: $black;
   }
   &__nav {
     display: flex;
@@ -503,7 +515,7 @@ label.active {
         font-family: inherit;
         border: none;
         background: none;
-        color: #000;
+        color: $black;
         cursor: pointer;
         &:hover {
           color: $color-main;
@@ -522,7 +534,7 @@ label.active {
 
     box-shadow: $shadow-big;
     border-radius: 10px;
-    background: #fff;
+    background: $white;
   }
   &__card {
     margin-top: 14px;
@@ -530,7 +542,7 @@ label.active {
 
     box-shadow: $shadow-big;
     border-radius: 10px;
-    background: #fff;
+    background: $white;
   }
   &__table {
     flex: 1;
@@ -556,7 +568,7 @@ label.active {
           font-size: 12px;
 
           border: none;
-          color: #000000;
+          color: $black;
           box-sizing: border-box;
         }
         td {
@@ -656,7 +668,7 @@ label.active {
       right: 0;
       top: 0;
       border-radius: 0 10px 10px 0;
-      color: #fff;
+      color: $white;
       line-height: 35px;
       text-align: center;
       margin: 0;
@@ -696,7 +708,7 @@ label.active {
   &__name {
     margin-left: 20px;
     font-size: 14px;
-    color: #000;
+    color: $black;
   }
   &__input {
     display: none;

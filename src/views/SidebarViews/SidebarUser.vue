@@ -3,9 +3,8 @@
     <h2 class="sidebar-title">Личный кабинет</h2>
     <vuescroll :ops="scrollOps">
       <div class="person-wrapper">
-        
         <div class="person-content">
-          <app-person></app-person>
+          <user-information></user-information>
         </div>
       </div>
     </vuescroll>
@@ -13,18 +12,18 @@
 </template>
 
 <script>
-import AppPerson from "@/components/cards/AppPerson.vue";
+import UserInformation from "@/components/user/UserInformation.vue";
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components: {
     vuescroll,
-    AppPerson,
+    UserInformation,
   },
   computed: {
     ...mapGetters(["scrollOps"]),
-  }
+  },
 };
 </script>
 

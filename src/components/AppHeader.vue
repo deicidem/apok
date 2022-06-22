@@ -1,6 +1,8 @@
 <template>
-  <header class="header" >
-    <h1 class="title">Комплексная тематическая обработка данных космической съемки</h1>
+  <header class="header">
+    <h1 class="title">
+      Комплексная тематическая обработка данных космической съемки
+    </h1>
 
     <div class="header-items">
       <nav class="header-nav">
@@ -21,8 +23,7 @@
         </div>
         <div class="header-menu__buttons">
           <div class="button__wrapper header-menu__button-wrapper">
-
-            <router-link to="/login" custom v-slot="{navigate}">
+            <router-link to="/login" custom v-slot="{ navigate }">
               <button
                 class="button button-svg button-white header-menu__button"
                 @click="navigate"
@@ -31,7 +32,6 @@
               </button>
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>
-
           </div>
           <div class="button__wrapper header-menu__button-wrapper">
             <button
@@ -51,11 +51,11 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  methods: {
-    ...mapActions("users", ["logout"]),
-  },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
+  },
+  methods: {
+    ...mapActions("users", ["logout"]),
   },
 };
 </script>
@@ -73,7 +73,7 @@ export default {
 
   background: $gradient;
   box-shadow: $shadow-big;
-  color: #fff;
+  color: $white;
 }
 .user-box {
   display: none;
@@ -99,7 +99,7 @@ export default {
     justify-content: space-between;
     padding: 20px 100px;
 
-    background: #fff;
+    background: $white;
     box-shadow: $shadow-big;
   }
   &-nav {
@@ -113,7 +113,7 @@ export default {
       li {
         margin-right: 50px;
         a {
-          color: #000;
+          color: $black;
           font-size: 20px;
           img {
             height: 60px;
@@ -128,7 +128,7 @@ export default {
     &__text {
       margin-right: 50px;
       font-size: 1.25rem;
-      color: #000;
+      color: $black;
     }
     &__buttons {
       display: flex;

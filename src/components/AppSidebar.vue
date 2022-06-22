@@ -2,7 +2,7 @@
   <div class="sidebar_wrap" :class="active ? 'active' : ''">
     <!-- <transition name="slide"> -->
     <div class="sidebar" :class="{ active }">
-      <app-plan-data v-if="isAuth"></app-plan-data>
+      <plan-data v-if="isAuth"></plan-data>
       <div class="sidebar-content">
         <router-view> </router-view>
       </div>
@@ -121,7 +121,7 @@
       </div>
 
       <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/person" custom v-slot="{ navigate, isActive }">
+        <router-link to="/main/user" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
             :class="{ active: isActive }"
@@ -143,12 +143,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import AppPlanData from "@/components/cards/AppPlanData";
-
+import PlanData from "@/components/plan/PlanData.vue";
 export default {
   name: "AppSidebar",
   components: {
-    AppPlanData,
+    PlanData,
   },
   data() {
     return {
@@ -166,14 +165,17 @@ export default {
   },
   methods: {
     ...mapActions(["setSidebarState"]),
+
     open() {
       this.setSidebarState(true);
       this.$emit("open");
     },
+
     close() {
       this.setSidebarState(false);
       this.$emit("close");
     },
+
     toggleSidebar() {
       if (this.active) {
         this.close();
@@ -198,7 +200,7 @@ export default {
     width: 18px;
     height: 18px;
 
-    color: #fff;
+    color: $white;
     font-size: 12px;
     background: $gradient-r;
     border-radius: 50%;
@@ -261,7 +263,7 @@ export default {
     padding: 6px;
 
     background: $gradient;
-    color: #fff;
+    color: $white;
     text-align: center;
     font-size: 18px;
     font-weight: 400;
@@ -271,7 +273,7 @@ export default {
     position: relative;
     height: 100%;
 
-    background: #edecec;
+    background: $white-dark;
     overflow: hidden;
   }
   &-open {
@@ -293,9 +295,9 @@ export default {
     &:focus-within {
       background: #384342;
       box-sizing: border-box;
-      border-top: 1px solid #fff;
-      border-left: 1px solid #fff;
-      border-right: 1px solid #fff;
+      border-top: 1px solid $white;
+      border-left: 1px solid $white;
+      border-right: 1px solid $white;
     }
   }
   &-close {
@@ -311,7 +313,7 @@ export default {
     font-size: 14px;
     box-sizing: border-box;
 
-    color: #fff;
+    color: $white;
     transition: color 0.2s ease-out;
   }
   &-collapsed {
@@ -323,7 +325,7 @@ export default {
     height: 100%;
     width: 50px;
 
-    background: #ffffff;
+    background: $white;
     box-shadow: $shadow-small;
     display: flex;
     flex-direction: column;
@@ -358,7 +360,7 @@ export default {
         opacity: 0;
 
         color: #618580;
-        background: #ffffff;
+        background: $white;
         box-shadow: $shadow-small;
         border-radius: 10px;
 

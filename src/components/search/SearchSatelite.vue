@@ -1,17 +1,17 @@
 <template>
-  <div class="search-spacecraft">
+  <div class="search-satelite">
     <h2 class="search-title">Космический аппарат</h2>
     <div class="accordion">
       <div
         class="accordion-item"
-        v-for="(series, i) in getSpacecrafts"
+        v-for="(series, i) in getsatelites"
         :key="series.id"
       >
         <div class="accordion-item__header" @click="updateShow(i)">
           <div
             v-bind:class="{
-              'accordion-item__close': !spacecraftsShow[i].show,
-              'accordion-item__open': spacecraftsShow[i].show,
+              'accordion-item__close': !satelitesShow[i].show,
+              'accordion-item__open': satelitesShow[i].show,
             }"
           ></div>
           <app-checkbox
@@ -21,7 +21,7 @@
           />
           <p>{{ series.name }}</p>
         </div>
-        <div class="accordion-item__body" v-show="spacecraftsShow[i].show">
+        <div class="accordion-item__body" v-show="satelitesShow[i].show">
           <div
             class="accordion-item__content"
             v-for="(sc, j) in series.models"
@@ -30,15 +30,15 @@
             <div class="accordion-item__header" @click="updateShow(i, j)">
               <div
                 v-bind:class="{
-                  'accordion-item__close': !spacecraftsShow[i].children[j].show,
-                  'accordion-item__open': spacecraftsShow[i].children[j].show,
+                  'accordion-item__close': !satelitesShow[i].children[j].show,
+                  'accordion-item__open': satelitesShow[i].children[j].show,
                 }"
               ></div>
               <app-checkbox
                 :mini="true"
                 :modelValue="sc.checked"
                 @change="
-                  selectSpacecraft({
+                  selectsatelite({
                     seriesInd: i,
                     scInd: j,
                     checked: $event,
@@ -52,7 +52,7 @@
 
             <div
               class="accordion-item__body"
-              v-show="spacecraftsShow[i].children[j].show"
+              v-show="satelitesShow[i].children[j].show"
             >
               <div class="accordion-item__content">
                 <label class="accordion-item__header">
@@ -60,7 +60,7 @@
                     :mini="true"
                     :modelValue="sc.mss"
                     @change="
-                      selectSpacecraft({
+                      selectsatelite({
                         seriesInd: i,
                         scInd: j,
                         checked: $event || sc.pss,
@@ -80,7 +80,7 @@
                     :mini="true"
                     :modelValue="sc.pss"
                     @change="
-                      selectSpacecraft({
+                      selectsatelite({
                         seriesInd: i,
                         scInd: j,
                         checked: $event || sc.mss,
@@ -112,35 +112,36 @@ export default {
   },
   data() {
     return {
-      spacecraftsShow: [],
+      satelitesShow: [],
       checkbox: "",
     };
   },
   computed: {
-    ...mapGetters("search", ["getSpacecrafts"], "isSelected"),
-  },
-  methods: {
-    ...mapActions("search", ["selectSpacecraft", "selectSeries"]),
-    updateShow(seriesInd, scInd = null) {
-      console.log(seriesInd);
-      if (scInd == null) {
-        this.spacecraftsShow[seriesInd].show =
-          !this.spacecraftsShow[seriesInd].show;
-      } else {
-        this.spacecraftsShow[seriesInd].children[scInd].show =
-          !this.spacecraftsShow[seriesInd].children[scInd].show;
-      }
-    },
+    ...mapGetters("search", ["getsatelites"], "isSelected"),
   },
   beforeMount() {
-    this.getSpacecrafts.forEach((el) => {
-      this.spacecraftsShow.push({
+    this.getsatelites.forEach((el) => {
+      this.satelitesShow.push({
         children: el.models.map(() => {
           return { show: false };
         }),
         show: false,
       });
     });
+  },
+  methods: {
+    ...mapActions("search", ["selectsatelite", "selectSeries"]),
+
+    updateShow(seriesInd, scInd = null) {
+      console.log(seriesInd);
+      if (scInd == null) {
+        this.satelitesShow[seriesInd].show =
+          !this.satelitesShow[seriesInd].show;
+      } else {
+        this.satelitesShow[seriesInd].children[scInd].show =
+          !this.satelitesShow[seriesInd].children[scInd].show;
+      }
+    },
   },
 };
 </script>
@@ -155,7 +156,7 @@ export default {
   opacity: 0;
 }
 .search {
-  &-spacecraft {
+  &-satelite {
     margin-top: 20px;
     padding: 20px;
 
@@ -170,13 +171,13 @@ export default {
   box-shadow: $shadow-small;
   border-radius: 10px;
   overflow: hidden;
-  background: #fff;
+  background: $white;
   &-item {
     position: relative;
     p {
       margin: 0 auto 0 4px;
 
-      color: #000;
+      color: $black;
       font-size: 0.875rem;
     }
     &__img {
@@ -221,7 +222,7 @@ export default {
 }
 @media screen and (max-width: 1440px) {
   .search {
-    &-spacecraft {
+    &-satelite {
       padding: 14px;
     }
   }

@@ -6,13 +6,13 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.1.104/apok_backend_php/public/api/',
+        target: 'http://localhost/apok_backend_php/public/api/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         },
         onProxyReq: function(request) {
-          request.setHeader("origin", "http://192.168.1.104");
+          request.setHeader("origin", "http://localhost");
         },
       }
     }

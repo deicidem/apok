@@ -208,8 +208,43 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters("search", ["getTimeInterval"]),
+
+    monthsValue() {
+      if (this.allMonths) {
+        return "Все";
+      } else {
+        let res = "";
+        this.months.forEach((el) => {
+          res += el.cnt + " ";
+        });
+        return res;
+      }
+    },
+
+    months() {
+      let res = [];
+      this.monthsOptions.forEach((el) => {
+        if (el.active) {
+          res.push({ ...el });
+        }
+      });
+      return res;
+    },
+
+    allMonths() {
+      return this.months.length == 12;
+    },
+  },
+  mounted() {
+    this.getTimeInterval.months.forEach((el) => {
+      this.monthsOptions[el.cnt - 1].active = true;
+    });
+  },
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
+
     onAllCheck($event) {
       if ($event) {
         this.monthsOptions.forEach((el) => {
@@ -226,9 +261,11 @@ export default {
         months: this.months,
       });
     },
+
     away() {
       this.selectActive = false;
     },
+
     submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -237,37 +274,6 @@ export default {
         return;
       }
     },
-  },
-  computed: {
-    ...mapGetters("search", ["getTimeInterval"]),
-    monthsValue() {
-      if (this.allMonths) {
-        return "Все";
-      } else {
-        let res = "";
-        this.months.forEach((el) => {
-          res += el.cnt + " ";
-        });
-        return res;
-      }
-    },
-    months() {
-      let res = [];
-      this.monthsOptions.forEach((el) => {
-        if (el.active) {
-          res.push({ ...el });
-        }
-      });
-      return res;
-    },
-    allMonths() {
-      return this.months.length == 12;
-    },
-  },
-  mounted() {
-    this.getTimeInterval.months.forEach((el) => {
-      this.monthsOptions[el.cnt - 1].active = true;
-    });
   },
 };
 </script>
@@ -397,7 +403,7 @@ label.active {
     flex-direction: column;
     width: 158px;
 
-    background: #fff;
+    background: $white;
     box-shadow: $shadow-small;
     border-radius: 10px;
   }
@@ -416,7 +422,7 @@ label.active {
     }
     &.active {
       background: $color-main;
-      color: #fff;
+      color: $white;
     }
   }
 }
@@ -458,7 +464,7 @@ label.active {
       span {
         .prev {
           &::after {
-            color: #000 !important;
+            color: $black !important;
           }
         }
       }
@@ -473,7 +479,7 @@ label.active {
 }
 .selected {
   background: $color-main !important;
-  color: #fff !important;
+  color: $white !important;
 }
 @media screen and (max-width: 1440px) {
   .vdp-datepicker input {

@@ -1,7 +1,7 @@
 <template>
   <div class="tasks">
     <h2 class="sidebar-title">Мои задачи</h2>
-    <app-delete-confirm ref="deleteConfirm"></app-delete-confirm>
+    <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     <vuescroll :ops="scrollOps">
       <div class="tasks__wrapper">
         <app-table v-if="tasks != null">
@@ -105,11 +105,11 @@
               v-if="item.result != null"
             >
               <td colspan="6">
-                <app-preview
+                <task-result
                   :views="item.result.views"
                   :files="item.result.files"
                   :taskIndex="i"
-                ></app-preview>
+                ></task-result>
               </td>
             </tr>
           </tbody>
@@ -117,12 +117,14 @@
         <div class="tasks-buttons">
           <button
             class="button button-r"
-            :disabled="deleteBanchDisabled"
+            :disabled="noItemsSelected || notDeletableItemSelected"
             @click="onDeleteBanch"
           >
             Удалить выбранное
           </button>
-          <button class="button button-g">Добавить в избранное</button>
+          <button class="button button-g" :disabled="noItemsSelected">
+            Добавить в избранное
+          </button>
         </div>
       </div>
 
@@ -136,8 +138,8 @@ import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
 import AppTable from "@/components/table/AppTable";
-import AppPreview from "@/components/cards/AppPreview";
-import AppDeleteConfirm from "@/components/cards/AppDeleteConfirm";
+import TaskResult from "@/components/tasks/TaskResult";
+import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
@@ -147,9 +149,9 @@ export default {
     AppCheckbox,
     AppTable,
     vuescroll,
-    AppDeleteConfirm,
+    AppDeleteConfirmation,
     // VsPagination,
-    AppPreview,
+    TaskResult,
   },
   data() {
     return {
@@ -174,7 +176,6 @@ export default {
           key: "status",
           active: false,
         },
-        
       ],
       reportType: false,
       pictureType: false,
@@ -196,25 +197,30 @@ export default {
       }
       return res;
     },
-    deleteBanchDisabled() {
-      if (this.tasks == null) {
-        return false;
-      }
-      let isNotDeletableSelected = false;
-      let cnt = 0;
-      for (let i = 0; i < this.tasks.length; i++) {
-        if (this.tasks[i].selected) {
-          if (!this.tasks[i].deletable) {
-            isNotDeletableSelected = true;
-            break;
-          }
-          cnt++;
+    noItemsSelected() {
+      let tasks = this.tasks;
+      let res = true;
+      for (let i = 0; i < tasks?.length; i++) {
+        if (tasks[i].selected) {
+          res = false;
+          break;
         }
       }
-      if (isNotDeletableSelected || cnt == 0) {
-        return true;
+      return res;
+    },
+    notDeletableItemSelected() {
+      let tasks = this.tasks;
+      let res = false;
+      if (tasks == null) {
+        return false;
       }
-      return false;
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].selected && !tasks[i].deletable) {
+          res = true;
+          break;
+        }
+      }
+      return res;
     },
   },
   methods: {
@@ -330,7 +336,7 @@ export default {
       border-radius: 3px;
       height: 10px;
       background: $gradient-w;
-      box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+      box-shadow: inset 1px 1px 3px rgba($black, 0.15);
       overflow: hidden;
       &__value {
         border-radius: 3px;
@@ -367,7 +373,7 @@ export default {
     &.active {
       background: $color-main;
       svg path {
-        fill: #fff;
+        fill: $white;
       }
     }
   }

@@ -5,12 +5,12 @@
       <div class="data-wrapper">
         <div class="data-item">
           <portal to="popup">
-            <app-plan-popup
+            <plan-upload-requirements-popup
               :plan="activePlan"
               :data="planPopup.data"
               v-if="planPopup.visible"
               @close="onPopupClose"
-            ></app-plan-popup>
+            ></plan-upload-requirements-popup>
           </portal>
           <div class="data-info">
             <h6 class="data__subtitle">Задача:</h6>
@@ -167,9 +167,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import * as filesApi from "@/api/files";
-import AppPlanPopup from "@/components/AppPlanPopup.vue";
+import PlanUploadRequirementsPopup from "@/components/plan/PlanUploadRequirementsPopup";
 
 export default {
+  components: {
+    PlanUploadRequirementsPopup,
+  },
   data() {
     return {
       planPopup: {
@@ -180,14 +183,12 @@ export default {
       showSelect: false,
     };
   },
-  components: {
-    AppPlanPopup,
-  },
   computed: {
     ...mapGetters("plans", ["getPlans", "activePlanIndex"]),
     ...mapGetters("map", ["getActivePolygonJson"]),
     ...mapGetters("results", ["getSelectable", "getResults", "resultsMap"]),
     ...mapGetters(["getDataCardState", "scrollOps"]),
+
     activePlan() {
       return this.getPlans[this.activePlanIndex];
     },
@@ -201,9 +202,11 @@ export default {
       "selectPlan",
     ]),
     ...mapActions(["setDataCardState"]),
+
     setPlanPopupData(i) {
       this.$set(this.planPopup, "data", this.activePlan.data[i]);
     },
+
     onParamChange(e, i) {
       this.changeText({
         dataIndex: i,
@@ -211,6 +214,7 @@ export default {
         text: e.target.value,
       });
     },
+
     startPlan() {
       let formData = new FormData();
       this.$refs.dzzFile.forEach((el, i) => {
@@ -219,6 +223,7 @@ export default {
       let data = filesApi.loadDzzArchive(formData);
       console.log(data);
     },
+
     onPopupClose(file) {
       this.setDataFile({
         planIndex: this.activePlanIndex,
@@ -227,11 +232,13 @@ export default {
       });
       this.planPopup.visible = false;
     },
+
     onUploadClick(i) {
       this.setPlanPopupData(i);
       this.planPopup.visible = true;
       this.planPopup.dataIndex = i;
     },
+
     selectDzz(i) {
       this.setSelectable({
         type: i,
@@ -239,12 +246,8 @@ export default {
         planIndex: this.activePlanIndex,
         dataIndex: i,
       });
-      // if (this.getSelectable) {
-      //   this.activePlan.data.forEach((el, i) => {
-
-      //   });
-      // }
     },
+
     onSelect(index) {
       this.selectPlan(index);
       this.showSelect = false;
@@ -281,8 +284,8 @@ export default {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: #fff;
-    // box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+    background: $white;
+    // box-shadow: inset 1px 1px 3px rgba($black, 0.15);
     box-shadow: $shadow-small;
     &.hidden {
       background: none;
@@ -318,14 +321,14 @@ export default {
     }
   }
   &-title {
-    color: #000;
+    color: $black;
     font-size: 18px;
     font-weight: 400;
     text-align: center;
     margin-bottom: 16px;
   }
   &-item {
-    background: #fff;
+    background: $white;
     position: relative;
     margin-bottom: 10px;
     width: 100%;
@@ -363,11 +366,11 @@ export default {
     font-size: 12px;
     width: 100%;
     text-align: left;
-    color: #000;
+    color: $black;
   }
   &__input {
     border: 1px solid #dfdfdf;
-    background: #fff;
+    background: $white;
     min-height: 30px;
     min-width: 360px;
     width: 100%;
@@ -401,7 +404,7 @@ export default {
     &-g {
       background: $color-main;
       svg path {
-        fill: #fff;
+        fill: $white;
       }
     }
   }
@@ -410,7 +413,7 @@ export default {
     margin: 10px 16px 0 auto;
   }
   &__selected {
-    background: #fff;
+    background: $white;
     border: 1px solid #dfdfdf;
     min-height: 30px;
     min-width: 360px;
@@ -423,21 +426,21 @@ export default {
     }
   }
   &__select {
-    background: #fff;
+    background: $white;
     margin-top: 4px;
     z-index: 10;
     position: absolute;
     top: calc(100% - 10px);
     width: 360px;
     left: 10px;
-    background: #fff;
+    background: $white;
     box-shadow: $shadow-big;
     border-radius: 10px;
     &__item {
       position: relative;
       padding: 8px 10px;
       font-size: 12px;
-      color: #000;
+      color: $black;
       transition: all 0.2s ease-out;
       border-bottom: 1px solid #dfdfdf;
       cursor: pointer;

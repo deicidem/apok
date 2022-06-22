@@ -11,13 +11,13 @@
           </div>
         </router-link>
 
-        <h2 class="fullScreen-title">Отчет</h2>
+        <h2 class="fullScreen-title">{{title}}</h2>
 
         <button class="button button-g fullScreen-button">Скачать</button>
       </div>
 
-      <div class="fullScreen-report">
-        <img src="@/assets/img/report.png" />
+      <div class="fullScreen-picture">
+        <img :src="path" alt="">
       </div>
     </vuescroll>
   </div>
@@ -31,6 +31,7 @@ export default {
   components: {
     vuescroll,
   },
+  props: ['title', 'path'],
   computed: {
     ...mapGetters(["scrollOps"]),
   },
@@ -54,7 +55,7 @@ export default {
   }
   &-title {
     margin: 0;
-    color: #000;
+    color: $black;
     font-weight: 400;
   }
   &-button {
@@ -64,12 +65,12 @@ export default {
     width: 270px;
     font-size: 1.125rem;
   }
-  &-report {
+  &-picture {
     margin: 50px auto;
     img {
       margin: 20px auto;
       max-width: 100%;
-      min-width: 50%;
+      max-height: 100%;
       height: auto;
       width: auto;
     }

@@ -1,7 +1,7 @@
 <template>
   <l-map
     ref="map"
-    @update:zoom="setZoom({value: $event})"
+    @update:zoom="setZoom({ value: $event })"
     @update:center="updateCenter($event)"
     @update:bounds="updateBounds($event)"
     @click="onClick($event)"
@@ -43,7 +43,6 @@
       v-if="filePolygon.geometry != null"
       :geojson="filePolygon.geometry"
     ></l-geo-json>
-
 
     <l-circle
       v-if="circle.active && circle.geometry != null"
@@ -152,8 +151,9 @@ export default {
       images: "getImages",
       viewImages: "getViewImages",
       filePolygon: "getFilePolygon",
-      needUpdateBounds: "getNeedUpdateBounds"
+      needUpdateBounds: "getNeedUpdateBounds",
     }),
+
     icon() {
       return require("@/assets/img/geo_marker.svg");
     },
@@ -165,35 +165,41 @@ export default {
       "setCenter",
       "setZoom",
       "setBounds",
-      "setNeedUpdateBounds"
+      "setNeedUpdateBounds",
     ]),
+
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();
-      this.setCenter({coordinate: center});
+      this.setCenter({ coordinate: center });
     },
+
     updateBounds(bounds) {
-      this.setBounds({bounds});
+      this.setBounds({ bounds });
     },
+
     // Добавление маркеров
     onClick($event) {
       if (
         this.drawable &&
         $event.originalEvent.target.classList.contains("vue2leaflet-map")
       ) {
-        this.addCoordinate({coordinate: $event.latlng});
+        this.addCoordinate({ coordinate: $event.latlng });
       }
     },
+
     // Изменение размеров полигона
     handleMarkerDragEnd($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({id, latlng: $event.target._latlng});
+        this.changeCoordinate({ id, latlng: $event.target._latlng });
       }
     },
+
     handleMarkerDrag($event, id) {
       if (this.drawable) {
-        this.changeCoordinate({id, latlng: $event.latlng});
+        this.changeCoordinate({ id, latlng: $event.latlng });
       }
     },
+
     // Сохранение файла
     save() {
       let polygon = L.polygon(this.polygon.geometry);
@@ -227,8 +233,8 @@ export default {
         this.$refs.map.fitBounds(this.bounds);
       }
       return a;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -91,6 +91,17 @@ export default {
       viewStates: [],
     };
   },
+  computed: {
+    activeView() {
+      return this.views[this.activeViewIndex];
+    },
+  },
+  mounted() {
+    this.setActiveView(0);
+    for (let i = 0; i < this.views.length; i++) {
+      this.viewStates.push({ active: false });
+    }
+  },
   methods: {
     ...mapActions("map", ["addViewImage", "removeViewImage"]),
     ...mapActions("tasks", ["setTaskViewActive", "setTaskViewFitBounds"]),
@@ -99,15 +110,18 @@ export default {
       this.reportType = !this.reportType;
       this.pictureType = !this.pictureType;
     },
+
     setActiveView(i) {
       this.activeViewIndex = i;
     },
+
     download(path) {
       filesApi.download(path);
     },
+
     onImageButtonClick(id, img, bounds, fitBounds) {
       if (this.views[this.activeViewIndex].active) {
-        this.removeViewImage({id});
+        this.removeViewImage({ id });
         this.setTaskViewActive({
           taskIndex: this.taskIndex,
           viewIndex: this.activeViewIndex,
@@ -128,17 +142,6 @@ export default {
         });
       }
     },
-  },
-  computed: {
-    activeView() {
-      return this.views[this.activeViewIndex];
-    },
-  },
-  mounted() {
-    this.setActiveView(0);
-    for (let i = 0; i < this.views.length; i++) {
-      this.viewStates.push({ active: false });
-    }
   },
 };
 </script>
@@ -169,7 +172,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    background: #fff;
+    background: $white;
     border-radius: 20px;
     box-shadow: $shadow-big;
     &__cross {
@@ -231,7 +234,7 @@ export default {
           font-family: inherit;
           border: none;
           background: none;
-          color: #000;
+          color: $black;
           cursor: pointer;
           &:hover {
             color: $color-main-light;
@@ -261,7 +264,7 @@ export default {
     }
     &__title {
       font-size: 16px;
-      color: #000;
+      color: $black;
     }
   }
 }

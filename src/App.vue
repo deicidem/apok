@@ -10,7 +10,7 @@
 
 <script>
 import AppHeader from "@/components/AppHeader.vue";
-import AppError from "@/components/cards/AppError.vue";
+import AppError from "@/components/AppError.vue";
 
 export default {
   components: {
@@ -50,7 +50,7 @@ body {
   font-weight: 400;
 
   overflow: visible;
-  color: #c7c7c7;
+  color: $white-dark;
 }
 
 header,
@@ -89,10 +89,8 @@ svg:focus {
   padding: 20px;
   max-height: 100%;
   flex: 1 1 auto;
-  background: #dfdfdf;
+  background: $white-dark;
 }
-
-
 
 /*_____________________button_________________*/
 .button {
@@ -115,7 +113,8 @@ svg:focus {
   cursor: pointer;
   z-index: 1;
   overflow: hidden;
-  color: #fff;
+  color: $white;
+  background: none;
   &__wrapper {
     position: relative;
     display: flex;
@@ -137,35 +136,34 @@ svg:focus {
       z-index: 1;
       background: rgba(#eee, 0.65);
     }
-    cursor: default;
+    cursor: no-drop;
   }
   &::after {
     content: "";
     position: absolute;
-    height: 100%;
+    height: 150%;
     width: 200%;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     transition: all 0.2s ease-out;
     z-index: -1;
   }
   &:not(:disabled) {
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 2px 10px rgba(#000, 0.3);
-      
+      box-shadow: 0 2px 10px rgba($black, 0.3);
     }
     &:active {
       transition: all 0.1s ease-out;
       transform: translateY(1px);
-      box-shadow: 0 2px 4px rgba(#000, 0.1);
+      box-shadow: 0 2px 4px rgba($black, 0.1);
     }
     &:hover:after {
-      transform: translateX(-25%);
+      left: 100%
     }
     &:active:after {
-      transform: translateX(-75%);
+      left: 0%
     }
   }
   &-g {
@@ -173,7 +171,7 @@ svg:focus {
       background: $gradient;
     }
     svg path {
-      fill: #fff;
+      fill: $white;
     }
   }
   &-white {
@@ -183,12 +181,12 @@ svg:focus {
     color: $color-main;
   }
   &-r {
-    color: #fff;
+    color: $white;
     &::after {
       background: $gradient-r;
     }
     svg path {
-      fill: #fff;
+      fill: $white;
     }
   }
   &-svg {
@@ -331,7 +329,7 @@ svg:focus {
   border-radius: 6px;
   box-shadow: $shadow-small;
   transform: translateX(-50%);
-  &-r{
+  &-r {
     color: $color-red;
   }
 }

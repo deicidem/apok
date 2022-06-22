@@ -4,7 +4,7 @@
     <vuescroll :ops="scrollOps">
       <div class="search-wrapper">
         <div class="search-content">
-          <search-zone></search-zone>
+          <search-area></search-area>
         </div>
       </div>
     </vuescroll>
@@ -12,20 +12,20 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex"
+import { mapGetters, mapActions } from "vuex";
 
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
-import SearchZone from "@/components/search/SearchZone";
+import SearchArea from "@/components/search/SearchArea";
 
 export default {
   components: {
     vuescroll,
-    SearchZone,
+    SearchArea,
   },
   methods: {
-    ...mapActions('search', ['search'])
+    ...mapActions("search", ["search"]),
   },
   computed: {
     ...mapGetters(["scrollOps"]),
@@ -40,7 +40,7 @@ export default {
   max-height: 100%;
   &-title {
     font-size: 20px;
-    color: #000;
+    color: $black;
     font-weight: 400;
     margin-bottom: 16px;
   }
@@ -54,7 +54,7 @@ export default {
   &-title {
     font-weight: 400;
     font-size: 1.25rem;
-    color: #000;
+    color: $black;
   }
   &-buttons {
     margin-top: 20px;

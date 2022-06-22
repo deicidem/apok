@@ -32,7 +32,7 @@
   &-title {
     margin: 0;
     line-height: 1.5;
-    color: #000;
+    color: $black;
     font-weight: 500;
     font-size: 18px;
   }

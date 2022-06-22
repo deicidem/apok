@@ -52,7 +52,7 @@ export default {
       font-size: 12px;
       color: $text-grey;
       p {
-        color: #000000;
+        color: $black;
         margin: 0 0 0 8px;
       }
     }
@@ -62,7 +62,7 @@ export default {
       p {
         margin: 0;
         font-size: 12px;
-        color: #000;
+        color: $black;
       }
     }
   }
@@ -75,8 +75,8 @@ export default {
 
   border-radius: 10px !important;
   &-rail {
-    box-shadow: inset 1px 1px 4px rgba(#000, 0.25);
-    background: #fff;
+    box-shadow: inset 1px 1px 4px rgba($black, 0.25);
+    background: $white;
   }
   &-process {
     background: $color-main;

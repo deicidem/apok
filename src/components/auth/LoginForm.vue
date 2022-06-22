@@ -6,45 +6,39 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="login"
-          :class="{ invalid: v$.login.$error }"
+          v-model.trim="$v.login.$model"
+          :class="{ invalid: $v.login.$error }"
         />
         <label class="input-label">Логин</label>
 
         <img
           svg-inline
-          :class="{
-            invalidIcon: v$.login.$error,
-            'input-img': !v$.login.$error,
-          }"
+          :class="$v.login.$error ? 'invalidIcon' : 'input-img'"
           src="@/assets/img/login-icon.svg"
           alt="Логин"
         />
-        <div v-if="v$.login.$error" class="error-tooltip">
-          <p>{{ v$.login.$errors[0].$message }}</p>
+
+        <div v-if="$v.login.$error" class="error-tooltip">
+          <p>{{ $v.login.$params.required.error }}</p>
         </div>
       </div>
 
       <div class="input-wrapper">
         <input
           placeholder=" "
-          type="password"
           class="input input-withIcon"
-          v-model.trim="password"
-          :class="{ invalid: v$.password.$error }"
+          v-model.trim="$v.password.$model"
+          :class="{ invalid: $v.password.$error }"
         />
         <label class="input-label">Пароль</label>
 
         <img
           svg-inline
-          :class="{
-            invalidIcon: v$.password.$error,
-            'input-img': !v$.password.$error,
-          }"
+          :class="$v.password.$error ? 'invalidIcon' : 'input-img'"
           src="@/assets/img/lock-icon.svg"
         />
-        <div v-if="v$.password.$error" class="error-tooltip">
-          <p>{{ v$.password.$errors[0].$message }}</p>
+        <div v-if="$v.password.$error" class="error-tooltip">
+          <p>{{ $v.password.$params.required.error }}</p>
         </div>
       </div>
 
@@ -70,13 +64,15 @@
 <script>
 import { mapActions } from "vuex";
 
-import useVuelidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
-import AppCheckbox from "../components/controls/AppCheckbox.vue";
-
+// import useVuelidate from "@vuelidate/core";
+import { required, helpers } from "vuelidate/lib/validators";
+import AppCheckbox from "@/components/controls/AppCheckbox.vue";
+import { validationMixin } from "vuelidate";
 export default {
+  mixins: [validationMixin],
   components: { AppCheckbox },
-  setup: () => ({ v$: useVuelidate() }),
+  // setup: () => ({ $v: useVuelidate() }),
+
   data() {
     return {
       login: "",
@@ -87,10 +83,10 @@ export default {
   validations() {
     return {
       login: {
-        required: helpers.withMessage("Введите значение", required),
+        required: helpers.withParams({ error: "Введите значение" }, required),
       },
       password: {
-        required: helpers.withMessage("Введите значение", required),
+        required: helpers.withParams({ error: "Введите значение" }, required),
       },
     };
   },
@@ -98,9 +94,9 @@ export default {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
+
     submitForm() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (!this.$v.$invalid) {
         this.authorize({
           email: this.login,
           password: this.password,
@@ -154,7 +150,7 @@ export default {
     &-title {
       text-align: center;
       font-size: 20px;
-      color: #000;
+      color: $black;
       margin-bottom: 20px;
     }
     &-wrapper {
@@ -209,7 +205,7 @@ export default {
       rgb(235, 96, 96, 0.6),
       rgb(141, 70, 70, 0.6)
     );
-    color: #fff;
+    color: $white;
     font-size: 14px;
     border-radius: 10px;
     p {

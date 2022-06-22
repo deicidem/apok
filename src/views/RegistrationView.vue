@@ -1,16 +1,16 @@
 <template>
   <section class="authorize">
-    <app-registration-popup></app-registration-popup>
+    <registration-form></registration-form>
   </section>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import AppRegistrationPopup from "@/components/AppRegistrationPopup";
+import RegistrationForm from "@/components/auth/RegistrationForm";
 
 export default {
   components: {
-    AppRegistrationPopup,
+    RegistrationForm,
   },
   methods: {
     ...mapActions("users", {
@@ -29,8 +29,9 @@ export default {
   z-index: 1;
 
   display: flex;
-  flex-direction: column;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
   height: 100%;

@@ -4,12 +4,8 @@
       <h5 class="confirm-title">{{ title }}</h5>
       <div class="confirm-text">{{ message }}</div>
       <div class="confirm-buttons">
-        <button class="button button-white" @click="_cancel">
-          Отмена
-        </button>
-        <button class="button button-r" @click="_confirm">
-          Удалить
-        </button>
+        <button class="button button-white" @click="_cancel">Отмена</button>
+        <button class="button button-r" @click="_confirm">Удалить</button>
       </div>
       <div class="confirm-cross">
         <img
@@ -27,7 +23,7 @@
 export default {
   data: () => ({
     title: undefined,
-    message: undefined, 
+    message: undefined,
     showPopup: false,
 
     resolvePromise: undefined,
@@ -66,7 +62,7 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(#000, 0.2);
+  background: rgba($black, 0.2);
   z-index: 100;
 }
 .confirm {
@@ -78,7 +74,7 @@ export default {
   max-width: 410px;
   width: 100%;
   padding: 15px 50px;
-  background: #fff;
+  background: $white;
   border-radius: 10px;
   box-shadow: $shadow-big;
   text-align: center;
@@ -96,7 +92,7 @@ export default {
   &-title {
     margin: 0;
     line-height: 1.5;
-    color: #000;
+    color: $black;
     font-weight: 500;
     font-size: 18px;
   }

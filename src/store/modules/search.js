@@ -11,19 +11,19 @@ export default {
       from: 0,
       to: 20
     },
-    spacecrafts: setupSpacecrafts(),
-    spacecraftsSelected: [],
+    satelites: setupsatelites(),
+    satelitesSelected: [],
   },
   getters: {
     getTimeInterval(state) {
       return state.timeInterval;
     },
-    getSpacecrafts(state) {
-      return state.spacecrafts;
+    getsatelites(state) {
+      return state.satelites;
     },
-    getSelectedSpacecrafts(state) {
+    getSelectedsatelites(state) {
       let res = [];
-      state.spacecrafts.forEach(el => {
+      state.satelites.forEach(el => {
         el.models.forEach(m => {
           if (m.checked) {
             res.push(m.id)
@@ -37,7 +37,7 @@ export default {
     },
     // isSelected(state) {
     //   return ({seriesInd, scInd}) => {
-    //     return state.spacecrafts[seriesInd].models[scInd].checked;
+    //     return state.satelites[seriesInd].models[scInd].checked;
     //   }
     // }
   },
@@ -53,44 +53,44 @@ export default {
 
       state.timeInterval = data;
     },
-    setSpacecrafts(state, newSpaceCrafts) {
-      state.spacecrafts = newSpaceCrafts;
+    setsatelites(state, newsatelites) {
+      state.satelites = newsatelites;
     },
-    addSpacecraft(state, {
+    addsatelite(state, {
       seriesInd,
       scInd,
       pss,
       mss
     }) {
-      let spacecraft = {
-        ...state.spacecrafts[seriesInd].models[scInd]
+      let satelite = {
+        ...state.satelites[seriesInd].models[scInd]
       }
-      spacecraft.pss = pss;
-      spacecraft.mss = mss;
-      state.spacecragtsSelected.push(spacecraft);
+      satelite.pss = pss;
+      satelite.mss = mss;
+      state.spacecragtsSelected.push(satelite);
     },
-    // removeSpacecraft(state, {seriesInd, scInd, pss, mss} ){},
+    // removesatelite(state, {seriesInd, scInd, pss, mss} ){},
     selectSeries(state, {
       seriesInd,
       val
     }) {
-      state.spacecrafts[seriesInd].checked = val;
-      state.spacecrafts[seriesInd].models.forEach(m => {
+      state.satelites[seriesInd].checked = val;
+      state.satelites[seriesInd].models.forEach(m => {
         m.checked = val;
         m.pss = val;
         m.mss = val;
       });
     },
-    selectSpacecraft(state, {
+    selectsatelite(state, {
       seriesInd,
       scInd,
       checked,
       pss,
       mss
     }) {
-      state.spacecrafts[seriesInd].models[scInd].pss = pss;
-      state.spacecrafts[seriesInd].models[scInd].mss = mss;
-      state.spacecrafts[seriesInd].models[scInd].checked = checked;
+      state.satelites[seriesInd].models[scInd].pss = pss;
+      state.satelites[seriesInd].models[scInd].mss = mss;
+      state.satelites[seriesInd].models[scInd].checked = checked;
     },
 
   },
@@ -101,11 +101,11 @@ export default {
     setTimeInterval(store, data) {
       store.commit('setTimeInterval', data);
     },
-    setSpacecrafts(store, newSpaceCrafts) {
-      store.commit('setSpacecrafts', newSpaceCrafts);
+    setsatelites(store, newsatelites) {
+      store.commit('setsatelites', newsatelites);
     },
-    selectSpacecraft(store, data) {
-      store.commit('selectSpacecraft', data);
+    selectsatelite(store, data) {
+      store.commit('selectsatelite', data);
     },
     selectSeries(store, data) {
       store.commit('selectSeries', data);
@@ -135,7 +135,7 @@ export default {
         startCloudiness: getters.getCloudiness[0],
         endCloudiness: getters.getCloudiness[1],
         months: getters.getTimeInterval.months,
-        satelites: getters.getSelectedSpacecrafts,
+        satelites: getters.getSelectedsatelites,
         polygon: polygon
       }
 
@@ -150,7 +150,7 @@ export default {
 }
 
 
-function setupSpacecrafts() {
+function setupsatelites() {
   return [{
     id: 0,
     name: "Канопус В",

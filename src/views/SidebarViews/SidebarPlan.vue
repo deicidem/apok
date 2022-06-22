@@ -24,7 +24,7 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 import { mapGetters, mapActions } from "vuex";
-import AppPlanCard from "@/components/cards/AppPlanCard.vue";
+import AppPlanCard from "@/components/plan/PlanCard.vue";
 // import AppPlanPopup from "@/components/AppPlanPopup.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 export default {
@@ -40,11 +40,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions('plans', ['selectPlan'])
+    ...mapActions("plans", ["selectPlan"]),
   },
   computed: {
     ...mapGetters(["scrollOps"]),
-    ...mapGetters('users', ["isAuth"]),
+    ...mapGetters("users", ["isAuth"]),
     ...mapGetters("plans", {
       plans: "getPlans",
     }),

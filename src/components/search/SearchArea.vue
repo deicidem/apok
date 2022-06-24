@@ -224,7 +224,8 @@ export default {
   },
   data() {
     return {
-      areaType: "screen",
+      file: null,
+      areaType: null,
       inputMaskLat: {
         pattern: `111°11'11" N`,
         formatCharacters: {
@@ -235,6 +236,7 @@ export default {
         },
       },
       placeholderLat: "000°00'00\" N",
+
       inputMaskLng: {
         pattern: `111°11'11" E`,
         formatCharacters: {
@@ -245,6 +247,7 @@ export default {
         },
       },
       placeholderLng: "000°00'00\" W",
+
       lng: "",
       lat: "",
       rad: "",
@@ -276,25 +279,53 @@ export default {
       "setZoom",
       "setScreenPolygon",
     ]),
-    showScreenPolygon() {
-      this.setScreenPolygon([
-        [this.getBounds._northEast.lat, this.getBounds._northEast.lng],
-        [this.getBounds._southWest.lat, this.getBounds._southWest.lng],
-      ]);
-      this.setZoom(this.getZoom - 1);
+
+    selectScreenArea() {
+      this.clearCoordinates();
+      this.addCoordinate({ coordinate: this.getBounds.getNorthEast() });
+      this.addCoordinate({ coordinate: this.getBounds.getNorthWest() });
+      this.addCoordinate({ coordinate: this.getBounds.getSouthWest() });
+      this.addCoordinate({ coordinate: this.getBounds.getSouthEast() });
+      this.setZoom({ value: this.getZoom - 1 });
     },
+
+    onFileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+
+    sendFile() {
+      this.setFilePolygon(this.file);
+    },
+
+    changeZoneType(type) {
+      this.searchZoneType = type;
+      if (this.searchZoneType == 1) {
+        this.setAreaPolygonActive();
+      } else if (this.searchZoneType == 2) {
+        this.setCirclePolygonActive();
+      } else {
+        this.setFilePolygonActive();
+      }
+    },
+
     createCircle() {
       let lat = this.parseCoords(this.lat);
       let lng = this.parseCoords(this.lng);
       let radius = +this.rad * 1000;
       this.setCirclePolygon({ radius, center: { lng, lat } });
-      this.setCenter([lng, lat]);
+      this.setCenter({ coordinate: [lng, lat] });
     },
+
+    removeCircle() {
+      this.setCirclePolygon(null);
+    },
+
     onAddCoordinate() {
       let lat = this.parseCoords(this.newCoord.lat);
       let lng = this.parseCoords(this.newCoord.lng);
       this.addCoordinate({ lat, lng });
     },
+
     parseCoords(coord) {
       let str = coord;
       let deg = "";
@@ -335,6 +366,15 @@ export default {
       }
       return deg;
     },
+
+    submitForm() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("Form successfully submitted");
+      } else {
+        return;
+      }
+    },
   },
 };
 </script>
@@ -365,8 +405,9 @@ export default {
   &__input {
     display: flex;
     align-items: center;
-    color: $text-grey;
-    padding-top: 10px;
+    margin-bottom: 10px;
+
+    color: $black;
   }
   &__nav {
     margin-top: 10px;
@@ -387,11 +428,7 @@ export default {
       list-style-type: none;
       button {
         background: none;
-        color: #000;
-        font-family: inherit;
-        border: none;
-        padding: 0;
-        margin: 0;
+        color: $black;
         cursor: pointer;
         &:hover {
           color: $color-main;
@@ -409,14 +446,14 @@ export default {
     padding: 15px;
     box-shadow: $shadow-big;
     border-radius: 10px;
-    background: #fff;
+    background: $white;
   }
   &__card {
     margin-top: 14px;
     padding: 20px;
     box-shadow: $shadow-big;
     border-radius: 10px;
-    background: #fff;
+    background: $white;
   }
   &__table {
     flex: 1;
@@ -455,9 +492,7 @@ export default {
           width: 130px;
           text-align: left;
           border: none;
-          font-size: 12px;
-          color: #000000;
-          padding: 0 6px 6px;
+          color: $black;
           box-sizing: border-box;
         }
         td {
@@ -550,6 +585,135 @@ export default {
     height: 20px !important;
     font-size: 10px;
     border-radius: 0 !important;
+  }
+}
+.coordinates {
+  &-form {
+    display: flex;
+    align-items: flex-start;
+  }
+  &-inputs {
+    margin-left: 16px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:focus-within .coordinates-label {
+      top: -20px;
+      font-size: 12px;
+    }
+  }
+  &-label {
+    top: 8px;
+    left: -10px;
+  }
+  &-input {
+    width: 120px;
+    height: 35px;
+    margin: 0;
+    &:focus .coordinates-label,
+    &:not(:placeholder-shown) ~ label {
+      top: -20px;
+      font-size: 12px;
+    }
+    &__letter {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-radius: 0 10px 10px 0;
+      color: $white;
+      line-height: 35px;
+      text-align: center;
+      margin: 0;
+      font-size: 16px;
+      background: $gradient;
+      width: 30px;
+      height: 35px;
+    }
+  }
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    &__button {
+      margin-left: auto;
+      max-width: 200px;
+      width: 190px;
+      &:last-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+.load-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  &__button {
+    margin-bottom: 10px;
+    width: 180px;
+  }
+  &__name {
+    margin-left: 20px;
+    font-size: 14px;
+    color: $black;
+  }
+  &__input {
+    display: none;
+  }
+}
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
+}
+.invalidLetter {
+  background: $gradient-r;
+}
+.error {
+  &-tooltip {
+    transition: all 2s ease-out;
+
+    width: 120px;
+    margin-top: 6px;
+    line-height: 110%;
+    color: $color-red;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .search-zone {
+    padding: 14px;
+    &__input {
+      span {
+        font-size: 0.875rem;
+      }
+    }
+  }
+  .search-zone__card {
+    padding: 10px;
+  }
+  .coordinates-wrapper__input {
+    width: 94px;
+    margin-right: 10px;
+    padding: 7px 10px;
+  }
+  .coordinates-wrapper__button {
+    margin-top: 10px;
   }
 }
 </style>

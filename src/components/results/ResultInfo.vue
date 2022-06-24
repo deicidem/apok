@@ -68,14 +68,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      card: {
-        active: false,
-        ind: null,
-      },
-    };
-  },
   props: ["cardData"],
 };
 </script>
@@ -85,7 +77,7 @@ export default {
   z-index: 11;
   position: absolute;
   width: 300px;
-  background: #000;
+  background: $black;
   top: 20px;
   right: 20px;
   background: $gradient-w;
@@ -118,19 +110,19 @@ export default {
   }
   &-title {
     font-size: 16px;
-    color: #000;
+    color: $black;
     margin-bottom: 15px;
   }
   &-img {
     width: 200px;
     margin-bottom: 20px;
-    border: 1px solid #000;
+    border: 1px solid $black;
   }
   &-table {
     &__wrapper {
       flex: 1;
     }
-    color: #000;
+    color: $black;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;

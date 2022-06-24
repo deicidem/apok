@@ -1,6 +1,5 @@
 <template>
   <div class="plan-item">
-    
     <div class="plan-item__img">
       <img :src="img" />
     </div>
@@ -12,12 +11,22 @@
       </p>
 
       <div class="plan-item__buttons">
-        <router-link :to="'/plan/' + planid" custom v-slot="{navigate}">
-          <button @click="navigate" class="button button-white plan-item__button">Подробнее</button>
+        <router-link :to="'/plan/' + planid" custom v-slot="{ navigate }">
+          <button
+            @click="navigate"
+            class="button button-white plan-item__button"
+          >
+            Подробнее
+          </button>
         </router-link>
 
-        <button :disabled="!isAuth" class="button button-g plan-item__button" @click="$emit('select')">Запланировать</button>
-
+        <button
+          :disabled="!isAuth"
+          class="button button-g plan-item__button"
+          @click="$emit('select')"
+        >
+          Запланировать
+        </button>
       </div>
     </div>
   </div>
@@ -30,7 +39,7 @@ export default {
     title: String,
     text: String,
     planid: Number,
-    isAuth: Boolean
+    isAuth: Boolean,
   },
 };
 </script>
@@ -45,7 +54,7 @@ export default {
     box-shadow: $shadow-big;
     border-radius: 10px;
     overflow: hidden;
-    background: #fff;
+    background: $white;
     &__img {
       img {
         min-height: 200px;
@@ -56,6 +65,7 @@ export default {
       }
     }
     &__info {
+      width: 100%;
       display: flex;
       flex-direction: column;
       padding: 10px 20px 15px 20px;
@@ -65,7 +75,7 @@ export default {
         font-size: 18px;
         font-weight: 500;
 
-        color: #000;
+        color: $black;
       }
       p {
         margin: 0;
@@ -86,7 +96,7 @@ export default {
       justify-content: space-between;
       margin-top: 20px;
     }
-    &__button{
+    &__button {
       margin-right: 20px;
       flex: 1 1 auto;
       &:last-child {
@@ -109,7 +119,7 @@ export default {
       &__buttons {
         margin-top: 10px;
       }
-      &__img{
+      &__img {
         max-width: 160px;
       }
     }

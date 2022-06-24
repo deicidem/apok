@@ -3,7 +3,7 @@
     <h2 class="sidebar-title">Мои уведомления</h2>
     <vuescroll :ops="scrollOps">
       <div class="alert-wrapper">
-        <app-alert-card
+        <alert-card
           v-for="(alert, i) in alerts"
           :key="alert.id"
           :seen="alert.seen"
@@ -11,7 +11,7 @@
           :text="alert.text"
           :theme="alert.theme"
           @delete="deleteAlert(i)"
-        ></app-alert-card>
+        ></alert-card>
       </div>
       <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
     </vuescroll>
@@ -22,7 +22,7 @@
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 
-import AppAlertCard from "@/components/cards/AppAlertCard.vue";
+import AlertCard from "@/components/alert/AlertCard.vue";
 import { mapGetters, mapActions } from "vuex";
 // import VsPagination from "@vuesimple/vs-pagination";
 
@@ -38,7 +38,7 @@ export default {
   },
   components: {
     vuescroll,
-    AppAlertCard,
+    AlertCard,
     // VsPagination,
   },
 };

@@ -101,7 +101,7 @@ export default {
   width: 100vw;
   height: 100vh;
 
-  background: rgba(#000, 0.5);
+  background: rgba($black, 0.5);
   .popup-card {
     position: absolute;
     top: 50%;
@@ -151,7 +151,7 @@ export default {
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
-      background: #fff;
+      background: $white;
     }
     &__line {
       margin: 10px 0;
@@ -174,7 +174,7 @@ export default {
     &__file {
       margin: 0 0 0 10px;
 
-      color: #000;
+      color: $black;
       font-size: 14px;
     }
     .info {

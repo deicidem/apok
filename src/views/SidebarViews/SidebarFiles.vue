@@ -1,7 +1,7 @@
 <template>
   <div class="files">
     <h2 class="sidebar-title">Мои файлы</h2>
-    <app-delete-confirm ref="deleteConfirm"></app-delete-confirm>
+    <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     <vuescroll :ops="scrollOps">
       <div class="files__wrapper">
         <app-table>
@@ -68,8 +68,10 @@
                       alt="Удалить"
                     />
                   </button>
-                  <span class="tooltiptext tooltiptext-r" v-if="!item.deletable">
-                    Файл используется
+                  <span
+                    class="tooltiptext tooltiptext-r"
+                  >
+                    {{item.deletable ? 'Удалить' : 'Файл используется'}}
                   </span>
                 </div>
               </td>
@@ -79,12 +81,14 @@
         <div class="files-buttons">
           <button
             class="button button-r"
-            :disabled="deleteBanchDisabled"
+            :disabled="noItemsSelected || notDeletableItemSelected"
             @click="onDeleteBanch"
           >
             Удалить выбранное
           </button>
-          <button class="button button-g">Добавить в избранное</button>
+          <button class="button button-g" :disabled="noItemsSelected">
+            Добавить в избранное
+          </button>
         </div>
       </div>
       <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
@@ -97,7 +101,7 @@ import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
 import AppTable from "@/components/table/AppTable";
-import AppDeleteConfirm from "@/components/cards/AppDeleteConfirm";
+import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 
@@ -107,7 +111,7 @@ export default {
     AppCheckbox,
     AppTable,
     vuescroll,
-    AppDeleteConfirm,
+    AppDeleteConfirmation,
     // VsPagination,
   },
   data() {
@@ -138,10 +142,11 @@ export default {
   },
   computed: {
     ...mapGetters(["scrollOps"]),
-    ...mapGetters("users", {
+    ...mapGetters("files", {
       files: "getFiles",
       sortDir: "getSortDir",
     }),
+
     allSelected() {
       let res = true;
       for (let i = 0; i < this.files.length; i++) {
@@ -152,35 +157,43 @@ export default {
       }
       return res;
     },
-    deleteBanchDisabled() {
-      if (this.files == null) {
-        return false;
-      }
-      let isNotDeletableSelected = false;
-      let cnt = 0;
-      for (let i = 0; i < this.files.length; i++) {
-        if (this.files[i].selected) {
-          if (!this.files[i].deletable) {
-            isNotDeletableSelected = true;
-            break;
-          }
-          cnt++;
+
+    noItemsSelected() {
+      let files = this.files;
+      let res = true;
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].selected) {
+          res = false;
+          break;
         }
       }
-      if (isNotDeletableSelected || cnt == 0) {
-        return true;
+      return res;
+    },
+    
+    notDeletableItemSelected() {
+      let files = this.files;
+      let res = false;
+      for (let i = 0; i < files?.length; i++) {
+        if (files[i]?.selected && !files[i]?.deletable) {
+          res = true;
+          break;
+        }
       }
-      return false;
+      return res;
     },
   },
+  async mounted() {
+    await this.loadFiles();
+  },
   methods: {
-    ...mapActions("users", [
+    ...mapActions("files", [
       "sortFilesBy",
       "loadFiles",
       "deleteFiles",
       "selectFile",
       "deleteFile",
     ]),
+
     async onDelete(i) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить этот файл?",
@@ -194,6 +207,7 @@ export default {
         console.log("You chose not to delete this page. Doing nothing now.");
       }
     },
+
     async onDeleteBanch() {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эти файлы?",
@@ -207,24 +221,25 @@ export default {
         console.log("You chose not to delete this page. Doing nothing now.");
       }
     },
+
     selectAll(val) {
       for (let i = 0; i < this.files.length; i++) {
         this.selectFile({ index: i, value: val });
       }
     },
+
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;
       });
       this.sortFilesBy(key);
     },
+
     onCheck(val) {
       console.log(val);
     },
   },
-  async mounted() {
-    await this.loadFiles();
-  },
+  
 };
 </script>
 
@@ -280,7 +295,7 @@ export default {
       border-radius: 3px;
       height: 10px;
       background: $gradient-w;
-      box-shadow: inset 1px 1px 3px rgba(#000, 0.15);
+      box-shadow: inset 1px 1px 3px rgba($black, 0.15);
       overflow: hidden;
       &__value {
         border-radius: 3px;
@@ -317,7 +332,7 @@ export default {
     &.active {
       background: $color-main;
       svg path {
-        fill: #fff;
+        fill: $white;
       }
     }
   }

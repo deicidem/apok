@@ -83,17 +83,19 @@ export default {
   top: 50%;
   left: 50%;
 
-  display: block;
-  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
   height: 20px;
 
   font-size: 14px;
   border-radius: 5px;
-  color: #fff;
+  color: $white;
   background: $gradient;
   opacity: 0;
 
+  transform: translate(-50%, -50%);
   transition: 0.1s ease-out;
 }
 .mini {

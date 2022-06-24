@@ -37,7 +37,7 @@ table {
   width: 100%;
   table-layout: auto;
   border-collapse: collapse;
-  background: #fff;
+  background: $white;
   border-radius: 10px;
   box-shadow: $shadow-big;
   padding-bottom: 10px;
@@ -47,7 +47,7 @@ table {
     &::after {
       background: $gradient-w;
       z-index: -1;
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       height: 100%;
@@ -67,6 +67,9 @@ table {
         color: $color-main;
         padding: 8px;
         box-sizing: border-box;
+        &:not(:empty) {
+          cursor: pointer;
+        }
         &:first-child {
           border-top-left-radius: 10px;
         }

@@ -6,82 +6,78 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'main',
-    component: () => import('../views/MainView.vue')
+    redirect: '/main'
   },
   {
     path: '/main',
     name: 'main',
-    component: () => import('../views/MainView.vue'),
+    component: () => import('@/views/MainView.vue'),
     children: [
       {
         path: '',
-        component: () => import('../views/SidebarViews/SidebarTasks')
+        component: () => import('@/views/SidebarViews/SidebarPlan')
       },
       {
         path: 'tasks',
-        component: () => import('../views/SidebarViews/SidebarTasks')
+        component: () => import('@/views/SidebarViews/SidebarTasks')
       },
       {
         path: 'plan',
-        component: () => import('../views/SidebarViews/SidebarPlan')
+        component: () => import('@/views/SidebarViews/SidebarPlan')
       },
       {
         path: 'search',
-        component: () => import('../views/SidebarViews/SidebarSearch')
+        component: () => import('@/views/SidebarViews/SidebarSearch')
       },
       {
         path: 'alerts',
-        component: () => import('../views/SidebarViews/SidebarAlerts')
+        component: () => import('@/views/SidebarViews/SidebarAlerts')
       },
       {
         path: 'results',
-        component: () => import('../views/SidebarViews/SidebarResults')
+        component: () => import('@/views/SidebarViews/SidebarResults')
       },
       {
-        path: 'person',
-        component: () => import('../views/SidebarViews/SidebarPerson')
+        path: 'user',
+        component: () => import('@/views/SidebarViews/SidebarUser')
       },
       {
         path: 'files',
-        component: () => import('../views/SidebarViews/SidebarFiles')
+        component: () => import('@/views/SidebarViews/SidebarFiles')
       },
       {
         path: 'area',
-        component: () => import('../views/SidebarViews/SidebarArea')
+        component: () => import('@/views/SidebarViews/SidebarArea')
       }
     ]
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/LoginView.vue')
+    component: () => import('@/views/LoginView.vue')
   },
   {
     path: '/registration',
     name: 'registration',
-    component: () => import('../views/RegistrationView.vue')
+    component: () => import('@/views/RegistrationView.vue')
   },
   {
     path: '/tutorial',
     name: 'tutorial',
-    component: () => import('../views/TutorialView.vue')
+    component: () => import('@/views/TutorialView.vue')
   },
   {
     path: '/plan/:id',
-    component: () => import('../views/PlanView.vue')
+    component: () => import('@/views/PlanView.vue')
   },
   {
-    path: '/report',
-    component: () => import('../components/AppReportFullScreen.vue')
-  },
-  {
-    path: '/picture',
-    component: () => import('../components/AppPictureFullScreen.vue')
+    path: '/full-screen',
+    name: 'full-screen',
+    component: () => import('@/views/FullScreenView.vue')
   },
   {
 		path: '*',
-		component: () => import('../components/AppE404.vue')
+		component: () => import('@/views/E404View.vue')
 	},
 ]
 

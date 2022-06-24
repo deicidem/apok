@@ -14,10 +14,10 @@
     <vuescroll :ops="scrollOps">
       <div class="search-wrapper">
         <div class="search-content">
-          <search-zone></search-zone>
+          <search-area></search-area>
           <search-date></search-date>
           <search-cloud></search-cloud>
-          <search-spacecraft></search-spacecraft>
+          <search-satelite></search-satelite>
         </div>
         <div class="search-buttons">
           <button class="button button-r">Очистить</button>
@@ -38,17 +38,17 @@ import "vuescroll/dist/vuescroll.css";
 
 import "vue-slider-component/theme/default.css";
 import SearchDate from "@/components/search/SearchDate";
-import SearchSpacecraft from "@/components/search/SearchSpacecraft";
+import SearchSatelite from "@/components/search/SearchSatelite";
 import SearchCloud from "@/components/search/SearchCloud";
-import SearchZone from "@/components/search/SearchZone";
+import SearchArea from "@/components/search/SearchArea";
 
 export default {
   components: {
     vuescroll,
     SearchDate,
-    SearchSpacecraft,
+    SearchSatelite,
     SearchCloud,
-    SearchZone,
+    SearchArea,
   },
   methods: {
     ...mapActions("search", ["search"]),
@@ -95,7 +95,7 @@ export default {
   }
   &-title {
     font-size: 20px;
-    color: #000;
+    color: $black;
     font-weight: 400;
     margin: 0 0 20px 0;
   }
@@ -109,7 +109,7 @@ export default {
   &-title {
     font-weight: 400;
     font-size: 1.25rem;
-    color: #000;
+    color: $black;
   }
   &-buttons {
     margin-top: 20px;

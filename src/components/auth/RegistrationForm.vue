@@ -129,7 +129,7 @@
 
       <router-link to="/login">
         <button class="button button-white form-wrapper__item">
-          Авторизоваться
+          Войти
         </button>
       </router-link>
     </form>
@@ -169,6 +169,7 @@ export default {
           minLength(1)
         ),
       },
+
       lastName: {
         required: helpers.withMessage("Введите значение", required),
         minLength: helpers.withMessage(
@@ -176,10 +177,12 @@ export default {
           minLength(1)
         ),
       },
+
       mail: {
         required: helpers.withMessage("Введите значение", required),
         email: helpers.withMessage("Некорректно введен почтовый адрес", email),
       },
+
       password: {
         password: {
           required: helpers.withMessage("Введите значение", required),
@@ -203,16 +206,18 @@ export default {
       addUser: "addUser",
       regUser: "regUser",
     }),
-    submitForm() {
+
+    async submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
         console.log("Form successfully submitted");
-        this.regUser({
+        await this.regUser({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.mail,
           password: this.password,
         });
+        this.$router.push('main');
       } else {
         return;
       }
@@ -237,7 +242,7 @@ export default {
     text-align: center;
     font-size: 20px;
 
-    color: #000;
+    color: $black;
   }
   &-wrapper {
     display: flex;
@@ -304,7 +309,7 @@ export default {
       rgb(235, 96, 96, 0.7),
       rgb(141, 70, 70, 0.7)
     );
-    color: #fff;
+    color: $white;
     font-size: 14px;
     border-radius: 10px;
     p {

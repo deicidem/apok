@@ -10,6 +10,7 @@ import alerts from './modules/alerts'
 import map from './modules/map'
 import search from './modules/search'
 import results from './modules/results'
+import files from './modules/files'
 
 export default new Vuex.Store({
   state: {
@@ -77,7 +78,8 @@ export default new Vuex.Store({
     alerts,
     map,
     search,
-    results
+    results,
+    files
   },
   strict: process.env.NODE_ENV !== 'production'
 })

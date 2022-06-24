@@ -1,13 +1,15 @@
 <template>
-  <header class="header" >
-    <h1 class="title">Комплексная тематическая обработка данных космической съемки</h1>
+  <header class="header">
+    <h1 class="title">
+      Комплексная тематическая обработка данных космической съемки
+    </h1>
 
     <div class="header-items">
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/катод.svg" alt="Логотип" />
+              <img src="@/assets/img/logo_apok.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">
@@ -20,9 +22,17 @@
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
         <div class="header-menu__buttons">
-          <div class="button__wrapper header-menu__button-wrapper">
-
-            <router-link to="/login" custom v-slot="{navigate}">
+          <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
+            <button
+              class="button button-svg button-white header-menu__button"
+              @click="onLogout"
+            >
+              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
+            </button>
+            <span class="tooltiptext">Выйти</span>
+          </div>
+          <div class="button__wrapper header-menu__button-wrapper" v-else>
+            <router-link to="/login" custom v-slot="{ navigate }">
               <button
                 class="button button-svg button-white header-menu__button"
                 @click="navigate"
@@ -31,17 +41,8 @@
               </button>
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>
-
           </div>
-          <div class="button__wrapper header-menu__button-wrapper">
-            <button
-              class="button button-svg button-white header-menu__button"
-              @click="logout"
-            >
-              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
-            </button>
-            <span class="tooltiptext">Выйти</span>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -51,11 +52,15 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  methods: {
-    ...mapActions("users", ["logout"]),
-  },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
+  },
+  methods: {
+    ...mapActions("users", ["logout"]),
+    async onLogout() {
+      await this.logout();
+      this.$router.push('/main');
+    }
   },
 };
 </script>
@@ -73,7 +78,7 @@ export default {
 
   background: $gradient;
   box-shadow: $shadow-big;
-  color: #fff;
+  color: $white;
 }
 .user-box {
   display: none;
@@ -99,7 +104,7 @@ export default {
     justify-content: space-between;
     padding: 20px 100px;
 
-    background: #fff;
+    background: $white;
     box-shadow: $shadow-big;
   }
   &-nav {
@@ -113,7 +118,7 @@ export default {
       li {
         margin-right: 50px;
         a {
-          color: #000;
+          color: $black;
           font-size: 20px;
           img {
             height: 60px;
@@ -128,7 +133,7 @@ export default {
     &__text {
       margin-right: 50px;
       font-size: 1.25rem;
-      color: #000;
+      color: $black;
     }
     &__buttons {
       display: flex;

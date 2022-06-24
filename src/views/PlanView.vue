@@ -14,7 +14,7 @@
         {{ plan.title }}
       </h2>
 
-      <button class="button button-g plan-wrapper__button">
+      <button class="button button-g plan-wrapper__button" @click="onPlan">
         Запланировать задачу
       </button>
     </div>
@@ -58,8 +58,17 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 export default {
+  methods: {
+    ...mapActions("plans", ["selectPlan"]),
+    ...mapActions(["setDataCardState"]),
+    onPlan() {
+      this.selectPlan(this.plan.index);
+      this.setDataCardState(true);
+      this.$router.push('/main/plan')
+    }
+  },
   computed: {
     ...mapGetters(["scrollOps"]),
     id() {
@@ -123,7 +132,8 @@ export default {
     &__cards {
       display: flex;
       flex-direction: column;
-      max-width: 60%;
+      flex: 1 1 60%;
+
     }
     &__card {
       margin-bottom: 30px;
@@ -140,6 +150,7 @@ export default {
     &__title {
       font-size: 1.25rem;
       color: $black;
+      font-weight: 500;
     }
     &__text {
       margin-top: 20px;
@@ -157,6 +168,7 @@ export default {
       overflow: hidden;
       box-shadow: $shadow-big;
       margin-left: 30px;
+      flex: 1 1 40%;
       img {
         object-fit: cover;
         object-position: center;

@@ -2,75 +2,44 @@
   <div class="preview">
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
-        <div class="preview-wrapper__cross">
+        <div class="preview-wrapper__cross" @click="$emit('close')">
           <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
         </div>
+
         <div class="preview-wrapper__title">Предпросмотр</div>
+
         <nav class="preview-wrapper__nav">
           <ul>
             <li v-for="(view, i) in views" :key="i">
               <button
                 @click="setActiveView(i)"
-                :class="{ active: i == activeViewIndex }"
+                :class="{ active: isViewActive(i) }"
               >
                 {{ view.title }}
               </button>
             </li>
           </ul>
         </nav>
-        <div v-if="activeView != null">
-          <div class="preview-picture">
-            <img :src="activeView.previewPath" />
-          </div>
-          <div class="preview-btns" v-if="activeView.type == 1">
-            <button class="button button-white">Скачать</button>
-            <router-link to="/report" custom v-slot="{ navigate }">
-              <button @click="navigate" class="button button-g">
-                На весь экран
-              </button>
-            </router-link>
-          </div>
-          <div class="preview-btns" v-else>
-            <button
-              class="button button-white"
-              v-if="this.activeView.active"
-              @click="
-                onImageButtonClick(
-                  activeView.id,
-                  activeView.previewPath,
-                  activeView.geography.bbox
-                )
-              "
-            >
-              Убрать с карты
-            </button>
-            <button
-              class="button button-g"
-              v-else
-              @click="
-                onImageButtonClick(
-                  activeView.id,
-                  activeView.previewPath,
-                  activeView.geography.bbox,
-                  activeView.fitBounds
-                )
-              "
-            >
-              Показать на карте
-            </button>
-            <router-link to="/report" custom v-slot="{ navigate }">
-              <button @click="navigate" class="button button-g">
-                На весь экран
-              </button>
-            </router-link>
-          </div>
-        </div>
+
+        <component
+          v-for="view in views"
+          v-show="activeView.id == view.id"
+          :is="viewType(view.type)"
+          :key="view.id"
+          :path="view.previewPath"
+          :title="view.title"
+          :download-path="view.downloadPath"
+          @show-image="
+            onShowImage($event, view.id, view.previewPath, view.geography.bbox)
+          "
+        ></component>
       </div>
+
       <div class="preview-wrapper__files">
         <div class="preview-wrapper__title">Файлы</div>
         <ul class="preview-wrapper__list">
           <li v-for="(file, i) in files" :key="i">
-            <a :href="file.path" target="_blank" download>{{ file.name }}</a>
+            <a :href="file.downloadPath" target="_blank" download>{{ file.name }}</a>
           </li>
         </ul>
       </div>
@@ -80,66 +49,44 @@
 
 <script>
 import { mapActions } from "vuex";
-import * as filesApi from "@/api/files";
+import TaskResultViewGeo from "@/components/tasks/TaskResultViewGeo.vue";
+import TaskResultViewImage from "@/components/tasks/TaskResultViewImage.vue";
 export default {
   props: ["files", "views", "taskIndex"],
+  components: {
+    TaskResultViewGeo,
+    TaskResultViewImage,
+  },
   data() {
     return {
-      reportType: false,
-      pictureType: false,
       activeViewIndex: 0,
-      viewStates: [],
     };
   },
   computed: {
+    viewType() {
+      return (type) =>
+        type == 1 ? "task-result-view-image" : "task-result-view-geo";
+    },
     activeView() {
       return this.views[this.activeViewIndex];
     },
-  },
-  mounted() {
-    this.setActiveView(0);
-    for (let i = 0; i < this.views.length; i++) {
-      this.viewStates.push({ active: false });
-    }
+    isViewActive() {
+      return (i) => i == this.activeViewIndex;
+    },
   },
   methods: {
     ...mapActions("map", ["addViewImage", "removeViewImage"]),
     ...mapActions("tasks", ["setTaskViewActive", "setTaskViewFitBounds"]),
 
-    showResult() {
-      this.reportType = !this.reportType;
-      this.pictureType = !this.pictureType;
-    },
-
     setActiveView(i) {
       this.activeViewIndex = i;
     },
 
-    download(path) {
-      filesApi.download(path);
-    },
-
-    onImageButtonClick(id, img, bounds, fitBounds) {
-      if (this.views[this.activeViewIndex].active) {
-        this.removeViewImage({ id });
-        this.setTaskViewActive({
-          taskIndex: this.taskIndex,
-          viewIndex: this.activeViewIndex,
-          val: false,
-        });
-      } else {
+    onShowImage({ show, fitBounds }, id, img, bounds) {
+      if (show) {
         this.addViewImage({ id, img, bounds, fitBounds });
-        this.setTaskViewActive({
-          taskIndex: this.taskIndex,
-          viewIndex: this.activeViewIndex,
-
-          val: true,
-        });
-        this.setTaskViewFitBounds({
-          taskIndex: this.taskIndex,
-          viewIndex: this.activeViewIndex,
-          val: false,
-        });
+      } else {
+        this.removeViewImage({ id });
       }
     },
   },
@@ -149,24 +96,6 @@ export default {
 <style scoped lang="scss">
 .preview {
   width: 100%;
-  &-picture {
-    margin: 20px auto;
-    img {
-      max-width: 100;
-    }
-  }
-  &-btns {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    .button {
-      flex: 1 1 auto;
-      margin-right: 20px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
   &-wrapper {
     position: relative;
     display: flex;
@@ -179,6 +108,7 @@ export default {
       position: absolute;
       right: 14px;
       top: 14px;
+      cursor: pointer;
       svg path {
         fill: $color-main;
       }

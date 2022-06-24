@@ -54,7 +54,7 @@
       <!-- </router-link> -->
       <router-link to="/registration">
         <button class="button button-white form-wrapper__item">
-          Регистрация
+          Зарегистироваться
         </button>
       </router-link>
     </form>
@@ -95,13 +95,14 @@ export default {
       authorize: "authorizeUser",
     }),
 
-    submitForm() {
+    async submitForm() {
       if (!this.$v.$invalid) {
-        this.authorize({
+        await this.authorize({
           email: this.login,
           password: this.password,
           remember: this.remember,
         });
+        this.$router.push('main');
       } else {
         return;
       }

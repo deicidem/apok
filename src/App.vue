@@ -114,7 +114,6 @@ svg:focus {
   z-index: 1;
   overflow: hidden;
   color: $white;
-  background: none;
   &__wrapper {
     position: relative;
     display: flex;
@@ -179,6 +178,14 @@ svg:focus {
       background: $gradient-w;
     }
     color: $color-main;
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
   }
   &-r {
     color: $white;
@@ -193,14 +200,6 @@ svg:focus {
     width: 30px;
     height: 30px;
     padding: 7px;
-    svg path {
-      fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
   }
   &-svg-r {
     width: 30px;

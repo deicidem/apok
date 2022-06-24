@@ -9,7 +9,6 @@
             <tr>
               <th class="col-checkbox center">
                 <app-checkbox
-                  class="checkbox-big"
                   :modelValue="allSelected"
                   @change="selectAll($event)"
                 />
@@ -109,6 +108,7 @@
                   :views="item.result.views"
                   :files="item.result.files"
                   :taskIndex="i"
+                  @close="showResult(i, item)"
                 ></task-result>
               </td>
             </tr>
@@ -228,6 +228,7 @@ export default {
       "setTaskActive",
       "sortTasksBy",
       "load",
+      "reload",
       "selectTask",
       "deleteTasks",
       "deleteTask",
@@ -277,7 +278,11 @@ export default {
     },
   },
   async mounted() {
-    await this.load();
+    if (this.tasks == null) {
+      await this.load();
+    } else {
+      await this.reload();
+    }
   },
 };
 </script>

@@ -67,6 +67,9 @@ table {
         color: $color-main;
         padding: 8px;
         box-sizing: border-box;
+        &:not(:empty) {
+          cursor: pointer;
+        }
         &:first-child {
           border-top-left-radius: 10px;
         }

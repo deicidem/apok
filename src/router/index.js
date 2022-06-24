@@ -15,7 +15,7 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/views/SidebarViews/SidebarTasks')
+        component: () => import('@/views/SidebarViews/SidebarPlan')
       },
       {
         path: 'tasks',
@@ -72,6 +72,7 @@ const routes = [
   },
   {
     path: '/full-screen',
+    name: 'full-screen',
     component: () => import('@/views/FullScreenView.vue')
   },
   {

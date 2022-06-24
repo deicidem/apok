@@ -2,14 +2,6 @@ import server from "@/api/http";
 
 function fixTask(task) {
   task.date = new Date(task.date);
-  if (task.result != null) {
-    task.result.views.forEach(v => {
-      v.previewPath = server.defaults.baseURL + "images?path=" + v.previewPath
-    })
-    task.result.files.forEach(f => {
-      f.path = server.defaults.baseURL + "files/download?fileId=" + f.id
-    })
-  }
 }
 
 export async function all() {

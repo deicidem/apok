@@ -129,7 +129,7 @@
 
       <router-link to="/login">
         <button class="button button-white form-wrapper__item">
-          Авторизоваться
+          Войти
         </button>
       </router-link>
     </form>
@@ -207,16 +207,17 @@ export default {
       regUser: "regUser",
     }),
 
-    submitForm() {
+    async submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
         console.log("Form successfully submitted");
-        this.regUser({
+        await this.regUser({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.mail,
           password: this.password,
         });
+        this.$router.push('main');
       } else {
         return;
       }

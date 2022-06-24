@@ -11,9 +11,6 @@ export async function all() {
   //   console.log(data);
     let res = await server.get('plans');
     console.log(res);
-    res.data.plans.forEach(el => {
-      el.previewPath = server.defaults.baseURL + "images?path=" + el.previewPath
-    });
     return res.data.plans;
   // })
   

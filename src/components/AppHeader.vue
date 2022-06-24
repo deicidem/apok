@@ -9,7 +9,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/катод.svg" alt="Логотип" />
+              <img src="@/assets/img/logo_apok.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">
@@ -22,7 +22,16 @@
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
         <div class="header-menu__buttons">
-          <div class="button__wrapper header-menu__button-wrapper">
+          <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
+            <button
+              class="button button-svg button-white header-menu__button"
+              @click="onLogout"
+            >
+              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
+            </button>
+            <span class="tooltiptext">Выйти</span>
+          </div>
+          <div class="button__wrapper header-menu__button-wrapper" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <button
                 class="button button-svg button-white header-menu__button"
@@ -33,15 +42,7 @@
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>
           </div>
-          <div class="button__wrapper header-menu__button-wrapper">
-            <button
-              class="button button-svg button-white header-menu__button"
-              @click="logout"
-            >
-              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
-            </button>
-            <span class="tooltiptext">Выйти</span>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -56,6 +57,10 @@ export default {
   },
   methods: {
     ...mapActions("users", ["logout"]),
+    async onLogout() {
+      await this.logout();
+      this.$router.push('/main');
+    }
   },
 };
 </script>

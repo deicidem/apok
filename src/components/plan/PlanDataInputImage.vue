@@ -4,7 +4,7 @@
     <h6 class="c-title">{{ title }}</h6>
     <div class="c-content">
       <div class="c-text">
-        {{ activeItemTitle }}
+        {{ activeItemTitle == null ? "Не выбран" : activeItemTitle}}
       </div>
       <div class="c-btns">
         <div class="button__wrapper c-btn">

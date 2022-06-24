@@ -71,7 +71,7 @@
                     <button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
-                      class="button button-svg tasks-button"
+                      class="button button-svg button-white tasks-button"
                     >
                       <img
                         svg-inline

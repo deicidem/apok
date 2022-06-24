@@ -132,6 +132,7 @@ export default {
       ul {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         padding: 0;
         margin: 0;
         list-style: none;
@@ -177,6 +178,7 @@ export default {
     }
     &__files {
       margin-right: 20px;
+      min-width: 100px;
       ul {
         margin-top: 10px;
         color: $color-main;
@@ -184,7 +186,7 @@ export default {
       }
       li {
         list-style-type: none;
-        margin-top: 4px;
+        margin-top: 6px;
         font-size: 14px;
         cursor: pointer;
         a {

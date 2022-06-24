@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class="alert-delete">
-      <button @click="$emit('delete')" class="button button-svg-r button-white">
-        <img svg-inline src="@/assets/img/trash.svg" />
+      <button @click="$emit('delete')" class="button button-svg-r button-white-gr">
+        <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" />
       </button>
       <div class="tooltiptext tooltiptext-r">Удалить</div>
     </div>
@@ -45,14 +45,14 @@ export default {
   width: 24px;
   height: 24px;
   &__task {
-    background: url("@/assets/img/alert-task.svg");
+    background: url("@/assets/img/alert-icons/alert-task.svg");
   }
 
   &__access {
-    background: url("@/assets/img/alert-access.svg");
+    background: url("@/assets/img/alert-icons/alert-access.svg");
   }
   &__data {
-    background: url("@/assets/img/alert-data.svg");
+    background: url("@/assets/img/alert-icons/alert-data.svg");
   }
 }
 .alert {

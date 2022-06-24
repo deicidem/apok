@@ -4,7 +4,7 @@
     <div class="c-content">
       <div class="c-text c-selected" @click="showSelect = !showSelect">
       <div class="c-select__icon">
-        <img svg-inline src="@/assets/img/arrow-down.svg" />
+        <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
       </div>
       <template v-if="selectedOption != null">
         {{ selectedOption.title }}

@@ -27,12 +27,12 @@
             >Искать с:</label
           >
           <div class="search-date__background">
-            <img src="@/assets/img/calendar.svg" />
+            <img src="@/assets/img/form-icons/calendar.svg" />
           </div>
         </div>
 
         <div class="search-date__arrow">
-          <img svg-inline src="@/assets/img/arrow.svg" />
+          <img svg-inline src="@/assets/img/arrows/arrow.svg" />
         </div>
 
         <div class="input-wrapper search-date__input">
@@ -61,7 +61,7 @@
             >До:</label
           >
           <div class="search-date__background">
-            <img src="@/assets/img/calendar.svg" />
+            <img src="@/assets/img/form-icons/calendar.svg" />
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
             />
             <label class="input-label select-label">Выбрать месяцы:</label>
             <div class="select-img">
-              <img svg-inline src="@/assets/img/arrow-down.svg" />
+              <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
             </div>
           </div>
           <div class="select-options" v-show="selectActive">

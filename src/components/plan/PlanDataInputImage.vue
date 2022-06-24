@@ -10,16 +10,16 @@
         <div class="button__wrapper c-btn">
           <button
             class="button button-svg"
-            :class="selectActive && selectable ? 'button-g' : 'button-white'"
+            :class="selectActive && selectable ? 'button-g' : 'button-white-gr'"
             @click="onSelect"
           >
-            <img svg-inline src="@/assets/img/choose.svg" alt="Выбрать" />
+            <img svg-inline src="@/assets/img/button-svg-icons/choose.svg" alt="Выбрать" />
           </button>
           <span class="tooltiptext">Выбрать</span>
         </div>
         <div class="button__wrapper c-btn">
-          <button class="button button-svg button-white" @click="onUpload">
-            <img svg-inline src="@/assets/img/upload.svg" alt="Загрузить" />
+          <button class="button button-svg button-white-gr" @click="onUpload">
+            <img svg-inline src="@/assets/img/button-svg-icons/upload.svg" alt="Загрузить" />
           </button>
           <span class="tooltiptext">Загрузить</span>
         </div>

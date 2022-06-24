@@ -14,7 +14,7 @@
         <img
           svg-inline
           :class="$v.login.$error ? 'invalidIcon' : 'input-img'"
-          src="@/assets/img/login-icon.svg"
+          src="@/assets/img/form-icons/login-icon.svg"
           alt="Логин"
         />
 
@@ -35,7 +35,7 @@
         <img
           svg-inline
           :class="$v.password.$error ? 'invalidIcon' : 'input-img'"
-          src="@/assets/img/lock-icon.svg"
+          src="@/assets/img/form-icons/lock-icon.svg"
         />
         <div v-if="$v.password.$error" class="error-tooltip">
           <p>{{ $v.password.$params.required.error }}</p>
@@ -134,7 +134,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background: url("@/assets/img/authorize__background.png");
+  background: url("@/assets/img/background/authorize__background.png");
   background-size: cover;
   .button-router {
     margin: 0 auto;
@@ -160,6 +160,7 @@ export default {
         height: 40px;
         margin: 10px auto;
         font-size: 16px;
+        background: $white;
       }
     }
   }

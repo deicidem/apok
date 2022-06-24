@@ -24,7 +24,7 @@
             invalidIcon: v$.firstName.$error,
             'input-img': !v$.firstName.$error,
           }"
-          src="@/assets/img/login-icon.svg"
+          src="@/assets/img/form-icons/login-icon.svg"
         />
         <div v-if="v$.firstName.$error" class="error-tooltip">
           <p>{{ v$.firstName.$errors[0].$message }}</p>
@@ -47,7 +47,7 @@
             invalidIcon: v$.lastName.$error,
             'input-img': !v$.lastName.$error,
           }"
-          src="@/assets/img/login-icon.svg"
+          src="@/assets/img/form-icons/login-icon.svg"
         />
         <div v-if="v$.lastName.$error" class="error-tooltip">
           <p>{{ v$.lastName.$errors[0].$message }}</p>
@@ -70,7 +70,7 @@
             invalidIcon: v$.mail.$error,
             'input-img': !v$.mail.$error,
           }"
-          src="@/assets/img/mail.svg"
+          src="@/assets/img/form-icons/mail.svg"
         />
         <div v-if="v$.mail.$error" class="error-tooltip">
           <p>{{ v$.mail.$errors[0].$message }}</p>
@@ -93,7 +93,7 @@
             invalidIcon: v$.password.password.$error,
             'input-img': !v$.password.password.$error,
           }"
-          src="@/assets/img/lock-icon.svg"
+          src="@/assets/img/form-icons/lock-icon.svg"
         />
         <div v-if="v$.password.password.$error" class="error-tooltip">
           <p>{{ v$.password.password.$errors[0].$message }}</p>
@@ -116,7 +116,7 @@
             invalidIcon: v$.password.confirm.$error,
             'input-img': !v$.password.confirm.$error,
           }"
-          src="@/assets/img/lock-icon.svg"
+          src="@/assets/img/form-icons/lock-icon.svg"
         />
         <div v-if="v$.password.confirm.$error" class="error-tooltip">
           <p>{{ v$.password.confirm.$errors[0].$message }}</p>

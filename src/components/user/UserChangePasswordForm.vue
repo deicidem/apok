@@ -4,7 +4,7 @@
       <div class="password-popup__line">
         <p>Поменять пароль</p>
         <div class="password-popup__cross" @click="$emit('close')">
-          <img src="@/assets/img/cross-w.svg" />
+          <img svg-inline src="@/assets/img/crosses/cross.svg" />
         </div>
       </div>
       <div class="password-popup__wrapper">
@@ -17,7 +17,7 @@
           />
           <label class="input-label">Текущий пароль</label>
 
-          <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+          <img svg-inline class="input-img" src="@/assets/img/form-icons/lock-icon.svg" />
         </div>
         <div class="input-wrapper">
           <input
@@ -28,7 +28,7 @@
           />
           <label class="input-label">Новый пароль</label>
 
-          <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+          <img svg-inline class="input-img" src="@/assets/img/form-icons/lock-icon.svg" />
         </div>
         <div class="input-wrapper">
           <input
@@ -39,7 +39,7 @@
           />
           <label class="input-label">Подтвердить пароль</label>
 
-          <img svg-inline class="input-img" src="@/assets/img/lock-icon.svg" />
+          <img svg-inline class="input-img" src="@/assets/img/form-icons/lock-icon.svg" />
         </div>
         <div class="password-popup__button">
           <button
@@ -113,6 +113,9 @@ export default {
 
     width: 18px;
     cursor: pointer;
+    svg path{
+      fill: $white;
+    }
   }
   &__wrapper {
     width: 400px;

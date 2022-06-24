@@ -14,13 +14,13 @@
         <img
           v-if="active"
           svg-inline
-          src="@/assets/img/sidebar-collapse.svg"
+          src="@/assets/img/sidebar-icons/sidebar-collapse.svg"
           alt="Развернуть"
         />
         <img
           v-else
           svg-inline
-          src="@/assets/img/sidebar-open.svg"
+          src="@/assets/img/sidebar-icons/sidebar-open.svg"
           alt="Скрыть"
         />
       </div>
@@ -34,7 +34,7 @@
           >
             <img
               svg-inline
-              src="@/assets/img/sidebar-task.svg"
+              src="@/assets/img/sidebar-icons/sidebar-task.svg"
               alt="Мои задачи"
             />
           </div>
@@ -52,7 +52,7 @@
           >
             <img
               svg-inline
-              src="@/assets/img/sidebar-plan.svg"
+              src="@/assets/img/sidebar-icons/sidebar-plan.svg"
               alt="Запланированные задачи"
             />
           </div>
@@ -72,7 +72,7 @@
           >
             <img
               svg-inline
-              src="@/assets/img/sidebar-search.svg"
+              src="@/assets/img/sidebar-icons/sidebar-search.svg"
               alt="Поиск снимков"
             />
           </div>
@@ -94,7 +94,7 @@
           >
             <img
               svg-inline
-              src="@/assets/img/sidebar-notification.svg"
+              src="@/assets/img/sidebar-icons/sidebar-notification.svg"
               alt="Мои уведомления"
             />
             <div class="notification">
@@ -113,7 +113,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img svg-inline src="@/assets/img/files.svg" alt="Личный кабинет" />
+            <img svg-inline src="@/assets/img/sidebar-icons/sidebar-files.svg" alt="Мои файлы" />
           </div>
         </router-link>
 
@@ -129,7 +129,7 @@
           >
             <img
               svg-inline
-              src="@/assets/img/sidebar-person.svg"
+              src="@/assets/img/sidebar-icons/sidebar-person.svg"
               alt="Личный кабинет"
             />
           </div>
@@ -380,14 +380,12 @@ export default {
       margin-top: 6px;
       width: 31px;
       height: 30px;
-      background: url("@/assets/img/sidebar-collapse.svg");
       cursor: pointer;
     }
     &__open {
       margin-top: 6px;
       width: 31px;
       height: 30px;
-      background: url("@/assets/img/sidebar-open.svg");
       background-repeat: no-repeat;
       cursor: pointer;
     }

@@ -5,7 +5,7 @@
       <router-link to="/main/search" custom v-slot="{ navigate }">
         <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
-            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
           </div>
           <span class="results-back__subtitle">Назад</span>
         </div>
@@ -48,14 +48,14 @@
                   <span v-if="sortDir == 'asc'" class="results-table__sort">
                     <img
                       svg-inline
-                      src="@/assets/img/sort-asc.svg"
+                      src="@/assets/img/sort-icons/sort-asc.svg"
                       alt="сортировка"
                     />
                   </span>
                   <span v-else class="results-table__sort">
                     <img
                       svg-inline
-                      src="@/assets/img/sort-desc.svg"
+                      src="@/assets/img/sort-icons/sort-desc.svg"
                       alt="сортировка"
                     />
                   </span>
@@ -84,7 +84,7 @@
                   >
                     <img
                       svg-inline
-                      src="@/assets/img/vector-o.svg"
+                      src="@/assets/img/button-svg-icons/vector-o.svg"
                       alt="Вектор"
                     />
                   </button>
@@ -105,7 +105,7 @@
                   >
                     <img
                       svg-inline
-                      src="@/assets/img/image.svg"
+                      src="@/assets/img/button-svg-icons/image.svg"
                       alt="Изображение"
                     />
                   </button>
@@ -127,7 +127,7 @@
                   >
                     <img
                       svg-inline
-                      src="@/assets/img/results-info.svg"
+                      src="@/assets/img/button-svg-icons/results-info.svg"
                       alt="Информация по объекту"
                     />
                   </button>

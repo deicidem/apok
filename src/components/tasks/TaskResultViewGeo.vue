@@ -10,7 +10,7 @@
     <div class="button-group">
       <button
         class="button"
-        :class="showImage ? 'button-g' : 'button-white'"
+        :class="showImage ? 'button-g' : 'button-white-gr'"
         @click="onClick"
       >
         {{ showImage ? "Показать на карте" : "Убрать с карты" }}

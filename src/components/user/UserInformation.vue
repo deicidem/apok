@@ -25,7 +25,7 @@
       </div>
       <div class="person-wrapper__buttons">
         <button
-          class="button button-white person-wrapper__button"
+          class="button button-white-gr person-wrapper__button"
           v-show="!editable"
           @click="editable = !editable"
         >

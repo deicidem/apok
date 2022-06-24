@@ -70,7 +70,7 @@
                     "
                   />
                   <div class="accordion-item__img">
-                    <img src="@/assets/img/spektr.svg" />
+                    <img src="@/assets/img/satelite-icons/spektr.svg" />
                   </div>
                   <p>Многоспектральная съемка</p>
                 </label>
@@ -90,7 +90,7 @@
                     "
                   />
                   <div class="accordion-item__img">
-                    <img src="@/assets/img/panhrom.svg" />
+                    <img src="@/assets/img/satelite-icons/panhrom.svg" />
                   </div>
                   <p>Панхроматическая съемка</p>
                 </label>
@@ -204,13 +204,13 @@ export default {
     &__close {
       height: 24px;
       width: 24px;
-      background: url("@/assets/img/arrow-close.svg");
+      background: url("@/assets/img/arrows/arrow-close.svg");
       cursor: pointer;
     }
     &__open {
       height: 24px;
       width: 24px;
-      background: url("@/assets/img/arrow-close.svg");
+      background: url("@/assets/img/arrows/arrow-close.svg");
       cursor: pointer;
       transform: rotate(90deg);
     }

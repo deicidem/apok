@@ -8,15 +8,15 @@
       <div class="c-btns">
         <div class="button__wrapper">
           <router-link to="area" custom v-slot="{ navigate }">
-            <button @click="navigate" class="button button-svg button-white c-btn">
-              <img svg-inline src="@/assets/img/choose.svg" alt="Выбрать" />
+            <button @click="navigate" class="button button-svg button-white-gr c-btn">
+              <img svg-inline src="@/assets/img/button-svg-icons/choose.svg" alt="Выбрать" />
             </button>
           </router-link>
           <span class="tooltiptext">Выбрать</span>
         </div>
         <div class="button__wrapper c-btn">
-          <button class="button button-svg button-white">
-            <img svg-inline src="@/assets/img/vector-o.svg" alt="Загрузить" />
+          <button class="button button-svg button-white-gr">
+            <img svg-inline src="@/assets/img/button-svg-icons/vector-o.svg" alt="Загрузить" />
           </button>
           <span class="tooltiptext">Показать</span>
         </div>

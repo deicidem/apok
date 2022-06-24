@@ -55,7 +55,7 @@
     </div>
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
-        <img src="@/assets/img/arrow-plan.svg" alt="Закрыть" />
+        <img src="@/assets/img/arrows/arrow-plan.svg" alt="Закрыть" />
       </div>
     </div>
   </div>

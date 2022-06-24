@@ -4,14 +4,14 @@
       <h5 class="confirm-title">{{ title }}</h5>
       <div class="confirm-text">{{ message }}</div>
       <div class="confirm-buttons">
-        <button class="button button-white" @click="_cancel">Отмена</button>
+        <button class="button button-white-gr" @click="_cancel">Отмена</button>
         <button class="button button-r" @click="_confirm">Удалить</button>
       </div>
       <div class="confirm-cross">
         <img
           svg-inline
           @click="_cancel"
-          src="@/assets/img/cross.svg"
+          src="@/assets/img/crosses/cross.svg"
           alt="Закрыть"
         />
       </div>

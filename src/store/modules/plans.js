@@ -16,6 +16,7 @@ export default {
 
       for (let i = 0; i < state.plans.length; i++) {
         let plan = state.plans[i];
+        plan.index = i;
         plansMap[plan.id] = plan;
       }
       return plansMap;
@@ -45,18 +46,7 @@ export default {
     }
   },
   actions: {
-    async load({ commit }) {
-      let plans = await plansApi.all();
-      plans.forEach(el => {
-        el.data.forEach(d => {
-          d.dzzIndex = null;
-          d.file = null;
-          d.text = null;
-        });
-      });
-      commit("setPlans", plans)
-      return plans;
-    },
+    
     setDataObject(store, data) {
       store.commit('setDataObject', data);
     },
@@ -70,6 +60,20 @@ export default {
     changeText(store, data) {
       store.commit('changeText', data);
     },
+
+    async load({ commit }) {
+      let plans = await plansApi.all();
+      plans.forEach(el => {
+        el.data.forEach(d => {
+          d.dzzIndex = null;
+          d.file = null;
+          d.text = null;
+        });
+      });
+      commit("setPlans", plans)
+      return plans;
+    },
+
     async planNewTask(store, i) {
       let dzzs = [];
       let params = [];

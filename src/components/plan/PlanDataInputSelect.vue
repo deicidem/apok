@@ -31,7 +31,7 @@ export default {
   components: {
     PlanDataInput,
   },
-  props: ['title', 'options'],
+  props: ['title', 'options', 'selected'],
   data: () => ({
     showSelect: false,
     selectedOptionIndex: null
@@ -41,11 +41,20 @@ export default {
       return this.options[this.selectedOptionIndex];
     }
   },
+  mounted() {
+    this.selectedOptionIndex = this.selected;
+  },
   methods: {
     onSelect(index) {
       this.showSelect = false;
       this.selectedOptionIndex = index;
       this.$emit('select', index);
+    }
+  },
+  watch: {
+    selected(newV, oldV) {
+      console.log(newV, oldV);
+      this.selectedOptionIndex = newV;
     }
   }
 };

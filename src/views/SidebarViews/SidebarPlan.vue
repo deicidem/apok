@@ -12,7 +12,7 @@
           :text="plan.excerpt"
           :title="plan.title"
           :isAuth="isAuth"
-          @select="selectPlan(i)"
+          @select="onPlan(i)"
         ></app-plan-card>
       </div>
       <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
@@ -41,6 +41,11 @@ export default {
   },
   methods: {
     ...mapActions("plans", ["selectPlan"]),
+    ...mapActions(["setDataCardState"]),
+    onPlan(i) {
+      this.selectPlan(i);
+      this.setDataCardState(true);
+    }
   },
   computed: {
     ...mapGetters(["scrollOps"]),

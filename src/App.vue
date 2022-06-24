@@ -212,6 +212,11 @@ svg:focus {
     svg path {
       fill: $color-red;
     }
+    &:hover {
+      svg path {
+        fill: darken($color-red, 10)
+      }
+    }
   }
 }
 // ____________________input__________________

@@ -49,9 +49,7 @@
         ></app-checkbox>
         <p class="remember-text">Запомнить меня</p>
       </div>
-      <!-- <router-link to="/main"> -->
       <button class="button button-g form-wrapper__item">Войти</button>
-      <!-- </router-link> -->
       <router-link to="/registration">
         <button class="button button-white form-wrapper__item">
           Зарегистироваться
@@ -67,12 +65,9 @@ import { mapActions } from "vuex";
 // import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
-import { validationMixin } from "vuelidate";
-export default {
-  mixins: [validationMixin],
-  components: { AppCheckbox },
-  // setup: () => ({ $v: useVuelidate() }),
 
+export default {
+  components: { AppCheckbox },
   data() {
     return {
       login: "",
@@ -80,15 +75,13 @@ export default {
       remember: false,
     };
   },
-  validations() {
-    return {
-      login: {
-        required: helpers.withParams({ error: "Введите значение" }, required),
-      },
-      password: {
-        required: helpers.withParams({ error: "Введите значение" }, required),
-      },
-    };
+  validations: {
+    login: {
+      required: helpers.withParams({ error: "Введите значение" }, required),
+    },
+    password: {
+      required: helpers.withParams({ error: "Введите значение" }, required),
+    },
   },
   methods: {
     ...mapActions("users", {
@@ -102,7 +95,7 @@ export default {
           password: this.password,
           remember: this.remember,
         });
-        this.$router.push('main');
+        this.$router.push("main");
       } else {
         return;
       }

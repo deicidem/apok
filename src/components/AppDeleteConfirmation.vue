@@ -11,7 +11,7 @@
         <img
           svg-inline
           @click="_cancel"
-          src="@/assets/img/crosses/cross.svg"
+          src="@/assets/img/cross/cross.svg"
           alt="Закрыть"
         />
       </div>

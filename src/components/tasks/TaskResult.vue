@@ -3,7 +3,7 @@
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
         <div class="preview-wrapper__cross" @click="$emit('close')">
-          <img svg-inline src="@/assets/img/crosses/cross.svg" alt="Закрыть" />
+          <img svg-inline src="@/assets/img/cross/cross.svg" alt="Закрыть" />
         </div>
 
         <div class="preview-wrapper__title">Предпросмотр</div>
@@ -132,6 +132,7 @@ export default {
       ul {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         padding: 0;
         margin: 0;
         list-style: none;
@@ -177,6 +178,7 @@ export default {
     }
     &__files {
       margin-right: 20px;
+      min-width: 100px;
       ul {
         margin-top: 10px;
         color: $color-main;
@@ -184,7 +186,7 @@ export default {
       }
       li {
         list-style-type: none;
-        margin-top: 4px;
+        margin-top: 6px;
         font-size: 14px;
         cursor: pointer;
         a {

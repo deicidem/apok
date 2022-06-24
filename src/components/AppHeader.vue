@@ -1,7 +1,8 @@
 <template>
   <header class="header">
     <h1 class="title">
-      Комплексная тематическая обработка данных космической съемки
+      <!-- Комплексная тематическая обработка данных космической съемки -->
+      Автоматизированное выявление изменений на местности
     </h1>
 
     <div class="header-items">
@@ -9,7 +10,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/logo_apok.svg" alt="Логотип" />
+              <img src="@/assets/img/АВИМ.svg" alt="Логотип" />
             </router-link>
           </li>
           <li class="header-nav__item">

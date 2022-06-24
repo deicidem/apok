@@ -4,7 +4,7 @@
       <div class="password-popup__line">
         <p>Поменять пароль</p>
         <div class="password-popup__cross" @click="$emit('close')">
-          <img svg-inline src="@/assets/img/crosses/cross.svg" />
+          <img svg-inline src="@/assets/img/cross/cross.svg" />
         </div>
       </div>
       <div class="password-popup__wrapper">

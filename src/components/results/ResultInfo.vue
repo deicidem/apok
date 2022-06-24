@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-close" @click="$emit('cardClose')">
-      <img svg-inline src="@/assets/img/crosses/cross.svg" alt="Закрыть" />
+      <img svg-inline src="@/assets/img/cross/cross.svg" alt="Закрыть" />
     </div>
     <div class="card-title">Информация по объекту</div>
     <div class="card-img">

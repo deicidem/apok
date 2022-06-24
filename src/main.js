@@ -3,24 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import PortalVue from 'portal-vue'
-// import VueCompositionAPI from '@vue/composition-api'
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
-
 Vue.use(PortalVue)
-// Vue.use(VueCompositionAPI)
-
-
-
 Vue.config.productionTip = false;
 
 store.dispatch('users/setCookie').then(async () => {
   return store.dispatch('plans/load');
-}).then(()=> {
+}).then(() => {
   return store.dispatch('search/load');
-}).then(()=> {
+}).then(() => {
   return store.dispatch('users/auth');
-}).then(()=> {
+}).then(() => {
   return store.dispatch('files/loadFiles');
 }).then(() => {
 

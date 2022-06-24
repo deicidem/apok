@@ -8,12 +8,20 @@
         :key="series.id"
       >
         <div class="accordion-item__header" @click="updateShow(i)">
-          <div
-            v-bind:class="{
-              'accordion-item__close': !satelitesShow[i].show,
-              'accordion-item__open': satelitesShow[i].show,
-            }"
-          ></div>
+          <div class="accordion-item__header-img">
+            <img
+              svg-inline
+              v-if="!satelitesShow[i].show"
+              src="@/assets/img/arrows/arrow-close.svg"
+              alt=""
+            />
+            <img
+              svg-inline
+              v-if="satelitesShow[i].show"
+              src="@/assets/img/arrows/arrow-open.svg"
+              alt=""
+            />
+          </div>
           <app-checkbox
             :mini="true"
             :model-value="series.checked"
@@ -21,6 +29,7 @@
           />
           <p>{{ series.name }}</p>
         </div>
+
         <div class="accordion-item__body" v-show="satelitesShow[i].show">
           <div
             class="accordion-item__content"
@@ -28,12 +37,20 @@
             :key="sc.id"
           >
             <div class="accordion-item__header" @click="updateShow(i, j)">
-              <div
-                v-bind:class="{
-                  'accordion-item__close': !satelitesShow[i].children[j].show,
-                  'accordion-item__open': satelitesShow[i].children[j].show,
-                }"
-              ></div>
+              <div class="accordion-item__header-img">
+                <img
+                  svg-inline
+                  v-if="!satelitesShow[i].children[j].show"
+                  src="@/assets/img/arrows/arrow-close.svg"
+                  alt=""
+                />
+                <img
+                  svg-inline
+                  v-if="satelitesShow[i].children[j].show"
+                  src="@/assets/img/arrows/arrow-open.svg"
+                  alt=""
+                />
+              </div>
               <app-checkbox
                 :mini="true"
                 :modelValue="sc.checked"
@@ -196,26 +213,17 @@ export default {
     &__header {
       display: flex;
       align-items: center;
-      padding: 6px 0 0 6px;
-    }
-    &__checkbox {
-      margin-right: 6px;
-    }
-    &__close {
-      height: 24px;
-      width: 24px;
-      background: url("@/assets/img/arrows/arrow-close.svg");
-      cursor: pointer;
-    }
-    &__open {
-      height: 24px;
-      width: 24px;
-      background: url("@/assets/img/arrows/arrow-close.svg");
-      cursor: pointer;
-      transform: rotate(90deg);
+      padding-top: 6px;
+      &-img {
+        margin-right: 10px;
+      }
+      svg path {
+        fill: $color-main;
+        vertical-align: middle;
+      }
     }
     &__content {
-      padding: 6px 0 0 24px;
+      padding: 6px 0 0 26px;
       border-top: none;
     }
   }

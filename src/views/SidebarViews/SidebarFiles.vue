@@ -68,10 +68,8 @@
                       alt="Удалить"
                     />
                   </button>
-                  <span
-                    class="tooltiptext tooltiptext-r"
-                  >
-                    {{item.deletable ? 'Удалить' : 'Файл используется'}}
+                  <span class="tooltiptext tooltiptext-r" v-if="item.deletable">
+                    {{ item.deletable ? "Удалить" : "Файл используется" }}
                   </span>
                 </div>
               </td>
@@ -169,7 +167,7 @@ export default {
       }
       return res;
     },
-    
+
     notDeletableItemSelected() {
       let files = this.files;
       let res = false;
@@ -239,7 +237,6 @@ export default {
       console.log(val);
     },
   },
-  
 };
 </script>
 

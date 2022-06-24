@@ -52,9 +52,7 @@
               </td>
               <td class="col-id center">{{ item.id }}</td>
               <td>{{ item.title }}</td>
-              <!-- <td>{{ `${item.date.getDate()}.${item.date.getMonth() + 1}.${item.date.getFullYear()}` }}</td> -->
               <td>{{ item.date.toLocaleDateString() }}</td>
-              <!--  -->
               <td v-if="!isNaN(+item.status)">
                 Выполняется: {{ item.status }}%
                 <div class="tasks-table__progress">
@@ -93,7 +91,7 @@
                         alt="Удалить"
                       />
                     </button>
-                    <span class="tooltiptext tooltiptext-r">Удалить</span>
+                    <span v-if="item.deletable" class="tooltiptext tooltiptext-r">Удалить</span>
                   </div>
                 </div>
               </td>

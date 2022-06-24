@@ -65,9 +65,11 @@ import { mapActions } from "vuex";
 // import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
+import { validationMixin } from 'vuelidate';
 
 export default {
   components: { AppCheckbox },
+  // setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       login: "",
@@ -75,6 +77,7 @@ export default {
       remember: false,
     };
   },
+  mixins: [validationMixin],
   validations: {
     login: {
       required: helpers.withParams({ error: "Введите значение" }, required),

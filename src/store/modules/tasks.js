@@ -16,6 +16,17 @@ export default {
     },
     getSortDir(state) {
       return state.currentSortDir;
+    },
+    getTasksMap(state) {
+      let tasksMap = {};
+
+      for (let i = 0; i < state.tasks.length; i++) {
+        let task = state.tasks[i];
+        tasksMap[task.id] = task;
+        tasksMap[task.id].index = i;
+      }
+
+      return tasksMap;
     }
   },
   mutations: {
@@ -27,8 +38,11 @@ export default {
         if (el.id == item.id) {
           state.tasks.splice(i, 1, item);
         }
-        
       })
+    },
+    addTask(state, item) {
+      state.tasks.push(item);
+
     },
     removeTask(state, index) {
       state.tasks.splice(index, 1);
@@ -71,12 +85,6 @@ export default {
         el.selected = false;
         if (el.result != null) {
           el.result.active = false;
-          el.result.views.forEach(e => {
-            if (e.type != 1) {
-              e.fitBounds = true;
-            }
-            e.active = false;
-          })
         }
         if (el.status != "Завершена") {
           dispatch('setTimer', el.id)
@@ -85,27 +93,53 @@ export default {
       commit('setTasks', tasks);
       return tasks;
     },
+    async reload({commit, dispatch, getters}) {
+      let tasks = await tasksApi.all();
+      getters.getTasks.forEach((task, i) => {
+        if (tasks.find(e => e.id == task.id) == null) {
+          commit('removeTask', i)
+        }
+      })
+
+      tasks.forEach(task => {
+        if (getters.getTasksMap[task.id] != null) {
+          let oldDate = new Date(getters.getTasksMap[task.id].updatedAt);
+          let newDate = new Date(task.updatedAt);
+          if (newDate > oldDate) {
+            task.selected = false;
+            if (task.result != null) {
+              task.result.active = false;
+            }
+            if (task.status != "Завершена") {
+              dispatch('setTimer', task.id)
+            }
+            commit('setTask', task);
+          }
+        } else {
+          commit('addTask', task);
+        }
+      })
+      
+      return tasks;
+    },
     async update({commit}, id) {
       let task = await tasksApi.one(id);
       task.selected = false;
       if (task.result != null) {
         task.result.active = false;
-        task.result.views.forEach(el => {
-          if (el.type != 1) {
-            el.fitBounds = true;
-          }
-          el.active = false;
-        })
       }
       commit('setTask', task);
       return task;
     },
     async setTimer({dispatch}, id) {
       let interval = setInterval(async () => {
-        let task = await dispatch('update', id);
-        if (task.status == "Завершена") {
+        dispatch('update', id).then(task => {
+          if (task.status == "Завершена") {
+            clearInterval(interval);
+          }
+        }).catch(() => {
           clearInterval(interval);
-        }
+        })
       }, 60000);
     },
     async deleteTasks({dispatch, commit, getters}) {

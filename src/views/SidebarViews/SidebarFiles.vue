@@ -70,9 +70,8 @@
                   </button>
                   <span
                     class="tooltiptext tooltiptext-r"
-                    v-if="!item.deletable"
                   >
-                    Файл используется
+                    {{item.deletable ? 'Удалить' : 'Файл используется'}}
                   </span>
                 </div>
               </td>

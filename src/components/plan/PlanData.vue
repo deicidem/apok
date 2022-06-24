@@ -1,150 +1,45 @@
 <template>
   <div class="data" :class="{ active: getDataCardState }">
     <div class="data-content">
+      <portal to="popup">
+        <plan-upload-requirements-popup
+          :plan="activePlan"
+          :data="planPopup.data"
+          v-if="planPopup.visible"
+          @close="onPopupClose"
+        ></plan-upload-requirements-popup>
+      </portal>
       <div class="data-title">Запланировать задачу</div>
       <div class="data-wrapper">
-        <div class="data-item">
-          <portal to="popup">
-            <plan-upload-requirements-popup
-              :plan="activePlan"
-              :data="planPopup.data"
-              v-if="planPopup.visible"
-              @close="onPopupClose"
-            ></plan-upload-requirements-popup>
-          </portal>
-          <div class="data-info">
-            <h6 class="data__subtitle">Задача:</h6>
-            <div
-              class="data__text data__selected"
-              @click="showSelect = !showSelect"
-            >
-              <div class="data-arrowDown">
-                <img svg-inline src="@/assets/img/arrow-down.svg" />
-              </div>
-              <template v-if="activePlan != null">
-                {{ activePlan.title }}
-              </template>
-            </div>
-            <div class="data__select" v-show="showSelect">
-              <div
-                class="data__select__item"
-                @click="onSelect(i)"
-                v-for="(plan, i) in getPlans"
-                :key="i"
-              >
-                {{ plan.title }}
-              </div>
-            </div>
-          </div>
-        </div>
+        <plan-data-input-select
+          title="Задача"
+          :options="getPlans"
+          @select="onSelect($event)"
+        ></plan-data-input-select>
         <template v-if="activePlan != null">
-          <div
-            class="data-item"
-            :class="{ dzz: data.type == 1 }"
-            v-for="(data, i) in activePlan.data"
-            :key="i"
-          >
+          <div v-for="(data, i) in activePlan.data" :key="i">
             <template v-if="data.type == 1">
-              <div class="data-circle" :class="`data-circle-${i + 1}`"></div>
-              <div class="data-info">
-                <h6 class="data__subtitle">{{ data.title }}</h6>
-                <div class="data-item__content">
-                  <div class="data__text" v-if="data.file != null">
-                    {{ data.file.name }}
-                  </div>
-                  <div class="data__text" v-else-if="data.dzzIndex != null">
-                    {{ resultsMap[data.dzzIndex].name }}
-                  </div>
-                  <div class="data__text" v-else>Не выбрано</div>
-                  <div class="data-btns">
-                    <div class="button__wrapper data-btn__wrapper">
-                      <button
-                        class="button button-svg data-btn"
-                        :class="
-                          getSelectable.dataIndex == i &&
-                          getSelectable.planIndex == activePlanIndex &&
-                          getSelectable.value
-                            ? 'data-btn-g'
-                            : 'button-svg'
-                        "
-                        @click="selectDzz(i)"
-                      >
-                        <img
-                          svg-inline
-                          src="@/assets/img/choose.svg"
-                          alt="Выбрать"
-                        />
-                      </button>
-                      <span class="tooltiptext">Выбрать</span>
-                    </div>
-                    <div class="button__wrapper data-btn__wrapper">
-                      <button
-                        class="button button-svg data-btn"
-                        @click="onUploadClick(i)"
-                      >
-                        <img
-                          svg-inline
-                          src="@/assets/img/upload.svg"
-                          alt="Загрузить"
-                        />
-                      </button>
-                      <span class="tooltiptext">Загрузить</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <plan-data-input-image
+                :title="data.title"
+                :active-item-title="planDataValueTitle(data)"
+                :circleStyle="1 + i"
+                :selectable="getSelectable.value && getSelectable.planIndex == activePlanIndex"
+                @select="selectDzz(i)"
+                @upload="onUploadClick(i)"
+              ></plan-data-input-image>
             </template>
             <template v-else-if="data.type == 2">
-              <div class="data-circle hidden"></div>
-              <div class="data-info">
-                <h6 class="data__subtitle">{{ data.title }}</h6>
-                <div class="data-item__content">
-                  <div class="data__text" v-if="getActivePolygonJson != null">
-                    Выбрана
-                  </div>
-                  <div class="data__text" v-else>Не выбрана</div>
-                  <div class="data-btns">
-                    <div class="button__wrapper data-btn__wrapper">
-                      <router-link to="area" custom v-slot="{ navigate }">
-                        <button
-                          @click="navigate"
-                          class="button button-svg data-btn"
-                        >
-                          <img
-                            svg-inline
-                            src="@/assets/img/choose.svg"
-                            alt="Выбрать"
-                          />
-                        </button>
-                      </router-link>
-                      <span class="tooltiptext">Выбрать</span>
-                    </div>
-                    <div class="button__wrapper data-btn__wrapper">
-                      <button class="button button-svg data-btn">
-                        <img
-                          svg-inline
-                          class="icon icon-vector-o"
-                          src="@/assets/img/vector-o.svg"
-                          alt="Загрузить"
-                        />
-                      </button>
-                      <span class="tooltiptext">Загрузить</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <plan-data-input-vector
+                :title="data.title"
+                :area-selected="getActivePolygonJson != null"
+              ></plan-data-input-vector>
             </template>
             <template v-else>
-              <div class="data-circle hidden"></div>
-              <div class="data-info">
-                <h6 class="data__subtitle">{{ data.title }}</h6>
-                <input
-                  required
-                  class="data__input"
-                  :value="data.text"
-                  @change="onParamChange($event, i)"
-                />
-              </div>
+              <plan-data-input-text
+                :title="data.title"
+                :value="data.text"
+                @input="onParamChange($event, i)"
+              ></plan-data-input-text>
             </template>
           </div>
         </template>
@@ -168,10 +63,18 @@
 import { mapActions, mapGetters } from "vuex";
 import * as filesApi from "@/api/files";
 import PlanUploadRequirementsPopup from "@/components/plan/PlanUploadRequirementsPopup";
+import PlanDataInputSelect from "@/components/plan/PlanDataInputSelect";
+import PlanDataInputImage from "@/components/plan/PlanDataInputImage";
+import PlanDataInputVector from "@/components/plan/PlanDataInputVector";
+import PlanDataInputText from "@/components/plan/PlanDataInputText";
 
 export default {
   components: {
     PlanUploadRequirementsPopup,
+    PlanDataInputSelect,
+    PlanDataInputImage,
+    PlanDataInputVector,
+    PlanDataInputText,
   },
   data() {
     return {
@@ -192,6 +95,19 @@ export default {
     activePlan() {
       return this.getPlans[this.activePlanIndex];
     },
+
+    planDataValueTitle() {
+      let map = this.resultsMap;
+      return (data) => {
+        if (data.file != null) {
+          return data.file.name;
+        } else if (data.dzzIndex != null) {
+          return map[data.dzzIndex].name;
+        } else {
+          return null;
+        }
+      };
+    },
   },
   methods: {
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
@@ -211,7 +127,7 @@ export default {
       this.changeText({
         dataIndex: i,
         planIndex: this.activePlanIndex,
-        text: e.target.value,
+        text: e,
       });
     },
 
@@ -369,18 +285,7 @@ export default {
     color: $black;
   }
   &__input {
-    border: 1px solid #dfdfdf;
-    background: $white;
-    min-height: 30px;
-    min-width: 360px;
-    width: 100%;
-    padding: 5px 30px 5px 10px;
-    border-radius: 5px;
-    &:focus,
-    &:focus-visible {
-      border: 1px solid rgba($color-main, 0.5);
-      outline: none;
-    }
+    
   }
   &-btns {
     padding: 0px 10px;

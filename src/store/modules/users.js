@@ -24,13 +24,14 @@ export default {
   actions: {
     
     setUser(store, user) {
-      console.log(user);
       store.commit('setUser', user)
     },
-    
+    async setCookie() {
+      return await userApi.setCookie();
+    },
     async authorizeUser(store, user) {
       await userApi.login({email: user.email,password: user.password, remember: user.remember});
-      store.dispatch('auth');
+      return await store.dispatch('auth');
     },
     async regUser(store, user) {
       await userApi.register({
@@ -40,11 +41,10 @@ export default {
         password: user.password.password,
         password_confirmation: user.password.confirm
       });
-      store.dispatch('auth');
+      
+      return await store.dispatch('auth');
     },
-    async setCookie() {
-      return await userApi.setCookie();
-    },
+    
     async auth(store) {
       let {data} = await userApi.auth();
       store.dispatch('setUser', data.user);
@@ -61,11 +61,11 @@ export default {
     async logout(store) {
       await userApi.logout();
       store.dispatch('setUser', null);
+      return;
     },
     
     async verifyEmail(store, url) {
-      let res = await userApi.verifyEmail(url);
-      console.log(res);
+      return await userApi.verifyEmail(url);
     },
     
   }

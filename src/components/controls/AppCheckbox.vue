@@ -83,8 +83,9 @@ export default {
   top: 50%;
   left: 50%;
 
-  display: block;
-  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
   height: 20px;
 
@@ -94,6 +95,7 @@ export default {
   background: $gradient;
   opacity: 0;
 
+  transform: translate(-50%, -50%);
   transition: 0.1s ease-out;
 }
 .mini {

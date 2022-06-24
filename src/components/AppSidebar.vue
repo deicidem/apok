@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar_wrap" :class="active ? 'active' : ''">
+  <div class="sidebar_wrap" :class="{ active }">
     <!-- <transition name="slide"> -->
     <div class="sidebar" :class="{ active }">
       <plan-data v-if="isAuth"></plan-data>
@@ -12,7 +12,7 @@
     <div class="sidebar-collapsed">
       <div @click="toggleSidebar()" class="sidebar-collapsed__img">
         <img
-          v-if="isCollapse"
+          v-if="active"
           svg-inline
           src="@/assets/img/sidebar-collapse.svg"
           alt="Развернуть"
@@ -151,8 +151,6 @@ export default {
   },
   data() {
     return {
-      isCollapse: false,
-      isOpen: true,
       cardDataClass: "",
     };
   },
@@ -179,12 +177,8 @@ export default {
     toggleSidebar() {
       if (this.active) {
         this.close();
-        this.isCollapse = false;
-        this.isOpen = true;
       } else {
         this.open();
-        this.isCollapse = true;
-        this.isOpen = false;
       }
     },
   },
@@ -312,8 +306,6 @@ export default {
     font-weight: 400;
     font-size: 14px;
     box-sizing: border-box;
-
-    color: $white;
     transition: color 0.2s ease-out;
   }
   &-collapsed {
@@ -374,7 +366,7 @@ export default {
       justify-content: center;
       cursor: pointer;
       path {
-        fill: $color-main;
+        fill: $color-main-dark;
       }
       &.active,
       &:hover,

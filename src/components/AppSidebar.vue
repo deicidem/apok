@@ -1,0 +1,404 @@
+<template>
+  <div class="sidebar_wrap" :class="{ active }">
+    <!-- <transition name="slide"> -->
+    <div class="sidebar" :class="{ active }">
+      <plan-data v-if="isAuth"></plan-data>
+      <div class="sidebar-content">
+        <router-view> </router-view>
+      </div>
+    </div>
+    <!-- </transition> -->
+
+    <div class="sidebar-collapsed">
+      <div @click="toggleSidebar()" class="sidebar-collapsed__img">
+        <img
+          v-if="active"
+          svg-inline
+          src="@/assets/img/sidebar-icons/sidebar-collapse.svg"
+          alt="Развернуть"
+        />
+        <img
+          v-else
+          svg-inline
+          src="@/assets/img/sidebar-icons/sidebar-open.svg"
+          alt="Скрыть"
+        />
+      </div>
+
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/tasks" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-icons/sidebar-task.svg"
+              alt="Мои задачи"
+            />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Мои задачи</div>
+      </div>
+
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/plan" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-icons/sidebar-plan.svg"
+              alt="Запланированные задачи"
+            />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">
+          Запланированные задачи
+        </div>
+      </div>
+
+      <div class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/search" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-icons/sidebar-search.svg"
+              alt="Поиск снимков"
+            />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
+      </div>
+
+      <div
+        v-show="isAuth"
+        class="sidebar-collapsed__item notification-wrapper"
+        @click="open"
+      >
+        <router-link to="/main/alerts" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-icons/sidebar-notification.svg"
+              alt="Мои уведомления"
+            />
+            <div class="notification">
+              <div class="notification-number">{{ alerts.length }}</div>
+            </div>
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
+      </div>
+
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/files" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img svg-inline src="@/assets/img/sidebar-icons/sidebar-files.svg" alt="Мои файлы" />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Мои файлы</div>
+      </div>
+
+      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
+        <router-link to="/main/user" custom v-slot="{ navigate, isActive }">
+          <div
+            @click="navigate"
+            :class="{ active: isActive }"
+            class="sidebar-collapsed__img"
+          >
+            <img
+              svg-inline
+              src="@/assets/img/sidebar-icons/sidebar-person.svg"
+              alt="Личный кабинет"
+            />
+          </div>
+        </router-link>
+
+        <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+import PlanData from "@/components/plan/PlanData.vue";
+export default {
+  name: "AppSidebar",
+  components: {
+    PlanData,
+  },
+  data() {
+    return {
+      cardDataClass: "",
+    };
+  },
+  computed: {
+    ...mapGetters({ active: "getSidebarState" }),
+    ...mapGetters("alerts", {
+      alerts: "getAlerts",
+    }),
+    ...mapGetters("users", ["isAuth"]),
+  },
+  methods: {
+    ...mapActions(["setSidebarState"]),
+
+    open() {
+      this.setSidebarState(true);
+      this.$emit("open");
+    },
+
+    close() {
+      this.setSidebarState(false);
+      this.$emit("close");
+    },
+
+    toggleSidebar() {
+      if (this.active) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.notification {
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  &-number {
+    width: 18px;
+    height: 18px;
+
+    color: $white;
+    font-size: 12px;
+    background: $gradient-r;
+    border-radius: 50%;
+    text-align: center;
+  }
+  &-wrapper {
+    position: relative;
+  }
+}
+.slide {
+  &-enter {
+    transform: translateX(-100%);
+  }
+  &-enter-active {
+    transition: all 0.3s ease;
+  }
+  &-enter-to {
+    transform: translateX(0);
+  }
+  &-leave {
+    transform: translateX(0);
+  }
+  &-leave-active {
+    transition: all 0.3s ease;
+  }
+  &-leave-to {
+    transform: translateX(-100%);
+  }
+}
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
+  &-enter,
+  &-leave-active {
+    opacity: 0;
+  }
+}
+.sidebar {
+  position: absolute;
+  left: 50px;
+
+  display: block;
+  height: 100%;
+  width: calc(100% - 50px);
+
+  z-index: 5;
+  box-shadow: $shadow-big;
+  transition: transform 0.3s ease-out;
+  transform: translateX(-100%);
+  &.active {
+    transform: translateX(0);
+  }
+  &-title {
+    position: relative;
+    margin: 0;
+    padding: 6px;
+
+    background: $gradient;
+    color: $white;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    box-shadow: $shadow-small;
+  }
+  &-content {
+    position: relative;
+    height: 100%;
+
+    background: $white-dark;
+    overflow: hidden;
+  }
+  &-open {
+    margin-top: 6px;
+  }
+  &__box {
+    display: flex;
+  }
+  &__item {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+
+    border-top: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+
+    transition: background-color 0.2s ease-out;
+    &:focus-within {
+      background: #384342;
+      box-sizing: border-box;
+      border-top: 1px solid $white;
+      border-left: 1px solid $white;
+      border-right: 1px solid $white;
+    }
+  }
+  &-close {
+    justify-content: flex-end;
+    i:hover {
+      color: #384342;
+      transition: all 0.4s ease-out;
+    }
+  }
+  a {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: color 0.2s ease-out;
+  }
+  &-collapsed {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+
+    height: 100%;
+    width: 50px;
+
+    background: $white;
+    box-shadow: $shadow-small;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+      transition: all 0.2s ease-out;
+
+      a:hover + &__hidden {
+        visibility: inherit;
+        z-index: 1;
+        opacity: 1;
+      }
+      &__hidden {
+        position: absolute;
+        z-index: -1;
+        left: 33px;
+
+        display: inline-block;
+        white-space: nowrap;
+        padding: 5px 10px;
+
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+
+        color: $color-main;
+        visibility: hidden;
+        opacity: 0;
+
+        color: #618580;
+        background: $white;
+        box-shadow: $shadow-small;
+        border-radius: 10px;
+
+        transition: all 0.3s ease-out;
+      }
+    }
+    &__img {
+      width: 31px;
+      display: flex;
+      margin-top: 6px;
+      justify-content: center;
+      cursor: pointer;
+      path {
+        fill: $color-main-dark;
+      }
+      &.active,
+      &:hover,
+      &:focus-visible {
+        path {
+          fill: $color-main-light;
+        }
+      }
+    }
+    &__collapse {
+      margin-top: 6px;
+      width: 31px;
+      height: 30px;
+      cursor: pointer;
+    }
+    &__open {
+      margin-top: 6px;
+      width: 31px;
+      height: 30px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+  }
+  &-open {
+    i {
+      color: rgb(97, 133, 128);
+      &:hover {
+        transition: all 0.4s ease-out;
+        cursor: pointer;
+        color: #384342;
+      }
+    }
+  }
+}
+</style>

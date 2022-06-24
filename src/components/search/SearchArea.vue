@@ -52,7 +52,7 @@
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate({ index: i })">
-                <button class="button button-svg-r button-white-gr">
+                <button class="button button-svg-r">
                   <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" alt="Удалить" />
                 </button>
                 <div class="tooltiptext tooltiptext-r">Удалить</div>

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="alert-delete">
-      <button @click="$emit('delete')" class="button button-svg-r button-white-gr">
+      <button @click="$emit('delete')" class="button button-svg-r">
         <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" />
       </button>
       <div class="tooltiptext tooltiptext-r">Удалить</div>

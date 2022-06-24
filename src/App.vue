@@ -190,9 +190,6 @@ svg:focus {
   &-white {
     background: $white;
     color: $color-main;
-    svg path {
-      fill: $color-main;
-    }
   }
   &-r {
     color: $white;
@@ -209,6 +206,9 @@ svg:focus {
     padding: 7px;
   }
   &-svg-r {
+    &::after {
+      background: $gradient-w;
+    }
     width: 30px;
     height: 30px;
     padding: 7px;

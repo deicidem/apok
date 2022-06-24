@@ -83,7 +83,7 @@
                   </div>
                   <div class="button__wrapper">
                     <button
-                      class="button button-white-gr button-svg-r"
+                      class="button button-svg-r"
                       :disabled="!item.deletable"
                       @click="onDelete(i)"
                     >

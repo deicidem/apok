@@ -159,10 +159,10 @@ svg:focus {
       box-shadow: 0 2px 4px rgba($black, 0.1);
     }
     &:hover:after {
-      left: 100%
+      left: 100%;
     }
     &:active:after {
-      left: 0%
+      left: 0%;
     }
   }
   &-g {
@@ -187,9 +187,12 @@ svg:focus {
       }
     }
   }
-  &-white{
+  &-white {
     background: $white;
     color: $color-main;
+    svg path {
+      fill: $color-main;
+    }
   }
   &-r {
     color: $white;
@@ -211,11 +214,6 @@ svg:focus {
     padding: 7px;
     svg path {
       fill: $color-red;
-    }
-    &:hover {
-      svg path {
-        fill: darken($color-red, 10)
-      }
     }
   }
 }

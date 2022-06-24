@@ -113,8 +113,6 @@
                 </div>
               </td>
               <td class="dzz-name">{{ item.name }}</td>
-              <!-- <td>{{ item.round }}</td>
-              <td>{{ item.route }}</td> -->
               <td>{{ item.satelite }}</td>
               <td>{{ item.date }}</td>
               <td>{{ item.cloudiness }}%</td>

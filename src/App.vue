@@ -191,6 +191,14 @@ svg:focus {
   &-white{
     background: $white;
     color: $color-main;
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
   }
   &-r {
     color: $white;

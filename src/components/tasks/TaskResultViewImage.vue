@@ -4,7 +4,7 @@
       <img :src="path" class="image" />
     </div>
     <div class="button-group">
-      <a :href="downloadPath" target="_blank" download class="button button-white">
+      <a :href="downloadPath" target="_blank" download class="button button-white-gr">
         Скачать
       </a>
       <!-- <router-link to="/full-screen" custom v-slot="{ navigate }"> -->

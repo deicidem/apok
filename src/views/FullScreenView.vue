@@ -4,7 +4,7 @@
       <router-link to="/main/tasks">
         <div class="back">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrow.svg" />
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>

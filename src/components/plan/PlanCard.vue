@@ -14,7 +14,7 @@
         <router-link :to="'/plan/' + planid" custom v-slot="{ navigate }">
           <button
             @click="navigate"
-            class="button button-white plan-item__button"
+            class="button button-white-gr plan-item__button"
           >
             Подробнее
           </button>

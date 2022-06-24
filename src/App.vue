@@ -174,7 +174,7 @@ svg:focus {
       fill: $white;
     }
   }
-  &-white {
+  &-white-gr {
     &::after {
       background: $gradient-w;
     }
@@ -187,6 +187,10 @@ svg:focus {
         fill: $color-main-dark;
       }
     }
+  }
+  &-white{
+    background: $white;
+    color: $color-main;
   }
   &-r {
     color: $white;
@@ -238,7 +242,7 @@ svg:focus {
   font-size: 14px;
 
   border-radius: 7px;
-  border: 1px solid rgb($text-grey, 0.2);
+  border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
   &:focus-visible {

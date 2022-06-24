@@ -4,7 +4,7 @@
       <div class="popup-card__header">
         <div class="back" @click="$emit('close', file)">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>

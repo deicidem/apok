@@ -23,14 +23,14 @@
                   <span v-if="sortDir == 'asc'" class="tasks-sort">
                     <img
                       svg-inline
-                      src="@/assets/img/sort-asc.svg"
+                      src="@/assets/img/sort-icons/sort-asc.svg"
                       alt="Сортировка"
                     />
                   </span>
                   <span v-else class="tasks-sort">
                     <img
                       svg-inline
-                      src="@/assets/img/sort-desc.svg"
+                      src="@/assets/img/sort-icons/sort-desc.svg"
                       alt="Сортировка"
                     />
                   </span>
@@ -71,11 +71,11 @@
                     <button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
-                      class="button button-svg button-white tasks-button"
+                      class="button button-white-gr button-svg tasks-button"
                     >
                       <img
                         svg-inline
-                        src="@/assets/img/results-info.svg"
+                        src="@/assets/img/button-svg-icons/results-info.svg"
                         alt="Изображение"
                       />
                     </button>
@@ -83,13 +83,13 @@
                   </div>
                   <div class="button__wrapper">
                     <button
-                      class="button button-white button-svg-r"
+                      class="button button-white-gr button-svg-r"
                       :disabled="!item.deletable"
                       @click="onDelete(i)"
                     >
                       <img
                         svg-inline
-                        src="@/assets/img/trash.svg"
+                        src="@/assets/img/button-svg-icons/trash.svg"
                         alt="Удалить"
                       />
                     </button>

@@ -52,8 +52,8 @@
               <td>{{ coord.lat }}</td>
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate({ index: i })">
-                <button class="button button-svg-r button-white">
-                  <img svg-inline src="@/assets/img/trash.svg" alt="Удалить" />
+                <button class="button button-svg-r button-white-gr">
+                  <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" alt="Удалить" />
                 </button>
                 <div class="tooltiptext tooltiptext-r">Удалить</div>
               </td>
@@ -84,11 +84,11 @@
                 <div class="zone-table__delete">
                   <button
                     @click="onAddCoordinate"
-                    class="button button-svg button-white"
+                    class="button button-svg button-white-gr"
                   >
                     <img
                       svg-inline
-                      src="@/assets/img/plus.svg"
+                      src="@/assets/img/button-svg-icons/plus.svg"
                       alt="Добавить"
                     />
                   </button>
@@ -102,7 +102,7 @@
       <div class="search-zone__buttons">
         <button
           class="button search-zone__button"
-          :class="getAreaPolygonDrawable ? 'button-white' : 'button-g'"
+          :class="getAreaPolygonDrawable ? 'button-white-gr' : 'button-g'"
           @click="setAreaPolygonDrawable({ value: !getAreaPolygonDrawable })"
         >
           <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
@@ -110,7 +110,7 @@
         </button>
 
         <button
-          class="button button-white search-zone__button"
+          class="button button-white-gr search-zone__button"
           @click="selectScreenArea"
         >
           Видимая область
@@ -220,7 +220,7 @@
             type="file"
             name="file"
           />
-          <span class="button button-white load-wrapper__button"
+          <span class="button button-white-gr load-wrapper__button"
             >Загрузить файл</span
           >
           <span class="load-wrapper__name">{{

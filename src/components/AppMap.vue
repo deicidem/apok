@@ -103,8 +103,8 @@ import {
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("@/assets/img/geo_marker.svg"),
-  iconUrl: require("@/assets/img/geo_marker.svg"),
+  iconRetinaUrl: require("@/assets/img/map-icons/geo_marker.svg"),
+  iconUrl: require("@/assets/img/map-icons/geo_marker.svg"),
   iconSize: [40, 40],
   iconAnchor: [20, 40],
   popupAnchor: null,
@@ -155,7 +155,7 @@ export default {
     }),
 
     icon() {
-      return require("@/assets/img/geo_marker.svg");
+      return require("@/assets/img/map-icons/geo_marker.svg");
     },
   },
   methods: {

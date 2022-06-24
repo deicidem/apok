@@ -4,7 +4,7 @@
       <h5 class="error-title">Ошибка 404</h5>
       <div class="error-text">Страница не найдена</div>
       <div class="error-cross">
-        <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
+        <img svg-inline src="@/assets/img/crosses/cross.svg" alt="Закрыть" />
       </div>
     </div>
   </div>

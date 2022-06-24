@@ -3,7 +3,7 @@
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
         <div class="preview-wrapper__cross" @click="$emit('close')">
-          <img svg-inline src="@/assets/img/cross.svg" alt="Закрыть" />
+          <img svg-inline src="@/assets/img/crosses/cross.svg" alt="Закрыть" />
         </div>
 
         <div class="preview-wrapper__title">Предпросмотр</div>

@@ -4,7 +4,7 @@
       <router-link to="/main/plan">
         <div class="back">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrow.svg" />
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -34,9 +34,6 @@
                   v-for="(req, i) in plan.requirements"
                   :key="i"
                 >
-                  <!-- <div class="plan-table__img">
-                  <img src="@/assets/img/plan__data.svg" />
-                </div> -->
                   <p class="plan-table__subtitle">{{ req.title }}:</p>
                   <p class="plan-table__text">
                     {{ req.description }}

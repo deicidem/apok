@@ -25,20 +25,20 @@
         <div class="header-menu__buttons">
           <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
             <button
-              class="button button-svg button-white header-menu__button"
+              class="button button-svg button-white-gr header-menu__button"
               @click="onLogout"
             >
-              <img svg-inline src="@/assets/img/logout.svg" alt="Логин" />
+              <img svg-inline src="@/assets/img/header-icons/logout.svg" alt="Логин" />
             </button>
             <span class="tooltiptext">Выйти</span>
           </div>
           <div class="button__wrapper header-menu__button-wrapper" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <button
-                class="button button-svg button-white header-menu__button"
+                class="button button-svg button-white-gr header-menu__button"
                 @click="navigate"
               >
-                <img svg-inline src="@/assets/img/login-icon.svg" alt="Логин" />
+                <img svg-inline src="@/assets/img/form-icons/login-icon.svg" alt="Логин" />
               </button>
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>

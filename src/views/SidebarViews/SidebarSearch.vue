@@ -6,7 +6,7 @@
         <div class="search-result" @click="navigate">
           <span class="search-result__subtitle">Результат</span>
           <div class="search-result__arrow">
-            <img svg-inline src="@/assets/img/arrow.svg" alt="Назад" />
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
           </div>
         </div>
       </router-link>

@@ -93,7 +93,7 @@
                         alt="Удалить"
                       />
                     </button>
-                    <span class="tooltiptext">Удалить</span>
+                    <span class="tooltiptext tooltiptext-r">Удалить</span>
                   </div>
                 </div>
               </td>

@@ -8,7 +8,7 @@
         :key="series.id"
       >
         <div class="accordion-item__header" @click="updateShow(i)">
-          <div>
+          <div class="accordion-item__header-img">
             <img
               svg-inline
               v-if="!satelitesShow[i].show"
@@ -29,7 +29,7 @@
           />
           <p>{{ series.name }}</p>
         </div>
-        
+
         <div class="accordion-item__body" v-show="satelitesShow[i].show">
           <div
             class="accordion-item__content"
@@ -37,7 +37,7 @@
             :key="sc.id"
           >
             <div class="accordion-item__header" @click="updateShow(i, j)">
-              <div>
+              <div class="accordion-item__header-img">
                 <img
                   svg-inline
                   v-if="!satelitesShow[i].children[j].show"
@@ -213,17 +213,17 @@ export default {
     &__header {
       display: flex;
       align-items: center;
-      padding: 6px 0 0 6px;
+      padding-top: 6px;
+      &-img {
+        margin-right: 10px;
+      }
       svg path {
         fill: $color-main;
         vertical-align: middle;
       }
     }
-    &__checkbox {
-      margin-right: 6px;
-    }
     &__content {
-      padding: 6px 0 0 24px;
+      padding: 6px 0 0 26px;
       border-top: none;
     }
   }

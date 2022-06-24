@@ -78,7 +78,7 @@
                 <div class="results-circle"></div>
                 <div class="button__wrapper results-table__button">
                   <button
-                    class="button button-svg results-button"
+                    class="button button-svg button-white results-button"
                     :class="results[i].polygonActive ? 'active' : ''"
                     @click="onPolygonButtonClick(i, item.id, item.geography)"
                   >
@@ -92,7 +92,7 @@
                 </div>
                 <div class="button__header results-table__button">
                   <button
-                    class="button button-svg results-button"
+                    class="button button-svg button-white results-button"
                     :class="results[i].imageActive ? 'active' : ''"
                     @click="
                       onImageButtonClick(
@@ -121,7 +121,7 @@
               <td class="results-table__buttons">
                 <div class="button__wrapper results-table__button">
                   <button
-                    class="button button-svg results-button"
+                    class="button button-svg button-white results-button"
                     :class="results[i].cardActive ? 'active' : ''"
                     @click="onCardButtonClick(i)"
                   >

@@ -1,5 +1,5 @@
 <template>
-  <div class="search-satelite">
+  <div class="search-satelite" v-if="getsatelites != null">
     <h2 class="search-title">Космический аппарат</h2>
     <div class="accordion">
       <div
@@ -7,8 +7,8 @@
         v-for="(series, i) in getsatelites"
         :key="series.id"
       >
-        <div class="accordion-item__header" @click="updateShow(i)">
-          <div class="accordion-item__header-img">
+        <div class="accordion-item__header">
+          <div class="accordion-item__header-img" @click="updateShow(i)">
             <img
               svg-inline
               v-if="!satelitesShow[i].show"
@@ -27,17 +27,19 @@
             :model-value="series.checked"
             @change="selectSeries({ seriesInd: i, val: $event })"
           />
-          <p>{{ series.name }}</p>
+          <span class="accordion-item__header-text" @click="updateShow(i)">{{
+            series.name
+          }}</span>
         </div>
 
         <div class="accordion-item__body" v-show="satelitesShow[i].show">
           <div
             class="accordion-item__content"
-            v-for="(sc, j) in series.models"
+            v-for="(sc, j) in series.satelites"
             :key="sc.id"
           >
-            <div class="accordion-item__header" @click="updateShow(i, j)">
-              <div class="accordion-item__header-img">
+            <div class="accordion-item__header">
+              <div class="accordion-item__header-img" @click="updateShow(i, j)">
                 <img
                   svg-inline
                   v-if="!satelitesShow[i].children[j].show"
@@ -64,7 +66,11 @@
                   })
                 "
               />
-              <p>{{ sc.name }}</p>
+              <span
+                class="accordion-item__header-text"
+                @click="updateShow(i, j)"
+                >{{ sc.name }}</span
+              >
             </div>
 
             <div
@@ -89,7 +95,9 @@
                   <div class="accordion-item__img">
                     <img src="@/assets/img/satelite-icons/spektr.svg" />
                   </div>
-                  <p>Многоспектральная съемка</p>
+                  <span class="accordion-item__header-text"
+                    >Многоспектральная съемка</span
+                  >
                 </label>
 
                 <label class="accordion-item__header">
@@ -109,7 +117,9 @@
                   <div class="accordion-item__img">
                     <img src="@/assets/img/satelite-icons/panhrom.svg" />
                   </div>
-                  <p>Панхроматическая съемка</p>
+                  <span class="accordion-item__header-text"
+                    >Панхроматическая съемка</span
+                  >
                 </label>
               </div>
             </div>
@@ -137,9 +147,20 @@ export default {
     ...mapGetters("search", ["getsatelites"], "isSelected"),
   },
   beforeMount() {
+    // for (const key in this.getsatelites) {
+    //   if (Object.hasOwnProperty.call(this.getsatelites, key)) {
+    //     const el = this.getsatelites[key];
+    //     this.satelitesShow.push({
+    //       children: el.map(() => {
+    //         return {show: false};
+    //       }),
+    //       show: false
+    //     })
+    //   }
+    // }
     this.getsatelites.forEach((el) => {
       this.satelitesShow.push({
-        children: el.models.map(() => {
+        children: el.satelites.map(() => {
           return { show: false };
         }),
         show: false,
@@ -191,12 +212,6 @@ export default {
   background: $white;
   &-item {
     position: relative;
-    p {
-      margin: 0 auto 0 4px;
-
-      color: $black;
-      font-size: 0.875rem;
-    }
     &__img {
       margin-left: 10px;
     }
@@ -211,15 +226,31 @@ export default {
       }
     }
     &__header {
+      position: relative;
       display: flex;
       align-items: center;
-      padding-top: 6px;
+      padding-left: 30px;
+      margin-top: 6px;
       &-img {
-        margin-right: 10px;
+        cursor: pointer;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
       }
       svg path {
         fill: $color-main;
         vertical-align: middle;
+      }
+      &-text {
+        cursor: pointer;
+        margin: 0 auto 0 4px;
+        color: $black;
+        font-size: 0.875rem;
       }
     }
     &__content {

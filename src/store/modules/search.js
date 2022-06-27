@@ -1,4 +1,5 @@
 import * as dzzApi from "@/api/dzz";
+import * as satelitesApi from "@/api/satelites";
 export default {
   namespaced: true,
   state: {
@@ -11,7 +12,7 @@ export default {
       from: 0,
       to: 20
     },
-    satelites: setupsatelites(),
+    satelites: null,
     satelitesSelected: [],
   },
   getters: {
@@ -22,14 +23,14 @@ export default {
       return state.satelites;
     },
     getSelectedsatelites(state) {
-      let res = [];
-      state.satelites.forEach(el => {
-        el.models.forEach(m => {
-          if (m.checked) {
-            res.push(m.id)
-          }
-        });
-      });
+      let res = state.satelites;
+      // state.satelites.forEach(el => {
+      //   el.models.forEach(m => {
+      //     if (m.checked) {
+      //       res.push(m.id)
+      //     }
+      //   });
+      // });
       return res;
     },
     getCloudiness(state) {
@@ -56,26 +57,12 @@ export default {
     setsatelites(state, newsatelites) {
       state.satelites = newsatelites;
     },
-    addsatelite(state, {
-      seriesInd,
-      scInd,
-      pss,
-      mss
-    }) {
-      let satelite = {
-        ...state.satelites[seriesInd].models[scInd]
-      }
-      satelite.pss = pss;
-      satelite.mss = mss;
-      state.spacecragtsSelected.push(satelite);
-    },
-    // removesatelite(state, {seriesInd, scInd, pss, mss} ){},
     selectSeries(state, {
       seriesInd,
       val
     }) {
       state.satelites[seriesInd].checked = val;
-      state.satelites[seriesInd].models.forEach(m => {
+      state.satelites[seriesInd].satelites.forEach(m => {
         m.checked = val;
         m.pss = val;
         m.mss = val;
@@ -88,9 +75,9 @@ export default {
       pss,
       mss
     }) {
-      state.satelites[seriesInd].models[scInd].pss = pss;
-      state.satelites[seriesInd].models[scInd].mss = mss;
-      state.satelites[seriesInd].models[scInd].checked = checked;
+      state.satelites[seriesInd].satelites[scInd].pss = pss;
+      state.satelites[seriesInd].satelites[scInd].mss = mss;
+      state.satelites[seriesInd].satelites[scInd].checked = checked;
     },
 
   },
@@ -118,8 +105,9 @@ export default {
         endDate: new Date("2022-08-30"),
         startCloudiness: 0,
         endCloudiness: 100,
-        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        satelites: [1, 2, 3, 4, 5, 6]
+        months: [{cnt:1},{cnt:2},{cnt:3},{cnt:4}, {cnt:5}, {cnt:6}, {cnt:7}, {cnt:8}, {cnt:9}, {cnt:10}, {cnt:11}, {cnt:12}],
+        satelites: [1, 2, 3, 4, 5, 6],
+        polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[163.300781,85.051129],[-4.921875,85.051129],[-4.921875,-13.410994],[163.300781,-13.410994],[163.300781,85.051129]]]}}'
       }
       let results = await dzzApi.all(params);
 
@@ -145,68 +133,104 @@ export default {
 
 
       dispatch('results/setResults',results ,  {root : true});
+    },
+    async loadSatelites({dispatch}) {
+      let res = await satelitesApi.all();
+      let satelites = res.data.satelites;
+      // res.data.satelites.forEach(s => {
+      //   console.log(s);
+      //   if (Object.prototype.hasOwnProperty.call(satelites , s.type)) {
+      //     satelites[s.type].push(s);
+      //   } else {
+      //     satelites[s.type] = [s];
+      //   }
+      // });
+      // console.log(satelites);
+
+      dispatch('setsatelites', satelites);
     }
   }
 }
 
 
-function setupsatelites() {
-  return [{
-    id: 0,
-    name: "Канопус В",
-    checked: false,
-    models: [{
-      id: 0,
-      name: "Канопус В 1",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    {
-      id: 1,
-      name: "Канопус В 2",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    {
-      id: 2,
-      name: "Канопус В 3",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    ]
-  },
-  {
-    id: 1,
-    name: "Ресурс П",
-    checked: false,
-    models: [{
-      id: 0,
-      name: "Ресурс П 1",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    {
-      id: 1,
-      name: "Ресурс П 2",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    {
-      id: 2,
-      name: "Ресурс П 3",
-      checked: false,
-      mss: false,
-      pss: false
-    },
-    ]
-  }
-  ]
-}
+// function setupsatelites() {
+//   return [{
+//     id: 1,
+//     name: "Канопус В",
+//     checked: false,
+//     models: [{
+//       id: 1,
+//       name: "Канопус В 1",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 2,
+//       name: "Канопус В 2",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 3,
+//       name: "Канопус В 3",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 4,
+//       name: "Канопус В 4",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 5,
+//       name: "Канопус В 5",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 6,
+//       name: "Канопус В 6",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     ]
+//   },
+//   {
+//     id: 2,
+//     name: "Ресурс П",
+//     checked: false,
+//     models: [{
+//       id: 0,
+//       name: "Ресурс П 1",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 1,
+//       name: "Ресурс П 2",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     {
+//       id: 2,
+//       name: "Ресурс П 3",
+//       checked: false,
+//       mss: false,
+//       pss: false
+//     },
+//     ]
+//   }
+//   ]
+// }
 
 // function setupResults() {
 //   return [

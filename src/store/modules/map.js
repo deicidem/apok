@@ -245,22 +245,32 @@ export default {
     removeCirclePolygon({commit}) {
       commit('setCirclePolygon', {data: null})
     },
-    addGeoJsonPolygon({commit}, payload) {
+    addGeoJsonPolygon({commit, getters}, payload) {
+      let geoJson = L.geoJSON(payload.json);
+      let bounds = geoJson.getBounds()
+
+      if (!getters.getBounds.contains(bounds)) {
+        commit('setBounds', {bounds});
+        commit('setNeedUpdateBounds', {value: true})
+      }
+
       commit('addGeoJsonPolygon', payload)
     },
     removeGeoJsonPolygon({commit}, payload) {
       commit('removeGeoJsonPolygon', payload)
     },
-    addImage({commit}, payload) {
+    addImage({commit, getters }, payload) {
       let image = payload;
       let p1 = L.latLng(image.bounds[1], image.bounds[0]);
       let p2 = L.latLng(image.bounds[3], image.bounds[2]);
       let bounds = L.latLngBounds(p1, p2);
-      let center = bounds.getCenter();
 
-      commit('setCenter', {coordinate: center});
-      commit('setBounds', {bounds});
-      commit('setNeedUpdateBounds', {value: true})
+      if (!getters.getBounds.contains(bounds)) {
+        commit('setBounds', {bounds});
+        commit('setNeedUpdateBounds', {value: true})
+      }
+      
+
       image.bounds = bounds;
       commit('addImage', image)
     },
@@ -274,8 +284,6 @@ export default {
       let bounds = L.latLngBounds(p1, p2);
 
       if (image.fitBounds) {
-        let center = bounds.getCenter();
-        commit('setCenter', {coordinate: center});
         commit('setBounds', {bounds});
         commit('setNeedUpdateBounds', {value: true})
       }

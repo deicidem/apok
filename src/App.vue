@@ -1,4 +1,5 @@
 <template>
+
   <div class="wrapper">
     <app-header @click="height()" ref="header"></app-header>
     <div class="content" :style="height">
@@ -34,6 +35,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -102,7 +105,6 @@ svg:focus {
   padding: 0 24px;
   height: 35px;
   width: 190px;
-
   font-family: inherit;
   text-align: center;
   font-size: 0.875rem;
@@ -114,6 +116,7 @@ svg:focus {
   z-index: 1;
   overflow: hidden;
   color: $white;
+  transition-delay: 0.2s;
   &__wrapper {
     position: relative;
     display: flex;
@@ -150,6 +153,7 @@ svg:focus {
   }
   &:not(:disabled) {
     &:hover {
+      transition-delay: 0s;
       transform: translateY(-2px);
       box-shadow: 0 2px 10px rgba($black, 0.3);
     }
@@ -190,6 +194,14 @@ svg:focus {
   &-white {
     background: $white;
     color: $color-main;
+    svg path {
+      fill: $color-main;
+    }
+    &:hover {
+      svg path {
+        fill: $color-main-dark;
+      }
+    }
   }
   &-r {
     color: $white;
@@ -204,6 +216,14 @@ svg:focus {
     width: 30px;
     height: 30px;
     padding: 7px;
+    &.active {
+      &::after {
+        background: $gradient;
+      }
+      svg path {
+        fill: $white;
+      }
+    }
   }
   &-svg-r {
     &::after {

@@ -35,7 +35,7 @@
       @click="save"
       :fill="true"
       :lat-lngs="polygon.geometry"
-      color="#899cc5"
+      color="#46a1bf"
     ></l-polygon>
 
     <l-geo-json
@@ -231,7 +231,9 @@ export default {
     needUpdateBounds(b, a) {
       if (b) {
         console.log(this.$refs.map.mapObject);
-        this.$refs.map.mapObject.flyToBounds(this.bounds);
+        this.$refs.map.mapObject.flyToBounds(this.bounds, {
+          duration: 1.5
+        });
         this.setNeedUpdateBounds({value: false})
       }
       return a;

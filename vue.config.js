@@ -36,7 +36,7 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       scss: {
-        additionalData: `@import "@/assets/styles/variables.scss";`
+        additionalData: `@import "@/assets/styles/variables.scss"; @import url("@/assets/fonts/FluentUI-Icons/FluentSystemIcons-Resizable.css");`
       }
     }
   }

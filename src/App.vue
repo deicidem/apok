@@ -1,4 +1,5 @@
 <template>
+
   <div class="wrapper">
     <app-header @click="height()" ref="header"></app-header>
     <div class="content" :style="height">
@@ -34,6 +35,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;

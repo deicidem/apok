@@ -9,7 +9,7 @@
       :value="getCloudiness"
       @change="setCloudiness({ from: $event[0], to: $event[1] })"
       :adsorb="true"
-      :interval="10"
+      :interval="5"
     ></vue-slider>
     <div class="search-cloud__subtitle">
       Процент облачности:

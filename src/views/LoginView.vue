@@ -59,7 +59,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background: url("@/assets/img/background/authorize__background.png");
+  background: url("@/assets/img/background/katod.png");
   background-size: cover;
   .button-router {
     margin: 0 auto;

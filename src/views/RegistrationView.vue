@@ -35,7 +35,7 @@ export default {
 
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/background/authorize__background.png");
+  background: url("@/assets/img/background/apok.png");
   background-size: cover;
 }
 </style>

@@ -53,7 +53,11 @@
               <td>{{ coord.lng }}</td>
               <td class="col delete" @click="deleteCoordinate({ index: i })">
                 <button class="button button-svg-r">
-                  <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" alt="Удалить" />
+                  <img
+                    svg-inline
+                    src="@/assets/img/button-svg-icons/trash.svg"
+                    alt="Удалить"
+                  />
                 </button>
                 <div class="tooltiptext tooltiptext-r">Удалить</div>
               </td>
@@ -441,10 +445,12 @@ label.active {
   font-size: 12px;
   color: $color-main;
 }
+
 .number {
   max-width: 40px;
   text-align: center !important;
 }
+
 .zone-table {
   &__input {
     display: block;
@@ -465,9 +471,11 @@ label.active {
     }
   }
 }
+
 .delete {
   position: relative;
 }
+
 .search-zone {
   padding: 20px;
 
@@ -636,6 +644,7 @@ label.active {
     border-radius: 0 !important;
   }
 }
+
 .coordinates {
   &-form {
     display: flex;
@@ -693,6 +702,7 @@ label.active {
     }
   }
 }
+
 .load-wrapper {
   display: flex;
   align-items: center;
@@ -704,7 +714,7 @@ label.active {
   }
   &__button {
     width: 190px;
-    &:first-child{
+    &:first-child {
       margin-bottom: 20px;
     }
   }
@@ -717,6 +727,7 @@ label.active {
     display: none;
   }
 }
+
 .invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;
@@ -731,9 +742,11 @@ label.active {
     }
   }
 }
+
 .invalidLetter {
   background: $gradient-r;
 }
+
 .error {
   &-tooltip {
     transition: all 2s ease-out;
@@ -746,6 +759,7 @@ label.active {
     border-radius: 10px;
   }
 }
+
 @media screen and (max-width: 1440px) {
   .search-zone {
     padding: 14px;

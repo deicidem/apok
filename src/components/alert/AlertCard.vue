@@ -7,7 +7,9 @@
     ></div>
     <div class="alert-item__content">
       <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
-        <div class="icon" :class="'icon__' + [theme]"></div>
+        <div class="icon" :class="'icon__' + [theme]">
+          <img src="'icon__' + [theme]" alt="">
+        </div>
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
@@ -44,15 +46,16 @@ export default {
 .icon {
   width: 24px;
   height: 24px;
+  border
   &__task {
-    background: url("@/assets/img/alert-icons/alert-task.svg");
+    background: $text-green;
   }
 
   &__access {
-    background: url("@/assets/img/alert-icons/alert-access.svg");
+    background: $text-plum;
   }
   &__data {
-    background: url("@/assets/img/alert-icons/alert-data.svg");
+    background: $text-blue;
   }
 }
 .alert {

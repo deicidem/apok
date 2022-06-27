@@ -17,8 +17,9 @@
             />
             <img
               svg-inline
+              class="satelite-close"
               v-if="satelitesShow[i].show"
-              src="@/assets/img/arrows/arrow-open.svg"
+              src="@/assets/img/arrows/arrow-close.svg"
               alt=""
             />
           </div>
@@ -48,8 +49,9 @@
                 />
                 <img
                   svg-inline
+                  class="satelite-close"
                   v-if="satelitesShow[i].children[j].show"
-                  src="@/assets/img/arrows/arrow-open.svg"
+                  src="@/assets/img/arrows/arrow-close.svg"
                   alt=""
                 />
               </div>
@@ -185,14 +187,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.satelite-close {
+  transform: rotate(90deg);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s ease-in-out;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
+
 .search {
   &-satelite {
     margin-top: 20px;
@@ -203,6 +211,7 @@ export default {
     background: $gradient-w;
   }
 }
+
 .accordion {
   padding: 10px;
 
@@ -259,6 +268,7 @@ export default {
     }
   }
 }
+
 @media screen and (max-width: 1440px) {
   .search {
     &-satelite {

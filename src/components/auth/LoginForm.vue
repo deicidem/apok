@@ -7,21 +7,36 @@
           placeholder=" "
           class="input input-withIcon"
           v-model.trim="$v.login.$model"
-          :class="{ invalid: (!$v.login.minLength || !$v.login.required) && submitStatus === 'ERROR' }"
+          :class="{
+            invalid:
+              (!$v.login.minLength || !$v.login.required) &&
+              submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Логин</label>
 
         <img
           svg-inline
-          :class="(!$v.login.minLength || !$v.login.required) && submitStatus === 'ERROR' ? 'invalidIcon' : 'input-img'"
+          :class="
+            (!$v.login.minLength || !$v.login.required) &&
+            submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/login-icon.svg"
           alt="Логин"
         />
 
-        <div v-if="!$v.login.required && submitStatus === 'ERROR'" class="error-tooltip">
+        <div
+          v-if="!$v.login.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
           <p>Введите значение</p>
         </div>
-        <div v-if="!$v.login.minLength && submitStatus === 'ERROR'" class="error-tooltip">
+        <div
+          v-if="!$v.login.minLength && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
           <p>Логин должен содержать больше 6 символов</p>
         </div>
       </div>
@@ -31,20 +46,35 @@
           placeholder=" "
           class="input input-withIcon"
           v-model.trim="$v.password.$model"
-          :class="{ invalid: (!$v.password.minLength || !$v.password.required) && submitStatus === 'ERROR' }"
+          :class="{
+            invalid:
+              (!$v.password.minLength || !$v.password.required) &&
+              submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Пароль</label>
 
         <img
           svg-inline
-          :class="(!$v.password.minLength || !$v.password.required) && submitStatus === 'ERROR' ? 'invalidIcon' : 'input-img'"
+          :class="
+            (!$v.password.minLength || !$v.password.required) &&
+            submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/lock-icon.svg"
         />
-      <div v-if="!$v.password.required && submitStatus === 'ERROR'" class="error-tooltip">
+        <div
+          v-if="!$v.password.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
           <p>Введите значение</p>
         </div>
-        <div v-if="!$v.password.minLength && submitStatus === 'ERROR'" class="error-tooltip">
-          <p>Пароль должен содержать больше 6 символов</p>
+        <div
+          v-if="!$v.password.minLength && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Пароль должен содержать больше 8 символов</p>
         </div>
       </div>
 
@@ -57,7 +87,11 @@
       </div>
       <button class="button button-g form-wrapper__item">Войти</button>
       <router-link to="/registration">
-        <button type="submit" :disabled="submitStatus === 'PENDING'" class="button button-white form-wrapper__item">
+        <button
+          type="submit"
+          :disabled="submitStatus === 'PENDING'"
+          class="button button-white form-wrapper__item"
+        >
           Зарегистироваться
         </button>
       </router-link>
@@ -67,24 +101,19 @@
 
 <script>
 import { mapActions } from "vuex";
-
-// import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
-import { validationMixin } from "vuelidate";
 
 export default {
   components: { AppCheckbox },
-  // setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       login: "",
       password: "",
       remember: false,
-      submitStatus: null
+      submitStatus: null,
     };
   },
-  mixins: [validationMixin],
   validations: {
     login: {
       required,
@@ -99,7 +128,6 @@ export default {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
-
     async submitForm() {
       if (!this.$v.$invalid) {
         await this.authorize({
@@ -108,9 +136,9 @@ export default {
           remember: this.remember,
         });
         this.$router.push("main");
-        this.submitStatus = 'PENDING'
+        this.submitStatus = "PENDING";
       } else {
-        this.submitStatus = 'ERROR'
+        this.submitStatus = "ERROR";
         return;
       }
     },

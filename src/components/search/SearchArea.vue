@@ -609,6 +609,7 @@ label.active {
   &__coordinates {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
   }
   &__load {
     display: flex;
@@ -617,7 +618,7 @@ label.active {
   &__buttons {
     display: flex;
     flex-direction: column;
-    margin: 30px 0 0 20px;
+    margin: 20px 0 0 20px;
   }
   &__button {
     margin: 10px 0;
@@ -702,8 +703,10 @@ label.active {
     align-items: flex-end;
   }
   &__button {
-    margin-bottom: 10px;
-    width: 180px;
+    width: 190px;
+    &:first-child{
+      margin-bottom: 20px;
+    }
   }
   &__name {
     margin-left: 20px;

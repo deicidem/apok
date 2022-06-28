@@ -142,57 +142,106 @@
             <masked-input
               placeholder=" "
               class="input input-withIcon coordinates-input"
-              v-model.trim="lat"
-              :class="{ invalid: v$.lat.$error }"
+              v-model.trim="$v.lat.$model"
+              :class="{
+                invalid:
+                  (!$v.lat.minLength || !$v.lat.required) &&
+                  submitStatus === 'ERROR',
+              }"
               :mask="inputMaskLat"
             />
             <label class="input-label coordinates-label"> Широта </label>
             <p
               class="coordinates-input__letter"
-              :class="{ invalidLetter: v$.lng.$error }"
+              :class="{
+                invalidLetter:
+                  (!$v.lat.minLength || !$v.lat.required) &&
+                  submitStatus === 'ERROR',
+              }"
             >
               Ю
             </p>
 
-            <p v-if="v$.lat.$error" class="error-tooltip">
-              {{ v$.lat.$errors[0].$message }}
-            </p>
+            <div
+              v-if="!$v.lat.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
+
+            <div
+              v-if="!$v.lat.minLength && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение должно превышать 8 символов</p>
+            </div>
           </div>
 
           <div class="input-wrapper coordinates-inputs">
             <masked-input
               placeholder=" "
               class="input coordinates-input"
-              v-model.trim="lng"
-              :class="{ invalid: v$.lng.$error }"
+              v-model.trim="$v.lng.$model"
+              :class="{
+                invalid:
+                  (!$v.lng.minLength || !$v.lng.required) &&
+                  submitStatus === 'ERROR',
+              }"
               :mask="inputMaskLng"
             />
             <label class="input-label coordinates-label"> Долгота </label>
             <p
               class="coordinates-input__letter"
-              :class="{ invalidLetter: v$.lng.$error }"
+              :class="{
+                invalidLetter:
+                  (!$v.lng.minLength || !$v.lng.required) &&
+                  submitStatus === 'ERROR',
+              }"
             >
               В
             </p>
 
-            <p v-if="v$.lng.$error" class="error-tooltip">
-              {{ v$.lng.$errors[0].$message }}
-            </p>
+            <div
+              v-if="!$v.lng.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
+
+            <div
+              v-if="!$v.lng.minLength && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение должно превышать 8 символов</p>
+            </div>
           </div>
 
           <div class="input-wrapper coordinates-inputs">
             <input
               placeholder=" "
               class="input coordinates-input"
-              v-model.trim="rad"
-              :class="{ invalid: v$.rad.$error }"
+              v-model.trim="$v.rad.$model"
+              :class="{
+                invalid:
+                  (!$v.rad.numeric || !$v.rad.required) &&
+                  submitStatus === 'ERROR',
+              }"
               id="radius"
             />
             <label class="input-label coordinates-label"> Радиус (км) </label>
 
-            <p v-if="v$.rad.$error" class="error-tooltip">
-              {{ v$.rad.$errors[0].$message }}
-            </p>
+            <div
+              v-if="!$v.rad.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
+            <div
+              v-if="!$v.rad.numeric && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение может содержать только цифры</p>
+            </div>
           </div>
         </form>
         <div class="coordinates-wrapper">
@@ -250,22 +299,19 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import MaskedInput from "vue-masked-input";
-import useVuelidate from "@vuelidate/core";
-import { required, helpers, minLength, numeric } from "@vuelidate/validators";
-// import {IMaskDirective} from 'vue-imask';
+import { required, minLength, numeric } from "vuelidate/lib/validators";
 
 export default {
   components: {
     MaskedInput,
   },
-  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       file: null,
       areaType: null,
 
       inputMaskLat: {
-        pattern: `111°11'11" N`,
+        pattern: `111°11'11"`,
         formatCharacters: {
           N: {
             validate: (char) => /[nsNS]/.test(char),
@@ -273,10 +319,10 @@ export default {
           },
         },
       },
-      placeholderLat: "000°00'00\" N",
+      placeholderLat: "000°00'00\"",
 
       inputMaskLng: {
-        pattern: `111°11'11" E`,
+        pattern: `111°11'11"`,
         formatCharacters: {
           E: {
             validate: (char) => /[ewEW]/.test(char),
@@ -284,11 +330,12 @@ export default {
           },
         },
       },
-      placeholderLng: "000°00'00\" W",
+      placeholderLng: "000°00'00\"",
 
       lng: "",
       lat: "",
       rad: "",
+      submitStatus: null,
       searchZoneType: 1,
       newCoord: {
         lat: "",
@@ -299,18 +346,16 @@ export default {
   validations() {
     return {
       lng: {
-        required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Логин должен содержать больше 6 символов",
-          minLength(6)
-        ),
+        required,
+        minLength: minLength(6),
       },
       lat: {
-        required: helpers.withMessage("Введите значение", required),
+        required,
+        minLength: minLength(6),
       },
       rad: {
-        required: helpers.withMessage("Введите значение", required),
-        numeric: helpers.withMessage("Введите числовое значение", numeric),
+        required,
+        numeric,
       },
     };
   },
@@ -428,10 +473,11 @@ export default {
     },
 
     submitForm() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (!this.$v.$invalid) {
         console.log("Form successfully submitted");
+        this.submitStatus = "PENDING";
       } else {
+        this.submitStatus = "ERROR";
         return;
       }
     },

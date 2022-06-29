@@ -1,246 +1,174 @@
 <template>
-  <div class="search-zone">
-    <h2 class="search-title">Зона интереса</h2>
-    <nav class="search-zone__nav">
-      <ul>
-        <li>
-          <button
-            @click="changeZoneType(1)"
-            :class="searchZoneType == 1 ? 'active' : ''"
-          >
-            Задать полигон
-          </button>
-        </li>
-        <li class="line"></li>
-        <li>
-          <button
-            @click="changeZoneType(2)"
-            :class="searchZoneType == 2 ? 'active' : ''"
-          >
-            Круглая зона
-          </button>
-        </li>
-        <li class="line"></li>
-        <li>
-          <button
-            @click="changeZoneType(3)"
-            :class="searchZoneType == 3 ? 'active' : ''"
-          >
-            Загрузить файл
-          </button>
-        </li>
-      </ul>
-    </nav>
+<search-base title="Зона интереса" :invalid="invalid">
+  <template v-slot:error-message>
+    Укажите зону интереса
+  </template>
+  <template v-slot:content>
+      <nav class="search-zone__nav">
+        <ul>
+          <li>
+            <button
+              @click="changeZoneType(1)"
+              :class="searchZoneType == 1 ? 'active' : ''"
+            >
+              Задать полигон
+            </button>
+          </li>
+          <li class="line"></li>
+          <li>
+            <button
+              @click="changeZoneType(2)"
+              :class="searchZoneType == 2 ? 'active' : ''"
+            >
+              Круглая зона
+            </button>
+          </li>
+          <li class="line"></li>
+          <li>
+            <button
+              @click="changeZoneType(3)"
+              :class="searchZoneType == 3 ? 'active' : ''"
+            >
+              Загрузить файл
+            </button>
+          </li>
+        </ul>
+      </nav>
 
-    <div
-      class="search-zone__card search-zone__main"
-      v-show="searchZoneType == 1"
-    >
-      <div class="search-zone__table">
-        <table>
-          <thead>
-            <tr>
-              <th class="number">№</th>
-              <th>Широта</th>
-              <th>Долгота</th>
-              <th class="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
-              <td class="number">{{ i + 1 }}</td>
-              <td>{{ coord.lat }}</td>
-              <td>{{ coord.lng }}</td>
-              <td class="col delete" @click="deleteCoordinate({ index: i })">
-                <button class="button button-svg-r">
-                  <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" alt="Удалить" />
-                </button>
-                <div class="tooltiptext tooltiptext-r">Удалить</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="number"></td>
-              <td class="zone-table__input__td">
-                <div class="zone-table__input__wrapper">
-                  <masked-input
-                    class="zone-table__input"
-                    v-model="newCoord.lat"
-                    :mask="inputMaskLat"
-                    :placeholder="placeholderLat"
-                  />
-                </div>
-              </td>
-              <td class="zone-table__input__td">
-                <div class="zone-table__input__wrapper">
-                  <masked-input
-                    class="zone-table__input"
-                    v-model="newCoord.lng"
-                    :mask="inputMaskLng"
-                    :placeholder="placeholderLng"
-                  />
-                </div>
-              </td>
-              <td class="col">
-                <div class="zone-table__delete">
-                  <button
-                    @click="onAddCoordinate"
-                    class="button button-svg button-white-gr"
-                  >
+      <div
+        class="search-zone__card search-zone__main"
+        v-show="searchZoneType == 1"
+      >
+        <div class="search-zone__table">
+          <table>
+            <thead>
+              <tr>
+                <th class="number">№</th>
+                <th>Широта</th>
+                <th>Долгота</th>
+                <th class="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(coord, i) in getFormattedCoordinates" :key="i">
+                <td class="number">{{ i + 1 }}</td>
+                <td>{{ coord.lat }}</td>
+                <td>{{ coord.lng }}</td>
+                <td class="col delete" @click="deleteCoordinate({ index: i })">
+                  <button class="button button-svg-r">
                     <img
                       svg-inline
-                      src="@/assets/img/button-svg-icons/plus.svg"
-                      alt="Добавить"
+                      src="@/assets/img/button-svg-icons/trash.svg"
+                      alt="Удалить"
                     />
                   </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <div class="tooltiptext tooltiptext-r">Удалить</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="number"></td>
+                <td class="zone-table__input__td">
+                  <div class="zone-table__input__wrapper">
+                    <masked-input
+                      class="zone-table__input"
+                      v-model="newCoord.lat"
+                      :mask="inputMaskLat"
+                      :placeholder="placeholderLat"
+                    />
+                  </div>
+                </td>
+                <td class="zone-table__input__td">
+                  <div class="zone-table__input__wrapper">
+                    <masked-input
+                      class="zone-table__input"
+                      v-model="newCoord.lng"
+                      :mask="inputMaskLng"
+                      :placeholder="placeholderLng"
+                    />
+                  </div>
+                </td>
+                <td class="col">
+                  <div class="zone-table__delete">
+                    <button
+                      @click="onAddCoordinate"
+                      class="button button-svg button-white-gr"
+                    >
+                      <img
+                        svg-inline
+                        src="@/assets/img/button-svg-icons/plus.svg"
+                        alt="Добавить"
+                      />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="search-zone__buttons">
+          <button
+            class="button search-zone__button"
+            :class="getAreaPolygonDrawable ? 'button-white-gr' : 'button-g'"
+            @click="setAreaPolygonDrawable({ value: !getAreaPolygonDrawable })"
+          >
+            <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
+            <span v-else> Сохранить полигон </span>
+          </button>
+
+          <button
+            class="button button-white-gr search-zone__button"
+            @click="selectScreenArea"
+          >
+            Видимая область
+          </button>
+          <button
+            @click="clearCoordinates()"
+            :disabled="getActivePolygonJson == null"
+            class="button button-r search-zone__button"
+          >
+            Очистить координаты
+          </button>
+        </div>
       </div>
 
-      <div class="search-zone__buttons">
-        <button
-          class="button search-zone__button"
-          :class="getAreaPolygonDrawable ? 'button-white-gr' : 'button-g'"
-          @click="setAreaPolygonDrawable({ value: !getAreaPolygonDrawable })"
+      <div>
+        
+
+        <div
+          class="search-zone__card search-zone__load"
+          v-show="searchZoneType == 3"
         >
-          <span v-if="!getAreaPolygonDrawable"> Использовать карту </span>
-          <span v-else> Сохранить полигон </span>
-        </button>
-
-        <button
-          class="button button-white-gr search-zone__button"
-          @click="selectScreenArea"
-        >
-          Видимая область
-        </button>
-        <button
-          @click="clearCoordinates()"
-          class="button button-r search-zone__button"
-        >
-          Очистить координаты
-        </button>
-      </div>
-    </div>
-
-    <div>
-      <div
-        class="search-zone__card search-zone__coordinates"
-        v-show="searchZoneType == 2"
-      >
-        <form
-          class="coordinates-form"
-          @submit.prevent="submitForm()"
-          method="POST"
-        >
-          <div class="input-wrapper coordinates-inputs">
-            <masked-input
-              placeholder=" "
-              class="input input-withIcon coordinates-input"
-              v-model.trim="lat"
-              :class="{ invalid: v$.lat.$error }"
-              :mask="inputMaskLat"
-            />
-            <label class="input-label coordinates-label"> Широта </label>
-            <p
-              class="coordinates-input__letter"
-              :class="{ invalidLetter: v$.lng.$error }"
-            >
-              Ю
-            </p>
-
-            <p v-if="v$.lat.$error" class="error-tooltip">
-              {{ v$.lat.$errors[0].$message }}
-            </p>
-          </div>
-
-          <div class="input-wrapper coordinates-inputs">
-            <masked-input
-              placeholder=" "
-              class="input coordinates-input"
-              v-model.trim="lng"
-              :class="{ invalid: v$.lng.$error }"
-              :mask="inputMaskLng"
-            />
-            <label class="input-label coordinates-label"> Долгота </label>
-            <p
-              class="coordinates-input__letter"
-              :class="{ invalidLetter: v$.lng.$error }"
-            >
-              В
-            </p>
-
-            <p v-if="v$.lng.$error" class="error-tooltip">
-              {{ v$.lng.$errors[0].$message }}
-            </p>
-          </div>
-
-          <div class="input-wrapper coordinates-inputs">
+          <label class="load-wrapper">
             <input
-              placeholder=" "
-              class="input coordinates-input"
-              v-model.trim="rad"
-              :class="{ invalid: v$.rad.$error }"
-              id="radius"
+              @change="onFileUpload"
+              class="load-wrapper__input"
+              ref="file"
+              type="file"
+              name="file"
             />
-            <label class="input-label coordinates-label"> Радиус (км) </label>
-
-            <p v-if="v$.rad.$error" class="error-tooltip">
-              {{ v$.rad.$errors[0].$message }}
-            </p>
+            <span class="button button-white-gr load-wrapper__button"
+              >Загрузить файл</span
+            >
+            <span class="load-wrapper__name">{{
+              file == null ? "не выбран" : file.name
+            }}</span>
+          </label>
+          <div class="load-wrapper__buttons">
+            <button
+              class="button button-g load-wrapper__button"
+              @click="sendFile()"
+            >
+              Показать на карте
+            </button>
+            <button class="button button-r load-wrapper__button" type="red">
+              Удалить
+            </button>
           </div>
-        </form>
-        <div class="coordinates-wrapper">
-          <button
-            @click="submitForm()"
-            class="button button-g coordinates-wrapper__button"
-          >
-            Загрузить на карту
-          </button>
-
-          <button
-            class="button button-r coordinates-wrapper__button"
-            @click="removeCircle"
-          >
-            Убрать с карты
-          </button>
         </div>
       </div>
-
-      <div
-        class="search-zone__card search-zone__load"
-        v-show="searchZoneType == 3"
-      >
-        <label class="load-wrapper">
-          <input
-            @change="onFileUpload"
-            class="load-wrapper__input"
-            ref="file"
-            type="file"
-            name="file"
-          />
-          <span class="button button-white-gr load-wrapper__button"
-            >Загрузить файл</span
-          >
-          <span class="load-wrapper__name">{{
-            file == null ? "не выбран" : file.name
-          }}</span>
-        </label>
-        <div class="load-wrapper__buttons">
-          <button
-            class="button button-g load-wrapper__button"
-            @click="sendFile()"
-          >
-            Показать на карте
-          </button>
-          <button class="button button-r load-wrapper__button" type="red">
-            Удалить
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  </template>
+</search-base>
 </template>
 
 <script>
@@ -248,11 +176,13 @@ import { mapGetters, mapActions } from "vuex";
 import MaskedInput from "vue-masked-input";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength, numeric } from "@vuelidate/validators";
+import SearchBase from "@/components/search/SearchBase";
 // import {IMaskDirective} from 'vue-imask';
 
 export default {
   components: {
     MaskedInput,
+    SearchBase,
   },
   setup: () => ({ v$: useVuelidate() }),
   data() {
@@ -316,9 +246,16 @@ export default {
       "getCirclePolygon",
       "getAreaPolygonDrawable",
       "getFormattedCoordinates",
+      "getActivePolygonJson",
       "getBounds",
       "getZoom",
     ]),
+    ...mapGetters("search", ["getSearchStatus"]),
+    invalid() {
+      return (
+        this.getActivePolygonJson == null && this.getSearchStatus == "ERROR"
+      );
+    },
   },
   methods: {
     ...mapActions("map", [
@@ -493,6 +430,7 @@ label.active {
     display: flex;
     margin-top: 10px;
     ul {
+      line-height: 1;
       display: flex;
       align-items: center;
       padding: 0;
@@ -506,7 +444,7 @@ label.active {
       border-left: 1px solid $color-main;
     }
     li {
-      margin: 4px;
+      margin: 0 4px;
       list-style-type: none;
       button {
         padding: 0;
@@ -635,63 +573,7 @@ label.active {
     border-radius: 0 !important;
   }
 }
-.coordinates {
-  &-form {
-    display: flex;
-    align-items: flex-start;
-  }
-  &-inputs {
-    margin-left: 16px;
-    &:first-child {
-      margin-left: 0;
-    }
-    &:focus-within .coordinates-label {
-      top: -20px;
-      font-size: 12px;
-    }
-  }
-  &-label {
-    top: 8px;
-    left: -10px;
-  }
-  &-input {
-    width: 120px;
-    height: 35px;
-    margin: 0;
-    &:focus .coordinates-label,
-    &:not(:placeholder-shown) ~ label {
-      top: -20px;
-      font-size: 12px;
-    }
-    &__letter {
-      position: absolute;
-      right: 0;
-      top: 0;
-      border-radius: 0 10px 10px 0;
-      color: $white;
-      line-height: 35px;
-      text-align: center;
-      margin: 0;
-      font-size: 16px;
-      background: $gradient;
-      width: 30px;
-      height: 35px;
-    }
-  }
-  &-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    &__button {
-      margin-left: auto;
-      max-width: 200px;
-      width: 190px;
-      &:last-child {
-        margin-top: 20px;
-      }
-    }
-  }
-}
+
 .load-wrapper {
   display: flex;
   align-items: center;
@@ -714,35 +596,7 @@ label.active {
     display: none;
   }
 }
-.invalid {
-  border: 1px solid $color-red;
-  transition: all 1s ease-out;
-  color: $color-red;
-  &:focus ~ .input-label,
-  &:not(:placeholder-shown) ~ label {
-    color: $color-red;
-  }
-  &:focus ~ .invalidIcon {
-    path {
-      fill: $color-red;
-    }
-  }
-}
-.invalidLetter {
-  background: $gradient-r;
-}
-.error {
-  &-tooltip {
-    transition: all 2s ease-out;
 
-    width: 120px;
-    margin-top: 6px;
-    line-height: 110%;
-    color: $color-red;
-    font-size: 12px;
-    border-radius: 10px;
-  }
-}
 @media screen and (max-width: 1440px) {
   .search-zone {
     padding: 14px;

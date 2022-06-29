@@ -17,7 +17,11 @@
           :cardData="cardData"
           @cardClose="onCardClose()"
           @PolygonButtonClick="
-            onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
+            onPolygonButtonClick(
+              card.ind, 
+              cardData.id, 
+              cardData.geography
+            )
           "
           @ImageButtonClick="
             onImageButtonClick(
@@ -65,13 +69,11 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="loaded" :class="{ selectable: selectable.value }">
+          <tbody v-if="loaded" >
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="
-                item.selected.value ? `selected-${item.selected.type + 1}` : ''
-              "
+              :class="{ selectable: selectable.value && !(item.selected.value == selectable.value && item.selected.type != selectable.type), [`selected-${item.selected.type + 1}`] : item.selected.value }"
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">
@@ -338,83 +340,7 @@ export default {
 .dzz-name {
   word-break: break-all;
 }
-.card {
-  z-index: 11;
-  position: absolute;
-  width: 300px;
-  background: $black;
-  top: 20px;
-  right: 20px;
-  background: $gradient-w;
-  box-shadow: $shadow-big;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px 20px;
 
-  &-close {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    svg path {
-      transition: all 0.1s ease-out;
-      fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
-  }
-  &-title {
-    font-size: 16px;
-    color: $black;
-    margin-bottom: 15px;
-  }
-  &-img {
-    width: 200px;
-    margin-bottom: 20px;
-    border: 1px solid $black;
-  }
-  &-table {
-    &__wrapper {
-      flex: 1;
-    }
-    color: $black;
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    th {
-      color: $color-main;
-      text-align: left;
-      font-size: 12px;
-    }
-    td {
-      vertical-align: top;
-      padding: 10px 10px 10px 0;
-      font-size: 12px;
-    }
-    tr {
-      border-bottom: 1px solid rgba($color-main, 0.2);
-    }
-  }
-  &-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  &-button {
-    margin-top: 15px;
-    min-width: 230px;
-  }
-}
 .results {
   &-back {
     position: absolute;
@@ -464,25 +390,24 @@ export default {
       }
     }
     .selectable {
-      tr {
-        position: relative;
-        &::after {
-          content: "";
-          opacity: 0;
-          position: absolute;
-          border: 2px solid $color-main;
-          top: 0px;
-          left: 0px;
-          right: 0px;
-          bottom: 0px;
-        }
-        &:hover:after {
-          opacity: 1;
-        }
-        &:last-child:after {
-          border-bottom-right-radius: 10px;
-          border-bottom-left-radius: 10px;
-        }
+      position: relative;
+      cursor: pointer;
+      &::after {
+        content: "";
+        opacity: 0;
+        position: absolute;
+        border: 2px solid $color-main;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+      }
+      &:hover:after {
+        opacity: 1;
+      }
+      &:last-child:after {
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
       }
     }
     .selected {

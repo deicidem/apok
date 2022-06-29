@@ -1,12 +1,14 @@
 <template>
-  <div class="form">
+  <form-base>
     <form-message
       v-show="showMessage"
       :status="submitStatus == 'ERROR' ? 'error' : 'valid'"
       :message="message"
     ></form-message>
-    <div class="form-title">Авторизация</div>
-    <form class="form-wrapper" @submit.prevent="submitForm()" method="POST">
+
+    <div class="c-title">Авторизация</div>
+
+    <form class="c-forim" @submit.prevent="submitForm()">
       <div class="input-wrapper">
         <input
           placeholder=" "
@@ -88,25 +90,27 @@
           :model-value="remember"
           @change="remember = $event"
         ></app-checkbox>
-        <p class="remember-text">Запомнить меня</p>
+        <span class="remember-text">Запомнить меня</span>
       </div>
+
       <button
-        class="button button-g form-wrapper__item"
+        class="button button-g c-form__item"
         :disabled="submitStatus === 'PENDING'"
       >
         Войти
       </button>
-      <router-link to="/registration">
+
+      <router-link to="/registration" v-slot="{navigate}">
         <button
-          type="submit"
+          @click="navigate"
           :disabled="submitStatus === 'PENDING'"
-          class="button button-white form-wrapper__item"
+          class="button button-white c-form__item"
         >
           Зарегистироваться
         </button>
       </router-link>
     </form>
-  </div>
+  </form-base>
 </template>
 
 <script>
@@ -115,12 +119,14 @@ import { mapActions } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
+import FormBase from "@/components/auth/FormBase.vue";
 import { validationMixin } from "vuelidate";
 
 export default {
   components: {
     AppCheckbox,
     FormMessage,
+    FormBase,
   },
   data() {
     return {
@@ -201,80 +207,7 @@ export default {
     font-size: 14px;
   }
 }
-.authorize {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-
-  background: url("@/assets/img/background/apok.png");
-  background-size: cover;
-  .button-router {
-    margin: 0 auto;
-  }
-  .form {
-    position: relative;
-    background: $gradient-w;
-    margin: 30px 0 0 0;
-    width: 400px;
-    padding: 30px;
-    border-radius: 10px;
-    border: none;
-    box-shadow: $shadow-big;
-    margin: 16% auto;
-    &-title {
-      text-align: center;
-      font-size: 20px;
-      color: $black;
-      margin-bottom: 20px;
-    }
-    &-wrapper {
-      &__item {
-        width: 300px;
-        height: 40px;
-        margin: 10px auto;
-        font-size: 16px;
-        background: $white;
-      }
-    }
-    &-message {
-      display: flex;
-      align-items: center;
-      left: 0;
-      bottom: calc(100% + 20px);
-      position: absolute;
-      width: 100%;
-      padding: 15px;
-      background: $gradient-w;
-      box-shadow: $shadow-big;
-      border-radius: 10px;
-      color: $color-main;
-      &__icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 35px;
-        color: $color-main;
-        width: 35px;
-        height: 35px;
-        margin-right: 20px;
-        .icon {
-          line-height: 0;
-        }
-      }
-      &__text {
-        text-align: left;
-        font-size: 16px;
-      }
-    }
-  }
-}
+  
 .invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;

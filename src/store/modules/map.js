@@ -305,6 +305,13 @@ export default {
       formData.append('file', payload.file);
       let {data} = await filesApi.getPolygon(formData);
       commit('setFilePolygon', {file: data.file})
+    },
+    activePolygonFitBounds({getters, commit}) {
+      let geoJson = L.geoJSON(JSON.parse(getters.getActivePolygonJson));
+      let bounds = geoJson.getBounds();
+      commit('setBounds', {bounds});
+      // commit('setZoom', {value: getters.getZoom - 1});
+      commit('setNeedUpdateBounds', {value: true})
     }
   }
 }

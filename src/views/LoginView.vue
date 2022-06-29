@@ -1,16 +1,16 @@
 <template>
   <section class="authorize">
-    <app-auth-popup></app-auth-popup>
+    <form-login></form-login>
   </section>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 
-import AppAuthPopup from "../components/auth/LoginForm.vue";
+import FormLogin from "../components/auth/FormLogin.vue";
 
 export default {
-  components: { AppAuthPopup },
+  components: { FormLogin },
 
   methods: {
     ...mapActions("users", {
@@ -61,32 +61,7 @@ export default {
 
   background: url("@/assets/img/background/katod.png");
   background-size: cover;
-  .button-router {
-    margin: 0 auto;
-  }
-  .form {
-    background: $gradient-w;
-    margin: 30px 0 0 0;
-    width: 400px;
-    padding: 30px;
-    border-radius: 10px;
-    border: none;
-    box-shadow: $shadow-big;
-    &-title {
-      text-align: center;
-      font-size: 20px;
-      color: $black;
-      margin-bottom: 20px;
-    }
-    &-wrapper {
-      &__item {
-        width: 300px;
-        height: 40px;
-        margin: 10px auto;
-        font-size: 16px;
-      }
-    }
-  }
+
 }
 .invalid {
   border: 1px solid $color-red;

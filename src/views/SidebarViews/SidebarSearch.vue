@@ -2,7 +2,7 @@
   <div class="search">
     <div class="sidebar-title">
       Поиск снимков
-      <router-link to="/main/results" custom v-slot="{navigate}">
+      <router-link to="/main/results" custom v-slot="{ navigate }">
         <div class="search-result" @click="navigate">
           <span class="search-result__subtitle">Результат</span>
           <div class="search-result__arrow">
@@ -21,7 +21,7 @@
         </div>
         <div class="search-buttons">
           <button class="button button-r">Очистить</button>
-          <button class="button button-g" @click="search">
+          <button class="button button-g" @click="onSearch">
             Запросить данные
           </button>
         </div>
@@ -52,14 +52,17 @@ export default {
   },
   methods: {
     ...mapActions("search", ["search"]),
+    async onSearch() {
+      await this.search();
+      this.$router.push("results");
+    },
   },
+
   computed: {
     ...mapGetters(["scrollOps"]),
   },
   data() {
-    return {
-
-    };
+    return {};
   },
 };
 </script>
@@ -81,23 +84,23 @@ export default {
       height: 23px;
       transform: rotate(180deg);
       svg {
-        height: 100%;;
+        height: 100%;
       }
       svg path {
-        fill: #FFF;
+        fill: #fff;
       }
     }
     &__subtitle {
       margin-right: 10px;
-      color: #FFF;
+      color: #fff;
       font-size: 14px;
     }
   }
   &-title {
-    font-size: 20px;
-    color: $black;
-    font-weight: 400;
     margin: 0 0 20px 0;
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: $black;
   }
   &-wrapper {
     padding: 30px;
@@ -105,11 +108,6 @@ export default {
   &-content {
     width: 100%;
     height: 100%;
-  }
-  &-title {
-    font-weight: 400;
-    font-size: 1.25rem;
-    color: $black;
   }
   &-buttons {
     margin-top: 20px;

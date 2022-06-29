@@ -1,139 +1,187 @@
 <template>
   <search-area-base class="c">
-    <form
-          class="coordinates-form"
-          @submit.prevent="submitForm()"
-          method="POST"
+    <form class="c-form">
+      <div class="input-wrapper c-inputs">
+        <masked-input
+          placeholder=" "
+          class="input input-withIcon c-input"
+          v-model.trim="$v.lat.$model"
+          :class="{
+            invalid:
+              (!$v.lat.minLength || !$v.lat.required) &&
+              submitStatus === 'ERROR',
+          }"
+          :mask="inputMaskLat"
+        />
+
+        <label class="input-label c-label"> Широта </label>
+
+        <p
+          class="c-input__letter"
+          :class="{
+            invalidLetter:
+              (!$v.lat.minLength || !$v.lat.required) &&
+              submitStatus === 'ERROR',
+          }"
         >
-          <div class="input-wrapper coordinates-inputs">
-            <masked-input
-              placeholder=" "
-              class="input input-withIcon coordinates-input"
-              v-model.trim="$v.lat.$model"
-              :class="{
-                invalid:
-                  (!$v.lat.minLength || !$v.lat.required) &&
-                  submitStatus === 'ERROR',
-              }"
-              :mask="inputMaskLat"
-            />
-            <label class="input-label coordinates-label"> Широта </label>
-            <p
-              class="coordinates-input__letter"
-              :class="{
-                invalidLetter:
-                  (!$v.lat.minLength || !$v.lat.required) &&
-                  submitStatus === 'ERROR',
-              }"
-            >
-              Ю
-            </p>
+          Ю
+        </p>
 
-            <div
-              v-if="!$v.lat.required && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Введите значение</p>
-            </div>
-
-            <div
-              v-if="!$v.lat.minLength && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Значение должно превышать 8 символов</p>
-            </div>
-          </div>
-
-          <div class="input-wrapper coordinates-inputs">
-            <masked-input
-              placeholder=" "
-              class="input coordinates-input"
-              v-model.trim="$v.lng.$model"
-              :class="{
-                invalid:
-                  (!$v.lng.minLength || !$v.lng.required) &&
-                  submitStatus === 'ERROR',
-              }"
-              :mask="inputMaskLng"
-            />
-            <label class="input-label coordinates-label"> Долгота </label>
-            <p
-              class="coordinates-input__letter"
-              :class="{
-                invalidLetter:
-                  (!$v.lng.minLength || !$v.lng.required) &&
-                  submitStatus === 'ERROR',
-              }"
-            >
-              В
-            </p>
-
-            <div
-              v-if="!$v.lng.required && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Введите значение</p>
-            </div>
-
-            <div
-              v-if="!$v.lng.minLength && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Значение должно превышать 8 символов</p>
-            </div>
-          </div>
-
-          <div class="input-wrapper coordinates-inputs">
-            <input
-              placeholder=" "
-              class="input coordinates-input"
-              v-model.trim="$v.rad.$model"
-              :class="{
-                invalid:
-                  (!$v.rad.numeric || !$v.rad.required) &&
-                  submitStatus === 'ERROR',
-              }"
-              id="radius"
-            />
-            <label class="input-label coordinates-label"> Радиус (км) </label>
-
-            <div
-              v-if="!$v.rad.required && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Введите значение</p>
-            </div>
-            <div
-              v-if="!$v.rad.numeric && submitStatus === 'ERROR'"
-              class="error-tooltip"
-            >
-              <p>Значение может содержать только цифры</p>
-            </div>
-          </div>
-        </form>
-        <div class="coordinates-wrapper">
-          <button
-            @click="submitForm()"
-            class="button button-g coordinates-wrapper__button"
-          >
-            Загрузить на карту
-          </button>
-
-          <button
-            class="button button-r coordinates-wrapper__button"
-            @click="removeCircle"
-          >
-            Убрать с карты
-          </button>
+        <div
+          v-if="!$v.lat.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
         </div>
+
+        <div
+          v-if="!$v.lat.minLength && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Значение должно превышать 8 символов</p>
+        </div>
+      </div>
+
+      <div class="input-wrapper c-inputs">
+        <masked-input
+          placeholder=" "
+          class="input c-input"
+          v-model.trim="$v.lng.$model"
+          :class="{
+            invalid:
+              (!$v.lng.minLength || !$v.lng.required) &&
+              submitStatus === 'ERROR',
+          }"
+          :mask="inputMaskLng"
+        />
+        <label class="input-label c-label"> Долгота </label>
+        <p
+          class="c-input__letter"
+          :class="{
+            invalidLetter:
+              (!$v.lng.minLength || !$v.lng.required) &&
+              submitStatus === 'ERROR',
+          }"
+        >
+          В
+        </p>
+
+        <div
+          v-if="!$v.lng.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
+        </div>
+
+        <div
+          v-if="!$v.lng.minLength && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Значение должно превышать 8 символов</p>
+        </div>
+      </div>
+
+      <div class="input-wrapper c-inputs">
+        <input
+          placeholder=" "
+          class="input c-input"
+          v-model.trim="$v.rad.$model"
+          :class="{
+            invalid:
+              (!$v.rad.numeric || !$v.rad.required) && submitStatus === 'ERROR',
+          }"
+        />
+        <label class="input-label c-label"> Радиус (км) </label>
+
+        <div
+          v-if="!$v.rad.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
+        </div>
+        <div
+          v-if="!$v.rad.numeric && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Значение может содержать только цифры</p>
+        </div>
+      </div>
+    </form>
+    <div class="c-wrapper">
+      <button @click="submitForm" class="button button-g c-button">
+        Загрузить на карту
+      </button>
+
+      <button class="button button-r c-button" @click="$emit('remove')">
+        Убрать с карты
+      </button>
+    </div>
   </search-area-base>
 </template>
 
 <script>
 import SearchAreaBase from "@/components/search/SearchAreaBase.vue";
+import { required, minLength, numeric } from "vuelidate/lib/validators";
+import MaskedInput from "vue-masked-input";
+
 export default {
   components: {
+    MaskedInput,
     SearchAreaBase,
+  },
+  data: () => ({
+    submitStatus: null,
+
+    inputMaskLat: {
+      pattern: `111°11'11"`,
+      formatCharacters: {
+        N: {
+          validate: (char) => /[nsNS]/.test(char),
+          transform: (char) => char.toUpperCase(),
+        },
+      },
+    },
+    placeholderLat: "000°00'00\"",
+    inputMaskLng: {
+      pattern: `111°11'11"`,
+      formatCharacters: {
+        E: {
+          validate: (char) => /[ewEW]/.test(char),
+          transform: (char) => char.toUpperCase(),
+        },
+      },
+    },
+    placeholderLng: "000°00'00\"",
+
+    lng: "",
+    lat: "",
+    rad: "",
+  }),
+  validations() {
+    return {
+      lng: {
+        required,
+        minLength: minLength(6),
+      },
+      lat: {
+        required,
+        minLength: minLength(6),
+      },
+      rad: {
+        required,
+        numeric,
+      },
+    };
+  },
+  methods: {
+    submitForm() {
+      if (!this.$v.$invalid) {
+        this.$emit("submit", { lng: this.lng, lat: this.lat, rad: this.rad });
+      } else {
+        this.submitStatus = "ERROR";
+        return;
+      }
+    },
   },
 };
 </script>
@@ -142,6 +190,14 @@ export default {
 .c {
   display: flex;
   align-items: flex-start;
+  &-button {
+    margin-left: auto;
+    max-width: 200px;
+    width: 190px;
+    &:last-child {
+      margin-top: 20px;
+    }
+  }
   &-form {
     display: flex;
     align-items: flex-start;
@@ -151,7 +207,7 @@ export default {
     &:first-child {
       margin-left: 0;
     }
-    &:focus-within .coordinates-label {
+    &:focus-within .c-label {
       top: -20px;
       font-size: 12px;
     }
@@ -193,7 +249,7 @@ export default {
     width: 120px;
     height: 35px;
     margin: 0;
-    &:focus .coordinates-label,
+    &:focus .c-label,
     &:not(:placeholder-shown) ~ label {
       top: -20px;
       font-size: 12px;
@@ -213,18 +269,11 @@ export default {
       height: 35px;
     }
   }
+
   &-wrapper {
     display: flex;
     flex-direction: column;
     margin-left: 20px;
-    &__button {
-      margin-left: auto;
-      max-width: 200px;
-      width: 190px;
-      &:last-child {
-        margin-top: 20px;
-      }
-    }
   }
 }
 </style>

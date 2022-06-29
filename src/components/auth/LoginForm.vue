@@ -79,7 +79,7 @@
           v-if="!$v.password.minLength && submitStatus === 'ERROR'"
           class="error-tooltip"
         >
-          <p>Пароль должен содержать больше 6 символов</p>
+          <p>Пароль должен содержать больше 8 символов</p>
         </div>
       </div>
 
@@ -115,7 +115,6 @@ import { mapActions } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
-import { validationMixin } from "vuelidate";
 
 export default {
   components: {
@@ -132,7 +131,6 @@ export default {
       message: "",
     };
   },
-  mixins: [validationMixin],
   validations: {
     login: {
       required,
@@ -147,7 +145,6 @@ export default {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
-
     async submitForm() {
       this.showMessage = false;
 

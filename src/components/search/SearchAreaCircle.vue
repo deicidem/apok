@@ -1,78 +1,131 @@
 <template>
   <search-area-base class="c">
-    <form class="coordinates-form" @submit.prevent="submitForm()">
-      <div class="input-wrapper coordinates-inputs">
-        <masked-input
-          placeholder=" "
-          class="input input-withIcon coordinates-input"
-          v-model.trim="lat"
-          :class="{ invalid: v$.lat.$error }"
-          :mask="inputMaskLat"
-        />
-        <label class="input-label coordinates-label"> Широта </label>
-        <p
-          class="coordinates-input__letter"
-          :class="{ invalidLetter: v$.lng.$error }"
+    <form
+          class="coordinates-form"
+          @submit.prevent="submitForm()"
+          method="POST"
         >
-          Ю
-        </p>
+          <div class="input-wrapper coordinates-inputs">
+            <masked-input
+              placeholder=" "
+              class="input input-withIcon coordinates-input"
+              v-model.trim="$v.lat.$model"
+              :class="{
+                invalid:
+                  (!$v.lat.minLength || !$v.lat.required) &&
+                  submitStatus === 'ERROR',
+              }"
+              :mask="inputMaskLat"
+            />
+            <label class="input-label coordinates-label"> Широта </label>
+            <p
+              class="coordinates-input__letter"
+              :class="{
+                invalidLetter:
+                  (!$v.lat.minLength || !$v.lat.required) &&
+                  submitStatus === 'ERROR',
+              }"
+            >
+              Ю
+            </p>
 
-        <p v-if="v$.lat.$error" class="error-tooltip">
-          {{ v$.lat.$errors[0].$message }}
-        </p>
-      </div>
+            <div
+              v-if="!$v.lat.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
 
-      <div class="input-wrapper coordinates-inputs">
-        <masked-input
-          placeholder=" "
-          class="input coordinates-input"
-          v-model.trim="lng"
-          :class="{ invalid: v$.lng.$error }"
-          :mask="inputMaskLng"
-        />
-        <label class="input-label coordinates-label"> Долгота </label>
-        <p
-          class="coordinates-input__letter"
-          :class="{ invalidLetter: v$.lng.$error }"
-        >
-          В
-        </p>
+            <div
+              v-if="!$v.lat.minLength && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение должно превышать 8 символов</p>
+            </div>
+          </div>
 
-        <p v-if="v$.lng.$error" class="error-tooltip">
-          {{ v$.lng.$errors[0].$message }}
-        </p>
-      </div>
+          <div class="input-wrapper coordinates-inputs">
+            <masked-input
+              placeholder=" "
+              class="input coordinates-input"
+              v-model.trim="$v.lng.$model"
+              :class="{
+                invalid:
+                  (!$v.lng.minLength || !$v.lng.required) &&
+                  submitStatus === 'ERROR',
+              }"
+              :mask="inputMaskLng"
+            />
+            <label class="input-label coordinates-label"> Долгота </label>
+            <p
+              class="coordinates-input__letter"
+              :class="{
+                invalidLetter:
+                  (!$v.lng.minLength || !$v.lng.required) &&
+                  submitStatus === 'ERROR',
+              }"
+            >
+              В
+            </p>
 
-      <div class="input-wrapper coordinates-inputs">
-        <input
-          placeholder=" "
-          class="input coordinates-input"
-          v-model.trim="rad"
-          :class="{ invalid: v$.rad.$error }"
-          id="radius"
-        />
-        <label class="input-label coordinates-label"> Радиус (км) </label>
+            <div
+              v-if="!$v.lng.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
 
-        <p v-if="v$.rad.$error" class="error-tooltip">
-          {{ v$.rad.$errors[0].$message }}
-        </p>
-      </div>
-    </form>
-    <div class="coordinates-wrapper">
-      <button
-        @click="submitForm()"
-        class="button button-g coordinates-wrapper__button"
-      >
-        Загрузить на карту
-      </button>
+            <div
+              v-if="!$v.lng.minLength && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение должно превышать 8 символов</p>
+            </div>
+          </div>
 
-      <button
-        class="button button-r coordinates-wrapper__button"
-        @click="removeCircle"
-      >
-        Убрать с карты
-      </button>
-    </div>
+          <div class="input-wrapper coordinates-inputs">
+            <input
+              placeholder=" "
+              class="input coordinates-input"
+              v-model.trim="$v.rad.$model"
+              :class="{
+                invalid:
+                  (!$v.rad.numeric || !$v.rad.required) &&
+                  submitStatus === 'ERROR',
+              }"
+              id="radius"
+            />
+            <label class="input-label coordinates-label"> Радиус (км) </label>
+
+            <div
+              v-if="!$v.rad.required && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Введите значение</p>
+            </div>
+            <div
+              v-if="!$v.rad.numeric && submitStatus === 'ERROR'"
+              class="error-tooltip"
+            >
+              <p>Значение может содержать только цифры</p>
+            </div>
+          </div>
+        </form>
+        <div class="coordinates-wrapper">
+          <button
+            @click="submitForm()"
+            class="button button-g coordinates-wrapper__button"
+          >
+            Загрузить на карту
+          </button>
+
+          <button
+            class="button button-r coordinates-wrapper__button"
+            @click="removeCircle"
+          >
+            Убрать с карты
+          </button>
+        </div>
   </search-area-base>
 </template>
 

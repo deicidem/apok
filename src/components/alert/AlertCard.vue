@@ -6,8 +6,27 @@
       v-show="!seen"
     ></div>
     <div class="alert-item__content">
-      <div class="alert-item__img" :class="[theme]" @click="getTheme(theme)">
-        <div class="icon" :class="'icon__' + [theme]"></div>
+      <div class="icon" @click="getTheme(theme)">
+        <div class="icon__child" :class="'icon__' + [theme]">
+          <img
+            svg-inline
+            v-if="[theme] == 'task'"
+            src="@/assets/img/alert-icons/alert-task.svg"
+            alt=""
+          />
+          <img
+            svg-inline
+            v-if="[theme] == 'access'"
+            src="@/assets/img/alert-icons/alert-access.svg"
+            alt=""
+          />
+          <img
+            svg-inline
+            v-if="[theme] == 'data'"
+            src="@/assets/img/alert-icons/alert-data.svg"
+            alt=""
+          />
+        </div>
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
@@ -42,17 +61,31 @@ export default {
 
 <style lang="scss" scoped>
 .icon {
-  width: 24px;
-  height: 24px;
+  border-radius: 10px;
+  &__child {
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+  }
   &__task {
-    background: url("@/assets/img/alert-icons/alert-task.svg");
+    background: $text-green;
+
+    img {
+      max-width: 24px;
+    }
   }
 
   &__access {
-    background: url("@/assets/img/alert-icons/alert-access.svg");
+    background: $text-plum;
+    img {
+      max-width: 24px;
+    }
   }
   &__data {
-    background: url("@/assets/img/alert-icons/alert-data.svg");
+    background: $text-blue;
+    img {
+      max-width: 24px;
+    }
   }
 }
 .alert {
@@ -93,8 +126,6 @@ export default {
       height: 40px;
 
       border-radius: 10px;
-      background: $gradient;
-      box-shadow: $shadow-small;
       img {
         max-width: 24px;
       }
@@ -137,13 +168,13 @@ export default {
   border-radius: 50%;
 }
 .task {
-  background: $gradient-g;
+  background: $text-green;
 }
 .access {
-  background: $gradient-p;
+  background: $text-plum;
 }
 .data {
-  background: $gradient-b;
+  background: $text-blue;
 }
 
 @media screen and (max-width: 1440px) {

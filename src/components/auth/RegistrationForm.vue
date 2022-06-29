@@ -12,22 +12,29 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="firstName"
-          :class="{ invalid: v$.firstName.$error }"
+          v-model.trim="$v.firstName.$model"
+          :class="{
+            invalid: !$v.firstName.required && submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Имя</label>
 
         <img
           svg-inline
           class="input-img"
-          :class="{
-            invalidIcon: v$.firstName.$error,
-            'input-img': !v$.firstName.$error,
-          }"
+          :class="
+            !$v.firstName.required && submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/login-icon.svg"
         />
-        <div v-if="v$.firstName.$error" class="error-tooltip">
-          <p>{{ v$.firstName.$errors[0].$message }}</p>
+
+        <div
+          v-if="!$v.firstName.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
         </div>
       </div>
 
@@ -35,22 +42,29 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="lastName"
-          :class="{ invalid: v$.lastName.$error }"
+          v-model.trim="$v.lastName.$model"
+          :class="{
+            invalid: !$v.lastName.required && submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Фамилия</label>
 
         <img
           svg-inline
           class="input-img"
-          :class="{
-            invalidIcon: v$.lastName.$error,
-            'input-img': !v$.lastName.$error,
-          }"
+          :class="
+            !$v.lastName.required && submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/login-icon.svg"
         />
-        <div v-if="v$.lastName.$error" class="error-tooltip">
-          <p>{{ v$.lastName.$errors[0].$message }}</p>
+
+        <div
+          v-if="!$v.lastName.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
         </div>
       </div>
 
@@ -58,22 +72,35 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="mail"
-          :class="{ invalid: v$.mail.$error }"
+          v-model.trim="$v.mail.$model"
+          :class="{
+            invalid:
+              (!$v.mail.email || !$v.mail.required) && submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Почтовый адрес</label>
 
         <img
           svg-inline
           class="input-img"
-          :class="{
-            invalidIcon: v$.mail.$error,
-            'input-img': !v$.mail.$error,
-          }"
+          :class="
+            (!$v.mail.email || !$v.mail.required) && submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/mail.svg"
         />
-        <div v-if="v$.mail.$error" class="error-tooltip">
-          <p>{{ v$.mail.$errors[0].$message }}</p>
+        <div
+          v-if="!$v.mail.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
+        </div>
+        <div
+          v-if="!$v.mail.email && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите корректный почтовый адрес</p>
         </div>
       </div>
 
@@ -81,22 +108,44 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="password.password"
-          :class="{ invalid: v$.password.password.$error }"
+          v-model.trim="$v.password.password.$model"
+          :class="{
+            invalid:
+              (!$v.password.password.minLength ||
+                !$v.password.password.required) &&
+              submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Пароль</label>
 
         <img
           svg-inline
           class="input-img"
-          :class="{
-            invalidIcon: v$.password.password.$error,
-            'input-img': !v$.password.password.$error,
-          }"
+          :class="
+            (!$v.password.password.minLength ||
+              !$v.password.password.required) &&
+            submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/lock-icon.svg"
         />
-        <div v-if="v$.password.password.$error" class="error-tooltip">
-          <p>{{ v$.password.password.$errors[0].$message }}</p>
+
+        <div
+          v-if="!$v.password.password.required && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Введите значение</p>
+        </div>
+
+        <div
+          v-if="!$v.password.password.minLength && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>
+            Пароль должен содержать более
+            {{ $v.password.password.$params.minLength.min }} символов
+          </p>
         </div>
       </div>
 
@@ -104,33 +153,43 @@
         <input
           placeholder=" "
           class="input input-withIcon"
-          v-model.trim="password.confirm"
-          :class="{ invalid: v$.password.confirm.$error }"
+          v-model.trim="$v.password.confirm.$model"
+          :class="{
+            invalid:
+              !$v.password.confirm.sameAsPassword && submitStatus === 'ERROR',
+          }"
         />
         <label class="input-label">Повторите пароль</label>
 
         <img
           svg-inline
           class="input-img"
-          :class="{
-            invalidIcon: v$.password.confirm.$error,
-            'input-img': !v$.password.confirm.$error,
-          }"
+          :class="
+            !$v.password.confirm.sameAsPassword && submitStatus === 'ERROR'
+              ? 'invalidIcon'
+              : 'input-img'
+          "
           src="@/assets/img/form-icons/lock-icon.svg"
         />
-        <div v-if="v$.password.confirm.$error" class="error-tooltip">
-          <p>{{ v$.password.confirm.$errors[0].$message }}</p>
+
+        <div
+          v-if="!$v.password.confirm.sameAsPassword && submitStatus === 'ERROR'"
+          class="error-tooltip"
+        >
+          <p>Пароли не совпадают</p>
         </div>
       </div>
 
-      <button type="submit" class="button button-g form-wrapper__item">
+      <button
+        type="submit"
+        :disabled="submitStatus === 'PENDING'"
+        class="button button-g form-wrapper__item"
+      >
         Зарегистироваться
       </button>
 
       <router-link to="/login">
-        <button class="button button-white form-wrapper__item">
-          Войти
-        </button>
+        <button class="button button-white form-wrapper__item">Войти</button>
       </router-link>
     </form>
   </div>
@@ -138,17 +197,9 @@
 
 <script>
 import { mapActions } from "vuex";
-import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  helpers,
-  email,
-  minLength,
-  sameAs,
-} from "@vuelidate/validators";
+import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 
 export default {
-  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       firstName: "",
@@ -158,45 +209,28 @@ export default {
         password: "",
         confirm: "",
       },
+      submitStatus: null,
     };
   },
   validations() {
     return {
       firstName: {
-        required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Логин должен содержать больше 1 символа",
-          minLength(1)
-        ),
+        required,
       },
-
       lastName: {
-        required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Логин должен содержать больше 1 символа",
-          minLength(1)
-        ),
+        required,
       },
-
       mail: {
-        required: helpers.withMessage("Введите значение", required),
-        email: helpers.withMessage("Некорректно введен почтовый адрес", email),
+        required,
+        email,
       },
-
       password: {
         password: {
-          required: helpers.withMessage("Введите значение", required),
-          minLength: helpers.withMessage(
-            "Пароль должен содержать больше 8 символов",
-            minLength(8)
-          ),
+          required,
+          minLength: minLength(8),
         },
         confirm: {
-          required: helpers.withMessage("Введите значение", required),
-          sameAs: helpers.withMessage(
-            "Пароли не совпадают",
-            sameAs(this.password.password)
-          ),
+          sameAsPassword: sameAs("password"),
         },
       },
     };
@@ -208,17 +242,17 @@ export default {
     }),
 
     async submitForm() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
-        console.log("Form successfully submitted");
+      if (!this.$v.$invalid) {
         await this.regUser({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.mail,
           password: this.password,
         });
-        this.$router.push('main');
+        this.$router.push("main");
+        this.submitStatus = "PENDING";
       } else {
+        this.submitStatus = "ERROR";
         return;
       }
     },

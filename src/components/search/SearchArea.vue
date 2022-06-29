@@ -174,24 +174,21 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import MaskedInput from "vue-masked-input";
-import useVuelidate from "@vuelidate/core";
-import { required, helpers, minLength, numeric } from "@vuelidate/validators";
 import SearchBase from "@/components/search/SearchBase";
-// import {IMaskDirective} from 'vue-imask';
+import { required, minLength, numeric } from "vuelidate/lib/validators";
 
 export default {
   components: {
     MaskedInput,
     SearchBase,
   },
-  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       file: null,
       areaType: null,
 
       inputMaskLat: {
-        pattern: `111°11'11" N`,
+        pattern: `111°11'11"`,
         formatCharacters: {
           N: {
             validate: (char) => /[nsNS]/.test(char),
@@ -199,10 +196,10 @@ export default {
           },
         },
       },
-      placeholderLat: "000°00'00\" N",
+      placeholderLat: "000°00'00\"",
 
       inputMaskLng: {
-        pattern: `111°11'11" E`,
+        pattern: `111°11'11"`,
         formatCharacters: {
           E: {
             validate: (char) => /[ewEW]/.test(char),
@@ -210,11 +207,12 @@ export default {
           },
         },
       },
-      placeholderLng: "000°00'00\" W",
+      placeholderLng: "000°00'00\"",
 
       lng: "",
       lat: "",
       rad: "",
+      submitStatus: null,
       searchZoneType: 1,
       newCoord: {
         lat: "",
@@ -225,18 +223,16 @@ export default {
   validations() {
     return {
       lng: {
-        required: helpers.withMessage("Введите значение", required),
-        minLength: helpers.withMessage(
-          "Логин должен содержать больше 6 символов",
-          minLength(6)
-        ),
+        required,
+        minLength: minLength(6),
       },
       lat: {
-        required: helpers.withMessage("Введите значение", required),
+        required,
+        minLength: minLength(6),
       },
       rad: {
-        required: helpers.withMessage("Введите значение", required),
-        numeric: helpers.withMessage("Введите числовое значение", numeric),
+        required,
+        numeric,
       },
     };
   },
@@ -361,10 +357,11 @@ export default {
     },
 
     submitForm() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (!this.$v.$invalid) {
         console.log("Form successfully submitted");
+        this.submitStatus = "PENDING";
       } else {
+        this.submitStatus = "ERROR";
         return;
       }
     },
@@ -378,10 +375,12 @@ label.active {
   font-size: 12px;
   color: $color-main;
 }
+
 .number {
   max-width: 40px;
   text-align: center !important;
 }
+
 .zone-table {
   &__input {
     display: block;
@@ -402,9 +401,11 @@ label.active {
     }
   }
 }
+
 .delete {
   position: relative;
 }
+
 .search-zone {
   padding: 20px;
 
@@ -547,6 +548,7 @@ label.active {
   &__coordinates {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
   }
   &__load {
     display: flex;
@@ -555,7 +557,7 @@ label.active {
   &__buttons {
     display: flex;
     flex-direction: column;
-    margin: 30px 0 0 20px;
+    margin: 20px 0 0 20px;
   }
   &__button {
     margin: 10px 0;
@@ -574,6 +576,64 @@ label.active {
   }
 }
 
+.coordinates {
+  &-form {
+    display: flex;
+    align-items: flex-start;
+  }
+  &-inputs {
+    margin-left: 16px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:focus-within .coordinates-label {
+      top: -20px;
+      font-size: 12px;
+    }
+  }
+  &-label {
+    top: 8px;
+    left: -10px;
+  }
+  &-input {
+    width: 120px;
+    height: 35px;
+    margin: 0;
+    &:focus .coordinates-label,
+    &:not(:placeholder-shown) ~ label {
+      top: -20px;
+      font-size: 12px;
+    }
+    &__letter {
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-radius: 0 10px 10px 0;
+      color: $white;
+      line-height: 35px;
+      text-align: center;
+      margin: 0;
+      font-size: 16px;
+      background: $gradient;
+      width: 30px;
+      height: 35px;
+    }
+  }
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    &__button {
+      margin-left: auto;
+      max-width: 200px;
+      width: 190px;
+      &:last-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
 .load-wrapper {
   display: flex;
   align-items: center;
@@ -584,8 +644,10 @@ label.active {
     align-items: flex-end;
   }
   &__button {
-    margin-bottom: 10px;
-    width: 180px;
+    width: 190px;
+    &:first-child {
+      margin-bottom: 20px;
+    }
   }
   &__name {
     margin-left: 20px;
@@ -594,6 +656,38 @@ label.active {
   }
   &__input {
     display: none;
+  }
+}
+
+.invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus ~ .input-label,
+  &:not(:placeholder-shown) ~ label {
+    color: $color-red;
+  }
+  &:focus ~ .invalidIcon {
+    path {
+      fill: $color-red;
+    }
+  }
+}
+
+.invalidLetter {
+  background: $gradient-r;
+}
+
+.error {
+  &-tooltip {
+    transition: all 2s ease-out;
+
+    width: 120px;
+    margin-top: 6px;
+    line-height: 110%;
+    color: $color-red;
+    font-size: 12px;
+    border-radius: 10px;
   }
 }
 

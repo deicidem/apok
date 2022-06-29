@@ -14,28 +14,21 @@
           class="input input-withIcon"
           v-model.trim="$v.firstName.$model"
           :class="{
-            invalid: !$v.firstName.required && submitStatus === 'ERROR',
+            invalid: !$v.firstName.required && formInvalid,
           }"
         />
         <label class="input-label">Имя</label>
 
-        <img
-          svg-inline
-          class="input-img"
+        <i
+          class="icon icon-ic_fluent_person_20_regular"
           :class="
-            !$v.firstName.required && submitStatus === 'ERROR'
-              ? 'invalidIcon'
-              : 'input-img'
+            !$v.firstName.required && formInvalid ? 'invalidIcon' : 'input-img'
           "
-          src="@/assets/img/form-icons/login-icon.svg"
-        />
+        ></i>
+      </div>
 
-        <div
-          v-if="!$v.firstName.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
+      <div v-if="!$v.firstName.required && formInvalid" class="error-tooltip">
+        <span>Введите значение</span>
       </div>
 
       <div class="input-wrapper">
@@ -44,28 +37,21 @@
           class="input input-withIcon"
           v-model.trim="$v.lastName.$model"
           :class="{
-            invalid: !$v.lastName.required && submitStatus === 'ERROR',
+            invalid: !$v.lastName.required && formInvalid,
           }"
         />
         <label class="input-label">Фамилия</label>
 
-        <img
-          svg-inline
-          class="input-img"
+        <i
+          class="icon icon-ic_fluent_person_20_regular"
           :class="
-            !$v.lastName.required && submitStatus === 'ERROR'
-              ? 'invalidIcon'
-              : 'input-img'
+            !$v.lastName.required && formInvalid ? 'invalidIcon' : 'input-img'
           "
-          src="@/assets/img/form-icons/login-icon.svg"
-        />
+        ></i>
+      </div>
 
-        <div
-          v-if="!$v.lastName.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
+      <div v-if="!$v.lastName.required && formInvalid" class="error-tooltip">
+        <span>Введите значение</span>
       </div>
 
       <div class="input-wrapper">
@@ -74,34 +60,26 @@
           class="input input-withIcon"
           v-model.trim="$v.mail.$model"
           :class="{
-            invalid:
-              (!$v.mail.email || !$v.mail.required) && submitStatus === 'ERROR',
+            invalid: (!$v.mail.email || !$v.mail.required) && formInvalid,
           }"
         />
         <label class="input-label">Почтовый адрес</label>
 
-        <img
-          svg-inline
-          class="input-img"
+        <i
+          class="icon icon-ic_fluent_mail_20_regular"
           :class="
-            (!$v.mail.email || !$v.mail.required) && submitStatus === 'ERROR'
+            (!$v.mail.email || !$v.mail.required) && formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
-          src="@/assets/img/form-icons/mail.svg"
-        />
-        <div
-          v-if="!$v.mail.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
-        <div
-          v-if="!$v.mail.email && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите корректный почтовый адрес</p>
-        </div>
+        ></i>
+      </div>
+
+      <div v-if="!$v.mail.required && formInvalid" class="error-tooltip">
+        <span>Введите значение</span>
+      </div>
+      <div v-if="!$v.mail.email && formInvalid" class="error-tooltip">
+        <span>Введите корректный почтовый адрес</span>
       </div>
 
       <div class="input-wrapper">
@@ -113,40 +91,38 @@
             invalid:
               (!$v.password.password.minLength ||
                 !$v.password.password.required) &&
-              submitStatus === 'ERROR',
+              formInvalid,
           }"
         />
         <label class="input-label">Пароль</label>
 
-        <img
-          svg-inline
-          class="input-img"
+        <i
+          class="icon icon-ic_fluent_lock_closed_20_regular"
           :class="
             (!$v.password.password.minLength ||
               !$v.password.password.required) &&
-            submitStatus === 'ERROR'
+            formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
-          src="@/assets/img/form-icons/lock-icon.svg"
-        />
+        ></i>
+      </div>
 
-        <div
-          v-if="!$v.password.password.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
+      <div
+        v-if="!$v.password.password.required && formInvalid"
+        class="error-tooltip"
+      >
+        <span>Введите значение</span>
+      </div>
 
-        <div
-          v-if="!$v.password.password.minLength && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>
-            Пароль должен содержать более
-            {{ $v.password.password.$params.minLength.min }} символов
-          </p>
-        </div>
+      <div
+        v-if="!$v.password.password.minLength && formInvalid"
+        class="error-tooltip"
+      >
+        <span>
+          Пароль должен содержать более
+          {{ $v.password.password.$params.minLength.min }} символов
+        </span>
       </div>
 
       <div class="input-wrapper">
@@ -155,29 +131,25 @@
           class="input input-withIcon"
           v-model.trim="$v.password.confirm.$model"
           :class="{
-            invalid:
-              !$v.password.confirm.sameAsPassword && submitStatus === 'ERROR',
+            invalid: !$v.password.confirm.sameAsPassword && formInvalid,
           }"
         />
         <label class="input-label">Повторите пароль</label>
-
-        <img
-          svg-inline
-          class="input-img"
+        <i
+          class="icon icon-ic_fluent_lock_closed_20_regular"
           :class="
-            !$v.password.confirm.sameAsPassword && submitStatus === 'ERROR'
+            !$v.password.confirm.sameAsPassword && formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
-          src="@/assets/img/form-icons/lock-icon.svg"
-        />
+        ></i>
+      </div>
 
-        <div
-          v-if="!$v.password.confirm.sameAsPassword && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Пароли не совпадают</p>
-        </div>
+      <div
+        v-if="!$v.password.confirm.sameAsPassword && formInvalid"
+        class="error-tooltip"
+      >
+        <span>Пароли не совпадают</span>
       </div>
 
       <button
@@ -235,12 +207,16 @@ export default {
       },
     };
   },
+  computed: {
+    formInvalid() {
+      return this.submitStatus === "FORM_INVALID";
+    },
+  },
   methods: {
     ...mapActions("users", {
       addUser: "addUser",
       regUser: "regUser",
     }),
-
     async submitForm() {
       if (!this.$v.$invalid) {
         await this.regUser({
@@ -252,7 +228,7 @@ export default {
         this.$router.push("main");
         this.submitStatus = "PENDING";
       } else {
-        this.submitStatus = "ERROR";
+        this.submitStatus = "FORM_INVALID";
         return;
       }
     },
@@ -262,42 +238,25 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  margin: 20% auto;
-  width: 400px;
-  padding: 30px;
-
   background: $gradient-w;
+  width: 400px;
+  padding: 30px 40px 30px 40px;
   border-radius: 10px;
   border: none;
   box-shadow: $shadow-big;
   &-title {
-    margin-bottom: 24px;
-
     text-align: center;
     font-size: 20px;
-
     color: $black;
+    margin-bottom: 20px;
   }
   &-wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     &__item {
-      width: 300px;
-      height: 40px;
-      margin: 10px auto;
-
+      margin-top: 20px;
+      width: 100%;
+      height: 44px;
       font-size: 16px;
-    }
-  }
-  &-error {
-    &__title {
-      color: $color-red;
-      font-size: 14px;
-    }
-    &__text {
-      color: $color-red;
-      font-size: 14px;
+      background: $white;
     }
   }
 }
@@ -310,46 +269,23 @@ export default {
     color: $color-red;
   }
   &:focus ~ .invalidIcon {
-    path {
-      fill: $color-red;
-    }
+    color: $color-red;
   }
 }
 .invalidIcon {
   position: absolute;
-  max-width: 26px;
-  right: 20px;
+  right: 0;
   top: 50%;
   transform: translate(-50%, -50%);
-  path {
-    fill: $color-red;
-  }
+  color: $color-red;
 }
+
 .error {
   &-tooltip {
-    position: absolute;
-    right: -250px;
-    top: 50%;
-    transform: translate(0, -50%);
-    transition: all 2s ease-out;
-
-    display: flex;
-    align-items: center;
-
-    height: 49px;
-    width: 250px;
-    background: linear-gradient(
-      to right,
-      rgb(235, 96, 96, 0.7),
-      rgb(141, 70, 70, 0.7)
-    );
-    color: $white;
-    font-size: 14px;
-    border-radius: 10px;
-    p {
-      text-align: left;
-      margin-left: 8px;
-    }
+    margin: 2px 0 0 0;
+    text-align: left;
+    font-size: 12px;
+    color: rgb(141, 70, 70);
   }
 }
 </style>

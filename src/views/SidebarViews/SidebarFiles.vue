@@ -58,15 +58,11 @@
               <td>
                 <div class="button__wrapper">
                   <button
-                    class="button button-svg-r"
+                    class="button button-svg button-svg-r"
                     :disabled="!item.deletable"
                     @click="onDelete(i)"
                   >
-                    <img
-                      svg-inline
-                      src="@/assets/img/button-svg-icons/trash.svg"
-                      alt="Удалить"
-                    />
+                    <i class="icon icon-ic_fluent_delete_20_regular"></i>
                   </button>
                   <span class="tooltiptext tooltiptext-r" v-if="item.deletable">
                     {{ item.deletable ? "Удалить" : "Файл используется" }}

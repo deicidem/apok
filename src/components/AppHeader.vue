@@ -11,7 +11,10 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/header-icons/logo_apok.svg" alt="Логотип" />
+              <img
+                src="@/assets/img/header-icons/logo_apok.svg"
+                alt="Логотип"
+              />
             </router-link>
           </li>
           <li class="header-nav__item">
@@ -24,27 +27,29 @@
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
         <div class="header-menu__buttons">
-          <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
+          <div
+            class="button__wrapper header-menu__button-wrapper"
+            v-if="isAuth"
+          >
             <button
-              class="button button-svg button-white-gr header-menu__button"
+              class="button button-svg header-menu__button"
               @click="onLogout"
             >
-              <img svg-inline src="@/assets/img/header-icons/logout.svg" alt="Логин" />
+              <i class="icon icon-ic_fluent_arrow_exit_20_regular"></i>
             </button>
             <span class="tooltiptext">Выйти</span>
           </div>
           <div class="button__wrapper header-menu__button-wrapper" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <button
-                class="button button-svg button-white-gr header-menu__button"
+                class="button button-svg header-menu__button"
                 @click="navigate"
               >
-                <img svg-inline src="@/assets/img/form-icons/login-icon.svg" alt="Логин" />
+                <i class="icon icon-ic_fluent_person_20_filled"></i>
               </button>
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>
           </div>
-          
         </div>
       </div>
     </div>
@@ -61,8 +66,8 @@ export default {
     ...mapActions("users", ["logout"]),
     async onLogout() {
       await this.logout();
-      this.$router.push('/main');
-    }
+      this.$router.push("/main");
+    },
   },
 };
 </script>
@@ -138,23 +143,17 @@ export default {
       color: $black;
     }
     &__buttons {
-      display: flex;
-      align-items: center;
+      // display: flex;
+      // align-items: center;
     }
     &__button {
-      width: 40px;
-      height: 40px;
+      font-size: 26px;
+
       &-wrapper {
+        height: 40px;
+        width: 40px;
+        background: $white;
         position: relative;
-        margin-right: 20px;
-      }
-      svg path {
-        fill: $color-main;
-      }
-      &:hover {
-        svg path {
-          fill: $color-main-dark;
-        }
       }
       // На IE 11 не работает
       @supports (background-clip: text) {

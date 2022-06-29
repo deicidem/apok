@@ -34,8 +34,8 @@
       </div>
     </div>
     <div class="alert-delete">
-      <button @click="$emit('delete')" class="button button-svg-r">
-        <img svg-inline src="@/assets/img/button-svg-icons/trash.svg" />
+      <button @click="$emit('delete')" class="button button-svg button-svg-r">
+        <i class="icon icon-ic_fluent_delete_20_regular"></i>
       </button>
       <div class="tooltiptext tooltiptext-r">Удалить</div>
     </div>

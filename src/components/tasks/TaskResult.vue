@@ -3,7 +3,7 @@
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
         <div class="preview-wrapper__cross" @click="$emit('close')">
-          <img svg-inline src="@/assets/img/cross/cross.svg" alt="Закрыть" />
+          <i class="fa-solid fa-xmark"></i>
         </div>
 
         <div class="preview-wrapper__title">Предпросмотр</div>
@@ -39,7 +39,9 @@
         <div class="preview-wrapper__title">Файлы</div>
         <ul class="preview-wrapper__list">
           <li v-for="(file, i) in files" :key="i">
-            <a :href="file.downloadPath" target="_blank" download>{{ file.name }}</a>
+            <a :href="file.downloadPath" target="_blank" download>{{
+              file.name
+            }}</a>
           </li>
         </ul>
       </div>
@@ -109,13 +111,10 @@ export default {
       right: 14px;
       top: 14px;
       cursor: pointer;
-      svg path {
-        fill: $color-main;
-      }
+      color: $color-main;
+      font-size: 20px;
       &:hover {
-        svg path {
-          fill: $color-main-dark;
-        }
+        color: $color-main-dark;
       }
     }
     &__list {

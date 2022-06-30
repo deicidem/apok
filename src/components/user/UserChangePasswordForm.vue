@@ -4,7 +4,7 @@
       <div class="password-popup__line">
         <p>Поменять пароль</p>
         <div class="password-popup__cross" @click="$emit('close')">
-          <img svg-inline src="@/assets/img/cross/cross.svg" />
+          <i class="fa-solid fa-xmark"></i>
         </div>
       </div>
       <form
@@ -14,7 +14,6 @@
       >
         <div class="input-wrapper">
           <input
-            required
             placeholder=" "
             v-model="$v.currentPassword.$model"
             class="input input-withIcon"
@@ -23,15 +22,14 @@
             }"
           />
           <label class="input-label">Текущий пароль</label>
-          <img
-            svg-inline
+          <i
+            class="icon icon-ic_fluent_lock_closed_20_regular"
             :class="
               !$v.currentPassword.required && submitStatus === 'ERROR'
                 ? 'invalidIcon'
                 : 'input-img'
             "
-            src="@/assets/img/form-icons/lock-icon.svg"
-          />
+          ></i>
           <div
             v-if="!$v.currentPassword.required && submitStatus === 'ERROR'"
             class="error-tooltip"
@@ -42,7 +40,6 @@
 
         <div class="input-wrapper">
           <input
-            required
             placeholder=" "
             v-model="$v.password.$model"
             class="input input-withIcon"
@@ -53,16 +50,15 @@
             }"
           />
           <label class="input-label">Новый пароль</label>
-          <img
-            svg-inline
+          <i
+            class="icon icon-ic_fluent_lock_closed_20_regular"
             :class="
               (!$v.password.required || !$v.password.minLength) &&
               submitStatus === 'ERROR'
                 ? 'invalidIcon'
                 : 'input-img'
             "
-            src="@/assets/img/form-icons/lock-icon.svg"
-          />
+          ></i>
           <div
             v-if="!$v.password.required && submitStatus === 'ERROR'"
             class="error-tooltip"
@@ -79,7 +75,6 @@
 
         <div class="input-wrapper">
           <input
-            required
             placeholder=" "
             v-model="$v.passwordConfirmation.$model"
             class="input input-withIcon"
@@ -89,15 +84,14 @@
             }"
           />
           <label class="input-label">Подтвердить пароль</label>
-          <img
-            svg-inline
+          <i
+            class="icon icon-ic_fluent_lock_closed_20_regular"
             :class="
               !$v.passwordConfirmation.sameAs && submitStatus === 'ERROR'
                 ? 'invalidIcon'
                 : 'input-img'
             "
-            src="@/assets/img/form-icons/lock-icon.svg"
-          />
+          ></i>
           <div
             v-if="!$v.passwordConfirmation.sameAs && submitStatus === 'ERROR'"
             class="error-tooltip"
@@ -195,24 +189,17 @@ export default {
   }
   &__cross {
     position: absolute;
-    right: 10px;
-
-    width: 18px;
+    right: 14px;
+    font-size: 20px;
     cursor: pointer;
-    svg path {
-      fill: $white;
-    }
+    color: $white;
   }
   &__wrapper {
     width: 400px;
-    padding: 30px;
-  }
-  &__input {
-    margin-top: 10px;
+    padding: 0 30px 30px 30px;
   }
   &__button {
-    margin: 10px auto;
-    width: 300px;
+    margin: 30px 0 0 0;
   }
   &__btn {
     width: 100%;
@@ -220,7 +207,6 @@ export default {
     height: 40px;
   }
 }
-
 .invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;
@@ -230,44 +216,24 @@ export default {
     color: $color-red;
   }
   &:focus ~ .invalidIcon {
-    path {
-      fill: $color-red;
-    }
+    color: $color-red;
   }
 }
 .invalidIcon {
   position: absolute;
-  max-width: 26px;
-  right: 20px;
-  top: 50%;
+  right: 0;
+  top: 36%;
   transform: translate(-50%, -50%);
-  path {
-    fill: $color-red;
-  }
+  color: $color-red;
 }
 .error {
   &-tooltip {
-    position: absolute;
-    right: -240px;
-    top: 50%;
-    transform: translate(0, -50%);
-    transition: all 2s ease-out;
-
-    display: flex;
-    align-items: center;
-
-    height: 49px;
-    width: 240px;
-    background: linear-gradient(
-      to right,
-      rgb(235, 96, 96, 0.6),
-      rgb(141, 70, 70, 0.6)
-    );
-    color: $white;
-    font-size: 14px;
-    border-radius: 10px;
+    margin: 2px 0 0 0;
+    text-align: left;
+    font-size: 12px;
+    color: $color-red;
     p {
-      margin-left: 8px;
+      margin: 0;
     }
   }
 }

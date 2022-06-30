@@ -16,12 +16,8 @@
             <td>{{ coord.lat }}</td>
             <td>{{ coord.lng }}</td>
             <td class="col delete" @click="$emit('delete', i)">
-              <button class="button button-svg-r">
-                <img
-                  svg-inline
-                  src="@/assets/img/button-svg-icons/trash.svg"
-                  alt="Удалить"
-                />
+              <button class="button button-svg button-svg-r">
+                <i class="icon icon-ic_fluent_delete_20_regular"></i>
               </button>
               <div class="tooltiptext tooltiptext-r">Удалить</div>
             </td>
@@ -54,11 +50,7 @@
                   @click="onAddCoordinate"
                   class="button button-svg button-white-gr"
                 >
-                  <img
-                    svg-inline
-                    src="@/assets/img/button-svg-icons/plus.svg"
-                    alt="Добавить"
-                  />
+                  <i class="fa-solid fa-plus"></i>
                 </button>
               </div>
             </td>

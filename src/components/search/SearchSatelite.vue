@@ -1,139 +1,138 @@
 <template>
-<search-base title="Космический аппарат" :invalid="invalid">
-<template v-slot:error-message>
-      Укажите косимческие аппараты
-    </template>
+  <search-base title="Космический аппарат" :invalid="invalid">
+    <template v-slot:error-message> Укажите косимческие аппараты </template>
     <template v-slot:content>
       <div class="accordion">
-      <div
-        class="accordion-item"
-        v-for="(series, i) in getSatelites"
-        :key="series.id"
-      >
-        <div class="accordion-item__header">
-          <div class="accordion-item__header-img" @click="updateShow(i)">
-            <img
-              svg-inline
-              v-if="!satelitesShow[i].show"
-              src="@/assets/img/arrows/arrow-close.svg"
-              alt=""
-            />
-            <img
-              svg-inline
-              class="satelite-close"
-              v-if="satelitesShow[i].show"
-              src="@/assets/img/arrows/arrow-close.svg"
-              alt=""
-            />
-          </div>
-          <app-checkbox
-            :mini="true"
-            :model-value="series.checked"
-            @change="selectSeries({ seriesInd: i, val: $event })"
-          />
-          <span class="accordion-item__header-text" @click="updateShow(i)">{{
-            series.name
-          }}</span>
-        </div>
-
-        <div class="accordion-item__body" v-show="satelitesShow[i].show">
-          <div
-            class="accordion-item__content"
-            v-for="(sc, j) in series.satelites"
-            :key="sc.id"
-          >
-            <div class="accordion-item__header">
-              <div class="accordion-item__header-img" @click="updateShow(i, j)">
-                <img
-                  svg-inline
-                  v-if="!satelitesShow[i].children[j].show"
-                  src="@/assets/img/arrows/arrow-close.svg"
-                  alt=""
-                />
-                <img
-                  svg-inline
-                  class="satelite-close"
-                  v-if="satelitesShow[i].children[j].show"
-                  src="@/assets/img/arrows/arrow-close.svg"
-                  alt=""
-                />
-              </div>
-              <app-checkbox
-                :mini="true"
-                :modelValue="sc.checked"
-                @change="
-                  selectSatelite({
-                    seriesInd: i,
-                    scInd: j,
-                    checked: $event,
-                    pss: $event,
-                    mss: $event,
-                  })
+        <div
+          class="accordion-item"
+          v-for="(series, i) in getSatelites"
+          :key="series.id"
+        >
+          <div class="accordion-item__header">
+            <div class="accordion-item__header-img" @click="updateShow(i)">
+              <i
+                v-if="!satelitesShow[i].show"
+                class="icon icon-ic_fluent_chevron_right_20_filled"
+              ></i>
+              <i
+                v-if="satelitesShow[i].show"
+                class="
+                  icon
+                  icon-ic_fluent_chevron_right_20_filled
+                  satelite-close
                 "
-              />
-              <span
-                class="accordion-item__header-text"
-                @click="updateShow(i, j)"
-                >{{ sc.name }}</span
-              >
+              ></i>
             </div>
+            <app-checkbox
+              :mini="true"
+              :model-value="series.checked"
+              @change="selectSeries({ seriesInd: i, val: $event })"
+            />
+            <span class="accordion-item__header-text" @click="updateShow(i)">{{
+              series.name
+            }}</span>
+          </div>
 
+          <div class="accordion-item__body" v-show="satelitesShow[i].show">
             <div
-              class="accordion-item__body"
-              v-show="satelitesShow[i].children[j].show"
+              class="accordion-item__content"
+              v-for="(sc, j) in series.satelites"
+              :key="sc.id"
             >
-              <div class="accordion-item__content">
-                <label class="accordion-item__header">
-                  <app-checkbox
-                    :mini="true"
-                    :modelValue="sc.mss"
-                    @change="
-                      selectSatelite({
-                        seriesInd: i,
-                        scInd: j,
-                        checked: $event || sc.pss,
-                        pss: sc.pss,
-                        mss: $event,
-                      })
+              <div class="accordion-item__header">
+                <div
+                  class="accordion-item__header-img"
+                  @click="updateShow(i, j)"
+                >
+                  <i
+                    v-if="!satelitesShow[i].children[j].show"
+                    class="icon icon-ic_fluent_chevron_right_20_filled"
+                  ></i>
+                  <i
+                    v-if="satelitesShow[i].children[j].show"
+                    class="
+                      icon
+                      icon-ic_fluent_chevron_right_20_filled
+                      satelite-close
                     "
-                  />
-                  <div class="accordion-item__img">
-                    <img src="@/assets/img/satelite-icons/spektr.svg" />
-                  </div>
-                  <span class="accordion-item__header-text"
-                    >Многоспектральная съемка</span
-                  >
-                </label>
+                  ></i>
+                </div>
+                <app-checkbox
+                  :mini="true"
+                  :modelValue="sc.checked"
+                  @change="
+                    selectSatelite({
+                      seriesInd: i,
+                      scInd: j,
+                      checked: $event,
+                      pss: $event,
+                      mss: $event,
+                    })
+                  "
+                />
+                <span
+                  class="accordion-item__header-text"
+                  @click="updateShow(i, j)"
+                  >{{ sc.name }}</span
+                >
+              </div>
 
-                <label class="accordion-item__header">
-                  <app-checkbox
-                    :mini="true"
-                    :modelValue="sc.pss"
-                    @change="
-                      selectSatelite({
-                        seriesInd: i,
-                        scInd: j,
-                        checked: $event || sc.mss,
-                        pss: $event,
-                        mss: sc.mss,
-                      })
-                    "
-                  />
-                  <div class="accordion-item__img">
-                    <img src="@/assets/img/satelite-icons/panhrom.svg" />
-                  </div>
-                  <span class="accordion-item__header-text"
-                    >Панхроматическая съемка</span
-                  >
-                </label>
+              <div
+                class="accordion-item__body"
+                v-show="satelitesShow[i].children[j].show"
+              >
+                <div class="accordion-item__content">
+                  <label class="accordion-item__header">
+                    <app-checkbox
+                      :mini="true"
+                      :modelValue="sc.mss"
+                      @change="
+                        selectSatelite({
+                          seriesInd: i,
+                          scInd: j,
+                          checked: $event || sc.pss,
+                          pss: sc.pss,
+                          mss: $event,
+                        })
+                      "
+                    />
+                    <div class="accordion-item__img">
+                      <img src="@/assets/img/satelite-icons/spektr.svg" />
+                    </div>
+                    <span class="accordion-item__header-text"
+                      >Многоспектральная съемка</span
+                    >
+                  </label>
+
+                  <label class="accordion-item__header">
+                    <app-checkbox
+                      :mini="true"
+                      :modelValue="sc.pss"
+                      @change="
+                        selectSatelite({
+                          seriesInd: i,
+                          scInd: j,
+                          checked: $event || sc.mss,
+                          pss: $event,
+                          mss: sc.mss,
+                        })
+                      "
+                    />
+                    <div class="accordion-item__img">
+                      <img src="@/assets/img/satelite-icons/panhrom.svg" />
+                    </div>
+                    <span class="accordion-item__header-text"
+                      >Панхроматическая съемка</span
+                    >
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </template>
-</search-base>
+  </search-base>
 </template>
 
 <script>
@@ -143,7 +142,7 @@ import SearchBase from "@/components/search/SearchBase";
 export default {
   components: {
     AppCheckbox,
-    SearchBase
+    SearchBase,
   },
   data() {
     return {
@@ -151,10 +150,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("search", ["getSatelites", "getSearchStatus", "getSelectedSatelites"]),
+    ...mapGetters("search", [
+      "getSatelites",
+      "getSearchStatus",
+      "getSelectedSatelites",
+    ]),
     invalid() {
-      return this.getSelectedSatelites.length == 0 && this.getSearchStatus == "ERROR"
-    }
+      return (
+        this.getSelectedSatelites.length == 0 && this.getSearchStatus == "ERROR"
+      );
+    },
   },
   beforeMount() {
     this.getSatelites.forEach((el) => {
@@ -200,8 +205,8 @@ export default {
 .search {
   &-satelite {
     &.invalid {
-    border: 1px solid $color-red;
-  }
+      border: 1px solid $color-red;
+    }
     margin-top: 20px;
     padding: 20px;
 
@@ -241,19 +246,16 @@ export default {
       margin-top: 6px;
       &-img {
         cursor: pointer;
-        width: 15px;
-        height: 15px;
         display: flex;
         align-items: center;
         position: absolute;
         left: 8px;
         top: 50%;
         transform: translateY(-50%);
+        color: $color-main;
+        font-size: 20px;
       }
-      svg path {
-        fill: $color-main;
-        vertical-align: middle;
-      }
+
       &-text {
         cursor: pointer;
         margin: 0 auto 0 4px;

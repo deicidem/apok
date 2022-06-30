@@ -5,7 +5,7 @@
       <router-link to="/main/search" custom v-slot="{ navigate }">
         <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
+            <i class="fa-solid fa-angles-left"></i>
           </div>
           <span class="results-back__subtitle">Назад</span>
         </div>
@@ -17,11 +17,7 @@
           :cardData="cardData"
           @cardClose="onCardClose()"
           @PolygonButtonClick="
-            onPolygonButtonClick(
-              card.ind, 
-              cardData.id, 
-              cardData.geography
-            )
+            onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
           "
           @ImageButtonClick="
             onImageButtonClick(
@@ -69,26 +65,30 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="loaded" >
+          <tbody v-if="loaded">
             <tr
               v-for="(item, i) in results"
               :key="i"
-              :class="{ selectable: selectable.value && !(item.selected.value == selectable.value && item.selected.type != selectable.type), [`selected-${item.selected.type + 1}`] : item.selected.value }"
+              :class="{
+                selectable:
+                  selectable.value &&
+                  !(
+                    item.selected.value == selectable.value &&
+                    item.selected.type != selectable.type
+                  ),
+                [`selected-${item.selected.type + 1}`]: item.selected.value,
+              }"
               @click="select(i, item.selected.value)"
             >
               <td class="results-table__buttons">
                 <div class="results-circle"></div>
                 <div class="button__wrapper results-table__button">
                   <button
-                    class="button button-svg button-white results-button"
+                    class="button button-svg results-button"
                     :class="results[i].polygonActive ? 'active' : ''"
                     @click="onPolygonButtonClick(i, item.id, item.geography)"
                   >
-                    <img
-                      svg-inline
-                      src="@/assets/img/button-svg-icons/vector-o.svg"
-                      alt="Вектор"
-                    />
+                    <i class="icon icon-ic_fluent_border_none_20_regular"></i>
                   </button>
                   <span class="tooltiptext">Границы</span>
                 </div>
@@ -105,11 +105,7 @@
                       )
                     "
                   >
-                    <img
-                      svg-inline
-                      src="@/assets/img/button-svg-icons/image.svg"
-                      alt="Изображение"
-                    />
+                    <i class="icon icon-ic_fluent_image_20_regular"></i>
                   </button>
                   <span class="tooltiptext">Изображение</span>
                 </div>
@@ -125,11 +121,7 @@
                     :class="results[i].cardActive ? 'active' : ''"
                     @click="onCardButtonClick(i)"
                   >
-                    <img
-                      svg-inline
-                      src="@/assets/img/button-svg-icons/results-info.svg"
-                      alt="Информация по объекту"
-                    />
+                    <i class="icon icon-ic_fluent_more_circle_20_regular"></i>
                   </button>
                   <span class="tooltiptext">Подробнее</span>
                 </div>
@@ -328,9 +320,8 @@ export default {
   align-items: center;
   cursor: pointer;
   &-arrow {
-    svg path {
-      fill: $color-main;
-    }
+    color: $color-main;
+    font-size: 20px;
   }
   &-subtitle {
     margin: 0 0 0 10px;
@@ -348,17 +339,9 @@ export default {
     left: 30px;
     display: flex;
     align-items: center;
+    justify-content: center;
     transform: translateY(-50%);
     cursor: pointer;
-    &__arrow {
-      height: 23px;
-      svg {
-        height: 100%;
-      }
-      svg path {
-        fill: $white;
-      }
-    }
     &__subtitle {
       margin-left: 10px;
       color: $white;
@@ -443,31 +426,21 @@ export default {
     }
   }
   &-button {
-    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 
     background: $gradient-w;
+    font-size: 24px;
     &.active {
       background: $color-main;
-      svg path {
-        fill: $white;
-      }
+      color: $white;
     }
     &:first-child {
       margin-left: 0;
     }
     &:last-child {
       margin-right: 0;
-    }
-  }
-  .icon {
-    width: 15px;
-    height: 15px;
-    &-vector-o {
-      width: 20px;
-      height: 20px;
     }
   }
 }

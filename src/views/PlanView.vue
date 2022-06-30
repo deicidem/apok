@@ -4,7 +4,7 @@
       <router-link to="/main/plan">
         <div class="back">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
+            <i class="fa-solid fa-angles-left"></i>
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -55,7 +55,7 @@
 <script>
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   methods: {
     ...mapActions("plans", ["selectPlan"]),
@@ -63,8 +63,8 @@ export default {
     onPlan() {
       this.selectPlan(this.plan.index);
       this.setDataCardState(true);
-      this.$router.push('/main/plan')
-    }
+      this.$router.push("/main/plan");
+    },
   },
   computed: {
     ...mapGetters(["scrollOps"]),
@@ -130,7 +130,6 @@ export default {
       display: flex;
       flex-direction: column;
       flex: 1 1 60%;
-
     }
     &__card {
       margin-bottom: 30px;
@@ -208,9 +207,8 @@ export default {
   align-items: center;
   cursor: pointer;
   &-arrow {
-    svg path {
-      fill: $color-main;
-    }
+    color: $color-main;
+    font-size: 20px;
   }
   &-subtitle {
     margin: 0 0 0 10px;

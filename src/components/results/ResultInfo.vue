@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-close" @click="$emit('cardClose')">
-      <img svg-inline src="@/assets/img/cross/cross.svg" alt="Закрыть" />
+      <i class="fa-solid fa-xmark"></i>
     </div>
     <div class="card-title">Информация по объекту</div>
     <div class="card-img">
@@ -84,22 +84,16 @@ export default {
 
   &-close {
     position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 25px;
-    height: 25px;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    svg path {
-      transition: all 0.1s ease-out;
-      fill: $color-main;
-    }
+    color: $color-main;
     &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
+      color: $color-main-dark;
     }
   }
   &-title {

@@ -23,9 +23,11 @@
               <plan-data-input-image
                 :title="data.title"
                 :active-item-title="planDataValueTitle(data)"
-                
                 :circleStyle="1 + i"
-                :selectable="getSelectable.value && getSelectable.planIndex == activePlanIndex"
+                :selectable="
+                  getSelectable.value &&
+                  getSelectable.planIndex == activePlanIndex
+                "
                 @select="selectDzz(i)"
                 @upload="onUploadClick(i)"
               ></plan-data-input-image>
@@ -56,7 +58,7 @@
     </div>
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
-        <img src="@/assets/img/arrows/arrow-plan.svg" alt="Закрыть" />
+        <i class="icon icon-ic_fluent_chevron_right_20_filled"></i>
       </div>
     </div>
   </div>
@@ -120,7 +122,7 @@ export default {
       "planNewTask",
       "changeText",
       "selectPlan",
-      "setDataObject"
+      "setDataObject",
     ]),
     ...mapActions(["setDataCardState"]),
 
@@ -148,16 +150,16 @@ export default {
     onPopupClose(file) {
       if (file != null) {
         this.setDataObject({
-        planIndex: this.activePlanIndex,
-        dataIndex: this.planPopup.dataIndex,
-        dzzIndex: null
-      })
-      this.resetResultSelection({planIndex: this.activePlanIndex});
-      this.setDataFile({
-        planIndex: this.activePlanIndex,
-        dataIndex: this.planPopup.dataIndex,
-        file,
-      });
+          planIndex: this.activePlanIndex,
+          dataIndex: this.planPopup.dataIndex,
+          dzzIndex: null,
+        });
+        this.resetResultSelection({ planIndex: this.activePlanIndex });
+        this.setDataFile({
+          planIndex: this.activePlanIndex,
+          dataIndex: this.planPopup.dataIndex,
+          file,
+        });
       }
       this.planPopup.visible = false;
     },
@@ -227,10 +229,10 @@ export default {
     border-bottom-right-radius: 20px;
     cursor: pointer;
     .data-close {
+      display: flex;
+      font-size: 30px;
+      color: $white;
       transform: rotate(180deg);
-    }
-    * {
-      width: 30px;
     }
   }
   &-title {
@@ -240,11 +242,10 @@ export default {
     text-align: center;
     margin-bottom: 16px;
   }
-  
+
   &-start {
     width: 200px;
     margin: 10px 16px 0 auto;
   }
-  
 }
 </style>

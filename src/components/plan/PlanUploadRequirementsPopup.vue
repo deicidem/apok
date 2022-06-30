@@ -4,7 +4,7 @@
       <div class="popup-card__header">
         <div class="back" @click="$emit('close', file)">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
+            <i class="fa-solid fa-angles-left"></i>
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -83,9 +83,8 @@ export default {
   align-items: center;
   cursor: pointer;
   &-arrow {
-    svg path {
-      fill: $color-main;
-    }
+    color: $color-main;
+    font-size: 20px;
   }
   &-subtitle {
     margin: 0 0 0 10px;

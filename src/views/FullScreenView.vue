@@ -4,7 +4,7 @@
       <router-link to="/main/tasks">
         <div class="back">
           <div class="back-arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
+            <i class="fa-solid fa-angles-left"></i>
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -14,14 +14,23 @@
         {{ $route.query.title }}
       </h2>
 
-      <a :href="$route.query.downloadPath" target="_blank" download class="button button-g fullscreen-button">
+      <a
+        :href="$route.query.downloadPath"
+        target="_blank"
+        download
+        class="button button-g fullscreen-button"
+      >
         Скачать
       </a>
     </div>
     <div class="fullscreen-content">
       <vuescroll :ops="scrollOps">
         <div class="image-wrapper">
-          <img :src="$route.query.path" :alt="$route.query.title" class="image">
+          <img
+            :src="$route.query.path"
+            :alt="$route.query.title"
+            class="image"
+          />
         </div>
       </vuescroll>
     </div>
@@ -85,7 +94,7 @@ export default {
     font-size: 1.125rem;
   }
   .image {
-    padding: 20px ;
+    padding: 20px;
     width: auto;
     max-width: 100%;
     background: $white;
@@ -105,9 +114,8 @@ export default {
     align-items: center;
     cursor: pointer;
     &-arrow {
-      svg path {
-        fill: $color-main;
-      }
+      color: $color-main;
+      font-size: 20px;
     }
     &-subtitle {
       margin: 0 0 0 10px;

@@ -35,7 +35,7 @@
               class="button button-svg header-menu__button"
               @click="onLogout"
             >
-              <i class="icon icon-ic_fluent_arrow_exit_20_regular"></i>
+              <i class="icon icon-ic_fluent_sign_out_20_regular"></i>
             </button>
             <span class="tooltiptext">Выйти</span>
           </div>

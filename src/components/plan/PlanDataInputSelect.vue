@@ -4,7 +4,7 @@
     <div class="c-content">
       <div class="c-text c-selected" @click="showSelect = !showSelect">
       <div class="c-select__icon">
-        <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
+        <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
       </div>
       <template v-if="selectedOption != null">
         {{ selectedOption.title }}
@@ -93,10 +93,7 @@ export default {
         right: 6px;
         top: 50%;
         transform: translate(0, -50%);
-        svg path {
-          fill: $color-main;
-          vertical-align: middle;
-        }
+        color: $color-main;
       }
     }
     &-selected {

@@ -1,6 +1,6 @@
 <template>
   <div class="plan">
-    <h2 class="sidebar-title">Запланировать задачу</h2>
+    <h2 class="sidebar-title">Доступные задачи</h2>
     <vuescroll :ops="scrollOps">
       <div class="plan-wrapper">
         <app-plan-card

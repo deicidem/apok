@@ -6,7 +6,7 @@
         <div class="search-result" @click="navigate">
           <span class="search-result__subtitle">Результат</span>
           <div class="search-result__arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" alt="Назад" />
+            <i class="fa-solid fa-angles-right"></i>
           </div>
         </div>
       </router-link>
@@ -72,24 +72,17 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
   &-result {
     position: absolute;
     top: 50%;
     right: 30px;
     display: flex;
     align-items: center;
+    justify-content: center;
     transform: translateY(-50%);
     cursor: pointer;
-    &__arrow {
-      height: 23px;
-      transform: rotate(180deg);
-      svg {
-        height: 100%;
-      }
-      svg path {
-        fill: #fff;
-      }
-    }
+    font-size: 18px;
     &__subtitle {
       margin-right: 10px;
       color: #fff;

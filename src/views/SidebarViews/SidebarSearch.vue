@@ -1,7 +1,7 @@
 <template>
-  <div class="search">
-    <div class="sidebar-title">
-      Поиск снимков
+<sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Поиск снимков</h2>
       <router-link to="/main/results" custom v-slot="{ navigate }">
         <div class="search-result" @click="navigate">
           <span class="search-result__subtitle">Результат</span>
@@ -10,8 +10,8 @@
           </div>
         </div>
       </router-link>
-    </div>
-    <vuescroll :ops="scrollOps">
+    </template>
+    <template v-slot:content>
       <div class="search-wrapper">
         <div class="search-content">
           <search-area></search-area>
@@ -20,49 +20,52 @@
           <search-satelite></search-satelite>
         </div>
         <div class="search-buttons">
-          <button class="button button-r">Очистить</button>
+          <button class="button button-r" @click="clearData">Очистить</button>
           <button class="button button-g" @click="onSearch">
             Запросить данные
           </button>
         </div>
       </div>
-    </vuescroll>
-  </div>
+    </template>
+  </sidebar-base>
+
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 
-import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
-
 import "vue-slider-component/theme/default.css";
-import SearchDate from "@/components/search/SearchDate";
-import SearchSatelite from "@/components/search/SearchSatelite";
-import SearchCloud from "@/components/search/SearchCloud";
-import SearchArea from "@/components/search/SearchArea";
-
+import SearchDate from "@/components/search/SearchDate.vue";
+import SearchSatelite from "@/components/search/SearchSatelite.vue";
+import SearchCloud from "@/components/search/SearchCloud.vue";
+import SearchArea from "@/components/search/SearchArea.vue";
+import SidebarBase from "@/components/SidebarBase.vue";
 export default {
   components: {
-    vuescroll,
     SearchDate,
     SearchSatelite,
     SearchCloud,
     SearchArea,
+    SidebarBase,
   },
   methods: {
-    ...mapActions("search", ["search"]),
+    ...mapActions("search", ["search", "clearData"]),
     async onSearch() {
       await this.search();
       this.$router.push("results");
     },
   },
-
+  mounted() {
+    this.loaded = true;
+  },
   computed: {
     ...mapGetters(["scrollOps"]),
   },
   data() {
-    return {};
+    return {
+      loaded: false
+    };
   },
 };
 </script>

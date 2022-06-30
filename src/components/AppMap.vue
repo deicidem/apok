@@ -6,6 +6,7 @@
     @update:bounds="updateBounds($event)"
     @click="onClick($event)"
     @ready="$emit('ready', $refs.map)"
+    @mousemove="onMouseMove($event)"
     :options="{ zoomControl: false }"
     style="height: 100%"
     :zoom="zoom"
@@ -14,10 +15,20 @@
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-control-zoom position="bottomleft"></l-control-zoom>
 
+    <l-control
+        :position="'bottomright'"
+        class="cursor-position"
+        v-if="cursorPosition != null"
+      >
+        <span class="lat">Широта: {{cursorPosition.lat}}</span>
+        <span class="lng">Долгота: {{cursorPosition.lng}}</span>
+      </l-control>
+
     <template v-if="polygon.active">
       <l-marker
         data-number="id"
         :draggable="drawable"
+        @dragstart="onDrag"
         @dragend="handleMarkerDragEnd($event, id)"
         v-for="(marker, id) in polygon.geometry"
         :key="id"
@@ -39,8 +50,8 @@
     ></l-polygon>
 
     <l-geo-json
+      v-if="filePolygon.active && filePolygon.geometry != null"
       :options="{ fill: false }"
-      v-if="filePolygon.geometry != null"
       :geojson="filePolygon.geometry"
     ></l-geo-json>
 
@@ -98,6 +109,7 @@ import {
   LGeoJson,
   LCircle,
   LControlZoom,
+  LControl
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -127,6 +139,7 @@ export default {
     LGeoJson,
     LCircle,
     LControlZoom,
+    LControl
   },
   data() {
     return {
@@ -137,6 +150,8 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      cursorPosition: null,
+      cursorUpdate: null,
     };
   },
   computed: {
@@ -167,10 +182,26 @@ export default {
       "setBounds",
       "setNeedUpdateBounds",
     ]),
-
+    onDrag() {
+      console.log(1);
+    },
     updateCenter(center) {
       this.$refs.map.mapObject.invalidateSize();
       this.setCenter({ coordinate: center });
+    },
+
+    onMouseMove(e) {
+      let lat = e.latlng.lat.toFixed(2);
+      let lng = e.latlng.lng.toFixed(2);
+      if (this.cursorUpdate == null)  {
+        this.cursorPosition = {lat, lng}
+        this.cursorUpdate = Date.now();
+      } else {
+        if ((Date.now() - this.cursorUpdate) > 100) {
+          this.cursorPosition = {lat, lng};
+          this.cursorUpdate = Date.now();
+        }
+      }
     },
 
     updateBounds(bounds) {
@@ -189,6 +220,7 @@ export default {
 
     // Изменение размеров полигона
     handleMarkerDragEnd($event, id) {
+      console.log(1);
       if (this.drawable) {
         this.changeCoordinate({ id, latlng: $event.target._latlng });
       }
@@ -252,5 +284,19 @@ export default {
   font-weight: 700;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.cursor-position {
+  background: #fff;
+  box-shadow: $shadow-small;
+  border-radius: 7px;
+  padding: 10px;
+  display: flex;
+  .lat, .lng {
+    font-family: monospace;
+    display: inline-block;
+  }
+  .lat {
+    margin-right: 10px;
+  }
 }
 </style>

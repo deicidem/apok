@@ -1,9 +1,14 @@
 <template>
-  <div class="files">
-    <h2 class="sidebar-title">Мои файлы</h2>
-    <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
-    <vuescroll :ops="scrollOps">
-      <div class="files__wrapper">
+<sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Мои файлы</h2>
+    </template>
+    <template v-slot:popups>
+            <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
+
+    </template>
+    <template v-slot:content>
+       <div class="files__wrapper">
         <app-table>
           <thead>
             <tr>
@@ -59,7 +64,7 @@
                 <div class="button__wrapper">
                   <button
                     class="button button-svg button-svg-r"
-                    :disabled="!item.deletable"
+                    :disabled="!item.deletable || pending"
                     @click="onDelete(i)"
                   >
                     <i class="icon icon-ic_fluent_delete_20_regular"></i>
@@ -75,38 +80,35 @@
         <div class="files-buttons">
           <button
             class="button button-r"
-            :disabled="noItemsSelected || notDeletableItemSelected"
+            :disabled="noItemsSelected || notDeletableItemSelected || pending"
             @click="onDeleteBanch"
           >
             Удалить выбранное
           </button>
-          <button class="button button-g" :disabled="noItemsSelected">
+          <button class="button button-g" :disabled="noItemsSelected || pending">
             Добавить в избранное
           </button>
         </div>
       </div>
-      <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
-    </vuescroll>
-  </div>
+    </template>
+  </sidebar-base>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
 // import VsPagination from "@vuesimple/vs-pagination";
 import AppTable from "@/components/table/AppTable";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
-
+import SidebarBase from "@/components/SidebarBase.vue";
 export default {
   name: "SidebarFiles",
   components: {
     AppCheckbox,
     AppTable,
-    vuescroll,
     AppDeleteConfirmation,
     // VsPagination,
+    SidebarBase,
   },
   data() {
     return {
@@ -132,10 +134,11 @@ export default {
           active: false,
         },
       ],
+      pending: false,
+      loaded: false
     };
   },
   computed: {
-    ...mapGetters(["scrollOps"]),
     ...mapGetters("files", {
       files: "getFiles",
       sortDir: "getSortDir",
@@ -178,6 +181,7 @@ export default {
   },
   async mounted() {
     await this.loadFiles();
+    this.loaded = true;
   },
   methods: {
     ...mapActions("files", [
@@ -195,11 +199,10 @@ export default {
           "Удаление этого файла приведет к потере всех связанных с ним данных.",
       });
       if (ok) {
-        console.log("You have successfully delete this page.");
-        this.deleteFile(i);
-      } else {
-        console.log("You chose not to delete this page. Doing nothing now.");
-      }
+        this.pending = true;
+        await this.deleteFile(i);
+        this.pending = false;
+      } 
     },
 
     async onDeleteBanch() {
@@ -209,11 +212,10 @@ export default {
           "Удаление этих файлов приведет к потере всех связанных с ними данных.",
       });
       if (ok) {
-        console.log("You have successfully delete this page.");
-        this.deleteFiles();
-      } else {
-        console.log("You chose not to delete this page. Doing nothing now.");
-      }
+        this.pending = true;
+        await this.deleteFiles();
+        this.pending = false;
+      } 
     },
 
     selectAll(val) {

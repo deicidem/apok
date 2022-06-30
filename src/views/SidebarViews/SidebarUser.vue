@@ -1,38 +1,39 @@
 <template>
-  <div class="person">
-    <h2 class="sidebar-title">Личный кабинет</h2>
-    <vuescroll :ops="scrollOps">
-      <div class="person-wrapper">
+  <sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Личный кабинет</h2>
+    </template>
+    <template v-slot:content>
+     <div class="person-wrapper">
         <div class="person-content">
           <user-information></user-information>
         </div>
       </div>
-    </vuescroll>
-  </div>
+    </template>
+  </sidebar-base>
 </template>
 
 <script>
 import UserInformation from "@/components/user/UserInformation.vue";
-import vuescroll from "vuescroll";
+import SidebarBase from "@/components/SidebarBase.vue";
 import "vuescroll/dist/vuescroll.css";
-import { mapGetters } from "vuex";
 export default {
   components: {
-    vuescroll,
     UserInformation,
+    SidebarBase,
   },
-  computed: {
-    ...mapGetters(["scrollOps"]),
-  },
+  data: ()=>({
+    loaded: false
+  }),
+  mounted() {
+    this.loaded = true;
+  }
 };
 </script>
 
 
 <style scoped lang="scss">
 .person {
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
   &-wrapper {
     padding: 30px;
   }

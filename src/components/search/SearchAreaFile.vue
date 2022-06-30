@@ -7,12 +7,13 @@
         ref="file"
         type="file"
         name="file"
+        accept=".json,.geojson,.zip"
       />
       <span class="button button-white-gr c-button">Загрузить файл</span>
       <span class="c-name">{{ file == null ? "не выбран" : file.name }}</span>
     </label>
     <div class="c-buttons">
-      <button class="button button-g c-button" @click="$emit('submit')">
+      <button class="button button-g c-button" :disabled="file == null" @click="$emit('submit', file)">
         Показать на карте
       </button>
       <button @click="$emit('remove')" class="button button-r c-button">

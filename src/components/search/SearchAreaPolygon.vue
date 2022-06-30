@@ -16,7 +16,7 @@
             <td>{{ coord.lat }}</td>
             <td>{{ coord.lng }}</td>
             <td class="col delete" @click="$emit('delete', i)">
-              <button class="button button-svg-r">
+              <button class="button button-svg button-svg-r">
                 <img
                   svg-inline
                   src="@/assets/img/button-svg-icons/trash.svg"
@@ -71,7 +71,7 @@
       <button
         class="button c-button"
         :class="drawable ? 'button-white-gr' : 'button-g'"
-        @click="$emit('set-drawable', !drawable)"
+        @click="onDraw"
       >
         {{ drawable ? "Сохранить полигон" : "Использовать карту" }}
       </button>
@@ -130,6 +130,10 @@ export default {
     },
   }),
   methods: {
+    onDraw() {
+      this.$emit('set-drawable', !this.drawable);
+      this.drawable = !this.drawable;
+    },
     parseCoords(coord) {
       let str = coord;
       let deg = "";

@@ -11,7 +11,7 @@
 
     <div class="sidebar-collapsed">
       <div @click="toggleSidebar()" class="sidebar-collapsed__item">
-        <div class="sidebar-collapsed__img">
+        <div class="sidebar-collapsed__link">
           <i
             v-if="active"
             class="icon icon-ic_fluent_arrow_minimize_20_regular"
@@ -20,99 +20,26 @@
         </div>
       </div>
 
-      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/tasks" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <i
-              class="icon icon-ic_fluent_clipboard_bullet_list_ltr_20_regular"
-            ></i>
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Мои задачи</div>
-      </div>
-
-      <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/plan" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <i class="icon icon-ic_fluent_apps_list_detail_20_regular"></i>
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">
-          Запланированные задачи
-        </div>
-      </div>
-
-      <div class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/search" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <i class="icon icon-ic_fluent_search_20_regular"></i>
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Поиск снимков</div>
-      </div>
-
       <div
-        v-show="isAuth"
-        class="sidebar-collapsed__item notification-wrapper"
+        v-for="(route, i) in routes"
+        :key="i"
+        v-show="!route.needAuth || isAuth"
+        class="sidebar-collapsed__item"
         @click="open"
       >
-        <router-link to="/main/alerts" custom v-slot="{ navigate, isActive }">
+        <router-link :to="route.path" custom v-slot="{ navigate, isActive }">
           <div
             @click="navigate"
             :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
+            class="sidebar-collapsed__link"
           >
-            <i class="icon icon-ic_fluent_alert_20_regular"></i>
-            <div class="notification">
+            <i class="icon" :class="route.icon"></i>
+            <div class="notification" v-if="route.name == 'Мои уведомления'">
               <div class="notification-number">{{ alerts.length }}</div>
             </div>
           </div>
         </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Мои уведомления</div>
-      </div>
-
-      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/files" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <i class="icon icon-ic_fluent_folder_20_regular"></i>
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Мои файлы</div>
-      </div>
-
-      <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
-        <router-link to="/main/user" custom v-slot="{ navigate, isActive }">
-          <div
-            @click="navigate"
-            :class="{ active: isActive }"
-            class="sidebar-collapsed__img"
-          >
-            <i class="icon icon-ic_fluent_person_20_regular"></i>
-          </div>
-        </router-link>
-
-        <div class="sidebar-collapsed__item__hidden">Личный кабинет</div>
+        <div class="sidebar-collapsed__link__name">{{ route.name }}</div>
       </div>
     </div>
   </div>
@@ -129,6 +56,44 @@ export default {
   data() {
     return {
       cardDataClass: "",
+      routes: [
+        {
+          name: "Мои задачи",
+          needAuth: true,
+          path: "/main/tasks",
+          icon: "icon-ic_fluent_clipboard_bullet_list_ltr_20_regular",
+        },
+        {
+          name: "Доступные задачи",
+          needAuth: false,
+          path: "/main/plan",
+          icon: "icon-ic_fluent_apps_list_detail_20_regular",
+        },
+        {
+          name: "Поиск снимков",
+          needAuth: false,
+          path: "/main/search",
+          icon: "icon-ic_fluent_search_20_regular",
+        },
+        {
+          name: "Мои уведомления",
+          needAuth: true,
+          path: "/main/alerts",
+          icon: "icon-ic_fluent_alert_20_regular",
+        },
+        {
+          name: "Мои файлы",
+          needAuth: true,
+          path: "/main/files",
+          icon: "icon-ic_fluent_folder_20_regular",
+        },
+        {
+          name: "Личный кабинет",
+          needAuth: true,
+          path: "/main/user",
+          icon: "icon-ic_fluent_person_20_regular",
+        },
+      ],
     };
   },
   computed: {
@@ -258,7 +223,6 @@ export default {
     display: flex;
     justify-content: center;
     flex-grow: 1;
-
     border-top: 1px solid transparent;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
@@ -278,13 +242,6 @@ export default {
       color: #384342;
       transition: all 0.4s ease-out;
     }
-  }
-  a {
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: color 0.2s ease-out;
   }
   &-collapsed {
     position: absolute;
@@ -306,8 +263,16 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #fff;
+    }
+    &__link {
+      width: 50px;
+      height: 50px;
+      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.2s ease-out;
-      padding: 10px 0;
       color: $color-main-dark;
       cursor: pointer;
       &.active,
@@ -315,15 +280,15 @@ export default {
       &:focus-visible {
         color: $color-main-light;
       }
-      &:hover + &__hidden {
+      &:hover + &__name {
         visibility: inherit;
-        z-index: 1;
+        z-index: -1;
         opacity: 1;
       }
-      &__hidden {
+      &__name {
         position: absolute;
         z-index: 2;
-        left: 33px;
+        left: 100%;
 
         display: inline-block;
         white-space: nowrap;
@@ -333,23 +298,17 @@ export default {
         font-size: 12px;
         line-height: 20px;
 
-        color: $color-main;
         visibility: hidden;
         opacity: 0;
+        border-left: 1px solid rgba(#000, 0.1);
 
-        color: #618580;
+        color: $color-main;
         background: $white;
         box-shadow: $shadow-small;
-        border-radius: 10px;
-
-        transition: all 0.3s ease-out;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        transition: all 0.2s ease-out;
       }
-    }
-    &__img {
-      font-size: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
   }
   &-open {

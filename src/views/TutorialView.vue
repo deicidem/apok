@@ -1,19 +1,21 @@
 <template>
-  <div class="tutorial"></div>
+  <page-base>
+    <template v-slot:header>
+      <h1 class="page-title">Руководства пользователя</h1>
+    </template>
+  </page-base>
 </template>
 
 <script>
+import PageBase from "@/components/PageBase";
+export default {
+  components: {
+    PageBase
+  }
+}
 </script>
 
 
 <style scoped lang="scss">
-.tutorial {
-  height: 100%;
-  padding: 40px;
 
-  box-shadow: $shadow-big;
-  border-radius: 25px;
-  overflow: hidden;
-  background: $gradient-w;
-}
 </style>

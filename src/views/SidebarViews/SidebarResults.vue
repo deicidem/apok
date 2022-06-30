@@ -1,7 +1,7 @@
 <template>
-  <div class="results">
-    <div class="sidebar-title">
-      Результаты поиска: {{ results.length }} найдено
+<sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Результаты поиска: {{ results.length }} найдено</h2>
       <router-link to="/main/search" custom v-slot="{ navigate }">
         <div class="results-back" @click="navigate">
           <div class="results-back__arrow">
@@ -10,8 +10,9 @@
           <span class="results-back__subtitle">Назад</span>
         </div>
       </router-link>
-    </div>
-    <div class="results-content">
+    </template>
+    <template v-slot:content>
+      <div class="results-content">
       <portal to="popup-card">
         <result-info
           :cardData="cardData"
@@ -139,14 +140,16 @@
         </app-table>
       </div>
     </div>
-    <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
-  </div>
+    </template>
+  </sidebar-base>
+
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import ResultInfo from "@/components/results/ResultInfo.vue";
+import SidebarBase from "@/components/SidebarBase.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
@@ -154,6 +157,7 @@ export default {
     AppTable,
     ResultInfo,
     // VsPagination,
+    SidebarBase,
   },
   data() {
     return {
@@ -197,6 +201,9 @@ export default {
       },
     };
   },
+  mounted() {
+    this.loaded = true;
+  },
   computed: {
     ...mapGetters("results", {
       results: "getResults",
@@ -223,7 +230,6 @@ export default {
       "selectResult",
       "sortResultsBy",
     ]),
-
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;

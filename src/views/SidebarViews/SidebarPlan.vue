@@ -1,7 +1,9 @@
 <template>
-  <div class="plan">
-    <h2 class="sidebar-title">Запланировать задачу</h2>
-    <vuescroll :ops="scrollOps">
+  <sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Доступные задачи</h2>
+    </template>
+    <template v-slot:content>
       <div class="plan-wrapper">
         <app-plan-card
           class="plan-card"
@@ -15,29 +17,31 @@
           @select="onPlan(i)"
         ></app-plan-card>
       </div>
-      <!-- <vs-pagination :total-pages="5" class="plan-wrapper"></vs-pagination> -->
-    </vuescroll>
-  </div>
+    </template>
+  </sidebar-base>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
 import { mapGetters, mapActions } from "vuex";
 import AppPlanCard from "@/components/plan/PlanCard.vue";
+import SidebarBase from "@/components/SidebarBase.vue";
 // import AppPlanPopup from "@/components/AppPlanPopup.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 export default {
   components: {
-    vuescroll,
     AppPlanCard,
     // AppPlanPopup,
     // VsPagination,
+    SidebarBase,
   },
   data() {
     return {
       planPopup: false,
+      loaded: false,
     };
+  },
+  mounted() {
+    this.loaded = true;
   },
   methods: {
     ...mapActions("plans", ["selectPlan"]),
@@ -45,10 +49,9 @@ export default {
     onPlan(i) {
       this.selectPlan(i);
       this.setDataCardState(true);
-    }
+    },
   },
   computed: {
-    ...mapGetters(["scrollOps"]),
     ...mapGetters("users", ["isAuth"]),
     ...mapGetters("plans", {
       plans: "getPlans",

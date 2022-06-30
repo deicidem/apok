@@ -1,8 +1,13 @@
 <template>
-  <div class="tasks">
-    <h2 class="sidebar-title">Мои задачи</h2>
-    <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
-    <vuescroll :ops="scrollOps">
+<sidebar-base :loaded="loaded">
+    <template v-slot:header>
+      <h2 class="c-title">Мои задачи</h2>
+    </template>
+    <template v-slot:popups>
+            <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
+
+    </template>
+    <template v-slot:content>
       <div class="tasks__wrapper">
         <app-table v-if="tasks != null">
           <thead>
@@ -69,7 +74,7 @@
                     <button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
-                      class="button  button-svg"
+                      class="button button-svg"
                     >
                       <i class="icon icon-ic_fluent_open_20_regular"></i>
                     </button>
@@ -78,7 +83,7 @@
                   <div class="button__wrapper">
                     <button
                       class="button button-svg button-svg-r"
-                      :disabled="!item.deletable"
+                      :disabled="!item.deletable || pending"
                       @click="onDelete(i)"
                     >
                       <i class="icon icon-ic_fluent_delete_20_regular"></i>
@@ -111,41 +116,39 @@
         <div class="tasks-buttons">
           <button
             class="button button-r"
-            :disabled="noItemsSelected || notDeletableItemSelected"
+            :disabled="noItemsSelected || notDeletableItemSelected || pending"
             @click="onDeleteBanch"
           >
             Удалить выбранное
           </button>
-          <button class="button button-g" :disabled="noItemsSelected">
+          <button
+            class="button button-g"
+            :disabled="noItemsSelected || pending"
+          >
             Добавить в избранное
           </button>
         </div>
       </div>
-
-      <!-- <vs-pagination :total-pages="5"></vs-pagination> -->
-    </vuescroll>
-  </div>
+    </template>
+  </sidebar-base>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
-// import VsPagination from "@vuesimple/vs-pagination";
 import AppTable from "@/components/table/AppTable";
 import TaskResult from "@/components/tasks/TaskResult";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
-
+import SidebarBase from "@/components/SidebarBase.vue";
 export default {
   name: "SidebarTasks",
   components: {
     AppCheckbox,
     AppTable,
-    vuescroll,
     AppDeleteConfirmation,
     // VsPagination,
     TaskResult,
+    SidebarBase,
   },
   data() {
     return {
@@ -173,10 +176,11 @@ export default {
       ],
       reportType: false,
       pictureType: false,
+      pending: false,
+      loaded: false
     };
   },
   computed: {
-    ...mapGetters(["scrollOps"]),
     ...mapGetters("tasks", {
       tasks: "getTasks",
       sortDir: "getSortDir",
@@ -228,7 +232,6 @@ export default {
       "deleteTask",
     ]),
     selectAll(val) {
-      console.log(1);
       for (let i = 0; i < this.tasks.length; i++) {
         this.selectTask({ index: i, value: val });
       }
@@ -251,10 +254,9 @@ export default {
           "Удаление этой задачи приведет к потере всех связанных с ней данных.",
       });
       if (ok) {
-        console.log("You have successfully delete this page.");
-        this.deleteTask(i);
-      } else {
-        console.log("You chose not to delete this page. Doing nothing now.");
+        this.pending = true;
+        await this.deleteTask(i);
+        this.pending = false;
       }
     },
     async onDeleteBanch() {
@@ -264,10 +266,9 @@ export default {
           "Удаление этих задач приведет к потере всех связанных с ними данных.",
       });
       if (ok) {
-        console.log("You have successfully delete this page.");
-        this.deleteTasks();
-      } else {
-        console.log("You chose not to delete this page. Doing nothing now.");
+        this.pending = true;
+        await this.deleteTasks();
+        this.pending = false;
       }
     },
   },
@@ -277,11 +278,13 @@ export default {
     } else {
       await this.reload();
     }
+    this.loaded = true;
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
 .tasks {
   display: flex;
   flex-direction: column;

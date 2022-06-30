@@ -4,8 +4,8 @@ export default {
   namespaced: true,
   state: {
     timeInterval: {
-      from: '',
-      to: '',
+      from: null,
+      to: null,
       months: []
     },
     cloudiness: {
@@ -14,28 +14,32 @@ export default {
     },
     satelites: null,
     satelitesSelected: [],
+    searchStatus: null
   },
   getters: {
     getTimeInterval(state) {
       return state.timeInterval;
     },
-    getsatelites(state) {
+    getSatelites(state) {
       return state.satelites;
     },
-    getSelectedsatelites(state) {
-      let res = state.satelites;
-      // state.satelites.forEach(el => {
-      //   el.models.forEach(m => {
-      //     if (m.checked) {
-      //       res.push(m.id)
-      //     }
-      //   });
-      // });
+    getSelectedSatelites(state) {
+      let res = [];
+      state.satelites.forEach(el => {
+        el.satelites.forEach(m => {
+          if (m.checked) {
+            res.push(m.id)
+          }
+        });
+      });
       return res;
     },
     getCloudiness(state) {
       return [state.cloudiness.from, state.cloudiness.to];
     },
+    getSearchStatus(state) {
+      return state.searchStatus;
+    }
     // isSelected(state) {
     //   return ({seriesInd, scInd}) => {
     //     return state.satelites[seriesInd].models[scInd].checked;
@@ -51,10 +55,12 @@ export default {
       state.cloudiness.to = to;
     },
     setTimeInterval(state, data) {
-
       state.timeInterval = data;
     },
-    setsatelites(state, newsatelites) {
+    setSearchStatus(state, data) {
+      state.searchStatus = data;
+    },
+    setSatelites(state, newsatelites) {
       state.satelites = newsatelites;
     },
     selectSeries(state, {
@@ -68,7 +74,7 @@ export default {
         m.mss = val;
       });
     },
-    selectsatelite(state, {
+    selectSatelite(state, {
       seriesInd,
       scInd,
       checked,
@@ -85,14 +91,17 @@ export default {
     setCloudiness(store, data) {
       store.commit('setCloudiness', data);
     },
+    setSearchStatus(store, data) {
+      store.commit('setSearchStatus', data);
+    },
     setTimeInterval(store, data) {
       store.commit('setTimeInterval', data);
     },
-    setsatelites(store, newsatelites) {
-      store.commit('setsatelites', newsatelites);
+    setSatelites(store, newsatelites) {
+      store.commit('setSatelites', newsatelites);
     },
-    selectsatelite(store, data) {
-      store.commit('selectsatelite', data);
+    selectSatelite(store, data) {
+      store.commit('selectSatelite', data);
     },
     selectSeries(store, data) {
       store.commit('selectSeries', data);
@@ -105,49 +114,90 @@ export default {
         endDate: new Date("2022-08-30"),
         startCloudiness: 0,
         endCloudiness: 100,
-        months: [{cnt:1},{cnt:2},{cnt:3},{cnt:4}, {cnt:5}, {cnt:6}, {cnt:7}, {cnt:8}, {cnt:9}, {cnt:10}, {cnt:11}, {cnt:12}],
+        months: [{
+          cnt: 1
+        }, {
+          cnt: 2
+        }, {
+          cnt: 3
+        }, {
+          cnt: 4
+        }, {
+          cnt: 5
+        }, {
+          cnt: 6
+        }, {
+          cnt: 7
+        }, {
+          cnt: 8
+        }, {
+          cnt: 9
+        }, {
+          cnt: 10
+        }, {
+          cnt: 11
+        }, {
+          cnt: 12
+        }],
         satelites: [1, 2, 3, 4, 5, 6],
         polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[163.300781,85.051129],[-4.921875,85.051129],[-4.921875,-13.410994],[163.300781,-13.410994],[163.300781,85.051129]]]}}'
       }
       let results = await dzzApi.all(params);
 
-      dispatch('results/setResults',results ,  {root : true});
+      dispatch('results/setResults', results, {
+        root: true
+      });
     },
-    async search({dispatch, getters, rootGetters}) {
+    async search({
+      dispatch,
+      getters,
+      rootGetters
+    }) {
       let polygon = rootGetters['map/getActivePolygonJson'];
-      console.log(polygon);
-      
-      let params = {
-        startDate: getters.getTimeInterval.from,
-        endDate: getters.getTimeInterval.to,
-        startCloudiness: getters.getCloudiness[0],
-        endCloudiness: getters.getCloudiness[1],
-        months: getters.getTimeInterval.months,
-        satelites: getters.getSelectedsatelites,
-        polygon: polygon
+      let timeInterval = getters.getTimeInterval;
+      let cloudiness = getters.getCloudiness;
+      let satelites = getters.getSelectedSatelites;
+      if (
+        timeInterval.from == null ||
+        timeInterval.to == null ||
+        timeInterval.months.length == 0 ||
+        polygon == null ||
+        cloudiness[0] == null ||
+        cloudiness[1] == null ||
+        satelites.length == 0
+      ) {
+        dispatch('setSearchStatus', "ERROR");
+        return;
       }
 
-
+      let params = {
+        startDate: timeInterval.from,
+        endDate: timeInterval.to,
+        startCloudiness: cloudiness[0],
+        endCloudiness: cloudiness[1],
+        months: timeInterval.months,
+        satelites,
+        polygon
+      }
 
       let results = await dzzApi.all(params);
-
-
-      dispatch('results/setResults',results ,  {root : true});
+      dispatch('results/setResults', results, {
+        root: true
+      });
     },
-    async loadSatelites({dispatch}) {
+    async loadSatelites({
+      dispatch
+    }) {
       let res = await satelitesApi.all();
       let satelites = res.data.satelites;
-      // res.data.satelites.forEach(s => {
-      //   console.log(s);
-      //   if (Object.prototype.hasOwnProperty.call(satelites , s.type)) {
-      //     satelites[s.type].push(s);
-      //   } else {
-      //     satelites[s.type] = [s];
-      //   }
-      // });
-      // console.log(satelites);
+      satelites.forEach(el => {
+        el.checked = false;
+        el.satelites.forEach(s => {
+          s.checked = false;
+        })
+      })
 
-      dispatch('setsatelites', satelites);
+      dispatch('setSatelites', satelites);
     }
   }
 }

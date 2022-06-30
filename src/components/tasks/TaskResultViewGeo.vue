@@ -29,7 +29,7 @@
 
 <script>
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
-import TaskResultView from "@/components/tasks/TaskResultView.vue";
+import TaskResultView from "@/components/tasks/TaskResultViewBase.vue";
 export default {
   props: ["path", "title", "downloadPath"],
   components: {

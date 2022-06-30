@@ -230,9 +230,10 @@ export default {
   watch: {
     needUpdateBounds(b, a) {
       if (b) {
-        console.log(this.$refs.map.mapObject);
+        console.log();
         this.$refs.map.mapObject.flyToBounds(this.bounds, {
-          duration: 1.5
+          duration: 1.5,
+          maxZoom: this.$refs.map.mapObject.getBoundsZoom(this.bounds) - 1
         });
         this.setNeedUpdateBounds({value: false})
       }

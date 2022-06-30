@@ -34,6 +34,7 @@
               <plan-data-input-vector
                 :title="data.title"
                 :area-selected="getActivePolygonJson != null"
+                @center="activePolygonFitBounds"
               ></plan-data-input-vector>
             </template>
             <template v-else>
@@ -112,6 +113,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("map", ["activePolygonFitBounds"]),
     ...mapActions("results", ["setSelectable", "resetResultSelection"]),
     ...mapActions("plans", [
       "setDataFile",

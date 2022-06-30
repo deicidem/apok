@@ -142,13 +142,10 @@ export default {
       font-size: 1.25rem;
       color: $black;
     }
-    &__buttons {
-      // display: flex;
-      // align-items: center;
-    }
     &__button {
       font-size: 26px;
-
+      height: 40px;
+      width: 40px;
       &-wrapper {
         height: 40px;
         width: 40px;
@@ -156,13 +153,13 @@ export default {
         position: relative;
       }
       // На IE 11 не работает
-      @supports (background-clip: text) {
-        i {
-          background: $gradient;
-          background-clip: text;
-          color: rgba(0, 0, 0, 0);
-        }
-      }
+      // @supports (background-clip: text) {
+      //   i {
+      //     background: $gradient;
+      //     background-clip: text;
+      //     color: rgba(0, 0, 0, 0);
+      //   }
+      // }
     }
   }
 }

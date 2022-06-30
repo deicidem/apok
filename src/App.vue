@@ -50,7 +50,7 @@ body {
   font-weight: 400;
 
   overflow: visible;
-  color: $white-dark;
+  background: $white-dark;
 }
 
 header,
@@ -350,7 +350,7 @@ svg:focus {
   font-size: 12px;
   line-height: 1.3;
   background: $gradient-w;
-  border-radius: 6px;
+  border-radius: 5px;
   box-shadow: $shadow-small;
   transform: translateX(-50%);
   &-r {

@@ -17,7 +17,7 @@ export default {};
     width: 100%;
     padding: 10px;
     box-shadow: $shadow-small;
-    border-radius: 5px;
+    border-radius: 7px;
   }
   
   &-title {

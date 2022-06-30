@@ -94,25 +94,21 @@
               <label class="select-option">
                 <app-checkbox
                   :mini="true"
-                  :modelValue="allMonths"
+                  :model-value="allMonths"
                   @change="onAllCheck($event)"
                 ></app-checkbox>
                 <span>Все</span>
               </label>
               <label
                 class="select-option"
-                v-for="(option, i) in monthsOptions"
+                v-for="(option, i) in getTimeInterval.months"
                 :key="i"
               >
                 <app-checkbox
                   :mini="true"
-                  v-model="option.active"
+                  :model-value="option.active"
                   @change="
-                    setTimeInterval({
-                      from: getTimeInterval.from,
-                      to: getTimeInterval.to,
-                      months,
-                    })
+                    onSelect(i)
                   "
                 ></app-checkbox>
                 <span>{{ option.name }}</span>
@@ -150,68 +146,6 @@ export default {
       from: null,
       to: null,
       selectActive: false,
-      monthsOptions: [
-        {
-          cnt: 1,
-          name: "январь",
-          active: true,
-        },
-        {
-          cnt: 2,
-          name: "февраль",
-          active: true,
-        },
-        {
-          cnt: 3,
-          name: "март",
-          active: true,
-        },
-        {
-          cnt: 4,
-          name: "апрель",
-          active: true,
-        },
-        {
-          cnt: 5,
-          name: "май",
-          active: true,
-        },
-        {
-          cnt: 6,
-          name: "июнь",
-          active: true,
-        },
-        {
-          cnt: 7,
-          name: "июль",
-          active: true,
-        },
-        {
-          cnt: 8,
-          name: "август",
-          active: true,
-        },
-        {
-          cnt: 9,
-          name: "сентябрь",
-          active: true,
-        },
-        {
-          cnt: 10,
-          name: "октябрь",
-          active: true,
-        },
-        {
-          cnt: 11,
-          name: "ноябрь",
-          active: true,
-        },
-        {
-          cnt: 12,
-          name: "декабрь",
-          active: true,
-        },
-      ],
     };
   },
   computed: {
@@ -221,8 +155,10 @@ export default {
         return "Все";
       } else {
         let res = "";
-        this.months.forEach((el) => {
-          res += el.cnt + " ";
+        this.getTimeInterval.months.forEach((el) => {
+          if (el.active) {
+            res += el.cnt + " ";
+          }
         });
         return res;
       }
@@ -230,7 +166,7 @@ export default {
 
     months() {
       let res = [];
-      this.monthsOptions.forEach((el) => {
+      this.getTimeInterval.months.forEach((el) => {
         if (el.active) {
           res.push({ ...el });
         }
@@ -253,32 +189,49 @@ export default {
     },
   },
   mounted() {
-    this.getTimeInterval.months.forEach((el) => {
-      this.monthsOptions[el.cnt - 1].active = true;
-    });
+    // this.getTimeInterval.months.forEach((el) => {
+      // this.monthsOptions[el.cnt - 1].active = true;
+    // });
   },
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
 
     onAllCheck($event) {
+      let months = [];
+      this.getTimeInterval.months.forEach(el => {
+        months.push({...el})
+      })
       if ($event) {
-        this.monthsOptions.forEach((el) => {
+        months.forEach((el) => {
           el.active = true;
         });
       } else {
-        this.monthsOptions.forEach((el) => {
+        months.forEach((el) => {
           el.active = false;
         });
       }
       this.setTimeInterval({
         from: this.getTimeInterval.from,
         to: this.getTimeInterval.to,
-        months: this.months,
+        months,
       });
     },
 
     away() {
       this.selectActive = false;
+    },
+
+    onSelect(i) {
+      let months = [];
+      this.getTimeInterval.months.forEach(el => {
+        months.push({...el})
+      })
+      months[i].active = !months[i].active;
+      this.setTimeInterval({
+        from: this.getTimeInterval.from,
+        to: this.getTimeInterval.to,
+        months: months,
+      })
     },
 
     submitForm() {

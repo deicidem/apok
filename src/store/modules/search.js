@@ -6,7 +6,68 @@ export default {
     timeInterval: {
       from: null,
       to: null,
-      months: []
+      months: [
+        {
+          cnt: 1,
+          name: "январь",
+          active: true,
+        },
+        {
+          cnt: 2,
+          name: "февраль",
+          active: true,
+        },
+        {
+          cnt: 3,
+          name: "март",
+          active: true,
+        },
+        {
+          cnt: 4,
+          name: "апрель",
+          active: true,
+        },
+        {
+          cnt: 5,
+          name: "май",
+          active: true,
+        },
+        {
+          cnt: 6,
+          name: "июнь",
+          active: true,
+        },
+        {
+          cnt: 7,
+          name: "июль",
+          active: true,
+        },
+        {
+          cnt: 8,
+          name: "август",
+          active: true,
+        },
+        {
+          cnt: 9,
+          name: "сентябрь",
+          active: true,
+        },
+        {
+          cnt: 10,
+          name: "октябрь",
+          active: true,
+        },
+        {
+          cnt: 11,
+          name: "ноябрь",
+          active: true,
+        },
+        {
+          cnt: 12,
+          name: "декабрь",
+          active: true,
+        },
+      ],
     },
     cloudiness: {
       from: 0,
@@ -74,6 +135,21 @@ export default {
         m.mss = val;
       });
     },
+    unSelectSatelites(state) {
+      state.satelites.forEach(series => {
+        series.checked = false;
+        series.satelites.forEach(s => {
+          s.checked = false;
+          s.pss = false;
+          s.mss = false;
+        })
+      })
+    },
+    unSelectMonths(state) {
+      state.timeInterval.months.forEach(el => {
+        el.active = false;
+      });
+    },
     selectSatelite(state, {
       seriesInd,
       scInd,
@@ -88,6 +164,19 @@ export default {
 
   },
   actions: {
+    clearData(store) {
+      store.commit('setCloudiness', {
+        from: 0,
+        to: 20
+      });
+      store.commit('setSearchStatus', null);
+      store.commit('unSelectSatelites');
+      store.commit('setTimeInterval', {from: null, to: null, months: store.getters.getTimeInterval.months});
+      store.commit('unSelectMonths');
+      store.dispatch('map/clearCoordinates', {}, {root: true});
+      store.dispatch('map/removeCirclePolygon', {}, {root: true});
+      store.dispatch('map/removeFilePolygon', {}, {root: true});
+    },
     setCloudiness(store, data) {
       store.commit('setCloudiness', data);
     },
@@ -201,133 +290,3 @@ export default {
     }
   }
 }
-
-
-// function setupsatelites() {
-//   return [{
-//     id: 1,
-//     name: "Канопус В",
-//     checked: false,
-//     models: [{
-//       id: 1,
-//       name: "Канопус В 1",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 2,
-//       name: "Канопус В 2",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 3,
-//       name: "Канопус В 3",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 4,
-//       name: "Канопус В 4",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 5,
-//       name: "Канопус В 5",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 6,
-//       name: "Канопус В 6",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     ]
-//   },
-//   {
-//     id: 2,
-//     name: "Ресурс П",
-//     checked: false,
-//     models: [{
-//       id: 0,
-//       name: "Ресурс П 1",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 1,
-//       name: "Ресурс П 2",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     {
-//       id: 2,
-//       name: "Ресурс П 3",
-//       checked: false,
-//       mss: false,
-//       pss: false
-//     },
-//     ]
-//   }
-//   ]
-// }
-
-// function setupResults() {
-//   return [
-//    {
-//     id: 1,
-//     name: "ETRIS.KV3.MSS.23121.1.0.2022-04-04.L0.FKL_KLG.NTSOMZ_MSK",
-//     round: "23121",
-//     route: "1",
-//     scName: "Канопус-В-3",
-//     date: "04.04.2022",
-//     cloudiness: 80,
-//     processingLevel: "1",
-//     geography: {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "type": "Polygon",
-//         "bounds": [
-//           [43.539726516356005, 36.382933900683454],
-//           [45.66351373527003, 39.27154542776307],
-//         ],
-//         "coordinates": [
-//           [
-//             [
-//               36.95827938552311,
-//               45.66351373527003
-//             ],
-//             [
-//               36.382933900683454,
-//               43.95279779154811
-//             ],
-//             [
-//               38.62953946820189,
-//               43.539726516356005
-//             ],
-//             [
-//               39.27154542776307,
-//               45.246411064541334
-//             ],
-//             [
-//               36.95827938552311,
-//               45.66351373527003
-//             ]
-//           ]
-//         ]
-//       },
-//     },
-//     previewPath: "https://www.imgonline.com.ua/examples/bee-on-daisy.jpg"
-//   }]
-// }

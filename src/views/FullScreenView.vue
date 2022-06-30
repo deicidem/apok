@@ -1,16 +1,16 @@
 <template>
-  <div class="fullscreen">
-    <div class="fullscreen-header">
-      <router-link to="/main/tasks">
-        <div class="back">
-          <div class="back-arrow">
+  <page-base>
+    <template v-slot:header>
+      <router-link to="/main/tasks" custom v-slot="{ navigate }">
+        <div class="page-back" @click="navigate">
+          <div class="page-back-arrow">
             <i class="fa-solid fa-angles-left"></i>
           </div>
-          <p class="back-subtitle">Назад</p>
+          <span class="page-back-subtitle">Назад</span>
         </div>
       </router-link>
 
-      <h2 class="fullscreen-title">
+      <h2 class="page-title">
         {{ $route.query.title }}
       </h2>
 
@@ -18,30 +18,24 @@
         :href="$route.query.downloadPath"
         target="_blank"
         download
-        class="button button-g fullscreen-button"
+        class="button button-g page-button"
       >
         Скачать
       </a>
-    </div>
-    <div class="fullscreen-content">
-      <vuescroll :ops="scrollOps">
-        <div class="image-wrapper">
-          <img
-            :src="$route.query.path"
-            :alt="$route.query.title"
-            class="image"
-          />
-        </div>
-      </vuescroll>
-    </div>
-  </div>
+    </template>
+    <template v-slot:content>
+      <img :src="$route.query.path" :alt="$route.query.title" class="image" />
+    </template>
+  </page-base>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
+import PageBase from "@/components/PageBase.vue";
 import { mapGetters } from "vuex";
 export default {
+  components: {
+    PageBase,
+  },
   computed: {
     ...mapGetters(["scrollOps"]),
     id() {
@@ -55,60 +49,27 @@ export default {
       return require(`@/assets/img/${fileName}`);
     },
   },
-  components: {
-    vuescroll,
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-.fullscreen {
-  position: relative;
-  height: 100%;
-  max-height: 100%;
-  padding: 40px;
+.image {
+  padding: 20px;
+  width: auto;
+  max-width: 100%;
+  background: $white;
+  border-radius: 10px;
   box-shadow: $shadow-big;
-  border-radius: 25px;
-  overflow: hidden;
-  background: $gradient-w;
-  &-title {
-    margin: 0;
-    color: $black;
-    font-weight: 400;
-  }
-  &-content {
-    padding: 50px 0;
+  &-wrapper {
+    padding: 10px 50px;
     margin: 0 auto;
-    height: 100%;
-    max-width: 1700px;
-  }
-  &-header {
     display: flex;
-    justify-content: space-between;
-    margin: 4px auto;
-    max-width: 1600px;
+    justify-content: center;
+    width: 100%;
   }
-  &-button {
-    height: auto;
-    width: 270px;
-    font-size: 1.125rem;
-  }
-  .image {
-    padding: 20px;
-    width: auto;
-    max-width: 100%;
-    background: $white;
-    border-radius: 10px;
-    box-shadow: $shadow-big;
-    &-wrapper {
-      padding: 10px 50px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-  }
-  .back {
+}
+.page {
+  &-back {
     margin-bottom: 0px;
     display: flex;
     align-items: center;
@@ -123,7 +84,6 @@ export default {
     }
   }
 }
-
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;

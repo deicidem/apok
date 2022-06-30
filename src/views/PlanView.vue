@@ -1,62 +1,62 @@
 <template>
-  <div class="plan" v-if="plan != null">
-    <div class="plan-wrapper__header">
-      <router-link to="/main/plan">
-        <div class="back">
-          <div class="back-arrow">
+  <page-base>
+    <template v-slot:header>
+      <router-link to="/main/plan" custom v-slot="{ navigate }">
+        <div class="page-back" @click="navigate">
+          <div class="page-back-arrow">
             <i class="fa-solid fa-angles-left"></i>
           </div>
-          <p class="back-subtitle">Назад</p>
+          <span class="page-back-subtitle">Назад</span>
         </div>
       </router-link>
 
-      <h2 class="plan-title">
+      <h2 class="page-title">
         {{ plan.title }}
       </h2>
 
-      <button class="button button-g plan-wrapper__button" @click="onPlan">
+      <button class="button button-g page-button" @click="onPlan">
         Запланировать задачу
       </button>
-    </div>
-    <div class="a">
-      <vuescroll :ops="scrollOps">
-        <div class="plan-wrapper">
-          <div class="plan-wrapper__cards">
-            <div class="plan-wrapper__card">
-              <div class="plan-wrapper__title">Описание</div>
-              <div class="plan-wrapper__text" v-html="plan.description"></div>
+    </template>
+    <template v-slot:content>
+      <div class="plan-wrapper">
+        <div class="plan-wrapper__cards">
+        <div class="plan-wrapper__card">
+          <div class="plan-wrapper__title">Описание</div>
+          <div class="plan-wrapper__text" v-html="plan.description"></div>
+        </div>
+        <div class="plan-wrapper__card">
+          <div class="plan-wrapper__title">Требования к данным</div>
+          <div class="plan-table">
+            <div
+              class="plan-table__item"
+              v-for="(req, i) in plan.requirements"
+              :key="i"
+            >
+              <p class="plan-table__subtitle">{{ req.title }}:</p>
+              <p class="plan-table__text">
+                {{ req.description }}
+              </p>
             </div>
-            <div class="plan-wrapper__card">
-              <div class="plan-wrapper__title">Требования к данным</div>
-              <div class="plan-table">
-                <div
-                  class="plan-table__item"
-                  v-for="(req, i) in plan.requirements"
-                  :key="i"
-                >
-                  <p class="plan-table__subtitle">{{ req.title }}:</p>
-                  <p class="plan-table__text">
-                    {{ req.description }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="plan-wrapper__img">
-            <img :src="plan.previewPath" />
           </div>
         </div>
-      </vuescroll>
-    </div>
-  </div>
+      </div>
+
+      <div class="plan-wrapper__img">
+        <img :src="plan.previewPath" />
+      </div>
+      </div>
+    </template>
+  </page-base>
 </template>
 
 <script>
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
 import { mapGetters, mapActions } from "vuex";
+import PageBase from "@/components/PageBase.vue";
 export default {
+  components: {
+    PageBase,
+  },
   methods: {
     ...mapActions("plans", ["selectPlan"]),
     ...mapActions(["setDataCardState"]),
@@ -79,53 +79,14 @@ export default {
       return require(`@/assets/img/${fileName}`);
     },
   },
-  components: {
-    vuescroll,
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 .plan {
-  position: relative;
-
-  height: 100%;
-  max-height: 100%;
-  padding: 40px;
-  box-shadow: $shadow-big;
-  border-radius: 25px;
-  overflow: hidden;
-  background: $gradient-w;
-  &-title {
-    margin: 0;
-    color: $black;
-    font-weight: 400;
-  }
-  .a {
-    padding: 50px 0;
-    margin: 0 auto;
-    height: 100%;
-    max-width: 1700px;
-  }
   &-wrapper {
-    padding: 10px 50px;
-    margin: 0 auto;
     display: flex;
     align-items: flex-start;
-    width: 100%;
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      margin: 4px auto;
-      max-width: 1600px;
-    }
-    &__button {
-      height: auto;
-      justify-self: end;
-
-      width: 270px;
-      font-size: 1.125rem;
-    }
     &__cards {
       display: flex;
       flex-direction: column;
@@ -201,21 +162,22 @@ export default {
     }
   }
 }
-.back {
-  margin-bottom: 0px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &-arrow {
-    color: $color-main;
+.page {
+  &-back {
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &-arrow {
+      color: $color-main;
     font-size: 20px;
-  }
-  &-subtitle {
-    margin: 0 0 0 10px;
-    color: $color-main;
+    }
+    &-subtitle {
+      margin: 0 0 0 10px;
+      color: $color-main;
+    }
   }
 }
-
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;

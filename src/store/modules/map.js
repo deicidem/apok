@@ -243,7 +243,7 @@ export default {
       commit('setCirclePolygon', payload)
     },
     removeCirclePolygon({commit}) {
-      commit('setCirclePolygon', {data: null})
+      commit('setCirclePolygon', null)
     },
     addGeoJsonPolygon({commit, getters}, payload) {
       let geoJson = L.geoJSON(payload.json);
@@ -303,8 +303,21 @@ export default {
     async setFilePolygon({commit}, payload) {
       let formData = new FormData();
       formData.append('file', payload.file);
-      let {data} = await filesApi.getPolygon(formData);
-      commit('setFilePolygon', {file: data.file})
+      let geoJson = null;
+      try {
+        let {data} = await filesApi.getPolygon(formData);
+        geoJson = data.file;
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+      let bounds = L.geoJSON(geoJson).getBounds();
+      commit('setBounds', {bounds});
+      commit('setNeedUpdateBounds', {value: true})
+      commit('setFilePolygon', geoJson)
+    },
+    removeFilePolygon({commit}) {
+      commit('setFilePolygon', null)
     },
     activePolygonFitBounds({getters, commit}) {
       let geoJson = L.geoJSON(JSON.parse(getters.getActivePolygonJson));

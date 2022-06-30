@@ -1,34 +1,36 @@
 <template>
-  <div class="search">
-    <h2 class="sidebar-title">Выбор зоны интереса</h2>
-    <vuescroll :ops="scrollOps">
-      <div class="search-wrapper">
+<sidebar-base :loaded="loaded">
+  <template v-slot:header>
+    <h2 class="c-title">Выбор зоны интереса</h2>
+  </template>
+  <template v-slot:content>
+    <div class="search-wrapper">
         <div class="search-content">
           <search-area></search-area>
         </div>
       </div>
-    </vuescroll>
-  </div>
+  </template>
+</sidebar-base>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-
-import vuescroll from "vuescroll";
-import "vuescroll/dist/vuescroll.css";
+import { mapActions } from "vuex";
 
 import SearchArea from "@/components/search/SearchArea";
-
+import SidebarBase from "@/components/SidebarBase.vue";
 export default {
   components: {
-    vuescroll,
     SearchArea,
+    SidebarBase
+  },
+  data: ()=>({
+    loaded: false
+  }),
+  mounted() {
+    this.loaded = true;
   },
   methods: {
     ...mapActions("search", ["search"]),
-  },
-  computed: {
-    ...mapGetters(["scrollOps"]),
   },
 };
 </script>

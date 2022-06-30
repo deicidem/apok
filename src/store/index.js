@@ -33,8 +33,8 @@ export default new Vuex.Store({
         opacity: 0.1,
         size: "6px",
         specifyBorderRadius: false,
-        gutterOfEnds: null,
-        gutterOfSide: "2px",
+        gutterOfEnds: "5px",
+        gutterOfSide: "5px",
         keepShow: false,
       },
       bar: {

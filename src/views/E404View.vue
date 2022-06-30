@@ -1,31 +1,37 @@
 <template>
-  <div class="error">
-    <p class="error-number">404</p>
-    <h1 class="error-title">Страница не найдена</h1>
-    <p class="error-text">
-      Перейдите на
-      <router-link class="error-link" to="/main">главную страницу</router-link>
-      сайта
-    </p>
-    <p class="error-text">Неверный адрес, либо страница больше не существует</p>
-  </div>
+  <page-base>
+    <template v-slot:header>
+      <h1 class="page-title">Страница не найдена</h1>
+    </template>
+    <template v-slot:content>
+      <p class="error-number">404</p>
+      <p class="error-text">
+        Неверный адрес, либо страница больше не существует
+      </p>
+      <p class="error-text">
+        Перейдите на <router-link class="error-link" to="/main">главную страницу</router-link> сайта
+      </p>
+    </template>
+  </page-base>
 </template>
 
 <script>
+import PageBase from "@/components/PageBase.vue";
+export default {
+  components: {
+    PageBase,
+  },
+};
 </script>
 
 <style scoped lang="scss">
 .error {
   &-number {
     color: $color-main;
-    font-size: 128px;
+    font-size: 200px;
     text-align: center;
-  }
-  &-title {
-    color: $black;
-    font-size: 32px;
-    text-align: center;
-    font-weight: 400;
+    margin-top: 100px;
+    margin-bottom: 0;
   }
   &-text {
     margin-top: 10px;

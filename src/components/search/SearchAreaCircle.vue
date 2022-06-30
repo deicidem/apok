@@ -174,6 +174,7 @@ export default {
     };
   },
   methods: {
+    
     submitForm() {
       if (!this.$v.$invalid) {
         this.$emit("submit", { lng: this.lng, lat: this.lat, rad: this.rad });

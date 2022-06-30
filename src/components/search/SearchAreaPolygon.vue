@@ -63,7 +63,7 @@
       <button
         class="button c-button"
         :class="drawable ? 'button-white-gr' : 'button-g'"
-        @click="$emit('set-drawable', !drawable)"
+        @click="onDraw"
       >
         {{ drawable ? "Сохранить полигон" : "Использовать карту" }}
       </button>
@@ -122,6 +122,10 @@ export default {
     },
   }),
   methods: {
+    onDraw() {
+      this.$emit('set-drawable', !this.drawable);
+      this.drawable = !this.drawable;
+    },
     parseCoords(coord) {
       let str = coord;
       let deg = "";

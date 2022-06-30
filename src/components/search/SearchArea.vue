@@ -49,7 +49,7 @@
         @remove="removeCircle()"
       ></search-area-circle>
 
-      <search-area-file v-show="searchZoneType == 3"> </search-area-file>
+      <search-area-file @submit="setFilePolygon({file: $event})" @remove="removeFilePolygon" v-show="searchZoneType == 3"> </search-area-file>
     </template>
   </search-base>
 </template>
@@ -108,8 +108,48 @@ export default {
       "setZoom",
       "setFilePolygon",
       "setFilePolygonActive",
+      "removeFilePolygon",
     ]),
-
+parseCoords(coord) {
+      let str = coord;
+      let deg = "";
+      let degEnd = false;
+      let min = "";
+      let minEnd = false;
+      let sec = "";
+      let secEnd = false;
+      let dir = "";
+      for (let i = 0; i < str.length; i++) {
+        if (!degEnd) {
+          if (str[i] == "°") {
+            degEnd = true;
+            continue;
+          }
+          deg += str[i];
+        } else if (!minEnd) {
+          if (str[i] == "'") {
+            minEnd = true;
+            continue;
+          }
+          min += str[i];
+        } else if (!secEnd) {
+          if (str[i] == '"') {
+            secEnd = true;
+            continue;
+          }
+          sec += str[i];
+        }
+      }
+      dir = str[str.length - 1];
+      sec = +sec / 3600;
+      min = +min / 60;
+      if (dir == "N" || dir == "E") {
+        deg = +deg + min + sec;
+      } else {
+        deg = -(+deg + min + sec);
+      }
+      return deg;
+    },
     selectScreenArea() {
       this.clearCoordinates();
       this.addCoordinate({ coordinate: this.getBounds.getNorthEast() });
@@ -119,9 +159,6 @@ export default {
       this.setZoom({ value: this.getZoom - 1 });
     },
 
-    sendFile() {
-      this.setFilePolygon(this.file);
-    },
 
     changeZoneType(type) {
       this.searchZoneType = type;

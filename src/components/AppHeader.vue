@@ -148,11 +148,14 @@ export default {
     }
     &__button {
       font-size: 26px;
-
+      height: 46px;
+      width: 46px;
+      padding: 0;
+      background: $white;
       &-wrapper {
-        height: 40px;
-        width: 40px;
-        background: $white;
+        // height: 40px;
+        // width: 40px;
+
         position: relative;
       }
       // На IE 11 не работает

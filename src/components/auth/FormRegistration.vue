@@ -1,13 +1,14 @@
 <template>
-  <div class="form">
-    <div class="form-title">Регистрация</div>
+  <form-base>
+    <form-message
+      v-show="showMessage"
+      :status="formInvalid ? 'error' : 'valid'"
+      :message="message"
+    ></form-message>
 
-    <form
-      class="form-wrapper"
-      id="registration"
-      @submit.prevent="submitForm()"
-      method="post"
-    >
+    <div class="c-title">Регистрация</div>
+
+    <form class="c-form" @submit.prevent="submitForm()">
       <div class="input-wrapper">
         <input
           placeholder=" "
@@ -25,10 +26,6 @@
             !$v.firstName.required && formInvalid ? 'invalidIcon' : 'input-img'
           "
         ></i>
-      </div>
-
-      <div v-if="!$v.firstName.required && formInvalid" class="error-tooltip">
-        <span>Введите значение</span>
       </div>
 
       <div class="input-wrapper">
@@ -131,18 +128,25 @@
           class="input input-withIcon"
           v-model.trim="$v.password.confirm.$model"
           :class="{
-            invalid: !$v.password.confirm.sameAsPassword && formInvalid,
+            invalid: (!$v.password.confirm.sameAsPassword || !$v.password.confirm.required) && formInvalid,
           }"
         />
         <label class="input-label">Повторите пароль</label>
         <i
           class="icon icon-ic_fluent_lock_closed_20_regular"
           :class="
-            !$v.password.confirm.sameAsPassword && formInvalid
+            (!$v.password.confirm.sameAsPassword || !$v.password.confirm.required) && formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
         ></i>
+      </div>
+
+      <div
+        v-if="!$v.password.confirm.required && formInvalid"
+        class="error-tooltip"
+      >
+        <span>Введите значение</span>
       </div>
 
       <div
@@ -153,35 +157,49 @@
       </div>
 
       <button
-        type="submit"
+        class="button button-g c-form__item"
         :disabled="submitStatus === 'PENDING'"
-        class="button button-g form-wrapper__item"
       >
         Зарегистироваться
       </button>
 
-      <router-link to="/login">
-        <button class="button button-white form-wrapper__item">Войти</button>
+      <router-link to="/login" v-slot="{ navigate }">
+        <button
+          @click="navigate"
+          :disabled="submitStatus === 'PENDING'"
+          class="button button-white c-form__item"
+        >
+          Войти
+        </button>
       </router-link>
     </form>
-  </div>
+  </form-base>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import FormMessage from "@/components/auth/FormMessage.vue";
+import FormBase from "@/components/auth/FormBase.vue";
 
 export default {
+  components: {
+    FormMessage,
+    FormBase,
+  },
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      mail: "",
+      firstName: null,
+      lastName: null,
+      mail: null,
       password: {
-        password: "",
-        confirm: "",
+        password: null,
+        confirm: null,
       },
       submitStatus: null,
+      showMessage: false,
+      message: null
     };
   },
   validations() {
@@ -202,6 +220,7 @@ export default {
           minLength: minLength(8),
         },
         confirm: {
+          required,
           sameAsPassword: sameAs("password"),
         },
       },
@@ -214,19 +233,43 @@ export default {
   },
   methods: {
     ...mapActions("users", {
-      addUser: "addUser",
-      regUser: "regUser",
+      authorize: "authorizeUser",
     }),
+
     async submitForm() {
+      this.showMessage = false;
+
       if (!this.$v.$invalid) {
-        await this.regUser({
+        this.submitStatus = "PENDING";
+
+        try {
+          await this.regUser({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.mail,
           password: this.password,
         });
-        this.$router.push("main");
-        this.submitStatus = "PENDING";
+
+          this.submitStatus = "SUBMIT";
+          this.message =
+            "Вы успешно авторизованы. Сейчас вы будете перенаправлены на главную страницу.";
+
+          setTimeout(() => {
+            this.$router.push("main");
+          }, 1500);
+        } catch (error) {
+          if (error?.response?.status == 422) {
+            this.message =
+              "Учетная запись  с указанными логином и паролем не существует";
+          } else {
+            this.message =
+              "При авторизации произошла ошибка, повторите попытку позже";
+          }
+
+          this.submitStatus = "ERROR";
+        }
+
+        this.showMessage = true;
       } else {
         this.submitStatus = "FORM_INVALID";
         return;
@@ -237,55 +280,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form {
-  background: $gradient-w;
-  width: 400px;
-  padding: 30px 40px 30px 40px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: $shadow-big;
-  &-title {
-    text-align: center;
-    font-size: 20px;
-    color: $black;
-    margin-bottom: 20px;
-  }
-  &-wrapper {
-    &__item {
-      margin-top: 20px;
-      width: 100%;
-      height: 44px;
-      font-size: 16px;
-      background: $white;
-    }
-  }
-}
-.invalid {
-  border: 1px solid $color-red;
-  transition: all 1s ease-out;
-  color: $color-red;
-  &:focus ~ .input-label,
-  &:not(:placeholder-shown) ~ label {
-    color: $color-red;
-  }
-  &:focus ~ .invalidIcon {
-    color: $color-red;
-  }
-}
-.invalidIcon {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: $color-red;
-}
-
-.error {
-  &-tooltip {
-    margin: 2px 0 0 0;
-    text-align: left;
-    font-size: 12px;
-    color: rgb(141, 70, 70);
-  }
-}
 </style>

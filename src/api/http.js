@@ -7,19 +7,17 @@ const instance = axios.create({
   withCredentials: true
 });
 
-// instance.interceptors.request.use(
-//   config => {
-//       const token = localStorage.getItem('access_token');
-//       console.log();
-//       if (token) {
-//           config.headers['Authorization'] = 'Bearer ' + token;
-//       }
-//       config.headers['Content-Type'] = 'application/json';
-//       return config;
-//   },
-//   error => {
-//       Promise.reject(error)
-// });
+instance.interceptors.response.use(
+  request => request,
+  error => {
+    // check network error
+    if(error.response === undefined){
+      error.response = { status: 0  }; // add new field networkErr
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export function addErrorHandler(fn) {
   instance.interceptors.response.use(response => response,fn);

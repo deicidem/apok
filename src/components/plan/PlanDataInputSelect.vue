@@ -63,15 +63,15 @@ export default {
 <style lang="scss" scoped>
   .c {
     &-select {
+      width: 100%;
       margin-top: 4px;
       z-index: 10;
       position: absolute;
-      top: calc(100% - 10px);
-      width: 360px;
+      top: calc(100% + 3px);
       left: 10px;
       background: $white;
       box-shadow: $shadow-big;
-      border-radius: 10px;
+      border-radius: 7px;
       &__option {
         position: relative;
         padding: 8px 10px;
@@ -100,13 +100,14 @@ export default {
       }
     }
     &-selected {
+      position: relative;
       background: $white;
       border: 1px solid #dfdfdf;
       min-height: 30px;
       min-width: 360px;
       width: 100%;
       padding: 5px 30px 5px 10px;
-      border-radius: 5px;
+      border-radius: 7px;
       cursor: pointer;
       &:hover {
         border: 1px solid rgba($color-main, 0.5);

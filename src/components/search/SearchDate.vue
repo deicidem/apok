@@ -1,123 +1,128 @@
 <template>
-  <div class="search-date">
-    <h2 class="search-title">Интервал дат съемки</h2>
-
-    <div class="search-date__wrapper">
-      <div class="search-date__inputs">
-        <div class="input-wrapper search-date__input">
-          <date-picker
-            format="yyyy-MM-dd"
-            placeholder=" "
-            :use-utc="true"
-            required
-            input-class="input"
-            :language="ru"
-            calendar-class="input-calendar"
-            :monday-first="true"
-            :value="getTimeInterval.from"
-            valueType="format"
-            @input="
-              setTimeInterval({ from: $event, to: getTimeInterval.to, months })
-            "
-          >
-          </date-picker>
-          <label
-            class="input-label search-date__label"
-            :class="{ active: getTimeInterval.from }"
-            >Искать с:</label
-          >
-          <div class="search-date__background">
-            <img src="@/assets/img/form-icons/calendar.svg" />
-          </div>
-        </div>
-
-        <div class="search-date__arrow">
-          <img svg-inline src="@/assets/img/arrows/arrow.svg" />
-        </div>
-
-        <div class="input-wrapper search-date__input">
-          <date-picker
-            format="yyyy-MM-dd"
-            placeholder=" "
-            :use-utc="true"
-            required
-            input-class="input"
-            :language="ru"
-            calendar-class="input-calendar"
-            :value="getTimeInterval.to"
-            valueType="format"
-            @input="
-              setTimeInterval({
-                from: getTimeInterval.from,
-                to: $event,
-                months,
-              })
-            "
-          >
-          </date-picker>
-          <label
-            class="input-label search-date__label"
-            :class="{ active: getTimeInterval.to }"
-            >До:</label
-          >
-          <div class="search-date__background">
-            <img src="@/assets/img/form-icons/calendar.svg" />
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="select" v-on-clickaway="away">
-          <div
-            class="input-wrapper select-data"
-            @click="selectActive = !selectActive"
-          >
-            <input
+  <search-base title="Интервал дат съемки" :invalid="invalid">
+    <template v-slot:error-message> Укажите интервал дат съмки </template>
+    <template v-slot:content>
+      <div class="search-date__wrapper">
+        <div class="search-date__inputs">
+          <div class="input-wrapper search-date__input">
+            <date-picker
+              format="yyyy-MM-dd"
               placeholder=" "
-              type="text"
-              class="input"
-              :value="monthsValue"
-              readonly
+              :use-utc="true"
               required
-              :class="{ invalid: monthsValue == '' }"
-            />
-            <label class="input-label select-label">Выбрать месяцы:</label>
-            <div class="select-img">
-              <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
+              input-class="input"
+              :language="ru"
+              calendar-class="input-calendar"
+              :monday-first="true"
+              :value="getTimeInterval.from"
+              valueType="format"
+              @input="
+                setTimeInterval({
+                  from: $event,
+                  to: getTimeInterval.to,
+                  months,
+                })
+              "
+            >
+            </date-picker>
+            <label
+              class="input-label search-date__label"
+              :class="{ active: getTimeInterval.from }"
+              >Искать с:</label
+            >
+            <div class="search-date__background">
+              <img src="@/assets/img/form-icons/calendar.svg" />
             </div>
           </div>
-          <div class="select-options" v-show="selectActive">
-            <label class="select-option">
-              <app-checkbox
-                :mini="true"
-                :modelValue="allMonths"
-                @change="onAllCheck($event)"
-              ></app-checkbox>
-              <span>Все</span>
-            </label>
-            <label
-              class="select-option"
-              v-for="(option, i) in monthsOptions"
-              :key="i"
+
+          <div class="search-date__arrow">
+            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
+          </div>
+
+          <div class="input-wrapper search-date__input">
+            <date-picker
+              format="yyyy-MM-dd"
+              placeholder=" "
+              :use-utc="true"
+              required
+              input-class="input"
+              :language="ru"
+              calendar-class="input-calendar"
+              :value="getTimeInterval.to"
+              valueType="format"
+              @input="
+                setTimeInterval({
+                  from: getTimeInterval.from,
+                  to: $event,
+                  months,
+                })
+              "
             >
-              <app-checkbox
-                :mini="true"
-                v-model="option.active"
-                @change="
-                  setTimeInterval({
-                    from: getTimeInterval.from,
-                    to: getTimeInterval.to,
-                    months,
-                  })
-                "
-              ></app-checkbox>
-              <span>{{ option.name }}</span>
-            </label>
+            </date-picker>
+            <label
+              class="input-label search-date__label"
+              :class="{ active: getTimeInterval.to }"
+              >До:</label
+            >
+            <div class="search-date__background">
+              <img src="@/assets/img/form-icons/calendar.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="select" v-on-clickaway="away">
+            <div
+              class="input-wrapper select-data"
+              @click="selectActive = !selectActive"
+            >
+              <input
+                placeholder=" "
+                type="text"
+                class="input"
+                :value="monthsValue"
+                readonly
+                required
+                :class="{ invalid: monthsValue == '' }"
+              />
+              <label class="input-label select-label">Выбрать месяцы:</label>
+              <div class="select-img">
+                <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
+              </div>
+            </div>
+            <div class="select-options" v-show="selectActive">
+              <label class="select-option">
+                <app-checkbox
+                  :mini="true"
+                  :modelValue="allMonths"
+                  @change="onAllCheck($event)"
+                ></app-checkbox>
+                <span>Все</span>
+              </label>
+              <label
+                class="select-option"
+                v-for="(option, i) in monthsOptions"
+                :key="i"
+              >
+                <app-checkbox
+                  :mini="true"
+                  v-model="option.active"
+                  @change="
+                    setTimeInterval({
+                      from: getTimeInterval.from,
+                      to: getTimeInterval.to,
+                      months,
+                    })
+                  "
+                ></app-checkbox>
+                <span>{{ option.name }}</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </search-base>
 </template>
 
 <script>
@@ -129,11 +134,12 @@ import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
 
 import useVuelidate from "@vuelidate/core";
-
+import SearchBase from "@/components/search/SearchBase";
 export default {
   mixins: [clickaway],
   components: {
     DatePicker,
+    SearchBase,
     AppCheckbox,
   },
   setup: () => ({ v$: useVuelidate() }),
@@ -141,8 +147,8 @@ export default {
     return {
       month: "",
       ru: ru,
-      from: "",
-      to: "",
+      from: null,
+      to: null,
       selectActive: false,
       monthsOptions: [
         {
@@ -209,8 +215,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("search", ["getTimeInterval"]),
-
+    ...mapGetters("search", ["getTimeInterval", "getSearchStatus"]),
     monthsValue() {
       if (this.allMonths) {
         return "Все";
@@ -235,6 +240,16 @@ export default {
 
     allMonths() {
       return this.months.length == 12;
+    },
+
+    invalid() {
+      let timeInterval = this.getTimeInterval;
+      return (
+        (timeInterval.to == null ||
+          timeInterval.from == null ||
+          timeInterval.months.length == 0) &&
+        this.getSearchStatus == "ERROR"
+      );
     },
   },
   mounted() {
@@ -287,11 +302,14 @@ label.active {
 
 .search {
   &-date {
+    &.invalid {
+      border: 1px solid $color-red;
+    }
     margin-top: 20px;
     padding: 20px;
 
     box-shadow: $shadow-small;
-    border-radius: 10px;
+    border-radius: 7px;
     background: $gradient-w;
     .input-calendar {
       color: #585858 !important;
@@ -347,7 +365,7 @@ label.active {
       padding: 7px;
 
       background: $gradient;
-      border-radius: 0 10px 10px 0;
+      border-radius: 0 7px 7px 0;
     }
   }
 }
@@ -401,11 +419,11 @@ label.active {
 
     display: flex;
     flex-direction: column;
-    width: 158px;
+    width: 100%;
 
     background: $white;
     box-shadow: $shadow-small;
-    border-radius: 10px;
+    border-radius: 7px;
   }
   &-option {
     display: flex;
@@ -454,7 +472,7 @@ label.active {
     top: 110%;
 
     width: 260px !important;
-    border-radius: 10px;
+    border-radius: 7px;
     border: none !important;
     overflow: hidden;
     box-shadow: $shadow-big;

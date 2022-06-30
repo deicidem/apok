@@ -1,10 +1,13 @@
 <template>
-  <div class="search-satelite" v-if="getsatelites != null">
-    <h2 class="search-title">Космический аппарат</h2>
-    <div class="accordion">
+<search-base title="Космический аппарат" :invalid="invalid">
+<template v-slot:error-message>
+      Укажите косимческие аппараты
+    </template>
+    <template v-slot:content>
+      <div class="accordion">
       <div
         class="accordion-item"
-        v-for="(series, i) in getsatelites"
+        v-for="(series, i) in getSatelites"
         :key="series.id"
       >
         <div class="accordion-item__header">
@@ -59,7 +62,7 @@
                 :mini="true"
                 :modelValue="sc.checked"
                 @change="
-                  selectsatelite({
+                  selectSatelite({
                     seriesInd: i,
                     scInd: j,
                     checked: $event,
@@ -85,7 +88,7 @@
                     :mini="true"
                     :modelValue="sc.mss"
                     @change="
-                      selectsatelite({
+                      selectSatelite({
                         seriesInd: i,
                         scInd: j,
                         checked: $event || sc.pss,
@@ -107,7 +110,7 @@
                     :mini="true"
                     :modelValue="sc.pss"
                     @change="
-                      selectsatelite({
+                      selectSatelite({
                         seriesInd: i,
                         scInd: j,
                         checked: $event || sc.mss,
@@ -129,38 +132,32 @@
         </div>
       </div>
     </div>
-  </div>
+    </template>
+</search-base>
 </template>
 
 <script>
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import { mapGetters, mapActions } from "vuex";
+import SearchBase from "@/components/search/SearchBase";
 export default {
   components: {
     AppCheckbox,
+    SearchBase
   },
   data() {
     return {
       satelitesShow: [],
-      checkbox: "",
     };
   },
   computed: {
-    ...mapGetters("search", ["getsatelites"], "isSelected"),
+    ...mapGetters("search", ["getSatelites", "getSearchStatus", "getSelectedSatelites"]),
+    invalid() {
+      return this.getSelectedSatelites.length == 0 && this.getSearchStatus == "ERROR"
+    }
   },
   beforeMount() {
-    // for (const key in this.getsatelites) {
-    //   if (Object.hasOwnProperty.call(this.getsatelites, key)) {
-    //     const el = this.getsatelites[key];
-    //     this.satelitesShow.push({
-    //       children: el.map(() => {
-    //         return {show: false};
-    //       }),
-    //       show: false
-    //     })
-    //   }
-    // }
-    this.getsatelites.forEach((el) => {
+    this.getSatelites.forEach((el) => {
       this.satelitesShow.push({
         children: el.satelites.map(() => {
           return { show: false };
@@ -170,10 +167,9 @@ export default {
     });
   },
   methods: {
-    ...mapActions("search", ["selectsatelite", "selectSeries"]),
+    ...mapActions("search", ["selectSatelite", "selectSeries"]),
 
     updateShow(seriesInd, scInd = null) {
-      console.log(seriesInd);
       if (scInd == null) {
         this.satelitesShow[seriesInd].show =
           !this.satelitesShow[seriesInd].show;
@@ -203,6 +199,9 @@ export default {
 
 .search {
   &-satelite {
+    &.invalid {
+    border: 1px solid $color-red;
+  }
     margin-top: 20px;
     padding: 20px;
 

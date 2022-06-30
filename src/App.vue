@@ -1,5 +1,4 @@
 <template>
-
   <div class="wrapper">
     <app-header @click="height()" ref="header"></app-header>
     <div class="content" :style="height">
@@ -35,8 +34,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -93,6 +90,10 @@ svg:focus {
   max-height: 100%;
   flex: 1 1 auto;
   background: $white-dark;
+}
+
+.icon {
+  line-height: 0;
 }
 
 /*_____________________button_________________*/
@@ -213,28 +214,29 @@ svg:focus {
     }
   }
   &-svg {
+    padding: 16px;
     width: 30px;
     height: 30px;
-    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-main;
+    font-size: 20px;
+    &::after {
+      background: $gradient-w;
+    }
     &.active {
       &::after {
         background: $gradient;
       }
       svg path {
-        fill: $white;
+        color: $white;
       }
     }
   }
   &-svg-r {
-    &::after {
-      background: $gradient-w;
-    }
-    width: 30px;
-    height: 30px;
-    padding: 7px;
-    svg path {
-      fill: $color-red;
-    }
+    color: $color-red;
+    font-size: 20px;
   }
 }
 // ____________________input__________________
@@ -260,14 +262,13 @@ svg:focus {
   }
   &:focus ~ .input-label,
   &:not(:placeholder-shown) ~ label {
-    top: -6px;
-    font-size: 12px;
     color: $color-main;
+    font-size: 13px;
+    top: -22px;
   }
   &-img {
     position: absolute;
-    max-width: 26px;
-    right: 20px;
+    right: 0;
     top: 50%;
     transform: translate(-50%, -50%);
     path {
@@ -276,36 +277,33 @@ svg:focus {
   }
   &-withIcon {
     padding: 15px 36px 15px 24px;
-    margin: 14px auto;
-    width: 300px;
+    width: 100%;
+    margin-top: 30px;
   }
   &-withoutIcon {
     padding-left: 8px;
     height: 35px;
-    margin-right: 14px;
   }
   &-label {
     display: none;
   }
   &-wrapper {
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    margin: 0;
+    i {
+      color: $color-main;
+      font-size: 30px;
+    }
     &:focus-within .input-label {
       color: $color-main;
-      font-size: 12px;
-      top: -6px;
+      font-size: 13px;
+      top: -22px;
     }
   }
 }
 .input-label {
   position: absolute;
-  top: 28px;
-  left: 20px;
+  top: 14px;
+  left: 0;
 
   display: inline-block;
   padding-left: 24px;

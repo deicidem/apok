@@ -21,31 +21,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.back {
-  margin-bottom: 0px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &-arrow {
-    svg path {
-      fill: $color-main;
-    }
-  }
-  &-subtitle {
-    margin: 0 0 0 10px;
-    color: $color-main;
-  }
-}
-.remember {
-  display: flex;
-  margin: 0 auto;
-  width: 300px;
-  &-text {
-    margin-left: 10px;
-    color: $text-grey;
-    font-size: 14px;
-  }
-}
 .authorize {
   position: absolute;
   top: 0;

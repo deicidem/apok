@@ -10,19 +10,14 @@
     <!-- </transition> -->
 
     <div class="sidebar-collapsed">
-      <div @click="toggleSidebar()" class="sidebar-collapsed__img">
-        <img
-          v-if="active"
-          svg-inline
-          src="@/assets/img/sidebar-icons/sidebar-collapse.svg"
-          alt="Развернуть"
-        />
-        <img
-          v-else
-          svg-inline
-          src="@/assets/img/sidebar-icons/sidebar-open.svg"
-          alt="Скрыть"
-        />
+      <div @click="toggleSidebar()" class="sidebar-collapsed__item">
+        <div class="sidebar-collapsed__img">
+          <i
+            v-if="active"
+            class="icon icon-ic_fluent_arrow_minimize_20_regular"
+          ></i>
+          <i v-else class="icon icon-ic_fluent_arrow_maximize_20_regular"></i>
+        </div>
       </div>
 
       <div v-show="isAuth" class="sidebar-collapsed__item" @click="open">
@@ -32,11 +27,9 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/sidebar-icons/sidebar-task.svg"
-              alt="Мои задачи"
-            />
+            <i
+              class="icon icon-ic_fluent_clipboard_bullet_list_ltr_20_regular"
+            ></i>
           </div>
         </router-link>
 
@@ -50,11 +43,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/sidebar-icons/sidebar-plan.svg"
-              alt="Запланированные задачи"
-            />
+            <i class="icon icon-ic_fluent_apps_list_detail_20_regular"></i>
           </div>
         </router-link>
 
@@ -70,11 +59,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/sidebar-icons/sidebar-search.svg"
-              alt="Поиск снимков"
-            />
+            <i class="icon icon-ic_fluent_search_20_regular"></i>
           </div>
         </router-link>
 
@@ -92,11 +77,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/sidebar-icons/sidebar-notification.svg"
-              alt="Мои уведомления"
-            />
+            <i class="icon icon-ic_fluent_alert_20_regular"></i>
             <div class="notification">
               <div class="notification-number">{{ alerts.length }}</div>
             </div>
@@ -113,7 +94,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img svg-inline src="@/assets/img/sidebar-icons/sidebar-files.svg" alt="Мои файлы" />
+            <i class="icon icon-ic_fluent_folder_20_regular"></i>
           </div>
         </router-link>
 
@@ -127,11 +108,7 @@
             :class="{ active: isActive }"
             class="sidebar-collapsed__img"
           >
-            <img
-              svg-inline
-              src="@/assets/img/sidebar-icons/sidebar-person.svg"
-              alt="Личный кабинет"
-            />
+            <i class="icon icon-ic_fluent_person_20_regular"></i>
           </div>
         </router-link>
 
@@ -188,17 +165,18 @@ export default {
 <style lang="scss">
 .notification {
   position: absolute;
-  top: -2px;
-  right: -5px;
+  top: 8px;
+  right: 4px;
   &-number {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 
     color: $white;
-    font-size: 12px;
+    font-size: 10px;
     background: $gradient-r;
     border-radius: 50%;
     text-align: center;
+    line-height: 160%;
   }
   &-wrapper {
     position: relative;
@@ -323,20 +301,28 @@ export default {
     flex-direction: column;
     align-items: center;
     &__item {
+      width: 100%;
       position: relative;
       display: flex;
       align-items: center;
-      margin-top: 6px;
+      justify-content: center;
       transition: all 0.2s ease-out;
-
-      a:hover + &__hidden {
+      padding: 10px 0;
+      color: $color-main-dark;
+      cursor: pointer;
+      &.active,
+      &:hover,
+      &:focus-visible {
+        color: $color-main-light;
+      }
+      &:hover + &__hidden {
         visibility: inherit;
         z-index: 1;
         opacity: 1;
       }
       &__hidden {
         position: absolute;
-        z-index: -1;
+        z-index: 2;
         left: 33px;
 
         display: inline-block;
@@ -360,34 +346,10 @@ export default {
       }
     }
     &__img {
-      width: 31px;
+      font-size: 30px;
       display: flex;
-      margin-top: 6px;
+      align-items: center;
       justify-content: center;
-      cursor: pointer;
-      path {
-        fill: $color-main-dark;
-      }
-      &.active,
-      &:hover,
-      &:focus-visible {
-        path {
-          fill: $color-main-light;
-        }
-      }
-    }
-    &__collapse {
-      margin-top: 6px;
-      width: 31px;
-      height: 30px;
-      cursor: pointer;
-    }
-    &__open {
-      margin-top: 6px;
-      width: 31px;
-      height: 30px;
-      background-repeat: no-repeat;
-      cursor: pointer;
     }
   }
   &-open {

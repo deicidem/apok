@@ -69,29 +69,25 @@
                     <button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
-                      class="button button-white-gr button-svg tasks-button"
+                      class="button  button-svg"
                     >
-                      <img
-                        svg-inline
-                        src="@/assets/img/button-svg-icons/results-info.svg"
-                        alt="Изображение"
-                      />
+                      <i class="icon icon-ic_fluent_open_20_regular"></i>
                     </button>
                     <span class="tooltiptext">Посмотреть результат</span>
                   </div>
                   <div class="button__wrapper">
                     <button
-                      class="button button-svg-r"
+                      class="button button-svg button-svg-r"
                       :disabled="!item.deletable"
                       @click="onDelete(i)"
                     >
-                      <img
-                        svg-inline
-                        src="@/assets/img/button-svg-icons/trash.svg"
-                        alt="Удалить"
-                      />
+                      <i class="icon icon-ic_fluent_delete_20_regular"></i>
                     </button>
-                    <span v-if="item.deletable" class="tooltiptext tooltiptext-r">Удалить</span>
+                    <span
+                      v-if="item.deletable"
+                      class="tooltiptext tooltiptext-r"
+                      >Удалить</span
+                    >
                   </div>
                 </div>
               </td>
@@ -365,21 +361,21 @@ export default {
       margin-top: 0px;
     }
   }
-  &-button {
-    margin: auto;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  // &-button {
+  //   margin: auto;
+  //   padding: 0;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
 
-    background: $gradient-w;
-    &.active {
-      background: $color-main;
-      svg path {
-        fill: $white;
-      }
-    }
-  }
+  //   background: $gradient-w;
+  //   &.active {
+  //     background: $color-main;
+  //     svg path {
+  //       fill: $white;
+  //     }
+  //   }
+  // }
   .green {
     color: $color-main;
   }

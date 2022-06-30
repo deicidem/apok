@@ -4,7 +4,7 @@
       <router-link to="/main/tasks" custom v-slot="{ navigate }">
         <div class="page-back" @click="navigate">
           <div class="page-back-arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
+            <i class="fa-solid fa-angles-left"></i>
           </div>
           <span class="page-back-subtitle">Назад</span>
         </div>
@@ -75,11 +75,8 @@ export default {
     align-items: center;
     cursor: pointer;
     &-arrow {
-      display: flex;
-      align-items: center;
-      svg path {
-        fill: $color-main;
-      }
+      color: $color-main;
+      font-size: 20px;
     }
     &-subtitle {
       margin: 0 0 0 10px;

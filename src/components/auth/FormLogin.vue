@@ -29,14 +29,13 @@
           "
         ></i>
 
-        
-      </div>
-      <div v-if="!$v.login.required && formInvalid" class="error-tooltip">
+        <div v-if="!$v.login.required && formInvalid" class="error-tooltip">
           Введите значение
         </div>
         <div v-if="!$v.login.minLength && formInvalid" class="error-tooltip">
           Логин должен содержать больше 6 символов
         </div>
+      </div>
 
       <div class="input-wrapper">
         <input
@@ -58,15 +57,14 @@
               : 'input-img'
           "
         ></i>
-        
-      </div>
-      
-      <div v-if="!$v.password.required && formInvalid" class="error-tooltip">
+
+        <div v-if="!$v.password.required && formInvalid" class="error-tooltip">
           Введите значение
         </div>
         <div v-if="!$v.password.minLength && formInvalid" class="error-tooltip">
           Пароль должен содержать больше 6 символов
         </div>
+      </div>
 
       <div class="c-remember">
         <app-checkbox
@@ -183,5 +181,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

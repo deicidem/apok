@@ -8,12 +8,7 @@
         <button class="button button-r" @click="_confirm">Удалить</button>
       </div>
       <div class="confirm-cross">
-        <img
-          svg-inline
-          @click="_cancel"
-          src="@/assets/img/cross/cross.svg"
-          alt="Закрыть"
-        />
+        <i @click="_cancel" class="fa-solid fa-xmark"></i>
       </div>
     </div>
   </div>
@@ -108,13 +103,9 @@ export default {
     top: 10px;
     display: flex;
     cursor: pointer;
-    svg path {
-      fill: $color-red;
-    }
+    color: $color-red;
     &:hover {
-      svg path {
-        fill: lighten($color: $color-red, $amount: 10);
-      }
+      color: lighten($color: $color-red, $amount: 10);
     }
   }
 }

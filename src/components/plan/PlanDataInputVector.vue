@@ -9,16 +9,16 @@
         <div class="button__wrapper">
           <router-link to="area" custom v-slot="{ navigate }">
             <button @click="navigate" class="button button-svg button-white-gr c-btn">
-              <img svg-inline src="@/assets/img/button-svg-icons/choose.svg" alt="Выбрать" />
+              <i class="icon icon-ic_fluent_cursor_20_regular"></i>
             </button>
           </router-link>
           <span class="tooltiptext">Выбрать</span>
         </div>
         <div class="button__wrapper c-btn" >
           <button class="button button-svg button-white-gr" @click="$emit('center')">
-            <img svg-inline src="@/assets/img/button-svg-icons/vector-o.svg" alt="Загрузить" />
+            <i class="icon icon-ic_fluent_center_horizontal_20_regular"></i>
           </button>
-          <span class="tooltiptext" >Показать</span>
+          <span class="tooltiptext">Показать</span>
         </div>
       </div>
     </div>

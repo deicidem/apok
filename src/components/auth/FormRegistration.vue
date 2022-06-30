@@ -26,6 +26,10 @@
             !$v.firstName.required && formInvalid ? 'invalidIcon' : 'input-img'
           "
         ></i>
+
+        <div v-if="!$v.firstName.required && formInvalid" class="error-tooltip">
+          <span>Введите значение</span>
+        </div>
       </div>
 
       <div class="input-wrapper">
@@ -45,10 +49,10 @@
             !$v.lastName.required && formInvalid ? 'invalidIcon' : 'input-img'
           "
         ></i>
-      </div>
 
-      <div v-if="!$v.lastName.required && formInvalid" class="error-tooltip">
-        <span>Введите значение</span>
+        <div v-if="!$v.lastName.required && formInvalid" class="error-tooltip">
+          <span>Введите значение</span>
+        </div>
       </div>
 
       <div class="input-wrapper">
@@ -70,13 +74,13 @@
               : 'input-img'
           "
         ></i>
-      </div>
 
-      <div v-if="!$v.mail.required && formInvalid" class="error-tooltip">
-        <span>Введите значение</span>
-      </div>
-      <div v-if="!$v.mail.email && formInvalid" class="error-tooltip">
-        <span>Введите корректный почтовый адрес</span>
+        <div v-if="!$v.mail.required && formInvalid" class="error-tooltip">
+          <span>Введите значение</span>
+        </div>
+        <div v-if="!$v.mail.email && formInvalid" class="error-tooltip">
+          <span>Введите корректный почтовый адрес</span>
+        </div>
       </div>
 
       <div class="input-wrapper">
@@ -103,23 +107,23 @@
               : 'input-img'
           "
         ></i>
-      </div>
 
-      <div
-        v-if="!$v.password.password.required && formInvalid"
-        class="error-tooltip"
-      >
-        <span>Введите значение</span>
-      </div>
+        <div
+          v-if="!$v.password.password.required && formInvalid"
+          class="error-tooltip"
+        >
+          <span>Введите значение</span>
+        </div>
 
-      <div
-        v-if="!$v.password.password.minLength && formInvalid"
-        class="error-tooltip"
-      >
-        <span>
-          Пароль должен содержать более
-          {{ $v.password.password.$params.minLength.min }} символов
-        </span>
+        <div
+          v-if="!$v.password.password.minLength && formInvalid"
+          class="error-tooltip"
+        >
+          <span>
+            Пароль должен содержать более
+            {{ $v.password.password.$params.minLength.min }} символов
+          </span>
+        </div>
       </div>
 
       <div class="input-wrapper">
@@ -128,32 +132,37 @@
           class="input input-withIcon"
           v-model.trim="$v.password.confirm.$model"
           :class="{
-            invalid: (!$v.password.confirm.sameAsPassword || !$v.password.confirm.required) && formInvalid,
+            invalid:
+              (!$v.password.confirm.sameAsPassword ||
+                !$v.password.confirm.required) &&
+              formInvalid,
           }"
         />
         <label class="input-label">Повторите пароль</label>
         <i
           class="icon icon-ic_fluent_lock_closed_20_regular"
           :class="
-            (!$v.password.confirm.sameAsPassword || !$v.password.confirm.required) && formInvalid
+            (!$v.password.confirm.sameAsPassword ||
+              !$v.password.confirm.required) &&
+            formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
         ></i>
-      </div>
 
-      <div
-        v-if="!$v.password.confirm.required && formInvalid"
-        class="error-tooltip"
-      >
-        <span>Введите значение</span>
-      </div>
+        <div
+          v-if="!$v.password.confirm.required && formInvalid"
+          class="error-tooltip"
+        >
+          <span>Введите значение</span>
+        </div>
 
-      <div
-        v-if="!$v.password.confirm.sameAsPassword && formInvalid"
-        class="error-tooltip"
-      >
-        <span>Пароли не совпадают</span>
+        <div
+          v-if="!$v.password.confirm.sameAsPassword && formInvalid"
+          class="error-tooltip"
+        >
+          <span>Пароли не совпадают</span>
+        </div>
       </div>
 
       <button
@@ -199,7 +208,7 @@ export default {
       },
       submitStatus: null,
       showMessage: false,
-      message: null
+      message: null,
     };
   },
   validations() {
@@ -244,11 +253,11 @@ export default {
 
         try {
           await this.regUser({
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.mail,
-          password: this.password,
-        });
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.mail,
+            password: this.password,
+          });
 
           this.submitStatus = "SUBMIT";
           this.message =

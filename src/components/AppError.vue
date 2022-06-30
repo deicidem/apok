@@ -4,7 +4,7 @@
       <h5 class="error-title">Ошибка 404</h5>
       <div class="error-text">Страница не найдена</div>
       <div class="error-cross">
-        <img svg-inline src="@/assets/img/cross/cross.svg" alt="Закрыть" />
+        <i class="fa-solid fa-xmark"></i>
       </div>
     </div>
   </div>
@@ -46,13 +46,10 @@
     position: absolute;
     right: 0;
     top: 0;
-    svg path {
-      fill: $color-red;
-    }
+    color: $color-red;
+    font-size: 20px;
     &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
+      color: $color-main-dark;
     }
   }
 }

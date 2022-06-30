@@ -31,12 +31,12 @@
               >Искать с:</label
             >
             <div class="search-date__background">
-              <img src="@/assets/img/form-icons/calendar.svg" />
+              <i class="icon icon-ic_fluent_calendar_ltr_20_regular"></i>
             </div>
           </div>
 
           <div class="search-date__arrow">
-            <img svg-inline src="@/assets/img/arrows/arrow.svg" />
+            <i class="icon icon-ic_fluent_arrow_right_20_regular"></i>
           </div>
 
           <div class="input-wrapper search-date__input">
@@ -65,7 +65,7 @@
               >До:</label
             >
             <div class="search-date__background">
-              <img src="@/assets/img/form-icons/calendar.svg" />
+              <i class="icon icon-ic_fluent_calendar_rtl_20_regular"></i>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
               />
               <label class="input-label select-label">Выбрать месяцы:</label>
               <div class="select-img">
-                <img svg-inline src="@/assets/img/arrows/arrow-down.svg" />
+                <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
               </div>
             </div>
             <div class="select-options" v-show="selectActive">
@@ -303,22 +303,28 @@ label.active {
     }
     &__arrow {
       display: flex;
-      max-height: 40px;
       margin: 0 20px;
-      transform: rotate(180deg);
-      svg path {
-        fill: $color-main;
-      }
+      color: $color-main;
+      font-size: 30px;
     }
     &__background {
       position: absolute;
       right: 0;
       top: 0;
 
-      padding: 7px;
+      height: 34px;
+      width: 30px;
 
       background: $gradient;
       border-radius: 0 7px 7px 0;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      i {
+        color: $white;
+        font-size: 24px;
+      }
     }
   }
 }
@@ -334,15 +340,14 @@ label.active {
     font-size: 14px;
     color: $text-grey;
   }
-  &-img {
+  &-img i {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translate(-50%, -50%);
     display: flex;
-    svg path {
-      fill: $color-main;
-    }
+    font-size: 12px;
+    color: $color-main;
   }
   &-data {
     &:focus-within .input-label {

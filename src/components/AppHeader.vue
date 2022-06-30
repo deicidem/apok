@@ -35,7 +35,7 @@
               class="button button-svg header-menu__button"
               @click="onLogout"
             >
-              <i class="icon icon-ic_fluent_arrow_exit_20_regular"></i>
+              <i class="icon icon-ic_fluent_sign_out_20_regular"></i>
             </button>
             <span class="tooltiptext">Выйти</span>
           </div>
@@ -144,23 +144,21 @@ export default {
     }
     &__button {
       font-size: 26px;
+      height: 46px;
+      width: 46px;
+      padding: 0;
+      background: $white;
       height: 40px;
       width: 40px;
-      &-wrapper {
-        height: 40px;
-        width: 40px;
-        background: $white;
-        position: relative;
-      }
-      // На IE 11 не работает
-      // @supports (background-clip: text) {
-      //   i {
-      //     background: $gradient;
-      //     background-clip: text;
-      //     color: rgba(0, 0, 0, 0);
-      //   }
-      // }
     }
+    // На IE 11 не работает
+    // @supports (background-clip: text) {
+    //   i {
+    //     background: $gradient;
+    //     background-clip: text;
+    //     color: rgba(0, 0, 0, 0);
+    //   }
+    // }
   }
 }
 @media screen and (max-width: 1440px) {

@@ -2,51 +2,41 @@
   <form-base>
     <form-message
       v-show="showMessage"
-      :status="submitStatus == 'ERROR' ? 'error' : 'valid'"
+      :status="formInvalid ? 'error' : 'valid'"
       :message="message"
     ></form-message>
 
     <div class="c-title">Авторизация</div>
 
-    <form class="c-forim" @submit.prevent="submitForm()">
+    <form class="c-form" @submit.prevent="submitForm()">
       <div class="input-wrapper">
         <input
           placeholder=" "
           class="input input-withIcon"
           v-model.trim="$v.login.$model"
           :class="{
-            invalid:
-              (!$v.login.minLength || !$v.login.required) &&
-              submitStatus === 'ERROR',
+            invalid: (!$v.login.minLength || !$v.login.required) && formInvalid,
           }"
         />
         <label class="input-label">Логин</label>
 
-        <img
-          svg-inline
+        <i
+          class="icon icon-ic_fluent_person_20_regular"
           :class="
-            (!$v.login.minLength || !$v.login.required) &&
-            submitStatus === 'ERROR'
+            (!$v.login.minLength || !$v.login.required) && formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
-          src="@/assets/img/form-icons/login-icon.svg"
-          alt="Логин"
-        />
+        ></i>
 
-        <div
-          v-if="!$v.login.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
-        <div
-          v-if="!$v.login.minLength && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Логин должен содержать больше 6 символов</p>
-        </div>
+        
       </div>
+      <div v-if="!$v.login.required && formInvalid" class="error-tooltip">
+          Введите значение
+        </div>
+        <div v-if="!$v.login.minLength && formInvalid" class="error-tooltip">
+          Логин должен содержать больше 6 символов
+        </div>
 
       <div class="input-wrapper">
         <input
@@ -55,42 +45,35 @@
           v-model.trim="$v.password.$model"
           :class="{
             invalid:
-              (!$v.password.minLength || !$v.password.required) &&
-              submitStatus === 'ERROR',
+              (!$v.password.minLength || !$v.password.required) && formInvalid,
           }"
         />
         <label class="input-label">Пароль</label>
 
-        <img
-          svg-inline
+        <i
+          class="icon icon-ic_fluent_lock_closed_20_regular"
           :class="
-            (!$v.password.minLength || !$v.password.required) &&
-            submitStatus === 'ERROR'
+            (!$v.password.minLength || !$v.password.required) && formInvalid
               ? 'invalidIcon'
               : 'input-img'
           "
-          src="@/assets/img/form-icons/lock-icon.svg"
-        />
-        <div
-          v-if="!$v.password.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
-        <div
-          v-if="!$v.password.minLength && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Пароль должен содержать больше 6 символов</p>
-        </div>
+        ></i>
+        
       </div>
+      
+      <div v-if="!$v.password.required && formInvalid" class="error-tooltip">
+          Введите значение
+        </div>
+        <div v-if="!$v.password.minLength && formInvalid" class="error-tooltip">
+          Пароль должен содержать больше 6 символов
+        </div>
 
-      <div class="remember">
+      <div class="c-remember">
         <app-checkbox
           :model-value="remember"
           @change="remember = $event"
         ></app-checkbox>
-        <span class="remember-text">Запомнить меня</span>
+        <span class="c-remember__text">Запомнить меня</span>
       </div>
 
       <button
@@ -100,7 +83,7 @@
         Войти
       </button>
 
-      <router-link to="/registration" v-slot="{navigate}">
+      <router-link to="/registration" v-slot="{ navigate }">
         <button
           @click="navigate"
           :disabled="submitStatus === 'PENDING'"
@@ -120,7 +103,6 @@ import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
-import { validationMixin } from "vuelidate";
 
 export default {
   components: {
@@ -130,23 +112,27 @@ export default {
   },
   data() {
     return {
-      login: "",
-      password: "",
+      login: null,
+      password: null,
       remember: false,
       submitStatus: null,
       showMessage: false,
-      message: "",
+      message: null,
     };
   },
-  mixins: [validationMixin],
   validations: {
     login: {
       required,
-      minLength: minLength(6),
+      minLength: minLength(8),
     },
     password: {
       required,
-      minLength: minLength(6),
+      minLength: minLength(8),
+    },
+  },
+  computed: {
+    formInvalid() {
+      return this.submitStatus === "FORM_INVALID";
     },
   },
   methods: {
@@ -188,7 +174,7 @@ export default {
 
         this.showMessage = true;
       } else {
-        this.submitStatus = "ERROR";
+        this.submitStatus = "FORM_INVALID";
         return;
       }
     },
@@ -197,65 +183,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.remember {
-  display: flex;
-  margin: 0 auto;
-  width: 300px;
-  &-text {
-    margin-left: 10px;
-    color: $text-grey;
-    font-size: 14px;
-  }
-}
-  
-.invalid {
-  border: 1px solid $color-red;
-  transition: all 1s ease-out;
-  color: $color-red;
-  &:focus ~ .input-label,
-  &:not(:placeholder-shown) ~ label {
-    color: $color-red;
-  }
-  &:focus ~ .invalidIcon {
-    path {
-      fill: $color-red;
-    }
-  }
-}
-.invalidIcon {
-  position: absolute;
-  max-width: 26px;
-  right: 20px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  path {
-    fill: $color-red;
-  }
-}
-.error {
-  &-tooltip {
-    position: absolute;
-    right: -240px;
-    top: 50%;
-    transform: translate(0, -50%);
-    transition: all 2s ease-out;
 
-    display: flex;
-    align-items: center;
-
-    height: 49px;
-    width: 240px;
-    background: linear-gradient(
-      to right,
-      rgb(235, 96, 96, 0.6),
-      rgb(141, 70, 70, 0.6)
-    );
-    color: $white;
-    font-size: 14px;
-    border-radius: 10px;
-    p {
-      margin-left: 8px;
-    }
-  }
-}
 </style>

@@ -1,16 +1,16 @@
 <template>
   <section class="authorize">
-    <registration-form></registration-form>
+    <form-registration></form-registration>
   </section>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import RegistrationForm from "@/components/auth/RegistrationForm";
+import FormRegistration from "@/components/auth/FormRegistration";
 
 export default {
   components: {
-    RegistrationForm,
+    FormRegistration,
   },
   methods: {
     ...mapActions("users", {

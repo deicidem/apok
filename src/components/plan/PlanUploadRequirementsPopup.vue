@@ -2,9 +2,9 @@
   <div class="plan-popup">
     <div class="popup-card">
       <div class="popup-card__header">
-        <div class="back" @click="$emit('close', file)">
+        <div class="back popup-card-back" @click="$emit('close', file)">
           <div class="back-arrow">
-            <i class="fa-solid fa-angles-left"></i>
+            <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
           <p class="back-subtitle">Назад</p>
         </div>
@@ -75,22 +75,6 @@ export default {
 
 
 <style lang="scss" scoped>
-.back {
-  position: absolute;
-  left: 0;
-  margin-bottom: 0px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &-arrow {
-    color: $color-main;
-    font-size: 20px;
-  }
-  &-subtitle {
-    margin: 0 0 0 10px;
-    color: $color-main;
-  }
-}
 .plan-popup {
   position: fixed;
   top: 0;
@@ -122,11 +106,17 @@ export default {
       bottom: 0;
       width: 100%;
     }
+    &-back {
+      position: absolute;
+      left: 0;
+    }
+
     &__header {
       position: relative;
       display: flex;
       justify-content: center;
     }
+
     &__title {
       margin: 0;
       font-size: 20px;
@@ -135,6 +125,7 @@ export default {
       color: $text-grey;
       max-width: 700px;
     }
+
     &__wrapper {
       display: flex;
       flex-direction: column;
@@ -142,6 +133,7 @@ export default {
       align-items: center;
       margin-top: 20px;
     }
+
     &__info {
       width: 500px;
       margin: 20px 0 0 0;
@@ -152,11 +144,13 @@ export default {
       overflow: hidden;
       background: $white;
     }
+
     &__line {
       margin: 10px 0;
       border-top: 1px solid #ebf0f0;
       width: 100%;
     }
+
     &__text {
       display: flex;
       margin-top: 6px;
@@ -165,22 +159,26 @@ export default {
       color: $text-grey;
       font-size: 14px;
     }
+
     &__buttons {
       margin-top: 20px;
       display: flex;
       align-items: center;
     }
+
     &__file {
       margin: 0 0 0 10px;
 
       color: $black;
       font-size: 14px;
     }
+
     .info {
       &-title {
         color: $text-grey;
         text-align: center;
       }
+
       &-table {
         &__item {
           position: relative;
@@ -189,26 +187,27 @@ export default {
           align-items: stretch;
           margin-top: 20px;
         }
+
         &__title {
           margin: 0 10px 0 0;
           width: 160px;
-
           color: $color-main;
         }
+
         &__wrapper {
           display: flex;
         }
+
         &__vertical {
           height: 100%;
           margin-right: 10px;
-
           border-left: 1px solid #ebf0f0;
         }
+
         &__text {
           max-width: 460px;
           margin-right: 10px;
           margin: 0;
-
           color: $text-grey;
           font-size: 12px;
         }

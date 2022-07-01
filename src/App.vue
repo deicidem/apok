@@ -96,6 +96,34 @@ svg:focus {
   line-height: 0;
 }
 
+.back {
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &-arrow {
+    display: flex;
+    color: $color-main;
+    font-size: 24px;
+  }
+  &-subtitle {
+    margin: 0 0 0 10px;
+    font-size: 18px;
+    color: $color-main;
+  }
+  &-arrow-w {
+    display: flex;
+    color: $white;
+    font-size: 24px;
+  }
+  &-subtitle-w {
+    margin: 0 0 0 10px;
+    font-size: 18px;
+    color: $white;
+  }
+}
+
 /*_____________________button_________________*/
 .button {
   position: relative;

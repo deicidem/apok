@@ -3,11 +3,11 @@
     <template v-slot:header>
       <h2 class="c-title">Результаты поиска: {{ results.length }} найдено</h2>
       <router-link to="/main/search" custom v-slot="{ navigate }">
-        <div class="results-back" @click="navigate">
-          <div class="results-back__arrow">
-            <i class="fa-solid fa-angles-left"></i>
+        <div class="back results-back" @click="navigate">
+          <div class="back-arrow-w">
+            <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
-          <span class="results-back__subtitle">Назад</span>
+          <span class="back-subtitle-w">Назад</span>
         </div>
       </router-link>
     </template>
@@ -315,21 +315,6 @@ export default {
 </script>
 
 <style lang="scss">
-.back {
-  margin-bottom: 0px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &-arrow {
-    color: $color-main;
-    font-size: 20px;
-  }
-  &-subtitle {
-    margin: 0 0 0 10px;
-    color: $color-main;
-  }
-}
-
 .dzz-name {
   word-break: break-all;
 }
@@ -339,20 +324,13 @@ export default {
     position: absolute;
     top: 50%;
     left: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transform: translateY(-50%);
-    color: $white;
-    cursor: pointer;
-    &__subtitle {
-      margin-left: 10px;
-      font-size: 14px;
-    }
   }
+
   &-wrapper {
     margin: 30px;
   }
+
   &-circle {
     margin-right: 15px;
     width: 22px;
@@ -361,6 +339,7 @@ export default {
     background: $white;
     box-shadow: inset 1px 1px 3px rgba($black, 0.15);
   }
+
   &-table {
     &__header {
       position: relative;
@@ -396,6 +375,7 @@ export default {
         border-bottom-left-radius: 10px;
       }
     }
+
     .selected {
       &-1 {
         .results-circle {
@@ -403,6 +383,7 @@ export default {
           box-shadow: $shadow-small;
         }
       }
+
       &-2 {
         .results-circle {
           background: $gradient-p;
@@ -410,6 +391,7 @@ export default {
         }
       }
     }
+
     tbody {
       background: none;
     }
@@ -420,6 +402,7 @@ export default {
       align-items: center;
       justify-content: center;
     }
+
     &__button {
       position: relative;
       margin-right: 15px;
@@ -428,6 +411,7 @@ export default {
       }
     }
   }
+
   &-button {
     display: flex;
     align-items: center;
@@ -435,13 +419,16 @@ export default {
 
     background: $gradient-w;
     font-size: 24px;
+
     &.active {
       background: $color-main;
       color: $white;
     }
+
     &:first-child {
       margin-left: 0;
     }
+
     &:last-child {
       margin-right: 0;
     }

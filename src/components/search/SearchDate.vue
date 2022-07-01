@@ -462,23 +462,6 @@ label.active {
     width: 140px;
     height: 28px;
   }
-  .search {
-    &-date {
-      padding: 14px;
-      &__back {
-        top: 18px;
-
-        padding: 4px;
-        cursor: pointer;
-      }
-      &__arrow {
-        margin: 0 16px;
-        img {
-          max-height: 28px;
-        }
-      }
-    }
-  }
   .select-data {
     width: 140px;
     height: 28px;

@@ -174,43 +174,21 @@ svg:focus {
     &::after {
       background: $gradient;
     }
-    svg path {
-      fill: $white;
-    }
   }
   &-white-gr {
     &::after {
       background: $gradient-w;
     }
     color: $color-main;
-    svg path {
-      fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
   }
   &-white {
     background: $white;
     color: $color-main;
-    svg path {
-      fill: $color-main;
-    }
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
   }
   &-r {
     color: $white;
     &::after {
       background: $gradient-r;
-    }
-    svg path {
-      fill: $white;
     }
   }
   &-svg {
@@ -229,9 +207,6 @@ svg:focus {
       &::after {
         background: $gradient;
       }
-      svg path {
-        color: $white;
-      }
     }
   }
   &-svg-r {
@@ -243,9 +218,6 @@ svg:focus {
 .input:active .input-label {
   display: block;
 }
-.input-wrapper:focus-within svg path {
-  fill: $color-main;
-}
 .input {
   display: block;
   padding: 8px 15px;
@@ -256,43 +228,48 @@ svg:focus {
   border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
+
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
   }
+
   &:focus ~ .input-label,
   &:not(:placeholder-shown) ~ label {
     color: $color-main;
     font-size: 13px;
     top: -22px;
   }
+
   &-img {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translate(-50%, -50%);
-    path {
-      fill: $color-main;
-    }
   }
+
   &-withIcon {
     padding: 15px 36px 15px 24px;
     width: 100%;
     margin-top: 30px;
   }
+
   &-withoutIcon {
     padding-left: 8px;
     height: 35px;
   }
+
   &-label {
     display: none;
   }
+
   &-wrapper {
     position: relative;
     i {
       color: $color-main;
       font-size: 30px;
     }
+
     &:focus-within .input-label {
       color: $color-main;
       font-size: 13px;
@@ -300,6 +277,7 @@ svg:focus {
     }
   }
 }
+
 .input-label {
   position: absolute;
   top: 14px;
@@ -316,16 +294,20 @@ svg:focus {
   -webkit-transition: 0.3s ease all;
   pointer-events: none;
 }
+
 /*_____________________pagination_____________*/
+
 .vs-pagination {
   &--active a {
     color: $color-main !important;
     font-weight: 600 !important;
     background-color: transparent !important;
   }
+
   li {
     a {
       color: $text-grey !important;
+
       &:hover {
         background-color: transparent !important;
         color: $color-main !important;
@@ -333,7 +315,9 @@ svg:focus {
     }
   }
 }
+
 /*_____________________tooltiptext_____________*/
+
 .tooltiptext {
   position: absolute;
   bottom: 120%;
@@ -353,18 +337,22 @@ svg:focus {
   border-radius: 5px;
   box-shadow: $shadow-small;
   transform: translateX(-50%);
+
   &-r {
     color: $color-red;
   }
 }
 
 /*_____________________vueScroll______________*/
+
 .__vuescroll {
   display: flex;
   flex-direction: column;
 }
+
 .__panel {
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     width: 0;
   }
@@ -375,10 +363,13 @@ svg:focus {
   }
   width: 100%;
 }
+
 .__bar-is-vertical {
   background: $color-main !important;
 }
+
 /*______________________________________*/
+
 @media screen and (max-width: 1440px) {
   .button {
     height: 28px;
@@ -388,9 +379,11 @@ svg:focus {
   .input {
     font-size: 10px;
     padding: 12px 10px;
+
     &-img {
       max-width: 22px;
     }
+
     &-wrapper {
       .input-label {
         top: 8px;

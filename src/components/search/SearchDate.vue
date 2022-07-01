@@ -65,7 +65,7 @@
               >До:</label
             >
             <div class="search-date__background">
-              <i class="icon icon-ic_fluent_calendar_rtl_20_regular"></i>
+              <i class="icon icon-ic_fluent_calendar_ltr_20_regular"></i>
             </div>
           </div>
         </div>
@@ -323,7 +323,7 @@ label.active {
       align-items: center;
       i {
         color: $white;
-        font-size: 24px;
+        font-size: 20px;
       }
     }
   }

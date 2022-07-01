@@ -1,5 +1,5 @@
 <template>
-<sidebar-base :loaded="loaded">
+  <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Результаты поиска: {{ results.length }} найдено</h2>
       <router-link to="/main/search" custom v-slot="{ navigate }">
@@ -13,128 +13,123 @@
     </template>
     <template v-slot:content>
       <div class="results-content">
-      <portal to="popup-card">
-        <result-info
-          :cardData="cardData"
-          @cardClose="onCardClose()"
-          @PolygonButtonClick="
-            onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
-          "
-          @ImageButtonClick="
-            onImageButtonClick(
-              card.ind,
-              cardData.id,
-              cardData.previewPath,
-              cardData.geography.bbox
-            )
-          "
-          v-if="card.ind != null"
-          v-show="card.active"
-        ></result-info>
-      </portal>
+        <portal to="popup-card">
+          <result-info
+            :cardData="cardData"
+            @cardClose="onCardClose()"
+            @PolygonButtonClick="
+              onPolygonButtonClick(card.ind, cardData.id, cardData.geography)
+            "
+            @ImageButtonClick="
+              onImageButtonClick(
+                card.ind,
+                cardData.id,
+                cardData.previewPath,
+                cardData.geography.bbox
+              )
+            "
+            v-if="card.ind != null"
+            v-show="card.active"
+          ></result-info>
+        </portal>
 
-      <div class="results-wrapper">
-        <app-table class="results-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th
-                v-for="(header, i) in headers"
+        <div class="results-wrapper">
+          <app-table class="results-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th
+                  v-for="(header, i) in headers"
+                  :key="i"
+                  @click="sortBy(header.key, i)"
+                  class="results-table__header"
+                >
+                  {{ header.title }}
+                  <template v-if="header.active">
+                    <span v-if="sortDir == 'asc'" class="results-table__sort">
+                      <i class="fa-solid fa-arrow-down-short-wide"></i>
+                    </span>
+                    <span v-else class="results-table__sort">
+                      <i class="fa-solid fa-arrow-down-wide-short"></i>
+                    </span>
+                  </template>
+                </th>
+
+                <th></th>
+              </tr>
+            </thead>
+            <tbody v-if="loaded">
+              <tr
+                v-for="(item, i) in results"
                 :key="i"
-                @click="sortBy(header.key, i)"
-                class="results-table__header"
+                :class="{
+                  selectable:
+                    selectable.value &&
+                    !(
+                      item.selected.value == selectable.value &&
+                      item.selected.type != selectable.type
+                    ),
+                  [`selected-${item.selected.type + 1}`]: item.selected.value,
+                }"
+                @click="select(i, item.selected.value)"
               >
-                {{ header.title }}
-                <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'" class="results-table__sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-asc.svg"
-                      alt="сортировка"
-                    />
-                  </span>
-                  <span v-else class="results-table__sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-desc.svg"
-                      alt="сортировка"
-                    />
-                  </span>
-                </template>
-              </th>
-
-              <th></th>
-            </tr>
-          </thead>
-          <tbody v-if="loaded">
-            <tr
-              v-for="(item, i) in results"
-              :key="i"
-              :class="{
-                selectable:
-                  selectable.value &&
-                  !(
-                    item.selected.value == selectable.value &&
-                    item.selected.type != selectable.type
-                  ),
-                [`selected-${item.selected.type + 1}`]: item.selected.value,
-              }"
-              @click="select(i, item.selected.value)"
-            >
-              <td class="results-table__buttons">
-                <div class="results-circle"></div>
-                <div class="button__wrapper results-table__button">
-                  <button
-                    class="button button-svg results-button"
-                    :class="results[i].polygonActive ? 'active' : ''"
-                    @click="onPolygonButtonClick(i, item.id, item.geography)"
-                  >
-                    <i class="icon icon-ic_fluent_select_object_20_regular"></i>
-                  </button>
-                  <span class="tooltiptext">Границы</span>
-                </div>
-                <div class="button__header results-table__button">
-                  <button
-                    class="button button-svg button-white results-button"
-                    :class="results[i].imageActive ? 'active' : ''"
-                    @click="
-                      onImageButtonClick(
-                        i,
-                        item.id,
-                        item.previewPath,
-                        item.geography == null ? null : item.geography.bbox
-                      )
-                    "
-                  >
-                    <i class="icon icon-ic_fluent_image_20_regular"></i>
-                  </button>
-                  <span class="tooltiptext">Изображение</span>
-                </div>
-              </td>
-              <td class="dzz-name">{{ item.name }}</td>
-              <td>{{ item.satelite }}</td>
-              <td>{{ item.date }}</td>
-              <td>{{ item.cloudiness }}%</td>
-              <td class="results-table__buttons">
-                <div class="button__wrapper results-table__button">
-                  <button
-                    class="button button-svg button-white results-button"
-                    :class="results[i].cardActive ? 'active' : ''"
-                    @click="onCardButtonClick(i)"
-                  >
-                    <i class="icon icon-ic_fluent_textbox_more_20_regular"></i>
-                  </button>
-                  <span class="tooltiptext">Подробнее</span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </app-table>
+                <td class="results-table__buttons">
+                  <div class="results-circle"></div>
+                  <div class="button__wrapper results-table__button">
+                    <button
+                      class="button button-svg results-button"
+                      :class="results[i].polygonActive ? 'active' : ''"
+                      @click="onPolygonButtonClick(i, item.id, item.geography)"
+                    >
+                      <i
+                        class="icon icon-ic_fluent_select_object_20_regular"
+                      ></i>
+                    </button>
+                    <span class="tooltiptext">Границы</span>
+                  </div>
+                  <div class="button__header results-table__button">
+                    <button
+                      class="button button-svg button-white results-button"
+                      :class="results[i].imageActive ? 'active' : ''"
+                      @click="
+                        onImageButtonClick(
+                          i,
+                          item.id,
+                          item.previewPath,
+                          item.geography == null ? null : item.geography.bbox
+                        )
+                      "
+                    >
+                      <i class="icon icon-ic_fluent_image_20_regular"></i>
+                    </button>
+                    <span class="tooltiptext">Изображение</span>
+                  </div>
+                </td>
+                <td class="dzz-name">{{ item.name }}</td>
+                <td>{{ item.satelite }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.cloudiness }}%</td>
+                <td class="results-table__buttons">
+                  <div class="button__wrapper results-table__button">
+                    <button
+                      class="button button-svg button-white results-button"
+                      :class="results[i].cardActive ? 'active' : ''"
+                      @click="onCardButtonClick(i)"
+                    >
+                      <i
+                        class="icon icon-ic_fluent_textbox_more_20_regular"
+                      ></i>
+                    </button>
+                    <span class="tooltiptext">Подробнее</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </app-table>
+        </div>
       </div>
-    </div>
     </template>
   </sidebar-base>
-
 </template>
 
 <script>
@@ -334,6 +329,7 @@ export default {
     color: $color-main;
   }
 }
+
 .dzz-name {
   word-break: break-all;
 }
@@ -347,10 +343,10 @@ export default {
     align-items: center;
     justify-content: center;
     transform: translateY(-50%);
+    color: $white;
     cursor: pointer;
     &__subtitle {
       margin-left: 10px;
-      color: $white;
       font-size: 14px;
     }
   }
@@ -369,15 +365,16 @@ export default {
     &__header {
       position: relative;
     }
+
     &__sort {
       position: absolute;
-      left: 0;
-      top: 54%;
+      left: -1px;
+      top: 50%;
       transform: translate(-50%, -50%);
-      svg path {
-        fill: $color-main;
-      }
+      color: $color-main;
+      font-size: 12px;
     }
+
     .selectable {
       position: relative;
       cursor: pointer;

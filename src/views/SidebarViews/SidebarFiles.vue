@@ -1,14 +1,13 @@
 <template>
-<sidebar-base :loaded="loaded">
+  <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Мои файлы</h2>
     </template>
     <template v-slot:popups>
-            <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
-
+      <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
     <template v-slot:content>
-       <div class="files__wrapper">
+      <div class="files__wrapper">
         <app-table>
           <thead>
             <tr>
@@ -27,18 +26,10 @@
               >
                 <template v-if="header.active">
                   <span v-if="sortDir == 'asc'" class="files-sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-asc.svg"
-                      alt="Сортировка"
-                    />
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
                   </span>
                   <span v-else class="files-sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-desc.svg"
-                      alt="Сортировка"
-                    />
+                    <i class="fa-solid fa-arrow-down-wide-short"></i>
                   </span>
                 </template>
                 {{ header.title }}
@@ -85,7 +76,10 @@
           >
             Удалить выбранное
           </button>
-          <button class="button button-g" :disabled="noItemsSelected || pending">
+          <button
+            class="button button-g"
+            :disabled="noItemsSelected || pending"
+          >
             Добавить в избранное
           </button>
         </div>
@@ -135,7 +129,7 @@ export default {
         },
       ],
       pending: false,
-      loaded: false
+      loaded: false,
     };
   },
   computed: {
@@ -202,7 +196,7 @@ export default {
         this.pending = true;
         await this.deleteFile(i);
         this.pending = false;
-      } 
+      }
     },
 
     async onDeleteBanch() {
@@ -215,7 +209,7 @@ export default {
         this.pending = true;
         await this.deleteFiles();
         this.pending = false;
-      } 
+      }
     },
 
     selectAll(val) {
@@ -244,6 +238,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .files {
   display: flex;
   flex-direction: column;
@@ -260,18 +255,20 @@ export default {
       }
     }
   }
+
   &-header {
     position: relative;
   }
+
   &-sort {
     position: absolute;
-    left: 0;
-    top: 60%;
+    left: -1px;
+    top: 50%;
     transform: translate(-50%, -50%);
-    svg path {
-      fill: $color-main;
-    }
+    color: $color-main;
+    font-size: 12px;
   }
+
   &-table {
     &__button {
       text-align: left;
@@ -284,6 +281,7 @@ export default {
         color: $color-main-light;
       }
     }
+
     &__progress {
       margin-top: 3px;
       width: 120px;
@@ -292,6 +290,7 @@ export default {
       background: $gradient-w;
       box-shadow: inset 1px 1px 3px rgba($black, 0.15);
       overflow: hidden;
+
       &__value {
         border-radius: 3px;
         height: 100%;
@@ -308,6 +307,7 @@ export default {
       }
     }
   }
+
   &__wrapper {
     margin: 30px;
     &-table {
@@ -316,30 +316,31 @@ export default {
       margin-top: 0px;
     }
   }
+
   &-button {
     margin: auto;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: $gradient-w;
     &.active {
       background: $color-main;
-      svg path {
-        fill: $white;
-      }
     }
   }
+
   .green {
     color: $color-main;
   }
+
   .col-checkbox {
     width: 40px;
   }
+
   .center {
     text-align: center;
   }
+
   thead {
     input {
       width: 20px;
@@ -354,6 +355,7 @@ export default {
     tr {
       position: relative;
     }
+
     input {
       width: 16px;
       height: 16px;
@@ -362,6 +364,7 @@ export default {
       border-radius: 50%;
       border: none;
     }
+
     input {
       width: 16px;
       height: 16px;

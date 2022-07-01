@@ -50,7 +50,7 @@
                   @click="onAddCoordinate"
                   class="button button-svg button-white-gr"
                 >
-                  <i class="icon icon-ic_fluent_add_20_regular"></i>
+                  <i class="icon icon-ic_fluent_add_20_filled"></i>
                 </button>
               </div>
             </td>

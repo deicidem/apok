@@ -1,11 +1,10 @@
 <template>
-<sidebar-base :loaded="loaded">
+  <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Мои задачи</h2>
     </template>
     <template v-slot:popups>
-            <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
-
+      <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
     <template v-slot:content>
       <div class="tasks__wrapper">
@@ -26,18 +25,10 @@
               >
                 <template v-if="header.active">
                   <span v-if="sortDir == 'asc'" class="tasks-sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-asc.svg"
-                      alt="Сортировка"
-                    />
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
                   </span>
                   <span v-else class="tasks-sort">
-                    <img
-                      svg-inline
-                      src="@/assets/img/sort-icons/sort-desc.svg"
-                      alt="Сортировка"
-                    />
+                    <i class="fa-solid fa-arrow-down-wide-short"></i>
                   </span>
                 </template>
                 {{ header.title }}
@@ -177,7 +168,7 @@ export default {
       reportType: false,
       pictureType: false,
       pending: false,
-      loaded: false
+      loaded: false,
     };
   },
   computed: {
@@ -284,7 +275,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .tasks {
   display: flex;
   flex-direction: column;
@@ -293,45 +283,52 @@ export default {
     margin-top: 30px;
     display: flex;
     justify-content: center;
+
     .button {
       width: auto;
       margin-right: 30px;
+
       &:last-child {
         margin-right: 0;
       }
     }
   }
+
   .tr_preview {
     border: none;
   }
+
   &-header {
     position: relative;
   }
+
   &-sort {
     position: absolute;
-    left: 0;
-    top: 60%;
+    left: -1px;
+    top: 50%;
     transform: translate(-50%, -50%);
-    svg path {
-      fill: $color-main;
-    }
+    color: $color-main;
+    font-size: 12px;
   }
   &-table {
     &__buttons {
       display: flex;
       justify-content: space-between;
     }
+
     &__button {
       text-align: left;
       font-size: 12px;
       background: none;
       border: none;
       color: $color-main;
+
       &:hover {
         cursor: pointer;
         color: $color-main-light;
       }
     }
+
     &__progress {
       margin-top: 5px;
       width: 120px;
@@ -340,6 +337,7 @@ export default {
       background: $gradient-w;
       box-shadow: inset 1px 1px 3px rgba($black, 0.15);
       overflow: hidden;
+
       &__value {
         border-radius: 3px;
         height: 100%;
@@ -358,36 +356,26 @@ export default {
   }
   &__wrapper {
     margin: 30px;
+
     &-table {
       height: inherit;
       overflow-x: auto;
       margin-top: 0px;
     }
   }
-  // &-button {
-  //   margin: auto;
-  //   padding: 0;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
 
-  //   background: $gradient-w;
-  //   &.active {
-  //     background: $color-main;
-  //     svg path {
-  //       fill: $white;
-  //     }
-  //   }
-  // }
   .green {
     color: $color-main;
   }
+
   .col-checkbox {
     width: 40px;
   }
+
   .center {
     text-align: center;
   }
+
   thead {
     input {
       width: 20px;
@@ -398,10 +386,12 @@ export default {
       border: none;
     }
   }
+
   tbody {
     tr {
       position: relative;
     }
+
     input {
       width: 16px;
       height: 16px;
@@ -410,6 +400,7 @@ export default {
       border-radius: 50%;
       border: none;
     }
+
     input {
       width: 16px;
       height: 16px;

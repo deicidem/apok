@@ -8,24 +8,18 @@
     <div class="alert-item__content">
       <div class="icon" @click="getTheme(theme)">
         <div class="icon__child" :class="'icon__' + [theme]">
-          <img
-            svg-inline
+          <i
             v-if="[theme] == 'task'"
-            src="@/assets/img/alert-icons/alert-task.svg"
-            alt=""
-          />
-          <img
-            svg-inline
+            class="icon icon-ic_fluent_clipboard_task_20_regular"
+          ></i>
+          <i
             v-if="[theme] == 'access'"
-            src="@/assets/img/alert-icons/alert-access.svg"
-            alt=""
-          />
-          <img
-            svg-inline
+            class="icon icon-ic_fluent_lock_open_20_regular"
+          ></i>
+          <i
             v-if="[theme] == 'data'"
-            src="@/assets/img/alert-icons/alert-data.svg"
-            alt=""
-          />
+            class="icon icon-ic_fluent_arrow_download_20_regular"
+          ></i>
         </div>
       </div>
       <div class="alert-item__info">
@@ -63,31 +57,26 @@ export default {
 .icon {
   border-radius: 10px;
   &__child {
-    padding: 10px;
+    padding: 4px;
     border-radius: 10px;
     display: flex;
+    font-size: 30px;
+    color: $white;
   }
+
   &__task {
     background: $text-green;
-
-    img {
-      max-width: 24px;
-    }
   }
 
   &__access {
     background: $text-plum;
-    img {
-      max-width: 24px;
-    }
   }
+
   &__data {
     background: $text-blue;
-    img {
-      max-width: 24px;
-    }
   }
 }
+
 .alert {
   &-item {
     position: relative;
@@ -154,12 +143,14 @@ export default {
       border-radius: 10px;
     }
   }
+
   &-delete {
     position: relative;
     display: flex;
     justify-content: center;
   }
 }
+
 .unread {
   width: 12px;
   height: 12px;
@@ -167,12 +158,15 @@ export default {
   background: $gradient;
   border-radius: 50%;
 }
+
 .task {
   background: $text-green;
 }
+
 .access {
   background: $text-plum;
 }
+
 .data {
   background: $text-blue;
 }

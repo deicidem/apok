@@ -29,7 +29,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   width: 100%;
   height: 100%;
   background: url("@/assets/img/background/katod.png");

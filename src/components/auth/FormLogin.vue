@@ -9,7 +9,27 @@
     <div class="c-title">Авторизация</div>
 
     <form class="c-form" @submit.prevent="submitForm()">
-      <div class="input-wrapper">
+      <app-input
+        class="c-form__input"
+        :value="login"
+        @input="$v.login.$model = $event"
+        :invalid="(!$v.login.minLength || !$v.login.required) && formInvalid"
+        icon="icon icon-ic_fluent_person_20_regular"
+        label="Логин"
+        :error="!$v.login.required ? 'Введите значение' : !$v.login.minLength ? 'Логин должен содержать больше 8 символов' : null" 
+      ></app-input>
+
+      <app-input
+        class="c-form__input"
+        :value="password"
+        @input="$v.password.$model = $event"
+        :invalid="(!$v.password.minLength || !$v.password.required) && formInvalid"
+        icon="icon icon-ic_fluent_lock_closed_20_regular"
+        label="Пароль"
+        type="password"
+        :error="!$v.password.required ? 'Введите значение' : !$v.password.minLength ? 'Пароль должен содержать не менее 8 символов' : null" 
+      ></app-input>
+      <!-- <div class="input-wrapper">
         <input
           placeholder=" "
           class="input input-withIcon"
@@ -35,9 +55,9 @@
         <div v-if="!$v.login.minLength && formInvalid" class="error-tooltip">
           Логин должен содержать больше 6 символов
         </div>
-      </div>
+      </div> -->
 
-      <div class="input-wrapper">
+      <!-- <div class="input-wrapper">
         <input
           placeholder=" "
           class="input input-withIcon"
@@ -64,7 +84,7 @@
         <div v-if="!$v.password.minLength && formInvalid" class="error-tooltip">
           Пароль должен содержать больше 6 символов
         </div>
-      </div>
+      </div> -->
 
       <div class="c-remember">
         <app-checkbox
@@ -99,12 +119,14 @@ import { mapActions } from "vuex";
 
 import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
+import AppInput from "@/components/controls/AppInput.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
 
 export default {
   components: {
     AppCheckbox,
+    AppInput,
     FormMessage,
     FormBase,
   },

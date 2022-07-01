@@ -29,7 +29,6 @@ export default {
   z-index: 1;
 
   display: flex;
-  text-align: center;
   align-items: center;
   justify-content: center;
 

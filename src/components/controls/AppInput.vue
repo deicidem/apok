@@ -1,42 +1,59 @@
 <template>
-  <label class="input-wrapper">
-    <span class="input-label">{{ label }}</span>
-
-    <masked-input
-      v-if="mask != ''"
-      :mask="mask"
-      :placeholder="placeholder"
-      type="text"
-      class="input"
+<div class="c-block">
+  <label class="c-input-wrapper">
+    <input
+      placeholder=" "
+      class="c-input c-input-withIcon"
       v-model="localValue"
+      :type="type"
+      :class="{ 'c-invalid': invalid }"
     />
-    <input v-else type="text" class="input" v-model="localValue" />
+    <div class="c-input-label">{{ label }}</div>
+
+    <i v-if="icon != null" class="c-input-img" :class="iconClass"></i>
+
+    
   </label>
+  <div v-if="error != null && invalid" class="c-error-tooltip">
+    {{ error }}
+  </div>
+</div>
+  
 </template>
 
 <script>
-import MaskedInput from "vue-masked-input";
-
 export default {
-  components: {
-    MaskedInput,
-  },
   props: {
     value: String,
     label: String,
-    mask: {
-      type: [String, Object],
-      default: "",
-    },
-    placeholder: {
+    invalid: Boolean,
+    error: String,
+    type: {
       type: String,
-      default: "",
+      default: "text"
     },
+    icon: {
+      type: String,
+      default: null
+    }
   },
   data() {
     return {
       localValue: null,
     };
+  },
+  computed: {
+    iconClass() {
+      let res = "";
+      if (this.icon != null) {
+        res += this.icon;
+        if (this.invalid) {
+          res += " c-invalid-icon";
+        }
+      }
+      return res;
+
+    }
   },
   mounted() {
     this.localValue = this.value;
@@ -53,38 +70,110 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  margin-top: 2px;
-  padding: 8px 10px;
+.c-block {
+  position: relative;
+}
+
+.c-input {
+  display: block;
+  padding: 8px 15px;
 
   font-size: 14px;
 
-  border-radius: 10px;
-  border: none;
-  border: 1px solid rgb($text-grey, 0.2);
+  border-radius: 7px;
+  border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
-  &:active {
-    outline: 1px solid $color-main;
-  }
-  &-wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 20px;
-    &:focus-within .input-label {
-      color: $color-main;
-    }
+  &[type=password] {
+    font-family:Verdana,sans-serif;
   }
   &:focus-visible {
-    outline: 1px solid $color-main;
+    border: 1px solid $color-main;
+    outline: none;
+  }
+  &:focus ~ .c-input-label,
+  &:not(:placeholder-shown) ~ .c-input-label {
+    color: $color-main;
+    font-size: 13px;
+    top: -22px;
+  }
+  &-img {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-main;
+    font-size: 30px;
+  }
+  &-withIcon {
+    padding: 15px 36px 15px 24px;
+    width: 100%;
+  }
+  &-withoutIcon {
+    padding-left: 8px;
+    height: 35px;
   }
   &-label {
-    display: inline-block;
-    margin-left: 10px;
-
-    font-size: 12px;
-    color: $text-grey;
+    display: none;
   }
+  &-wrapper {
+    display: block;
+    position: relative;
+    &:focus-within .c-input-label {
+      color: $color-main;
+      font-size: 13px;
+      top: -22px;
+    }
+  }
+}
+.c-input-label {
+  text-align: left;
+  position: absolute;
+  top: 14px;
+  left: 0;
+
+  display: inline-block;
+  padding-left: 24px;
+
+  font-size: 14px;
+  color: $text-grey;
+
+  transition: 0.3s ease all;
+  -moz-transition: 0.3s ease all;
+  -webkit-transition: 0.3s ease all;
+  pointer-events: none;
+}
+.c-invalid {
+  border: 1px solid $color-red;
+  transition: all 1s ease-out;
+  color: $color-red;
+  &:focus-visible {
+    border: 1px solid $color-red;
+  }
+  &:focus ~ .c-input-label,
+  &:not(:placeholder-shown) ~ .c-input-label {
+    color: $color-red;
+  }
+  
+}
+.c-invalid-icon {
+  color: $color-red;
+}
+.c-error {
+  &-tooltip {
+    margin: 2px 0 0 0;
+    text-align: left;
+    font-size: 12px;
+    color: $color-red;
+    p {
+      margin: 0;
+    }
+  }
+}
+.c-input:active .c-input-label {
+  display: block;
+}
+.c-input-wrapper:focus-within svg path {
+  fill: $color-main;
 }
 </style>

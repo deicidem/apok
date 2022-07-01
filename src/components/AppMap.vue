@@ -193,15 +193,16 @@ export default {
     onMouseMove(e) {
       let lat = e.latlng.lat.toFixed(2);
       let lng = e.latlng.lng.toFixed(2);
-      if (this.cursorUpdate == null)  {
-        this.cursorPosition = {lat, lng}
-        this.cursorUpdate = Date.now();
-      } else {
-        if ((Date.now() - this.cursorUpdate) > 100) {
-          this.cursorPosition = {lat, lng};
-          this.cursorUpdate = Date.now();
-        }
-      }
+      console.log(lat, lng);
+      // if (this.cursorUpdate == null)  {
+      //   this.cursorPosition = {lat, lng}
+      //   this.cursorUpdate = Date.now();
+      // } else {
+      //   if ((Date.now() - this.cursorUpdate) > 100) {
+      //     this.cursorPosition = {lat, lng};
+      //     this.cursorUpdate = Date.now();
+      //   }
+      // }
     },
 
     updateBounds(bounds) {

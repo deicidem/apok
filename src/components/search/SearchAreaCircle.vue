@@ -220,11 +220,6 @@ export default {
     &:not(:placeholder-shown) ~ label {
       color: $color-red;
     }
-    &:focus ~ .invalidIcon {
-      path {
-        fill: $color-red;
-      }
-    }
   }
   .invalidLetter {
     background: $gradient-r;

@@ -26,41 +26,34 @@ export default {
   top: 0;
   left: 0;
   z-index: 1;
-
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-
   background: url("@/assets/img/background/katod.png");
   background-size: cover;
-
 }
+
 .invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;
   color: $color-red;
+
   &:focus ~ .input-label,
   &:not(:placeholder-shown) ~ label {
     color: $color-red;
   }
-  &:focus ~ .invalidIcon {
-    path {
-      fill: $color-red;
-    }
-  }
 }
+
 .invalidIcon {
   position: absolute;
   max-width: 26px;
   right: 20px;
   top: 50%;
   transform: translate(-50%, -50%);
-  path {
-    fill: $color-red;
-  }
 }
+
 .error {
   &-tooltip {
     position: absolute;
@@ -82,6 +75,7 @@ export default {
     color: $white;
     font-size: 14px;
     border-radius: 10px;
+
     p {
       margin-left: 8px;
     }

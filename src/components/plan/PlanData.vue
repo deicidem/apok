@@ -58,7 +58,7 @@
     </div>
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
-        <i class="icon icon-ic_fluent_chevron_right_20_filled"></i>
+        <i class="icon icon-ic_fluent_chevron_left_20_filled"></i>
       </div>
     </div>
   </div>

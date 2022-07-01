@@ -1,13 +1,13 @@
 <template>
-<sidebar-base :loaded="loaded">
+  <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Поиск снимков</h2>
       <router-link to="/main/results" custom v-slot="{ navigate }">
-        <div class="search-result" @click="navigate">
-          <span class="search-result__subtitle">Результат</span>
-          <div class="search-result__arrow">
-            <i class="fa-solid fa-angles-right"></i>
+        <div class="back search-result" @click="navigate">
+          <div class="back-arrow-w">
+            <i class="icon icon-ic_fluent_arrow_right_20_regular"></i>
           </div>
+          <span class="back-subtitle-w">Результат</span>
         </div>
       </router-link>
     </template>
@@ -28,7 +28,6 @@
       </div>
     </template>
   </sidebar-base>
-
 </template>
 
 <script>
@@ -64,7 +63,7 @@ export default {
   },
   data() {
     return {
-      loaded: false
+      loaded: false,
     };
   },
 };
@@ -81,42 +80,39 @@ export default {
     top: 50%;
     right: 30px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 18px;
-    color: #fff;
-    &__subtitle {
-      margin-right: 10px;
-      color: #fff;
-      font-size: 14px;
-    }
   }
+
   &-title {
     margin: 0 0 20px 0;
     font-weight: 400;
     font-size: 1.25rem;
     color: $black;
   }
+
   &-wrapper {
     padding: 30px;
   }
+
   &-content {
     width: 100%;
     height: 100%;
   }
+
   &-buttons {
     margin-top: 20px;
     display: flex;
     justify-content: space-evenly;
   }
 }
+
 @media screen and (max-width: 1440px) {
   .search {
     &-wrapper {
       padding: 20px;
     }
+    
     &-title {
       font-size: 1.125rem;
       line-height: 130%;

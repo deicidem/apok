@@ -16,7 +16,7 @@
         </div>
         <div class="button__wrapper c-btn" >
           <button class="button button-svg button-white-gr" @click="$emit('center')">
-            <i class="icon icon-ic_fluent_center_horizontal_20_regular"></i>
+            <i class="icon icon-ic_fluent_my_location_20_regular"></i>
           </button>
           <span class="tooltiptext">Показать</span>
         </div>

@@ -89,7 +89,7 @@
                     :class="results[i].polygonActive ? 'active' : ''"
                     @click="onPolygonButtonClick(i, item.id, item.geography)"
                   >
-                    <i class="icon icon-ic_fluent_border_none_20_regular"></i>
+                    <i class="icon icon-ic_fluent_select_object_20_regular"></i>
                   </button>
                   <span class="tooltiptext">Границы</span>
                 </div>
@@ -122,7 +122,7 @@
                     :class="results[i].cardActive ? 'active' : ''"
                     @click="onCardButtonClick(i)"
                   >
-                    <i class="icon icon-ic_fluent_more_circle_20_regular"></i>
+                    <i class="icon icon-ic_fluent_textbox_more_20_regular"></i>
                   </button>
                   <span class="tooltiptext">Подробнее</span>
                 </div>

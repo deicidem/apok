@@ -86,6 +86,7 @@ export default {
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 18px;
+    color: #fff;
     &__subtitle {
       margin-right: 10px;
       color: #fff;

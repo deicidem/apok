@@ -1,14 +1,13 @@
 <template>
-<sidebar-base :loaded="loaded">
+  <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Мои файлы</h2>
     </template>
     <template v-slot:popups>
-            <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
-
+      <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
     <template v-slot:content>
-       <div class="files__wrapper">
+      <div class="files__wrapper">
         <app-table>
           <thead>
             <tr>
@@ -61,33 +60,34 @@
               <td>{{ item.type }}</td>
               <td>{{ item.date.toLocaleDateString() }}</td>
               <td>
-                <div class="button__wrapper">
-                  <button
-                    class="button button-svg button-svg-r"
+                  <app-button
+                    type="button-svg button-svg-r"
                     :disabled="!item.deletable || pending"
                     @click="onDelete(i)"
+                    :tooltip="item.deletable ? 'Удалить' : 'Файл используется'"
                   >
                     <i class="icon icon-ic_fluent_delete_20_regular"></i>
-                  </button>
-                  <span class="tooltiptext tooltiptext-r" v-if="item.deletable">
-                    {{ item.deletable ? "Удалить" : "Файл используется" }}
-                  </span>
-                </div>
+                  </app-button>
               </td>
             </tr>
           </tbody>
         </app-table>
         <div class="files-buttons">
-          <button
-            class="button button-r"
+          <app-button
+            class="files-button"
+            type="button-r"
             :disabled="noItemsSelected || notDeletableItemSelected || pending"
             @click="onDeleteBanch"
           >
             Удалить выбранное
-          </button>
-          <button class="button button-g" :disabled="noItemsSelected || pending">
+          </app-button>
+          <app-button
+            class="files-button"
+            type="button-g"
+            :disabled="noItemsSelected || pending"
+          >
             Добавить в избранное
-          </button>
+          </app-button>
         </div>
       </div>
     </template>
@@ -100,12 +100,14 @@ import AppTable from "@/components/table/AppTable";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
+import AppButton from "@/components/controls/AppButton";
 import SidebarBase from "@/components/SidebarBase.vue";
 export default {
   name: "SidebarFiles",
   components: {
     AppCheckbox,
     AppTable,
+    AppButton,
     AppDeleteConfirmation,
     // VsPagination,
     SidebarBase,
@@ -135,7 +137,7 @@ export default {
         },
       ],
       pending: false,
-      loaded: false
+      loaded: false,
     };
   },
   computed: {
@@ -202,7 +204,7 @@ export default {
         this.pending = true;
         await this.deleteFile(i);
         this.pending = false;
-      } 
+      }
     },
 
     async onDeleteBanch() {
@@ -215,7 +217,7 @@ export default {
         this.pending = true;
         await this.deleteFiles();
         this.pending = false;
-      } 
+      }
     },
 
     selectAll(val) {
@@ -252,14 +254,15 @@ export default {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    .button {
-      width: auto;
-      margin-right: 30px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+    
   }
+  &-button {
+    width: auto;
+    margin-right: 30px;
+    &:last-child {
+      margin-right: 0;
+    }
+    }
   &-header {
     position: relative;
   }
@@ -314,21 +317,6 @@ export default {
       height: inherit;
       overflow-x: auto;
       margin-top: 0px;
-    }
-  }
-  &-button {
-    margin: auto;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: $gradient-w;
-    &.active {
-      background: $color-main;
-      svg path {
-        fill: $white;
-      }
     }
   }
   .green {

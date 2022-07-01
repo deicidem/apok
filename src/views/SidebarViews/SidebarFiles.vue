@@ -52,14 +52,14 @@
               <td>{{ item.type }}</td>
               <td>{{ item.date.toLocaleDateString() }}</td>
               <td>
-                  <app-button
-                    type="button-svg button-svg-r"
-                    :disabled="!item.deletable || pending"
-                    @click="onDelete(i)"
-                    :tooltip="item.deletable ? 'Удалить' : 'Файл используется'"
-                  >
-                    <i class="icon icon-ic_fluent_delete_20_regular"></i>
-                  </app-button>
+                <app-button
+                  type="button-svg button-svg-r"
+                  :disabled="!item.deletable || pending"
+                  @click="onDelete(i)"
+                  :tooltip="item.deletable ? 'Удалить' : 'Файл используется'"
+                >
+                  <i class="icon icon-ic_fluent_delete_20_regular"></i>
+                </app-button>
               </td>
             </tr>
           </tbody>
@@ -72,16 +72,10 @@
             @click="onDeleteBanch"
           >
             Удалить выбранное
-
           </app-button>
           <app-button
             class="files-button"
             type="button-g"
-
-          </button>
-          <button
-            class="button button-g"
-
             :disabled="noItemsSelected || pending"
           >
             Добавить в избранное
@@ -253,7 +247,6 @@ export default {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-    
   }
   &-button {
     width: auto;
@@ -261,7 +254,7 @@ export default {
     &:last-child {
       margin-right: 0;
     }
-    }
+  }
   &-header {
     position: relative;
   }

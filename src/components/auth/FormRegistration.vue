@@ -9,161 +9,82 @@
     <div class="c-title">Регистрация</div>
 
     <form class="c-form" @submit.prevent="submitForm()">
-      <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.firstName.$model"
-          :class="{
-            invalid: !$v.firstName.required && formInvalid,
-          }"
-        />
-        <label class="input-label">Имя</label>
+      <app-input
+        class="c-form__input"
+        :value="firstName"
+        @input="$v.firstName.$model = $event"
+        :invalid="!$v.firstName.required && formInvalid"
+        icon="icon icon-ic_fluent_person_20_regular"
+        label="Имя"
+        :error="!$v.firstName.required ? 'Введите значение' : null"
+      >
+      </app-input>
 
-        <i
-          class="icon icon-ic_fluent_person_20_regular"
-          :class="
-            !$v.firstName.required && formInvalid ? 'invalidIcon' : 'input-img'
-          "
-        ></i>
+      <app-input
+        class="c-form__input"
+        :value="lastName"
+        @input="$v.lastName.$model = $event"
+        :invalid="!$v.lastName.required && formInvalid"
+        icon="icon icon-ic_fluent_person_20_regular"
+        label="Фамилия"
+        :error="!$v.lastName.required ? 'Введите значение' : null"
+      >
+      </app-input>
 
-        <div v-if="!$v.firstName.required && formInvalid" class="error-tooltip">
-          <span>Введите значение</span>
-        </div>
-      </div>
+      <app-input
+        class="c-form__input"
+        :value="mail"
+        @input="$v.mail.$model = $event"
+        :invalid="(!$v.mail.email || !$v.mail.required) && formInvalid"
+        icon="icon icon-ic_fluent_mail_20_regular"
+        label="Почтовый адрес"
+        :error="
+          !$v.mail.required
+            ? 'Введите значение'
+            : !$v.mail.email
+            ? 'Введите корректный почтовый адрес'
+            : null
+        "
+      >
+      </app-input>
 
-      <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.lastName.$model"
-          :class="{
-            invalid: !$v.lastName.required && formInvalid,
-          }"
-        />
-        <label class="input-label">Фамилия</label>
+      <app-input
+        class="c-form__input"
+        :value="password.password"
+        @input="$v.password.password.$model = $event"
+        :invalid="
+          (!$v.password.password.minLength || !$v.password.password.required) &&
+          formInvalid
+        "
+        icon="icon icon-ic_fluent_mail_20_regular"
+        label="Пароль"
+        :error="
+          !$v.password.password.required
+            ? 'Введите значение'
+            : !$v.password.password.minLength
+            ? 'Пароль должен содержать не меньше 8 символов'
+            : null
+        "
+      ></app-input>
 
-        <i
-          class="icon icon-ic_fluent_person_20_regular"
-          :class="
-            !$v.lastName.required && formInvalid ? 'invalidIcon' : 'input-img'
-          "
-        ></i>
-
-        <div v-if="!$v.lastName.required && formInvalid" class="error-tooltip">
-          <span>Введите значение</span>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.mail.$model"
-          :class="{
-            invalid: (!$v.mail.email || !$v.mail.required) && formInvalid,
-          }"
-        />
-        <label class="input-label">Почтовый адрес</label>
-
-        <i
-          class="icon icon-ic_fluent_mail_20_regular"
-          :class="
-            (!$v.mail.email || !$v.mail.required) && formInvalid
-              ? 'invalidIcon'
-              : 'input-img'
-          "
-        ></i>
-
-        <div v-if="!$v.mail.required && formInvalid" class="error-tooltip">
-          <span>Введите значение</span>
-        </div>
-        <div v-if="!$v.mail.email && formInvalid" class="error-tooltip">
-          <span>Введите корректный почтовый адрес</span>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.password.password.$model"
-          :class="{
-            invalid:
-              (!$v.password.password.minLength ||
-                !$v.password.password.required) &&
-              formInvalid,
-          }"
-        />
-        <label class="input-label">Пароль</label>
-
-        <i
-          class="icon icon-ic_fluent_lock_closed_20_regular"
-          :class="
-            (!$v.password.password.minLength ||
-              !$v.password.password.required) &&
-            formInvalid
-              ? 'invalidIcon'
-              : 'input-img'
-          "
-        ></i>
-
-        <div
-          v-if="!$v.password.password.required && formInvalid"
-          class="error-tooltip"
-        >
-          <span>Введите значение</span>
-        </div>
-
-        <div
-          v-if="!$v.password.password.minLength && formInvalid"
-          class="error-tooltip"
-        >
-          <span>
-            Пароль должен содержать более
-            {{ $v.password.password.$params.minLength.min }} символов
-          </span>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.password.confirm.$model"
-          :class="{
-            invalid:
-              (!$v.password.confirm.sameAsPassword ||
-                !$v.password.confirm.required) &&
-              formInvalid,
-          }"
-        />
-        <label class="input-label">Повторите пароль</label>
-        <i
-          class="icon icon-ic_fluent_lock_closed_20_regular"
-          :class="
-            (!$v.password.confirm.sameAsPassword ||
-              !$v.password.confirm.required) &&
-            formInvalid
-              ? 'invalidIcon'
-              : 'input-img'
-          "
-        ></i>
-
-        <div
-          v-if="!$v.password.confirm.required && formInvalid"
-          class="error-tooltip"
-        >
-          <span>Введите значение</span>
-        </div>
-
-        <div
-          v-if="!$v.password.confirm.sameAsPassword && formInvalid"
-          class="error-tooltip"
-        >
-          <span>Пароли не совпадают</span>
-        </div>
-      </div>
+      <app-input
+        class="c-form__input"
+        :value="password.confirm"
+        @input="$v.password.confirm.$model = $event"
+        :invalid="
+          (!$v.password.confirm.sameAs || !$v.password.confirm.required) &&
+          formInvalid
+        "
+        icon="icon icon-ic_fluent_mail_20_regular"
+        label="Повторите пароль"
+        :error="
+          !$v.password.confirm.required
+            ? 'Введите значение'
+            : !$v.password.confirm.sameAsPassword
+            ? 'Пароли не совпадают'
+            : null
+        "
+      ></app-input>
 
       <button
         class="button button-g c-form__item"
@@ -187,7 +108,7 @@
 
 <script>
 import { mapActions } from "vuex";
-
+import AppInput from "@/components/controls/AppInput.vue";
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
@@ -196,6 +117,7 @@ export default {
   components: {
     FormMessage,
     FormBase,
+    AppInput,
   },
   data() {
     return {

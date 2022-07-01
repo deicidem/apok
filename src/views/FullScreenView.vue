@@ -2,11 +2,11 @@
   <page-base>
     <template v-slot:header>
       <router-link to="/main/tasks" custom v-slot="{ navigate }">
-        <div class="page-back" @click="navigate">
-          <div class="page-back-arrow">
-            <i class="fa-solid fa-angles-left"></i>
+        <div class="back" @click="navigate">
+          <div class="back-arrow">
+            <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
-          <span class="page-back-subtitle">Назад</span>
+          <span class="back-subtitle">Назад</span>
         </div>
       </router-link>
 
@@ -60,6 +60,7 @@ export default {
   background: $white;
   border-radius: 10px;
   box-shadow: $shadow-big;
+
   &-wrapper {
     padding: 10px 50px;
     margin: 0 auto;
@@ -68,30 +69,17 @@ export default {
     width: 100%;
   }
 }
-.page {
-  &-back {
-    margin-bottom: 0px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &-arrow {
-      color: $color-main;
-      font-size: 20px;
-    }
-    &-subtitle {
-      margin: 0 0 0 10px;
-      color: $color-main;
-    }
-  }
-}
+
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;
     &-title {
       font-size: 18px;
     }
+
     &-wrapper {
       max-width: 1200px;
+
       &__header {
         max-width: 1200px;
       }

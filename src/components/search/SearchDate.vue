@@ -65,7 +65,7 @@
               >До:</label
             >
             <div class="search-date__background">
-              <i class="icon icon-ic_fluent_calendar_rtl_20_regular"></i>
+              <i class="icon icon-ic_fluent_calendar_ltr_20_regular"></i>
             </div>
           </div>
         </div>
@@ -323,7 +323,7 @@ label.active {
       align-items: center;
       i {
         color: $white;
-        font-size: 24px;
+        font-size: 20px;
       }
     }
   }
@@ -461,23 +461,6 @@ label.active {
   .vdp-datepicker input {
     width: 140px;
     height: 28px;
-  }
-  .search {
-    &-date {
-      padding: 14px;
-      &__back {
-        top: 18px;
-
-        padding: 4px;
-        cursor: pointer;
-      }
-      &__arrow {
-        margin: 0 16px;
-        img {
-          max-height: 28px;
-        }
-      }
-    }
   }
   .select-data {
     width: 140px;

@@ -193,7 +193,8 @@ export default {
     onMouseMove(e) {
       let lat = e.latlng.lat.toFixed(2);
       let lng = e.latlng.lng.toFixed(2);
-      console.log(lat, lng);
+      return {lat, lng};
+      // console.log(lat, lng);
       // if (this.cursorUpdate == null)  {
       //   this.cursorPosition = {lat, lng}
       //   this.cursorUpdate = Date.now();

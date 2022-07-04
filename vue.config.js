@@ -14,6 +14,16 @@ module.exports = defineConfig({
         onProxyReq: function(request) {
           request.setHeader("origin", "http://192.168.1.104");
         },
+      },
+      '/images': {
+        target: 'http://192.168.1.104/apok_backend_php/storage/app/public/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/images': ''
+        },
+        onProxyReq: function(request) {
+          request.setHeader("origin", "http://192.168.1.104");
+        },
       }
     }
   },

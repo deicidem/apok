@@ -77,11 +77,6 @@
           <app-button
             class="files-button"
             type="button-g"
-
-          </button>
-          <button
-            class="button button-g"
-
             :disabled="noItemsSelected || pending"
           >
             Добавить в избранное

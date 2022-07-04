@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+
 import vuescroll from "vuescroll";
 import "vuescroll/dist/vuescroll.css";
 import { mapGetters } from "vuex";

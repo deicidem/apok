@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import * as userApi from "@/api/user";
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,7 +19,8 @@ const routes = [
       },
       {
         path: 'tasks',
-        component: () => import('@/views/SidebarViews/SidebarTasks')
+        component: () => import('@/views/SidebarViews/SidebarTasks'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'plan',
@@ -31,7 +32,8 @@ const routes = [
       },
       {
         path: 'alerts',
-        component: () => import('@/views/SidebarViews/SidebarAlerts')
+        component: () => import('@/views/SidebarViews/SidebarAlerts'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'results',
@@ -39,11 +41,13 @@ const routes = [
       },
       {
         path: 'user',
-        component: () => import('@/views/SidebarViews/SidebarUser')
+        component: () => import('@/views/SidebarViews/SidebarUser'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'files',
-        component: () => import('@/views/SidebarViews/SidebarFiles')
+        component: () => import('@/views/SidebarViews/SidebarFiles'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'area',
@@ -89,6 +93,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta?.requiresAuth == true && to.name !== 'login') {
+    let {data} = await userApi.isAuth();
+    if (!data.isAuth) {
+      next({ name: 'login' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 })
 
 export default router

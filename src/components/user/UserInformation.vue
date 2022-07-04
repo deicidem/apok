@@ -91,8 +91,8 @@ export default {
     ...mapGetters("users", ["getUser"]),
   },
   mounted() {
-    this.user.firstName.value = this.getUser.first_name;
-    this.user.lastName.value = this.getUser.last_name;
+    this.user.firstName.value = this.getUser.firstName;
+    this.user.lastName.value = this.getUser.lastName;
     this.user.email.value = this.getUser.email;
   },
   methods: {

@@ -263,12 +263,14 @@ export default {
       }
     },
   },
-  async mounted() {
+  async created() {
+    console.log('start');
     if (this.tasks == null) {
       await this.load();
     } else {
       await this.reload();
     }
+    console.log('end');
     this.loaded = true;
   },
 };

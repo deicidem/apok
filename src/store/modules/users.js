@@ -4,7 +4,6 @@ export default {
   namespaced: true,
   state: {
     user: null,
-    
   },
   getters: {
     getUser(state) {
@@ -19,7 +18,6 @@ export default {
     setUser(state, user) {
       state.user = user;
     },
-    
   },
   actions: {
     

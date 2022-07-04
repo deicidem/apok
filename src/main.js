@@ -17,9 +17,6 @@ store.dispatch('users/setCookie').then(async () => {
 }).then(() => {
   return store.dispatch('users/auth');
 }).then(() => {
-  return store.dispatch('files/loadFiles');
-}).then(() => {
-
   new Vue({
     router,
     store,

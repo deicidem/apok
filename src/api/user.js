@@ -7,7 +7,9 @@ export async function setCookie() {
 export async function auth() {
   return await server.get('user/auth');
 }
-
+export async function isAuth() {
+  return await server.get('user/check-auth');
+}
 export async function login({email, password, remember}) {
   return await server.post('login', {
     email,

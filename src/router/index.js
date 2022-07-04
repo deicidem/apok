@@ -76,6 +76,10 @@ const routes = [
     component: () => import('@/views/FullScreenView.vue')
   },
   {
+    path: '/admin',
+    component: () => import('@/components/admin/AdminMain.vue')
+  },
+  {
 		path: '*',
 		component: () => import('@/views/E404View.vue')
 	},

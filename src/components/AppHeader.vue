@@ -6,7 +6,7 @@
       Автоматизация процессов оценки качества данных ДЗЗ
     </h1>
 
-    <div class="header-items">
+    <div v-if="showMenu == true" class="header-items">
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -17,15 +17,18 @@
               />
             </router-link>
           </li>
+
           <li class="header-nav__item">
             <router-link to="/tutorial">Руководства пользователя</router-link>
           </li>
         </ul>
       </nav>
+
       <div class="header-menu">
         <div class="header-menu__text" v-if="isAuth">
           Добро пожаловать, {{ getUser.first_name }}!
         </div>
+
         <div class="header-menu__buttons">
           <div
             class="button__wrapper header-menu__button-wrapper"
@@ -39,6 +42,7 @@
             </button>
             <span class="tooltiptext">Выйти</span>
           </div>
+
           <div class="button__wrapper header-menu__button-wrapper" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <button
@@ -59,6 +63,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  props: ["showMenu"],
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
   },
@@ -87,24 +92,29 @@ export default {
   box-shadow: $shadow-big;
   color: $white;
 }
+
 .user-box {
   display: none;
 }
+
 .auth-wrapper {
   position: absolute;
   right: 70px;
   top: 170px;
   z-index: 30;
 }
+
 .search-box {
   display: none;
 }
+
 .header {
   z-index: 10;
   position: relative;
   &-user {
     display: none;
   }
+
   &-items {
     display: flex;
     align-items: center;
@@ -114,6 +124,7 @@ export default {
     background: $white;
     box-shadow: $shadow-big;
   }
+
   &-nav {
     ul {
       display: flex;
@@ -122,11 +133,14 @@ export default {
       margin: 0;
 
       list-style: none;
+
       li {
         margin-right: 50px;
+
         a {
           color: $black;
           font-size: 20px;
+
           img {
             height: 60px;
           }
@@ -137,11 +151,13 @@ export default {
   &-menu {
     display: flex;
     align-items: center;
+
     &__text {
       margin-right: 50px;
       font-size: 1.25rem;
       color: $black;
     }
+
     &__button {
       font-size: 26px;
       height: 46px;
@@ -171,6 +187,7 @@ export default {
     &-items {
       padding: 10px 80px;
     }
+
     &-menu {
       &__button {
         width: 34px;

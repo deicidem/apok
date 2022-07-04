@@ -1,5 +1,5 @@
 <template>
-  <page-base>
+  <page-with-scroll :show-menu="true">
     <template v-slot:header>
       <router-link to="/main/tasks" custom v-slot="{ navigate }">
         <div class="back" @click="navigate">
@@ -26,15 +26,15 @@
     <template v-slot:content>
       <img :src="$route.query.path" :alt="$route.query.title" class="image" />
     </template>
-  </page-base>
+  </page-with-scroll>
 </template>
 
 <script>
-import PageBase from "@/components/PageBase.vue";
 import { mapGetters } from "vuex";
+import PageWithScroll from "../components/PageWithScroll.vue";
 export default {
   components: {
-    PageBase,
+    PageWithScroll,
   },
   computed: {
     ...mapGetters(["scrollOps"]),
@@ -73,6 +73,7 @@ export default {
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;
+
     &-title {
       font-size: 18px;
     }

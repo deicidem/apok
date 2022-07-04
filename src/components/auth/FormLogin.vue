@@ -1,5 +1,5 @@
 <template>
-  <form-base>
+  <form-base :show-menu="false">
     <form-message
       v-show="showMessage"
       :status="formInvalid ? 'error' : 'valid'"
@@ -16,74 +16,32 @@
         :invalid="(!$v.login.minLength || !$v.login.required) && formInvalid"
         icon="icon icon-ic_fluent_person_20_regular"
         label="Логин"
-        :error="!$v.login.required ? 'Введите значение' : !$v.login.minLength ? 'Логин должен содержать больше 8 символов' : null" 
+        :error="
+          !$v.login.required
+            ? 'Введите значение'
+            : !$v.login.minLength
+            ? 'Логин должен содержать больше 8 символов'
+            : null
+        "
       ></app-input>
-      
+
       <app-input
         class="c-form__input"
         :value="password"
         @input="$v.password.$model = $event"
-        :invalid="(!$v.password.minLength || !$v.password.required) && formInvalid"
+        :invalid="
+          (!$v.password.minLength || !$v.password.required) && formInvalid
+        "
         icon="icon icon-ic_fluent_lock_closed_20_regular"
         label="Пароль"
-        :error="!$v.password.required ? 'Введите значение' : !$v.password.minLength ? 'Пароль должен содержать не менее 8 символов' : null" 
+        :error="
+          !$v.password.required
+            ? 'Введите значение'
+            : !$v.password.minLength
+            ? 'Пароль должен содержать не менее 8 символов'
+            : null
+        "
       ></app-input>
-      <!-- <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.login.$model"
-          :class="{
-            invalid: (!$v.login.minLength || !$v.login.required) && formInvalid,
-          }"
-        />
-        <label class="input-label">Логин</label>
-
-        <i
-          class="icon icon-ic_fluent_person_20_regular"
-          :class="
-            (!$v.login.minLength || !$v.login.required) && formInvalid
-              ? 'invalidIcon'
-              : 'input-img'
-          "
-        ></i>
-
-        <div v-if="!$v.login.required && formInvalid" class="error-tooltip">
-          Введите значение
-        </div>
-        <div v-if="!$v.login.minLength && formInvalid" class="error-tooltip">
-          Логин должен содержать больше 6 символов
-        </div>
-      </div> -->
-
-      <!-- <div class="input-wrapper">
-        <input
-          placeholder=" "
-          class="input input-withIcon"
-          v-model.trim="$v.password.$model"
-          :class="{
-            invalid:
-              (!$v.password.minLength || !$v.password.required) && formInvalid,
-          }"
-        />
-        <label class="input-label">Пароль</label>
-
-        <i
-          class="icon icon-ic_fluent_lock_closed_20_regular"
-          :class="
-            (!$v.password.minLength || !$v.password.required) && formInvalid
-              ? 'invalidIcon'
-              : 'input-img'
-          "
-        ></i>
-
-        <div v-if="!$v.password.required && formInvalid" class="error-tooltip">
-          Введите значение
-        </div>
-        <div v-if="!$v.password.minLength && formInvalid" class="error-tooltip">
-          Пароль должен содержать больше 6 символов
-        </div>
-      </div> -->
 
       <div class="c-remember">
         <app-checkbox

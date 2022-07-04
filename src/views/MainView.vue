@@ -1,32 +1,37 @@
 <template>
-  <div class="hero-wrapper">
-    <section class="hero">
-      <portal-target name="popup"> </portal-target>
-      <portal-target name="popup-card"> </portal-target>
-      <portal-target name="password-popup"></portal-target>
-      <div class="sidebar-block" :class="sidebarBlock">
-        <app-sidebar
-          @close="sidebarBlockClass()"
-          @open="sidebarBlockClass()"
-        ></app-sidebar>
-      </div>
+  <page-base :show-menu="true">
+    <div class="hero-wrapper">
+      <section class="hero">
+        <portal-target name="popup"> </portal-target>
+        <portal-target name="popup-card"> </portal-target>
+        <portal-target name="password-popup"></portal-target>
+        <div class="sidebar-block" :class="sidebarBlock">
+          <app-sidebar
+            @close="sidebarBlockClass()"
+            @open="sidebarBlockClass()"
+          ></app-sidebar>
+        </div>
 
-      <div ref="wrap" class="map" :class="mapBlock">
-        <app-map @ready="getRef($event)"></app-map>
-      </div>
-    </section>
-  </div>
+        <div ref="wrap" class="map" :class="mapBlock">
+          <app-map @ready="getRef($event)"></app-map>
+        </div>
+      </section>
+    </div>
+  </page-base>
 </template>
 
 <script>
 import AppMap from "@/components/AppMap.vue";
 import AppSidebar from "@/components/AppSidebar.vue";
+import PageBase from "@/components/PageBase.vue";
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "MainView",
   components: {
     AppMap,
     AppSidebar,
+    PageBase,
   },
   data() {
     return {
@@ -81,6 +86,7 @@ export default {
   height: 100%;
   position: relative;
   overflow: hidden;
+
   &-wrapper {
     width: 100%;
     height: 100%;
@@ -88,6 +94,7 @@ export default {
     box-shadow: $shadow-big;
   }
 }
+
 .map {
   position: absolute;
   right: 0;
@@ -98,16 +105,19 @@ export default {
   width: 100%;
   max-width: calc(100% - 50px);
   margin-left: auto;
+
   &.collapsed {
     max-width: calc(100% - 800px);
   }
 }
+
 .sidebar-block {
   position: relative;
   z-index: 5;
   height: 100%;
 
   max-width: 800px;
+
   &.collapsed {
     box-shadow: $shadow-big;
     max-width: 50px;
@@ -118,6 +128,7 @@ export default {
   .sidebar-block {
     max-width: 650px;
   }
+
   .map {
     &.collapsed {
       max-width: calc(100% - 650px);

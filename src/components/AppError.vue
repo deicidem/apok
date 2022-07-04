@@ -28,6 +28,8 @@
   box-shadow: $shadow-big;
   &-wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column ;
   }
   &-title {
     margin: 0;

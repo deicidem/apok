@@ -1,16 +1,20 @@
 <template>
-  <section class="authorize">
-    <form-registration></form-registration>
-  </section>
+  <page-base>
+    <section class="authorize">
+      <form-registration></form-registration>
+    </section>
+  </page-base>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import FormRegistration from "@/components/auth/FormRegistration";
+import PageBase from "@/components/PageBase.vue";
 
 export default {
   components: {
     FormRegistration,
+    PageBase,
   },
   methods: {
     ...mapActions("users", {

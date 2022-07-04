@@ -1,34 +1,16 @@
 <template>
   <div class="wrapper">
-    <app-header @click="height()" ref="header"></app-header>
-    <div class="content" :style="height">
-      <router-view></router-view>
-      <app-error></app-error>
-    </div>
+    <router-view></router-view>
+    <app-error></app-error>
   </div>
 </template>
 
 <script>
-import AppHeader from "@/components/AppHeader.vue";
 import AppError from "@/components/AppError.vue";
 
 export default {
   components: {
-    AppHeader,
     AppError,
-  },
-  data() {
-    return {
-      contentHeight: 0,
-    };
-  },
-  computed: {
-    height() {
-      return { maxHeight: "calc(100% - " + this.contentHeight + "px)" };
-    },
-  },
-  mounted() {
-    this.contentHeight = this.$refs.header.$el.offsetHeight;
   },
 };
 </script>
@@ -86,6 +68,7 @@ svg:focus {
 }
 
 .content {
+  height: 100%;
   padding: 20px;
   max-height: 100%;
   flex: 1 1 auto;

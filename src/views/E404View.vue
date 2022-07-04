@@ -1,15 +1,16 @@
 <template>
-  <page-base>
-    <template v-slot:header>
-      <h1 class="page-title">Страница не найдена</h1>
-    </template>
-    <template v-slot:content>
+  <page-base :show-menu="true">
+    <template>
       <p class="error-number">404</p>
       <p class="error-text">
         Неверный адрес, либо страница больше не существует
       </p>
       <p class="error-text">
-        Перейдите на <router-link class="error-link" to="/main">главную страницу</router-link> сайта
+        Перейдите на
+        <router-link class="error-link" to="/main"
+          >главную страницу</router-link
+        >
+        сайта
       </p>
     </template>
   </page-base>
@@ -33,12 +34,14 @@ export default {
     margin-top: 100px;
     margin-bottom: 0;
   }
+
   &-text {
     margin-top: 10px;
     font-size: 16px;
     color: $black;
     text-align: center;
   }
+
   &-link {
     color: $color-main;
     border-bottom: 1px solid $color-main;

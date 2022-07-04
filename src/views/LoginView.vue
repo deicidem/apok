@@ -1,17 +1,21 @@
 <template>
-  <section class="authorize">
-    <form-login></form-login>
-  </section>
+  <page-base :show-menu="false">
+    <section class="authorize">
+      <form-login></form-login>
+    </section>
+  </page-base>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-
+import PageBase from "@/components/PageBase.vue";
 import FormLogin from "../components/auth/FormLogin.vue";
 
 export default {
-  components: { FormLogin },
-
+  components: {
+    FormLogin,
+    PageBase,
+  },
   methods: {
     ...mapActions("users", {
       authorize: "authorizeUser",

@@ -1,24 +1,25 @@
 <template>
-<div class="c-block">
-  <label class="c-input-wrapper">
-    <input
-      placeholder=" "
-      class="c-input c-input-withIcon"
-      v-model="localValue"
-      :type="type"
-      :class="{ 'c-invalid': invalid }"
-    />
-    <div class="c-input-label">{{ label }}</div>
+  <div class="c-block">
+    <label class="c-input-wrapper">
+      <input
+        placeholder=" "
+        class="c-input"
+        v-model="localValue"
+        :type="type"
+        :class="{
+          'c-invalid': invalid,
+          'c-input-with-icon': icon != null,
+          [inputClass]: inputClass != null,
+        }"
+      />
+      <div class="c-input-label">{{ label }}</div>
 
-    <i v-if="icon != null" class="c-input-img" :class="iconClass"></i>
-
-    
-  </label>
-  <div v-if="error != null && invalid" class="c-error-tooltip">
-    {{ error }}
+      <i v-if="icon != null" class="c-input-img" :class="iconClass"></i>
+    </label>
+    <div v-if="error != null && invalid" class="c-error-tooltip">
+      {{ error }}
+    </div>
   </div>
-</div>
-  
 </template>
 
 <script>
@@ -28,14 +29,15 @@ export default {
     label: String,
     invalid: Boolean,
     error: String,
+    inputClass: String,
     type: {
       type: String,
-      default: "text"
+      default: "text",
     },
     icon: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
@@ -52,8 +54,7 @@ export default {
         }
       }
       return res;
-
-    }
+    },
   },
   mounted() {
     this.localValue = this.value;
@@ -75,17 +76,16 @@ export default {
 }
 
 .c-input {
+  max-width: 100%;
   display: block;
   padding: 8px 15px;
-
   font-size: 14px;
-
   border-radius: 7px;
   border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
-  &[type=password] {
-    font-family:Verdana,sans-serif;
+  &[type="password"] {
+    font-family: Verdana, sans-serif;
   }
   &:focus-visible {
     border: 1px solid $color-main;
@@ -95,7 +95,7 @@ export default {
   &:not(:placeholder-shown) ~ .c-input-label {
     color: $color-main;
     font-size: 13px;
-    top: -22px;
+    top: -25%;
   }
   &-img {
     position: absolute;
@@ -105,13 +105,9 @@ export default {
     color: $color-main;
     font-size: 30px;
   }
-  &-withIcon {
-    padding: 15px 36px 15px 24px;
+  &-with-icon {
+    padding: 15px 60px 15px 24px;
     width: 100%;
-  }
-  &-withoutIcon {
-    padding-left: 8px;
-    height: 35px;
   }
   &-label {
     display: none;
@@ -122,14 +118,15 @@ export default {
     &:focus-within .c-input-label {
       color: $color-main;
       font-size: 13px;
-      top: -22px;
+      top: -25%;
     }
   }
 }
 .c-input-label {
   text-align: left;
   position: absolute;
-  top: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 0;
 
   display: inline-block;
@@ -154,7 +151,6 @@ export default {
   &:not(:placeholder-shown) ~ .c-input-label {
     color: $color-red;
   }
-  
 }
 .c-invalid-icon {
   color: $color-red;

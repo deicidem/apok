@@ -18,7 +18,7 @@
         label="Логин"
         :error="!$v.login.required ? 'Введите значение' : !$v.login.minLength ? 'Логин должен содержать больше 8 символов' : null" 
       ></app-input>
-
+      
       <app-input
         class="c-form__input"
         :value="password"
@@ -26,7 +26,6 @@
         :invalid="(!$v.password.minLength || !$v.password.required) && formInvalid"
         icon="icon icon-ic_fluent_lock_closed_20_regular"
         label="Пароль"
-        type="password"
         :error="!$v.password.required ? 'Введите значение' : !$v.password.minLength ? 'Пароль должен содержать не менее 8 символов' : null" 
       ></app-input>
       <!-- <div class="input-wrapper">

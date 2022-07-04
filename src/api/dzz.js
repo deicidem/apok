@@ -16,6 +16,6 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
     params[`satelites[${i}]`] = satelites[i];    
   }
   let result = await server.get('dzzs', {params});
-  
+  console.log(result);
   return result.data.dzzs;
 }

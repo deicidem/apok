@@ -82,29 +82,20 @@
       </div>
 
       <div class="input-wrapper c-inputs">
-        <input
-          placeholder=" "
-          class="input c-input"
-          v-model.trim="$v.rad.$model"
-          :class="{
-            invalid:
-              (!$v.rad.numeric || !$v.rad.required) && submitStatus === 'ERROR',
-          }"
-        />
-        <label class="input-label c-label"> Радиус (км) </label>
-
-        <div
-          v-if="!$v.rad.required && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Введите значение</p>
-        </div>
-        <div
-          v-if="!$v.rad.numeric && submitStatus === 'ERROR'"
-          class="error-tooltip"
-        >
-          <p>Значение может содержать только цифры</p>
-        </div>
+        <app-input
+          class="c-form__input"
+          :value="rad"
+          @input="$v.rad.$model = $event"
+          :invalid="(!$v.rad.numeric || !$v.rad.required) && submitStatus === 'ERROR'"
+          label="Радиус (км)"
+          :error="
+            !$v.rad.required
+              ? 'Введите значение'
+              : !$v.rad.numeric
+              ? 'Значение может содержать только цифры'
+              : null
+          "
+        ></app-input>
       </div>
     </form>
     <div class="c-wrapper">
@@ -123,11 +114,12 @@
 import SearchAreaBase from "@/components/search/SearchAreaBase.vue";
 import { required, minLength, numeric } from "vuelidate/lib/validators";
 import MaskedInput from "vue-masked-input";
-
+import AppInput from "@/components/controls/AppInput.vue";
 export default {
   components: {
     MaskedInput,
     SearchAreaBase,
+    AppInput,
   },
   data: () => ({
     submitStatus: null,
@@ -187,6 +179,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .c {
   display: flex;
   align-items: flex-start;
@@ -201,6 +194,9 @@ export default {
   &-form {
     display: flex;
     align-items: flex-start;
+    &__input {
+      max-width: 120px;
+    }
   }
   &-inputs {
     margin-left: 16px;

@@ -3,37 +3,43 @@
     <h1 class="admin-aside-title">Пользователи</h1>
 
     <div class="admin-aside-wrapper">
-      <admin-table-users></admin-table-users>
-      <admin-aside-info></admin-aside-info>
+      <admin-content></admin-content>
+
+      <div class="admin-aside-left">
+        <admin-aside-info></admin-aside-info>
+        <admin-aside-actions></admin-aside-actions>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import AdminTableUsers from "@/components/admin/AdminTableUsers.vue";
+import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminAsideInfo from "@/components/admin/AdminAsideInfo.vue";
+import AdminAsideActions from "@/components/admin/AdminAsideActions.vue";
 
 export default {
   components: {
-    AdminTableUsers,
+    AdminContent,
     AdminAsideInfo,
+    AdminAsideActions,
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .admin-aside {
-  background: $white;
+  background: $gradient-w;
   margin-left: 30px;
   width: 100%;
   border-radius: 20px;
-  height: 100%;
   box-shadow: $shadow-big;
-  height: auto;
+  height: 100%;
   padding: 30px;
 
   &-title {
-    font-size: 18px;
+    margin: 0;
+    font-size: 22px;
     font-weight: 400;
     text-align: center;
   }
@@ -42,6 +48,13 @@ export default {
     margin-top: 30px;
     display: flex;
     width: 100%;
+  }
+
+  &-left {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 }
 </style>

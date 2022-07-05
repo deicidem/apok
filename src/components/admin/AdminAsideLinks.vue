@@ -1,6 +1,6 @@
 <template>
   <div class="links-wrapper">
-    <h1 class="links-wrapper-title">Объекты пользователя</h1>
+    <h3 class="links-wrapper-title">Объекты пользователя</h3>
     <nav class="links-wrapper-menu">
       <ul>
         <li>Задачи</li>
@@ -19,10 +19,8 @@ export default {};
 <style lang="scss" scoped>
 .links-wrapper {
   background: $white;
-  border-radius: 20px;
-  height: 100%;
-  box-shadow: $shadow-big;
-  margin-left: 20px;
+  border-radius: 10px;
+  box-shadow: $shadow-small;
   margin-top: 30px;
   padding: 20px;
 
@@ -38,7 +36,7 @@ export default {};
       padding: 0;
       list-style: none;
       li {
-        font-size: 16px;
+        font-size: 14px;
         margin-right: 20px;
         text-decoration: underline;
       }

@@ -32,4 +32,7 @@ export default {
 </script>
 
 <style>
+.hero{
+  height: 100%;
+}
 </style>

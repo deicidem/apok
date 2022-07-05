@@ -1,6 +1,6 @@
 <template>
   <div class="aside-info">
-    <h1 class="aside-info-title">Анна Афанасьева</h1>
+    <h3 class="aside-info-title">Анна Афанасьева</h3>
     <admin-aside-user-info></admin-aside-user-info>
     <admin-aside-links></admin-aside-links>
   </div>
@@ -22,16 +22,16 @@ export default {
 .aside-info {
   background: $white;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
   box-shadow: $shadow-big;
-  margin-left: 20px;
   padding: 20px;
 
   &-title {
-        font-weight: 400;
+    font-weight: 400;
     font-size: 18px;
     text-align: center;
+    margin: 0;
   }
 }
 </style>

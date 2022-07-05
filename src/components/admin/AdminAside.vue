@@ -6,8 +6,9 @@
       <admin-content></admin-content>
 
       <div class="admin-aside-left">
-        <admin-aside-info></admin-aside-info>
-        <admin-aside-actions></admin-aside-actions>
+        <!-- <admin-aside-info></admin-aside-info>
+        <admin-aside-actions></admin-aside-actions> -->
+        <admin-aside-user-create></admin-aside-user-create>
       </div>
     </div>
   </div>
@@ -15,14 +16,16 @@
 
 <script>
 import AdminContent from "@/components/admin/AdminContent.vue";
-import AdminAsideInfo from "@/components/admin/AdminAsideInfo.vue";
-import AdminAsideActions from "@/components/admin/AdminAsideActions.vue";
+// import AdminAsideInfo from "@/components/admin/AdminAsideInfo.vue";
+// import AdminAsideActions from "@/components/admin/AdminAsideActions.vue";
+import AdminAsideUserCreate from "@/components/admin/AdminAsideUserCreate.vue";
 
 export default {
   components: {
     AdminContent,
-    AdminAsideInfo,
-    AdminAsideActions,
+    // AdminAsideInfo,
+    // AdminAsideActions,
+    AdminAsideUserCreate
   },
 };
 </script>

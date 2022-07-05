@@ -1,6 +1,6 @@
 <template>
   <div class="hero">
-    <app-input></app-input>
+    <app-input label="Введите..."></app-input>
     <app-button class="hero-button" type="button-white">Найти пользователя</app-button>
   </div>
 </template>

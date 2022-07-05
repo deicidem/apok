@@ -2,15 +2,18 @@
   <sidebar-base :loaded="loaded">
     <template v-slot:header>
       <h2 class="c-title">Поиск снимков</h2>
+
       <router-link to="/main/results" custom v-slot="{ navigate }">
         <div class="back search-result" @click="navigate">
           <div class="back-arrow-w">
             <i class="icon icon-ic_fluent_arrow_right_20_regular"></i>
           </div>
+
           <span class="back-subtitle-w">Результат</span>
         </div>
       </router-link>
     </template>
+
     <template v-slot:content>
       <div class="search-wrapper">
         <div class="search-content">
@@ -19,11 +22,12 @@
           <search-cloud></search-cloud>
           <search-satelite></search-satelite>
         </div>
+
         <div class="search-buttons">
-          <button class="button button-r" @click="clearData">Очистить</button>
-          <button class="button button-g" @click="onSearch">
+          <app-button type="button-r" @click="clearData"> Очистить </app-button>
+          <app-button type="button-g" @click="onSearch">
             Запросить данные
-          </button>
+          </app-button>
         </div>
       </div>
     </template>
@@ -32,7 +36,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-
 import "vuescroll/dist/vuescroll.css";
 import "vue-slider-component/theme/default.css";
 import SearchDate from "@/components/search/SearchDate.vue";
@@ -40,6 +43,8 @@ import SearchSatelite from "@/components/search/SearchSatelite.vue";
 import SearchCloud from "@/components/search/SearchCloud.vue";
 import SearchArea from "@/components/search/SearchArea.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
+import AppButton from "@/components/controls/AppButton";
+
 export default {
   components: {
     SearchDate,
@@ -47,7 +52,9 @@ export default {
     SearchCloud,
     SearchArea,
     SidebarBase,
+    AppButton,
   },
+
   methods: {
     ...mapActions("search", ["search", "clearData"]),
     async onSearch() {
@@ -55,12 +62,15 @@ export default {
       this.$router.push("results");
     },
   },
+
   mounted() {
     this.loaded = true;
   },
+
   computed: {
     ...mapGetters(["scrollOps"]),
   },
+
   data() {
     return {
       loaded: false,
@@ -112,7 +122,7 @@ export default {
     &-wrapper {
       padding: 20px;
     }
-    
+
     &-title {
       font-size: 1.125rem;
       line-height: 130%;

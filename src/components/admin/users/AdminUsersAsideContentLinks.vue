@@ -27,6 +27,7 @@ export default {
       display: flex;
       padding: 0;
       list-style: none;
+      
       li {
         font-size: 14px;
         margin-right: 20px;

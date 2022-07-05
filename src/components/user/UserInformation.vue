@@ -24,26 +24,31 @@
         </div>
       </div>
       <div class="person-wrapper__buttons">
-        <button
-          class="button button-white-gr person-wrapper__button"
+        <app-button
+          type="button-white-gr"
+          class="person-wrapper__button"
           v-show="!editable"
           @click="editable = !editable"
         >
           Редактировать
-        </button>
-        <button
+        </app-button>
+
+        <app-button
+          type="button-g"
           v-show="editable"
           @click="onEditDone"
-          class="button button-g person-wrapper__button"
+          class="person-wrapper__button"
         >
           Готово
-        </button>
-        <button
-          class="button button-g person-wrapper__button"
+        </app-button>
+
+        <app-button
+          type="button-g"
+          class="person-wrapper__button"
           @click="showPopup = true"
         >
           Поменять пароль
-        </button>
+        </app-button>
       </div>
     </div>
     <portal to="password-popup">
@@ -59,9 +64,11 @@
 <script>
 import UserChangePasswordForm from "@/components/user/UserChangePasswordForm";
 import { mapGetters, mapActions } from "vuex";
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     UserChangePasswordForm,
+    AppButton,
   },
   data() {
     return {
@@ -175,24 +182,24 @@ export default {
 .editme {
   width: 200px;
   height: 30px;
-
   border-radius: 10px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;
   padding-left: 10px;
+
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
   }
 }
+
 .check {
   color: $text-grey;
   font-size: 14px;
   margin-left: 30px;
   padding-left: 10px;
   line-height: 30px;
-
   width: 200px;
 }
 </style>

@@ -243,18 +243,22 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
   &-buttons {
     margin-top: 30px;
     display: flex;
     justify-content: center;
   }
+
   &-button {
     width: auto;
     margin-right: 30px;
+
     &:last-child {
       margin-right: 0;
     }
   }
+
   &-header {
     position: relative;
   }
@@ -275,6 +279,7 @@ export default {
       background: none;
       border: none;
       color: $color-main;
+
       &:hover {
         cursor: pointer;
         color: $color-main-light;
@@ -309,6 +314,7 @@ export default {
 
   &__wrapper {
     margin: 30px;
+
     &-table {
       height: inherit;
       overflow-x: auto;
@@ -332,7 +338,6 @@ export default {
     input {
       width: 20px;
       height: 20px;
-
       background: #eff2f2;
       border-radius: 50%;
       border: none;
@@ -346,7 +351,6 @@ export default {
     input {
       width: 16px;
       height: 16px;
-
       background: #eff2f2;
       border-radius: 50%;
       border: none;
@@ -355,7 +359,6 @@ export default {
     input {
       width: 16px;
       height: 16px;
-
       background: #eff2f2;
       box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
       border-radius: 50%;
@@ -378,16 +381,18 @@ export default {
     &__wrapper {
       margin: 20px;
     }
+
     th,
     td {
       padding: 6px 10px;
       line-height: 130%;
-
       font-weight: 400;
     }
+
     .col-checkbox {
       width: 24px;
     }
+
     .col-id {
       width: 40px;
     }

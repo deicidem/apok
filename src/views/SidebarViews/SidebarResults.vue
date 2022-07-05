@@ -7,10 +7,12 @@
           <div class="back-arrow-w">
             <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
+
           <span class="back-subtitle-w">Назад</span>
         </div>
       </router-link>
     </template>
+
     <template v-slot:content>
       <div class="results-content">
         <portal to="popup-card">
@@ -38,6 +40,7 @@
             <thead>
               <tr>
                 <th></th>
+
                 <th
                   v-for="(header, i) in headers"
                   :key="i"
@@ -49,6 +52,7 @@
                     <span v-if="sortDir == 'asc'" class="results-table__sort">
                       <i class="fa-solid fa-arrow-down-short-wide"></i>
                     </span>
+
                     <span v-else class="results-table__sort">
                       <i class="fa-solid fa-arrow-down-wide-short"></i>
                     </span>
@@ -58,6 +62,7 @@
                 <th></th>
               </tr>
             </thead>
+
             <tbody v-if="loaded">
               <tr
                 v-for="(item, i) in results"
@@ -75,21 +80,26 @@
               >
                 <td class="results-table__buttons">
                   <div class="results-circle"></div>
+
                   <div class="button__wrapper results-table__button">
-                    <button
-                      class="button button-svg results-button"
+                    <app-button
+                      type="button-svg"
+                      class="results-button"
                       :class="results[i].polygonActive ? 'active' : ''"
                       @click="onPolygonButtonClick(i, item.id, item.geography)"
                     >
                       <i
                         class="icon icon-ic_fluent_select_object_20_regular"
                       ></i>
-                    </button>
+                    </app-button>
+
                     <span class="tooltiptext">Границы</span>
                   </div>
+
                   <div class="button__header results-table__button">
-                    <button
-                      class="button button-svg button-white results-button"
+                    <app-button
+                      type="button-svg button-white"
+                      class="results-button"
                       :class="results[i].imageActive ? 'active' : ''"
                       @click="
                         onImageButtonClick(
@@ -101,25 +111,33 @@
                       "
                     >
                       <i class="icon icon-ic_fluent_image_20_regular"></i>
-                    </button>
+                    </app-button>
+
                     <span class="tooltiptext">Изображение</span>
                   </div>
                 </td>
+
                 <td class="dzz-name">{{ item.name }}</td>
+
                 <td>{{ item.satelite }}</td>
+
                 <td>{{ item.date }}</td>
+
                 <td>{{ item.cloudiness }}%</td>
+
                 <td class="results-table__buttons">
                   <div class="button__wrapper results-table__button">
-                    <button
-                      class="button button-svg button-white results-button"
+                    <app-button
+                      type="button-svg button-white"
+                      class="results-button"
                       :class="results[i].cardActive ? 'active' : ''"
                       @click="onCardButtonClick(i)"
                     >
                       <i
                         class="icon icon-ic_fluent_textbox_more_20_regular"
                       ></i>
-                    </button>
+                    </app-button>
+
                     <span class="tooltiptext">Подробнее</span>
                   </div>
                 </td>
@@ -137,6 +155,7 @@ import { mapGetters, mapActions } from "vuex";
 import AppTable from "@/components/table/AppTable";
 import ResultInfo from "@/components/results/ResultInfo.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
+import AppButton from "@/components/controls/AppButton";
 // import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
@@ -145,6 +164,7 @@ export default {
     ResultInfo,
     // VsPagination,
     SidebarBase,
+    AppButton,
   },
   data() {
     return {
@@ -357,6 +377,7 @@ export default {
     .selectable {
       position: relative;
       cursor: pointer;
+
       &::after {
         content: "";
         opacity: 0;
@@ -367,9 +388,11 @@ export default {
         right: 0px;
         bottom: 0px;
       }
+
       &:hover:after {
         opacity: 1;
       }
+
       &:last-child:after {
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;

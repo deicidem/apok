@@ -26,11 +26,9 @@ body {
   margin: 0;
   min-width: 1024px;
   width: 100%;
-
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
-
   overflow: visible;
   background: $white-dark;
 }
@@ -85,21 +83,25 @@ svg:focus {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
   &-arrow {
     display: flex;
     color: $color-main;
     font-size: 24px;
   }
+
   &-subtitle {
     margin: 0 0 0 10px;
     font-size: 18px;
     color: $color-main;
   }
+
   &-arrow-w {
     display: flex;
     color: $white;
     font-size: 24px;
   }
+
   &-subtitle-w {
     margin: 0 0 0 10px;
     font-size: 18px;
@@ -108,133 +110,133 @@ svg:focus {
 }
 
 /*_____________________button_________________*/
-.button {
-  position: relative;
+// .button {
+//   position: relative;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 24px;
-  height: 35px;
-  width: 190px;
-  font-family: inherit;
-  text-align: center;
-  font-size: 0.875rem;
-  border-radius: 7px;
-  border: none;
-  box-shadow: $shadow_small;
-  transition: all 0.2s ease-out;
-  cursor: pointer;
-  z-index: 1;
-  overflow: hidden;
-  color: $white;
-  transition-delay: 0.2s;
-  &__wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  &:hover + .tooltiptext {
-    display: block;
-  }
-  &:disabled {
-    &:before {
-      content: "";
-      display: block;
-      top: 0;
-      left: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      background: rgba(#eee, 0.65);
-    }
-    cursor: no-drop;
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    height: 150%;
-    width: 200%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.2s ease-out;
-    z-index: -1;
-  }
-  &:not(:disabled) {
-    &:hover {
-      transition-delay: 0s;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 10px rgba($black, 0.3);
-    }
-    &:active {
-      transition: all 0.1s ease-out;
-      transform: translateY(1px);
-      box-shadow: 0 2px 4px rgba($black, 0.1);
-    }
-    &:hover:after {
-      left: 100%;
-    }
-    &:active:after {
-      left: 0%;
-    }
-  }
-  &-g {
-    &::after {
-      background: $gradient;
-    }
-  }
-  &-white-gr {
-    &::after {
-      background: $gradient-w;
-    }
-    color: $color-main;
-  }
-  &-white {
-    background: $white;
-    color: $color-main;
-  }
-  &-r {
-    color: $white;
-    &::after {
-      background: $gradient-r;
-    }
-  }
-  &-svg {
-    padding: 16px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $color-main;
-    font-size: 20px;
-    &::after {
-      background: $gradient-w;
-    }
-    &.active {
-      &::after {
-        background: $gradient;
-      }
-    }
-  }
-  &-svg-r {
-    color: $color-red;
-    font-size: 20px;
-  }
-}
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding: 0 24px;
+//   height: 35px;
+//   width: 190px;
+//   font-family: inherit;
+//   text-align: center;
+//   font-size: 0.875rem;
+//   border-radius: 7px;
+//   border: none;
+//   box-shadow: $shadow_small;
+//   transition: all 0.2s ease-out;
+//   cursor: pointer;
+//   z-index: 1;
+//   overflow: hidden;
+//   color: $white;
+//   transition-delay: 0.2s;
+//   &__wrapper {
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+//   &:hover + .tooltiptext {
+//     display: block;
+//   }
+//   &:disabled {
+//     &:before {
+//       content: "";
+//       display: block;
+//       top: 0;
+//       left: 0;
+//       position: absolute;
+//       width: 100%;
+//       height: 100%;
+//       z-index: 1;
+//       background: rgba(#eee, 0.65);
+//     }
+//     cursor: no-drop;
+//   }
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     height: 150%;
+//     width: 200%;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     transition: all 0.2s ease-out;
+//     z-index: -1;
+//   }
+//   &:not(:disabled) {
+//     &:hover {
+//       transition-delay: 0s;
+//       transform: translateY(-2px);
+//       box-shadow: 0 2px 10px rgba($black, 0.3);
+//     }
+//     &:active {
+//       transition: all 0.1s ease-out;
+//       transform: translateY(1px);
+//       box-shadow: 0 2px 4px rgba($black, 0.1);
+//     }
+//     &:hover:after {
+//       left: 100%;
+//     }
+//     &:active:after {
+//       left: 0%;
+//     }
+//   }
+//   &-g {
+//     &::after {
+//       background: $gradient;
+//     }
+//   }
+//   &-white-gr {
+//     &::after {
+//       background: $gradient-w;
+//     }
+//     color: $color-main;
+//   }
+//   &-white {
+//     background: $white;
+//     color: $color-main;
+//   }
+//   &-r {
+//     color: $white;
+//     &::after {
+//       background: $gradient-r;
+//     }
+//   }
+//   &-svg {
+//     padding: 16px;
+//     width: 30px;
+//     height: 30px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     color: $color-main;
+//     font-size: 20px;
+//     &::after {
+//       background: $gradient-w;
+//     }
+//     &.active {
+//       &::after {
+//         background: $gradient;
+//       }
+//     }
+//   }
+//   &-svg-r {
+//     color: $color-red;
+//     font-size: 20px;
+//   }
+// }
+
 // ____________________input__________________
 .input:active .input-label {
   display: block;
 }
+
 .input {
   display: block;
   padding: 8px 15px;
-
   font-size: 14px;
-
   border-radius: 7px;
   border: 1px solid transparent;
   box-shadow: $shadow-small;
@@ -276,6 +278,7 @@ svg:focus {
 
   &-wrapper {
     position: relative;
+
     i {
       color: $color-main;
       font-size: 30px;
@@ -379,14 +382,14 @@ svg:focus {
   background: $color-main !important;
 }
 
-/*______________________________________*/
+/*___________________1440___________________*/
 
 @media screen and (max-width: 1440px) {
   .button {
     height: 28px;
-
     font-size: 0.75rem;
   }
+
   .input {
     font-size: 10px;
     padding: 12px 10px;

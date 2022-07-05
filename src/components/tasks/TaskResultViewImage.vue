@@ -4,11 +4,24 @@
       <img :src="path" class="image" />
     </div>
     <div class="button-group">
-      <a :href="downloadPath" target="_blank" download class="button button-white-gr">
-        Скачать
-      </a>
+      <app-button class="image-wrapper-button" type="button-white-gr"
+        ><a :href="downloadPath" target="_blank" download>
+          Скачать
+        </a></app-button
+      >
       <!-- <router-link to="/full-screen" custom v-slot="{ navigate }"> -->
-        <button @click="$router.push({ name: 'full-screen', query: { path, title, downloadPath } })" class="button button-g">На весь экран</button>
+      <app-button
+        class="image-wrapper-button"
+        type="button-g"
+        @click="
+          $router.push({
+            name: 'full-screen',
+            query: { path, title, downloadPath },
+          })
+        "
+      >
+        На весь экран
+      </app-button>
       <!-- </router-link> -->
     </div>
   </task-result-view>
@@ -16,15 +29,16 @@
 
 <script>
 import TaskResultView from "@/components/tasks/TaskResultViewBase.vue";
+import AppButton from "@/components/controls/AppButton";
 export default {
   props: ["path", "title", "downloadPath"],
+
   components: {
-    TaskResultView
-  }
+    TaskResultView,
+    AppButton,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
-  
 </style>

@@ -86,21 +86,23 @@
         "
       ></app-input>
 
-      <button
-        class="button button-g c-form__item"
+      <app-button
+        type="button-g "
+        class="c-form__item"
         :disabled="submitStatus === 'PENDING'"
       >
         Зарегистироваться
-      </button>
+      </app-button>
 
       <router-link to="/login" v-slot="{ navigate }">
-        <button
+        <app-button
+          type="button-white"
           @click="navigate"
           :disabled="submitStatus === 'PENDING'"
-          class="button button-white c-form__item"
+          class="c-form__item"
         >
           Войти
-        </button>
+        </app-button>
       </router-link>
     </form>
   </form-base>
@@ -109,6 +111,7 @@
 <script>
 import { mapActions } from "vuex";
 import AppInput from "@/components/controls/AppInput.vue";
+import AppButton from "@/components/controls/AppButton.vue";
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
@@ -118,6 +121,7 @@ export default {
     FormMessage,
     FormBase,
     AppInput,
+    AppButton,
   },
   data() {
     return {

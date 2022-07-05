@@ -4,8 +4,8 @@
       <h5 class="confirm-title">{{ title }}</h5>
       <div class="confirm-text">{{ message }}</div>
       <div class="confirm-buttons">
-        <button class="button button-white-gr" @click="_cancel">Отмена</button>
-        <button class="button button-r" @click="_confirm">Удалить</button>
+        <app-button type="button-white-gr" @click="_cancel">Отмена</app-button>
+        <app-button type="button-r" @click="_confirm">Удалить</app-button>
       </div>
       <div class="confirm-cross">
         <i @click="_cancel" class="fa-solid fa-xmark"></i>
@@ -15,7 +15,11 @@
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   data: () => ({
     title: undefined,
     message: undefined,
@@ -60,6 +64,7 @@ export default {
   background: rgba($black, 0.2);
   z-index: 100;
 }
+
 .confirm {
   position: absolute;
   top: 35%;
@@ -73,17 +78,14 @@ export default {
   border-radius: 10px;
   box-shadow: $shadow-big;
   text-align: center;
+
   &-buttons {
+    margin-top: 20px;
     display: flex;
     width: 100%;
-    align-items: center;
-    .button {
-      margin-right: 20px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+    justify-content: space-evenly;
   }
+
   &-title {
     margin: 0;
     line-height: 1.5;
@@ -91,12 +93,14 @@ export default {
     font-weight: 500;
     font-size: 18px;
   }
+
   &-text {
     color: $text-grey;
     font-weight: 400;
     font-size: 14px;
     margin: 10px auto 10px 0;
   }
+
   &-cross {
     position: absolute;
     right: 10px;
@@ -104,6 +108,7 @@ export default {
     display: flex;
     cursor: pointer;
     color: $color-red;
+
     &:hover {
       color: lighten($color: $color-red, $amount: 10);
     }

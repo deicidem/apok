@@ -26,6 +26,7 @@ export default {};
   height: 100%;
   box-shadow: $shadow-big;
   height: auto;
+
   &-wrapper {
     padding: 20px;
   }

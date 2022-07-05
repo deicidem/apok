@@ -8,26 +8,32 @@
       <span class="checkbox-label">Центрировать</span>
     </label>
     <div class="button-group">
-      <button
-        class="button"
+      <app-button
+        type="button-g"
         :class="showImage ? 'button-g' : 'button-white-gr'"
         @click="onClick"
       >
         {{ showImage ? "Показать на карте" : "Убрать с карты" }}
-      </button>
+      </app-button>
       <!-- <router-link to="/full-screen" custom v-slot="{ navigate }"> -->
-      <button
-        @click="$router.push({ name: 'full-screen', query: { path, title, downloadPath } })"
-        class="button button-g"
+      <app-button
+        type="button-g"
+        @click="
+          $router.push({
+            name: 'full-screen',
+            query: { path, title, downloadPath },
+          })
+        "
       >
         На весь экран
-      </button>
+      </app-button>
       <!-- </router-link> -->
     </div>
   </task-result-view>
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import TaskResultView from "@/components/tasks/TaskResultViewBase.vue";
 export default {
@@ -35,6 +41,7 @@ export default {
   components: {
     AppCheckbox,
     TaskResultView,
+    AppButton,
   },
   data: () => ({
     showImage: true,
@@ -58,6 +65,7 @@ export default {
     display: flex;
     align-items: center;
   }
+
   &-label {
     margin-left: 10px;
   }

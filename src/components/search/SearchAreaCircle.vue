@@ -86,7 +86,9 @@
           class="c-form__input"
           :value="rad"
           @input="$v.rad.$model = $event"
-          :invalid="(!$v.rad.numeric || !$v.rad.required) && submitStatus === 'ERROR'"
+          :invalid="
+            (!$v.rad.numeric || !$v.rad.required) && submitStatus === 'ERROR'
+          "
           label="Радиус (км)"
           :error="
             !$v.rad.required
@@ -99,13 +101,13 @@
       </div>
     </form>
     <div class="c-wrapper">
-      <button @click="submitForm" class="button button-g c-button">
+      <app-button type="button-g" @click="submitForm" class="c-button">
         Загрузить на карту
-      </button>
+      </app-button>
 
-      <button class="button button-r c-button" @click="$emit('remove')">
+      <app-button type="button-r" class="c-button" @click="$emit('remove')">
         Убрать с карты
-      </button>
+      </app-button>
     </div>
   </search-area-base>
 </template>
@@ -115,11 +117,13 @@ import SearchAreaBase from "@/components/search/SearchAreaBase.vue";
 import { required, minLength, numeric } from "vuelidate/lib/validators";
 import MaskedInput from "vue-masked-input";
 import AppInput from "@/components/controls/AppInput.vue";
+import AppButton from "@/components/controls/AppButton.vue";
 export default {
   components: {
     MaskedInput,
     SearchAreaBase,
     AppInput,
+    AppButton,
   },
   data: () => ({
     submitStatus: null,
@@ -179,51 +183,62 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .c {
   display: flex;
   align-items: flex-start;
+
   &-button {
     margin-left: auto;
     max-width: 200px;
     width: 190px;
+
     &:last-child {
       margin-top: 20px;
     }
   }
+
   &-form {
     display: flex;
     align-items: flex-start;
+
     &__input {
       max-width: 120px;
     }
   }
+
   &-inputs {
     margin-left: 16px;
+
     &:first-child {
       margin-left: 0;
     }
+
     &:focus-within .c-label {
       top: -20px;
       font-size: 12px;
     }
   }
+
   &-label {
     top: 8px;
     left: -10px;
   }
+
   .invalid {
     border: 1px solid $color-red;
     transition: all 1s ease-out;
     color: $color-red;
+
     &:focus ~ .input-label,
     &:not(:placeholder-shown) ~ label {
       color: $color-red;
     }
   }
+
   .invalidLetter {
     background: $gradient-r;
   }
+
   .error {
     &-tooltip {
       transition: all 2s ease-out;
@@ -236,15 +251,18 @@ export default {
       border-radius: 10px;
     }
   }
+
   &-input {
     width: 120px;
     height: 35px;
     margin: 0;
+
     &:focus .c-label,
     &:not(:placeholder-shown) ~ label {
       top: -20px;
       font-size: 12px;
     }
+
     &__letter {
       position: absolute;
       right: 0;

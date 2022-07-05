@@ -53,29 +53,36 @@
 import { mapActions } from "vuex";
 import TaskResultViewGeo from "@/components/tasks/TaskResultViewGeo.vue";
 import TaskResultViewImage from "@/components/tasks/TaskResultViewImage.vue";
+
 export default {
   props: ["files", "views", "taskIndex"],
+
   components: {
     TaskResultViewGeo,
     TaskResultViewImage,
   },
+
   data() {
     return {
       activeViewIndex: 0,
     };
   },
+
   computed: {
     viewType() {
       return (type) =>
         type == 1 ? "task-result-view-image" : "task-result-view-geo";
     },
+
     activeView() {
       return this.views[this.activeViewIndex];
     },
+
     isViewActive() {
       return (i) => i == this.activeViewIndex;
     },
   },
+
   methods: {
     ...mapActions("map", ["addViewImage", "removeViewImage"]),
     ...mapActions("tasks", ["setTaskViewActive", "setTaskViewFitBounds"]),
@@ -98,6 +105,7 @@ export default {
 <style scoped lang="scss">
 .preview {
   width: 100%;
+
   &-wrapper {
     position: relative;
     display: flex;
@@ -106,6 +114,7 @@ export default {
     background: $white;
     border-radius: 20px;
     box-shadow: $shadow-big;
+
     &__cross {
       position: absolute;
       right: 14px;
@@ -113,21 +122,26 @@ export default {
       cursor: pointer;
       color: $color-main;
       font-size: 20px;
+
       &:hover {
         color: $color-main-dark;
       }
     }
+
     &__list {
       margin: 0;
       padding: 0;
     }
+
     &__main {
       margin-right: 30px;
       flex: 1 1 auto;
     }
+
     &__nav {
       display: flex;
       margin-top: 10px;
+
       ul {
         display: flex;
         align-items: center;
@@ -136,14 +150,17 @@ export default {
         margin: 0;
         list-style: none;
       }
+
       .line {
         height: 12px;
         border-left: 1px solid $color-main;
       }
+
       li {
         margin: 0 20px 0 0;
         list-style-type: none;
         position: relative;
+
         &::after {
           content: "";
           display: block;
@@ -154,45 +171,53 @@ export default {
           right: -10px;
           border-right: 1px solid $color-main;
         }
+
         &:last-child:after {
           display: none;
         }
+
         button {
           padding: 0;
           margin: 0;
-
           font-family: inherit;
           border: none;
           background: none;
           color: $black;
           cursor: pointer;
+
           &:hover {
             color: $color-main-light;
           }
+
           &.active {
             color: $color-main;
           }
         }
       }
     }
+
     &__files {
       margin-right: 20px;
       min-width: 100px;
+
       ul {
         margin-top: 10px;
         color: $color-main;
         text-decoration: underline;
       }
+
       li {
         list-style-type: none;
         margin-top: 6px;
         font-size: 14px;
         cursor: pointer;
+
         a {
           color: $color-main;
         }
       }
     }
+
     &__title {
       font-size: 16px;
       color: $black;

@@ -22,9 +22,11 @@ table {
   border-radius: 10px;
   box-shadow: $shadow-big;
   padding-bottom: 10px;
+
   thead {
     position: relative;
     z-index: 1;
+
     &::after {
       background: $gradient-w;
       z-index: -1;
@@ -40,6 +42,7 @@ table {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+
     tr {
       th {
         text-align: left;
@@ -48,34 +51,42 @@ table {
         color: $color-main;
         padding: 8px;
         box-sizing: border-box;
+
         &:not(:empty) {
           cursor: pointer;
         }
+
         &:first-child {
           border-top-left-radius: 10px;
         }
+
         &:last-child {
           border-top-right-radius: 10px;
         }
       }
     }
   }
+
   tbody {
     text-align: left;
     font-size: 12px;
     color: #384342;
     vertical-align: top;
     line-height: 150%;
+
     &:last-child {
       border-bottom: none;
     }
+
     tr {
       border-top: 1px solid rgba($color-main, 0.3);
       line-height: 17px;
+
       td {
         padding: 10px;
         max-width: 210px;
       }
+
       .green {
         color: $color-main;
       }

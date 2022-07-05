@@ -80,6 +80,7 @@ export default {
     font-size: 1.125rem;
   }
 }
+
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;

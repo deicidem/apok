@@ -51,21 +51,24 @@
         <span class="c-remember__text">Запомнить меня</span>
       </div>
 
-      <button
-        class="button button-g c-form__item"
+      <app-button
+        type="button-g"
+        class="c-form__item"
         :disabled="submitStatus === 'PENDING'"
       >
         Войти
-      </button>
+      </app-button>
 
-      <router-link to="/registration" v-slot="{ navigate }">
-        <button
+      <router-link to="/registration" custom v-slot="{ navigate }">
+        <app-button
+          type="button-white"
+          class="c-form__item"
           @click="navigate"
           :disabled="submitStatus === 'PENDING'"
-          class="button button-white c-form__item"
         >
           Зарегистироваться
-        </button>
+        </app-button>
+
       </router-link>
     </form>
   </form-base>
@@ -77,6 +80,7 @@ import { mapActions } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+import AppButton from "@/components/controls/AppButton.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
 
@@ -84,6 +88,7 @@ export default {
   components: {
     AppCheckbox,
     AppInput,
+    AppButton,
     FormMessage,
     FormBase,
   },

@@ -101,13 +101,13 @@
         </div>
 
         <div class="password-popup__button">
-          <button
-            class="button button-g password-popup__btn"
-            type="submit"
+          <app-button
+            type="button-g submit"
+            class="password-popup__btn"
             :disabled="submitStatus === 'PENDING'"
           >
             Подтвердить
-          </button>
+          </app-button>
         </div>
       </form>
     </div>
@@ -116,7 +116,11 @@
 
 <script>
 import { required, minLength, sameAs } from "vuelidate/lib/validators";
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   data() {
     return {
       currentPassword: "",
@@ -161,8 +165,8 @@ export default {
 
   width: 100vw;
   height: 100vh;
-
   background: rgba($black, 0.5);
+
   &__card {
     position: absolute;
     top: 50%;
@@ -173,6 +177,7 @@ export default {
     border-radius: 10px;
     background: $gradient-w;
   }
+
   &__line {
     position: relative;
     display: flex;
@@ -182,11 +187,13 @@ export default {
     height: 50px;
     width: 100%;
     border-radius: 10px 10px 0 0;
+
     p {
       color: $white;
       font-size: 20px;
     }
   }
+
   &__cross {
     position: absolute;
     right: 14px;
@@ -194,31 +201,38 @@ export default {
     cursor: pointer;
     color: $white;
   }
+
   &__wrapper {
     width: 400px;
     padding: 0 30px 30px 30px;
   }
+
   &__button {
     margin: 30px 0 0 0;
   }
+
   &__btn {
     width: 100%;
     font-size: 16px;
     height: 40px;
   }
 }
+
 .invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;
   color: $color-red;
+
   &:focus ~ .input-label,
   &:not(:placeholder-shown) ~ label {
     color: $color-red;
   }
+
   &:focus ~ .invalidIcon {
     color: $color-red;
   }
 }
+
 .invalidIcon {
   position: absolute;
   right: 0;
@@ -226,12 +240,14 @@ export default {
   transform: translate(-50%, -50%);
   color: $color-red;
 }
+
 .error {
   &-tooltip {
     margin: 2px 0 0 0;
     text-align: left;
     font-size: 12px;
     color: $color-red;
+
     p {
       margin: 0;
     }

@@ -35,24 +35,26 @@ export default {
   align-items: center;
   margin-right: 8px;
 }
+
 .radio__input {
   display: none;
+
   &:checked + .radio-fake {
     background: $gradient;
+
     &::before {
       opacity: 1;
     }
   }
 }
-.radio-fake {
-  cursor: pointer;
 
+.radio-fake {
   position: relative;
 
   display: inline-block;
+  cursor: pointer;
   width: 18px;
   height: 18px;
-
   border: none;
   border-radius: 50%;
   background: $gradient-w;
@@ -69,13 +71,10 @@ export default {
   width: 8px;
   height: 8px;
   transform: translate(-50%, -50%);
-
   font-size: 14px;
-
   border-radius: 50%;
   opacity: 1;
   background: $white;
-
   transition: 0.1s ease-out;
 }
 </style>

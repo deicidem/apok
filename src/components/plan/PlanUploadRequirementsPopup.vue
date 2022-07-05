@@ -43,10 +43,10 @@
           </div>
         </div>
         <div class="popup-card__buttons">
-          <button class="button button-g">
+          <app-button type="button-g">
             Загрузить
             <input type="file" name="a" ref="file" @change="onFileUpload" />
-          </button>
+          </app-button>
           <div class="popup-card__text">
             <p v-if="file != null" class="popup-card__file">{{ file.name }}</p>
             <p v-else>Не выбрано</p>
@@ -58,7 +58,11 @@
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   props: ["plan", "data"],
   data() {
     return {
@@ -83,21 +87,21 @@ export default {
 
   width: 100vw;
   height: 100vh;
-
   background: rgba($black, 0.5);
+
   .popup-card {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
 
     padding: 20px;
     min-width: 900px;
-
     box-shadow: $shadow-small;
     border-radius: 10px;
     overflow: hidden;
     background: $gradient-w;
+    transform: translate(-50%, -50%);
+
     input[type="file"] {
       position: absolute;
       left: 0;
@@ -106,6 +110,7 @@ export default {
       bottom: 0;
       width: 100%;
     }
+
     &-back {
       position: absolute;
       left: 0;
@@ -138,7 +143,6 @@ export default {
       width: 500px;
       margin: 20px 0 0 0;
       padding: 20px;
-
       box-shadow: $shadow-small;
       border-radius: 10px;
       overflow: hidden;
@@ -155,7 +159,6 @@ export default {
       display: flex;
       margin-top: 6px;
       margin-left: 10px;
-
       color: $text-grey;
       font-size: 14px;
     }
@@ -168,7 +171,6 @@ export default {
 
     &__file {
       margin: 0 0 0 10px;
-
       color: $black;
       font-size: 14px;
     }
@@ -182,7 +184,6 @@ export default {
       &-table {
         &__item {
           position: relative;
-
           display: flex;
           align-items: stretch;
           margin-top: 20px;

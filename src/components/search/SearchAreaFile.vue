@@ -9,25 +9,35 @@
         name="file"
         accept=".json,.geojson,.zip"
       />
-      <span class="button button-white-gr c-button">Загрузить файл</span>
+      <app-button type="button-white-gr" class="c-button"
+        >Загрузить файл</app-button
+      >
       <span class="c-name">{{ file == null ? "не выбран" : file.name }}</span>
     </label>
     <div class="c-buttons">
-      <button class="button button-g c-button" :disabled="file == null" @click="$emit('submit', file)">
+      <app-button
+        type="button-g"
+        class="c-button"
+        :disabled="file == null"
+        @click="$emit('submit', file)"
+      >
         Показать на карте
-      </button>
-      <button @click="$emit('remove')" class="button button-r c-button">
+      </app-button>
+
+      <app-button type="button-r " @click="$emit('remove')" class="c-button">
         Удалить
-      </button>
+      </app-button>
     </div>
   </search-area-base>
 </template>
 
 <script>
 import SearchAreaBase from "@/components/search/SearchAreaBase.vue";
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     SearchAreaBase,
+    AppButton,
   },
   data: () => ({
     file: null,
@@ -36,7 +46,7 @@ export default {
     onFileUpload() {
       this.file = this.$refs.file.files[0];
     },
-  }
+  },
 };
 </script>
 
@@ -44,27 +54,33 @@ export default {
 .c {
   display: flex;
   align-items: flex-start;
+
   &-load {
     display: flex;
     align-items: center;
     width: 100%;
   }
+
   &-buttons {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   }
+
   &-button {
     width: 190px;
+
     &:first-child {
       margin-bottom: 20px;
     }
   }
+
   &-name {
     margin-left: 20px;
     font-size: 14px;
     color: $black;
   }
+
   &-input {
     display: none;
   }

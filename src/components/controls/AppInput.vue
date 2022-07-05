@@ -84,19 +84,23 @@ export default {
   border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
+
   &[type="password"] {
     font-family: Verdana, sans-serif;
   }
+
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
   }
+
   &:focus ~ .c-input-label,
   &:not(:placeholder-shown) ~ .c-input-label {
     color: $color-main;
     font-size: 13px;
     top: -25%;
   }
+
   &-img {
     position: absolute;
     right: 0;
@@ -105,16 +109,20 @@ export default {
     color: $color-main;
     font-size: 30px;
   }
+
   &-with-icon {
     padding: 15px 60px 15px 24px;
     width: 100%;
   }
+
   &-label {
     display: none;
   }
+
   &-wrapper {
     display: block;
     position: relative;
+
     &:focus-within .c-input-label {
       color: $color-main;
       font-size: 13px;
@@ -122,6 +130,7 @@ export default {
     }
   }
 }
+
 .c-input-label {
   text-align: left;
   position: absolute;
@@ -140,6 +149,7 @@ export default {
   -webkit-transition: 0.3s ease all;
   pointer-events: none;
 }
+
 .c-invalid {
   border: 1px solid $color-red;
   transition: all 1s ease-out;
@@ -152,23 +162,28 @@ export default {
     color: $color-red;
   }
 }
+
 .c-invalid-icon {
   color: $color-red;
 }
+
 .c-error {
   &-tooltip {
     margin: 2px 0 0 0;
     text-align: left;
     font-size: 12px;
     color: $color-red;
+
     p {
       margin: 0;
     }
   }
 }
+
 .c-input:active .c-input-label {
   display: block;
 }
+
 .c-input-wrapper:focus-within svg path {
   fill: $color-main;
 }

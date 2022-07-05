@@ -4,23 +4,24 @@
     <h6 class="c-title">{{ title }}</h6>
     <div class="c-content">
       <div class="c-text">
-        {{ activeItemTitle == null ? "Не выбран" : activeItemTitle}}
+        {{ activeItemTitle == null ? "Не выбран" : activeItemTitle }}
       </div>
       <div class="c-btns">
         <div class="button__wrapper c-btn">
-          <button
-            class="button button-svg"
+          <app-button
+            type="button-svg"
             :class="selectActive && selectable ? 'button-g' : 'button-white-gr'"
             @click="onSelect"
           >
             <i class="icon icon-ic_fluent_cursor_20_regular"></i>
-          </button>
+          </app-button>
           <span class="tooltiptext">Выбрать</span>
         </div>
+
         <div class="button__wrapper c-btn">
-          <button class="button button-svg button-white-gr" @click="onUpload">
+          <app-button type="button-svg button-white-gr" @click="onUpload">
             <i class="icon icon-ic_fluent_share_ios_20_regular"></i>
-          </button>
+          </app-button>
           <span class="tooltiptext">Загрузить</span>
         </div>
       </div>
@@ -30,10 +31,11 @@
 
 <script>
 import PlanDataInput from "@/components/plan/PlanDataInput";
-
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     PlanDataInput,
+    AppButton,
   },
   props: {
     title: String,
@@ -63,8 +65,8 @@ export default {
         this.selectActive = false;
         return;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -73,6 +75,7 @@ export default {
   &-title {
     margin-left: 30px;
   }
+
   &-circle {
     position: absolute;
     top: 10px;
@@ -81,15 +84,17 @@ export default {
     height: 22px;
     border-radius: 50%;
     background: $white;
-    // box-shadow: inset 1px 1px 3px rgba($black, 0.15);
     box-shadow: $shadow-small;
+
     &.hidden {
       background: none;
       box-shadow: none;
     }
+
     &-1 {
       background: $gradient-b;
     }
+
     &-2 {
       background: $gradient-p;
     }

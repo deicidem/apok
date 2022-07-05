@@ -17,6 +17,7 @@
                   @change="selectAll($event)"
                 />
               </th>
+
               <th
                 v-for="(header, i) in headers"
                 :key="i"
@@ -33,6 +34,7 @@
                 </template>
                 {{ header.title }}
               </th>
+
               <th></th>
             </tr>
           </thead>
@@ -46,9 +48,13 @@
                   @change="selectTask({ index: i, value: $event })"
                 />
               </td>
+
               <td class="col-id center">{{ item.id }}</td>
+
               <td>{{ item.title }}</td>
+
               <td>{{ item.date.toLocaleDateString() }}</td>
+
               <td v-if="!isNaN(+item.status)">
                 Выполняется: {{ item.status }}%
                 <div class="tasks-table__progress">
@@ -58,27 +64,31 @@
                   ></div>
                 </div>
               </td>
+
               <td v-else>{{ item.status }}</td>
+
               <td>
                 <div class="tasks-table__buttons">
                   <div class="button__wrapper">
-                    <button
+                    <app-button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
-                      class="button button-svg"
+                      type="button-svg"
                     >
                       <i class="icon icon-ic_fluent_open_20_regular"></i>
-                    </button>
+                    </app-button>
                     <span class="tooltiptext">Посмотреть результат</span>
                   </div>
+
                   <div class="button__wrapper">
-                    <button
-                      class="button button-svg button-svg-r"
+                    <app-button
+                      type="button-svg button-svg-r"
                       :disabled="!item.deletable || pending"
                       @click="onDelete(i)"
                     >
                       <i class="icon icon-ic_fluent_delete_20_regular"></i>
-                    </button>
+                    </app-button>
+
                     <span
                       v-if="item.deletable"
                       class="tooltiptext tooltiptext-r"
@@ -105,19 +115,16 @@
           </tbody>
         </app-table>
         <div class="tasks-buttons">
-          <button
-            class="button button-r"
+          <app-button
+            type="button-r"
             :disabled="noItemsSelected || notDeletableItemSelected || pending"
             @click="onDeleteBanch"
           >
             Удалить выбранное
-          </button>
-          <button
-            class="button button-g"
-            :disabled="noItemsSelected || pending"
-          >
+          </app-button>
+          <app-button type="button-g" :disabled="noItemsSelected || pending">
             Добавить в избранное
-          </button>
+          </app-button>
         </div>
       </div>
     </template>
@@ -131,6 +138,7 @@ import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import SidebarBase from "@/components/SidebarBase.vue";
+import AppButton from "@/components/controls/AppButton";
 export default {
   name: "SidebarTasks",
   components: {
@@ -140,6 +148,7 @@ export default {
     // VsPagination,
     TaskResult,
     SidebarBase,
+    AppButton,
   },
   data() {
     return {
@@ -264,13 +273,13 @@ export default {
     },
   },
   async created() {
-    console.log('start');
+    console.log("start");
     if (this.tasks == null) {
       await this.load();
     } else {
       await this.reload();
     }
-    console.log('end');
+    console.log("end");
     this.loaded = true;
   },
 };

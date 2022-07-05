@@ -7,9 +7,11 @@ export async function setCookie() {
 export async function auth() {
   return await server.get('user/auth');
 }
+
 export async function isAuth() {
   return await server.get('user/check-auth');
 }
+
 export async function login({email, password, remember}) {
   return await server.post('login', {
     email,
@@ -49,7 +51,11 @@ export async function updatePassword({email, currentPassword, password, password
   });
 }
 
-export async function verifyEmail(url) {
-  return await server.get(url);
+export async function all() {
+  return await server.get('user');
 }
 
+export async function allFiltered(search) {
+  let params = search == null ? {search} : null;
+  return await server.get('user', {params});
+}

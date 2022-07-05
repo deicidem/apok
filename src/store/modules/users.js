@@ -1,4 +1,4 @@
-import * as userApi from "@/api/user";
+import * as userApi from "@/api/users";
 
 export default {
   namespaced: true,
@@ -61,10 +61,17 @@ export default {
       store.dispatch('setUser', null);
       return;
     },
-    
-    async verifyEmail(store, url) {
-      return await userApi.verifyEmail(url);
+
+    async getUsers(store, data) {
+      let res = null;
+      if (data == null) {
+        res = await userApi.all();
+      } else {
+        res = await userApi.allFiltered(data);
+      }
+
+      store.dispatch('setUsers', res.data.users);
+      return;
     },
-    
   }
 }

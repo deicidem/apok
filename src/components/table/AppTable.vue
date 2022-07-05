@@ -1,25 +1,6 @@
 <template>
   <table>
     <slot></slot>
-    <!-- <thead>
-      <tr>
-        <th class="col-checkbox center"><input type="checkbox" /></th>
-        <th v-for="(h, i) in headers" :key="i">{{h}}</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr v-for="item in data" :key="item.id">
-        <td class="col-checkbox center">
-          <input type="checkbox" :checked="item.delete" />
-        </td>
-        <td class="col-id center">{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.date }}</td>
-        <td class="green">{{ item.status }}</td>
-        <td class="green">{{ item.result }}</td>
-      </tr>
-    </tbody> -->
   </table>
 </template>
 

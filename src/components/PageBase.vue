@@ -17,16 +17,20 @@ export default {
   },
   data() {
     return {
-      contentHeight: 0,
+      didMount: false
     };
   },
   computed: {
     height() {
-      return { maxHeight: "calc(100% - " + this.contentHeight + "px)" };
+      if (this.didMount) {
+        return { maxHeight: "calc(100% - " + this.$refs.header.$el.offsetHeight + "px)" };
+      } else {
+        return { maxHeight: "auto" }
+      }
     },
   },
   mounted() {
-    this.contentHeight = this.$refs.header.$el.offsetHeight;
+    this.didMount = true;
   },
 };
 </script>

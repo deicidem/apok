@@ -16,8 +16,11 @@ export default {
   background: $white;
   border-radius: 10px;
   box-shadow: $shadow-small;
-  margin-top: 30px;
+  margin-bottom: 20px;
   padding: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
   &-title {
     margin: 0 0 10px;
     font-size: 18px;

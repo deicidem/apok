@@ -1,7 +1,6 @@
 <template>
-  <div class="links-wrapper">
-    <h3 class="links-wrapper-title">Объекты пользователя</h3>
-    <nav class="links-wrapper-menu">
+  <admin-aside-block title="Связанные объекты">
+    <nav class="admin-aside-links">
       <ul>
         <li>Задачи</li>
         <li>Файлы</li>
@@ -9,29 +8,22 @@
         <li>Группы</li>
       </ul>
     </nav>
-  </div>
+  </admin-aside-block>
 </template>
 
 <script>
-export default {};
+import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
+export default {
+  components: {
+    AdminAsideBlock
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.links-wrapper {
-  background: $white;
-  border-radius: 10px;
-  box-shadow: $shadow-small;
-  margin-top: 30px;
-  padding: 20px;
-
-  &-title {
-    font-size: 18px;
-    font-weight: 400;
-  }
-
-  &-menu {
+.admin-aside-links {
     ul {
-      margin-top: 20px;
+      margin: 0;
       display: flex;
       padding: 0;
       list-style: none;
@@ -42,6 +34,5 @@ export default {};
         text-decoration: underline;
       }
     }
-  }
 }
 </style>

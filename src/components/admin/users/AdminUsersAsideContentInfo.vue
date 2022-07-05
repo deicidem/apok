@@ -1,6 +1,5 @@
 <template>
-  <div class="person">
-    <div class="person-title">Личные данные</div>
+  <admin-aside-block title="Личные данные">
     <div class="person-wrapper">
       <div class="person-wrapper__text">
         <div class="person-wrapper__information">
@@ -48,13 +47,15 @@
         >
       </div>
     </div>
-  </div>
+  </admin-aside-block>
 </template>
 
 <script>
+import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
+    AdminAsideBlock,
     AppButton,
   },
   data() {
@@ -81,11 +82,11 @@ export default {
       showPopup: false,
     };
   },
-  mounted() {
-    this.user.firstName.value = this.getUser.firstName;
-    this.user.lastName.value = this.getUser.lastName;
-    this.user.email.value = this.getUser.email;
-  },
+  // mounted() {
+  //   this.user.firstName.value = this.getUser.firstName;
+  //   this.user.lastName.value = this.getUser.lastName;
+  //   this.user.email.value = this.getUser.email;
+  // },
   methods: {
     onEditDone() {
       this.editable = false;

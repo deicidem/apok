@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import * as userApi from "@/api/user";
+import * as usersApi from "@/api/users";
 Vue.use(VueRouter)
 
 const routes = [
@@ -81,7 +81,18 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('@/components/admin/AdminMain.vue')
+    component: () => import('@/views/AdminView.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/AdminViews/AdminUsersView')
+      },
+      {
+        path: 'users',
+        component: () => import('@/views/AdminViews/AdminUsersView'),
+        meta: { requiresAuth: true }
+      },
+    ]
   },
   {
 		path: '*',
@@ -97,7 +108,7 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.meta?.requiresAuth == true && to.name !== 'login') {
-    let {data} = await userApi.isAuth();
+    let {data} = await usersApi.isAuth();
     if (!data.isAuth) {
       next({ name: 'login' });
     } else {

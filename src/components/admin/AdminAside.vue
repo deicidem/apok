@@ -1,64 +1,41 @@
 <template>
   <div class="admin-aside">
-    <h1 class="admin-aside-title">Пользователи</h1>
-
-    <div class="admin-aside-wrapper">
-      <admin-content></admin-content>
-
-      <div class="admin-aside-left">
-        <!-- <admin-aside-info></admin-aside-info>
-        <admin-aside-actions></admin-aside-actions> -->
-        <admin-aside-user-create></admin-aside-user-create>
-      </div>
+    <div class="admin-aside-content" :style="height">
+      <slot name="content"></slot>
+    </div>
+    <div class="admin-aside-actions" ref="actions">
+      <slot name="actions" ></slot>
     </div>
   </div>
 </template>
 
 <script>
-import AdminContent from "@/components/admin/AdminContent.vue";
-// import AdminAsideInfo from "@/components/admin/AdminAsideInfo.vue";
-// import AdminAsideActions from "@/components/admin/AdminAsideActions.vue";
-import AdminAsideUserCreate from "@/components/admin/AdminAsideUserCreate.vue";
-
 export default {
-  components: {
-    AdminContent,
-    // AdminAsideInfo,
-    // AdminAsideActions,
-    AdminAsideUserCreate
+  data() {
+    return {
+      didMount: false
+    };
+  },
+  computed: {
+    height() {
+      if (this.didMount) {
+        return { maxHeight: "calc(100% - " +  (this.$refs.actions.offsetHeight)+ "px)" };
+      } 
+      return { maxHeight: "auto" }
+    },
+  },
+  mounted() {
+    this.didMount = true;
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .admin-aside {
-  background: $gradient-w;
-  margin-left: 30px;
   width: 100%;
-  border-radius: 20px;
-  box-shadow: $shadow-big;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 30px;
-
-  &-title {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 400;
-    text-align: center;
-  }
-
-  &-wrapper {
-    margin-top: 30px;
-    display: flex;
-    width: 100%;
-  }
-
-  &-left {
-    width: 100%;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
+  max-height: 100%;
 }
 </style>

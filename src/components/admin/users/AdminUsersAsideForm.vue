@@ -1,6 +1,5 @@
 <template>
-  <div class="hero">
-    <h3 class="hero-title">Создать пользователя</h3>
+  <admin-aside-content title="Создать пользователя">
     <form class="c-form" @submit.prevent="submitForm()">
       <app-input
         class="c-form__input"
@@ -87,15 +86,17 @@
         Создать
       </app-button>
     </form>
-  </div>
+  </admin-aside-content>
 </template>
 
 <script>
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 export default {
   components: {
+    AdminAsideContent,
     AppInput,
     AppButton,
   },
@@ -146,20 +147,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hero {
-  background: $white;
-  border-radius: 10px;
-  box-shadow: $shadow-big;
-  padding: 30px;
-  width: 100%;
-  &-title {
-    text-align: center;
-    font-size: 18px;
-    margin: 0;
-    font-weight: 400;
-  }
-}
-
 .c {
   position: relative;
   background: $gradient-w;
@@ -167,7 +154,6 @@ export default {
   padding: 30px 40px 30px 40px;
   border-radius: 10px;
   border: none;
-  box-shadow: $shadow-big;
   &-title {
     text-align: center;
     font-size: 20px;
@@ -179,7 +165,7 @@ export default {
     width: 400px;
     background: $white;
     border-radius: 10px;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
     padding: 30px;
     &__input {
       margin-top: 30px;

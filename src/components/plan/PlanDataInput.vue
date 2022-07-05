@@ -19,18 +19,20 @@ export default {};
     box-shadow: $shadow-small;
     border-radius: 7px;
   }
-  
+
   &-title {
     margin-top: 0;
     font-size: 12px;
     color: $text-grey;
     margin-bottom: 5px;
   }
+
   &-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &-text {
     position: relative;
     font-size: 12px;
@@ -38,9 +40,11 @@ export default {};
     text-align: left;
     color: $black;
   }
+
   &-btn {
     margin-left: 10px;
   }
+
   &-btns {
     padding: 0px 10px;
     margin: 0 0 0 auto;

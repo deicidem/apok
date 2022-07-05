@@ -132,6 +132,7 @@ export default {
   position: absolute;
   top: 8px;
   right: 4px;
+
   &-number {
     width: 16px;
     height: 16px;
@@ -143,6 +144,7 @@ export default {
     text-align: center;
     line-height: 160%;
   }
+
   &-wrapper {
     position: relative;
   }
@@ -151,18 +153,23 @@ export default {
   &-enter {
     transform: translateX(-100%);
   }
+
   &-enter-active {
     transition: all 0.3s ease;
   }
+
   &-enter-to {
     transform: translateX(0);
   }
+
   &-leave {
     transform: translateX(0);
   }
+
   &-leave-active {
     transition: all 0.3s ease;
   }
+
   &-leave-to {
     transform: translateX(-100%);
   }
@@ -179,6 +186,7 @@ export default {
     opacity: 0;
   }
 }
+
 .sidebar {
   position: absolute;
   left: 50px;
@@ -191,9 +199,11 @@ export default {
   box-shadow: $shadow-big;
   transition: transform 0.3s ease-out;
   transform: translateX(-100%);
+
   &.active {
     transform: translateX(0);
   }
+
   &-title {
     position: relative;
     margin: 0;
@@ -206,6 +216,7 @@ export default {
     font-weight: 400;
     box-shadow: $shadow-small;
   }
+
   &-content {
     position: relative;
     height: 100%;
@@ -213,12 +224,15 @@ export default {
     background: $white-dark;
     overflow: hidden;
   }
+
   &-open {
     margin-top: 6px;
   }
+
   &__box {
     display: flex;
   }
+
   &__item {
     display: flex;
     justify-content: center;
@@ -228,6 +242,7 @@ export default {
     border-right: 1px solid transparent;
 
     transition: background-color 0.2s ease-out;
+
     &:focus-within {
       background: #384342;
       box-sizing: border-box;
@@ -236,13 +251,16 @@ export default {
       border-right: 1px solid $white;
     }
   }
+
   &-close {
     justify-content: flex-end;
+
     i:hover {
       color: #384342;
       transition: all 0.4s ease-out;
     }
   }
+
   &-collapsed {
     position: absolute;
     left: 0;
@@ -257,6 +275,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     &__item {
       width: 100%;
       position: relative;
@@ -265,6 +284,7 @@ export default {
       justify-content: center;
       background: #fff;
     }
+
     &__link {
       width: 50px;
       height: 50px;
@@ -275,16 +295,19 @@ export default {
       transition: all 0.2s ease-out;
       color: $color-main-dark;
       cursor: pointer;
+
       &.active,
       &:hover,
       &:focus-visible {
         color: $color-main-light;
       }
+
       &:hover + &__name {
         visibility: inherit;
         z-index: -1;
         opacity: 1;
       }
+
       &__name {
         position: absolute;
         z-index: 2;
@@ -311,9 +334,11 @@ export default {
       }
     }
   }
+
   &-open {
     i {
       color: rgb(97, 133, 128);
+
       &:hover {
         transition: all 0.4s ease-out;
         cursor: pointer;

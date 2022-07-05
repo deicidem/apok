@@ -79,22 +79,25 @@
         "
       ></app-input>
 
-      <button
-        class="button button-g c-form__item"
+      <app-button
+        type="button-g"
+        class="c-form__item"
         :disabled="submitStatus === 'PENDING'"
       >
         Создать
-      </button>
+      </app-button>
     </form>
   </div>
 </template>
 
 <script>
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 export default {
   components: {
     AppInput,
+    AppButton,
   },
   data() {
     return {
@@ -180,7 +183,7 @@ export default {
     padding: 30px;
     &__input {
       margin-top: 30px;
-      &:first-child{
+      &:first-child {
         margin: 0;
       }
     }

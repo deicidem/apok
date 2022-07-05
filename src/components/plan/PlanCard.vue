@@ -12,28 +12,34 @@
 
       <div class="plan-item__buttons">
         <router-link :to="'/plan/' + planid" custom v-slot="{ navigate }">
-          <button
+          <app-button
+            type="button-white-gr"
             @click="navigate"
-            class="button button-white-gr plan-item__button"
+            class="plan-item__button"
           >
             Подробнее
-          </button>
+          </app-button>
         </router-link>
 
-        <button
+        <app-button
+          type="button-g"
           :disabled="!isAuth"
-          class="button button-g plan-item__button"
+          class="plan-item__button"
           @click="$emit('select')"
         >
           Запланировать
-        </button>
+        </app-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   props: {
     img: String,
     title: String,
@@ -55,6 +61,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     background: $white;
+
     &__img {
       img {
         min-height: 200px;
@@ -64,11 +71,13 @@ export default {
         object-fit: cover;
       }
     }
+
     &__info {
       width: 100%;
       display: flex;
       flex-direction: column;
       padding: 10px 20px 15px 20px;
+
       h2 {
         margin: 0;
         line-height: 1.5;
@@ -77,6 +86,7 @@ export default {
 
         color: $black;
       }
+
       p {
         margin: 0;
         line-height: 1.5;
@@ -90,15 +100,18 @@ export default {
         color: #333;
       }
     }
+
     &__buttons {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-top: 20px;
     }
+
     &__button {
       margin-right: 20px;
       flex: 1 1 auto;
+
       &:last-child {
         margin-right: 0;
       }
@@ -112,13 +125,16 @@ export default {
       &__info {
         font-size: 1rem;
         line-height: 130%;
+
         p {
           font-size: 0.75rem;
         }
       }
+
       &__buttons {
         margin-top: 10px;
       }
+
       &__img {
         max-width: 160px;
       }

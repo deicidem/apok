@@ -26,11 +26,13 @@
   border-radius: 10px;
   border: 2px solid #d84949;
   box-shadow: $shadow-big;
+
   &-wrapper {
     position: relative;
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
   }
+
   &-title {
     margin: 0;
     line-height: 1.5;
@@ -38,18 +40,21 @@
     font-weight: 500;
     font-size: 18px;
   }
+
   &-text {
     color: $text-grey;
     font-weight: 400;
     font-size: 14px;
     margin: 10px auto 10px 0;
   }
+
   &-cross {
     position: absolute;
     right: 0;
     top: 0;
     color: $color-red;
     font-size: 20px;
+
     &:hover {
       color: $color-main-dark;
     }

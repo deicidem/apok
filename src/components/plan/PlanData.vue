@@ -49,12 +49,13 @@
           </div>
         </template>
       </div>
-      <button
+      <app-button
+        type="button-g"
         @click="planNewTask(activePlanIndex)"
-        class="button button-g data-start"
+        class="data-start"
       >
         Начать
-      </button>
+      </app-button>
     </div>
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
@@ -72,7 +73,7 @@ import PlanDataInputSelect from "@/components/plan/PlanDataInputSelect";
 import PlanDataInputImage from "@/components/plan/PlanDataInputImage";
 import PlanDataInputVector from "@/components/plan/PlanDataInputVector";
 import PlanDataInputText from "@/components/plan/PlanDataInputText";
-
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     PlanUploadRequirementsPopup,
@@ -80,6 +81,7 @@ export default {
     PlanDataInputImage,
     PlanDataInputVector,
     PlanDataInputText,
+    AppButton,
   },
   data() {
     return {
@@ -207,12 +209,15 @@ export default {
   box-shadow: $shadow-big;
   transform: translateX(-100%);
   transition: all 0.3s ease-out;
+
   &.active {
     transform: translateX(0);
+
     .data-close {
       transform: rotate(0deg);
     }
   }
+
   &-content {
     width: 100%;
     display: flex;
@@ -220,6 +225,7 @@ export default {
     justify-content: center;
     padding: 16px;
   }
+
   &-line {
     width: 30px;
     background-color: $color-main;
@@ -228,6 +234,7 @@ export default {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     cursor: pointer;
+
     .data-close {
       display: flex;
       font-size: 30px;
@@ -235,6 +242,7 @@ export default {
       transform: rotate(180deg);
     }
   }
+
   &-title {
     color: $black;
     font-size: 18px;

@@ -2,11 +2,7 @@
   <plan-data-input>
     <h6 class="c-title">{{ title }}</h6>
     <div class="c-content">
-      <input
-        required
-        class="c-input"
-        v-model="localValue"
-      />
+      <input required class="c-input" v-model="localValue" />
     </div>
   </plan-data-input>
 </template>
@@ -51,6 +47,7 @@ export default {
   width: 100%;
   padding: 5px 30px 5px 10px;
   border-radius: 5px;
+
   &:focus,
   &:focus-visible {
     border: 1px solid rgba($color-main, 0.5);

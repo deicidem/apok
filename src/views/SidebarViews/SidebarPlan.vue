@@ -65,11 +65,14 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
   &-wrapper {
     margin: 30px;
   }
+
   &-card {
     margin-bottom: 30px;
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -80,6 +83,7 @@ export default {
     &-wrapper {
       margin: 20px;
     }
+
     &-card {
       margin-bottom: 20px;
     }

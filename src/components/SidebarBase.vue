@@ -1,6 +1,6 @@
 <template>
   <div class="c">
-    <header class="c-header"> 
+    <header class="c-header">
       <slot name="header"></slot>
     </header>
     <slot name="popups"></slot>
@@ -21,13 +21,13 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     vuescroll,
-    AppLoader
+    AppLoader,
     // VsPagination,
   },
-  props: ['loaded'],
+  props: ["loaded"],
   computed: {
-    ...mapGetters(['scrollOps']),
-  }
+    ...mapGetters(["scrollOps"]),
+  },
 };
 </script>
 
@@ -36,6 +36,7 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
   &-header {
     position: relative;
     margin: 0;
@@ -43,6 +44,7 @@ export default {
     background: $gradient;
     box-shadow: $shadow-small;
   }
+
   &-title {
     margin: 0;
     color: $white;
@@ -51,6 +53,7 @@ export default {
     font-weight: 400;
   }
 }
+
 .__rail-is-vertical {
   bottom: 5px !important;
   top: 5px !important;

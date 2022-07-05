@@ -14,15 +14,13 @@
         {{ $route.query.title }}
       </h2>
 
-      <a
-        :href="$route.query.downloadPath"
-        target="_blank"
-        download
-        class="button button-g page-button"
-      >
-        Скачать
-      </a>
+      <app-button type="button-g" class="page-button">
+        <a :href="$route.query.downloadPath" target="_blank" download>
+          Скачать
+        </a>
+      </app-button>
     </template>
+
     <template v-slot:content>
       <img :src="$route.query.path" :alt="$route.query.title" class="image" />
     </template>
@@ -32,18 +30,25 @@
 <script>
 import { mapGetters } from "vuex";
 import PageWithScroll from "../components/PageWithScroll.vue";
+import AppButton from "@/components/controls/AppButton";
+
 export default {
   components: {
     PageWithScroll,
+    AppButton,
   },
+
   computed: {
     ...mapGetters(["scrollOps"]),
+
     id() {
       return +this.$route.params.id;
     },
+
     plan() {
       return this.$store.getters["plans/plan"](this.id);
     },
+
     itemImage() {
       const fileName = this.plan.image.toLowerCase();
       return require(`@/assets/img/${fileName}`);

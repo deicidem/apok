@@ -53,6 +53,7 @@ export default {
 .user-table {
   width: 700px;
 }
+
 // table {
 //   width: 700px;
 //   table-layout: auto;

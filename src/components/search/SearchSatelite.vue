@@ -223,27 +223,32 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   background: $white;
+
   &-item {
     position: relative;
+
     &__img {
       margin-left: 10px;
     }
+
     &__input {
       position: absolute;
       top: 0;
       left: 0;
-
       opacity: 0;
+
       &:checked ~ .accordion-item__content {
         display: inline-block;
       }
     }
+
     &__header {
       position: relative;
       display: flex;
       align-items: center;
       padding-left: 30px;
       margin-top: 6px;
+
       &-img {
         cursor: pointer;
         display: flex;
@@ -263,6 +268,7 @@ export default {
         font-size: 0.875rem;
       }
     }
+
     &__content {
       padding: 6px 0 0 26px;
       border-top: none;

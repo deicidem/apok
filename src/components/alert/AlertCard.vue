@@ -5,6 +5,7 @@
       :class="[theme]"
       v-show="!seen"
     ></div>
+
     <div class="alert-item__content">
       <div class="icon" @click="getTheme(theme)">
         <div class="icon__child" :class="'icon__' + [theme]">
@@ -27,17 +28,22 @@
         <p :class="'alert-item__' + [theme]">Посмотреть результат</p>
       </div>
     </div>
+
     <div class="alert-delete">
-      <button @click="$emit('delete')" class="button button-svg button-svg-r">
+      <app-button @click="$emit('delete')" type="button-svg  button-svg-r">
         <i class="icon icon-ic_fluent_delete_20_regular"></i>
-      </button>
+      </app-button>
       <div class="tooltiptext tooltiptext-r">Удалить</div>
     </div>
   </div>
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   props: {
     text: String,
     icon: String,
@@ -56,6 +62,7 @@ export default {
 <style lang="scss" scoped>
 .icon {
   border-radius: 10px;
+
   &__child {
     padding: 4px;
     border-radius: 10px;
@@ -90,49 +97,59 @@ export default {
     border-radius: 10px;
     background: $white;
     box-shadow: $shadow-big;
+
     &__task {
       color: $text-green;
     }
+
     &__access {
       color: $text-plum;
     }
+
     &__data {
       color: $text-blue;
     }
+
     &__content {
       display: flex;
     }
+
     &__unread {
       position: absolute;
       top: -4px;
       left: -4px;
     }
+
     &__img {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 40px;
       height: 40px;
-
       border-radius: 10px;
+
       img {
         max-width: 24px;
       }
     }
+
     &__info {
       margin-left: 16px;
+
       h2 {
         margin: 0;
         color: $text-grey;
         font-weight: 400;
         font-size: 14px;
       }
+
       p {
         margin: 0;
         font-weight: 400;
         font-size: 12px;
       }
     }
+
     &__trash {
       width: 35px;
       height: 35px;

@@ -1,7 +1,9 @@
 <template>
   <div class="hero">
     <app-input label="Введите..."></app-input>
-    <app-button class="hero-button" type="button-white">Найти пользователя</app-button>
+    <app-button class="hero-button" type="button-white"
+      >Найти пользователя
+    </app-button>
   </div>
 </template>
 
@@ -21,7 +23,8 @@ export default {
   margin-top: 20px;
   display: flex;
   height: auto;
-  &-button{
+
+  &-button {
     margin-left: 20px;
   }
 }

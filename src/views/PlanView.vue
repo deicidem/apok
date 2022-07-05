@@ -14,37 +14,37 @@
         {{ plan.title }}
       </h2>
 
-      <button class="button button-g page-button" @click="onPlan">
+      <app-button type="button-g" class="page-button" @click="onPlan">
         Запланировать задачу
-      </button>
+      </app-button>
     </template>
     <template v-slot:content>
       <div class="plan-wrapper">
         <div class="plan-wrapper__cards">
-        <div class="plan-wrapper__card">
-          <div class="plan-wrapper__title">Описание</div>
-          <div class="plan-wrapper__text" v-html="plan.description"></div>
-        </div>
-        <div class="plan-wrapper__card">
-          <div class="plan-wrapper__title">Требования к данным</div>
-          <div class="plan-table">
-            <div
-              class="plan-table__item"
-              v-for="(req, i) in plan.requirements"
-              :key="i"
-            >
-              <p class="plan-table__subtitle">{{ req.title }}:</p>
-              <p class="plan-table__text">
-                {{ req.description }}
-              </p>
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Описание</div>
+            <div class="plan-wrapper__text" v-html="plan.description"></div>
+          </div>
+          <div class="plan-wrapper__card">
+            <div class="plan-wrapper__title">Требования к данным</div>
+            <div class="plan-table">
+              <div
+                class="plan-table__item"
+                v-for="(req, i) in plan.requirements"
+                :key="i"
+              >
+                <p class="plan-table__subtitle">{{ req.title }}:</p>
+                <p class="plan-table__text">
+                  {{ req.description }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="plan-wrapper__img">
-        <img :src="plan.previewPath" />
-      </div>
+        <div class="plan-wrapper__img">
+          <img :src="plan.previewPath" />
+        </div>
       </div>
     </template>
   </page-base>
@@ -53,9 +53,11 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import PageBase from "@/components/PageBase.vue";
+import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
     PageBase,
+    AppButton,
   },
   methods: {
     ...mapActions("plans", ["selectPlan"]),
@@ -87,38 +89,45 @@ export default {
   &-wrapper {
     display: flex;
     align-items: flex-start;
+
     &__cards {
       display: flex;
       flex-direction: column;
       flex: 1 1 60%;
     }
+
     &__card {
       margin-bottom: 30px;
       padding: 20px;
-
       box-shadow: $shadow-big;
       border-radius: 10px;
       overflow: hidden;
       background: $white;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
+
     &__title {
       font-size: 1.25rem;
       color: $black;
       font-weight: 500;
     }
+
     &__text {
       margin-top: 20px;
       color: $black;
+
       p {
         margin: 0;
       }
+
       ul {
         margin: 0;
       }
     }
+
     &__img {
       background: $white;
       border-radius: 15px;
@@ -126,37 +135,42 @@ export default {
       box-shadow: $shadow-big;
       margin-left: 30px;
       flex: 1 1 40%;
+
       img {
         object-fit: cover;
         object-position: center;
       }
     }
+
     .plan-table {
       margin-top: 20px;
+
       &__item {
         display: flex;
         align-items: center;
         position: relative;
         margin: 6px 0;
       }
+
       &__line {
         border-top: 1px solid #ebf0f0;
         width: 100%;
       }
+
       &__img {
         margin-right: 6px;
       }
+
       &__subtitle {
         margin: 0;
         font-size: 18px;
         color: $color-main;
       }
+
       &__text {
         position: absolute;
         left: 180px;
-
         font-size: 14px;
-
         color: $text-grey;
       }
     }
@@ -166,11 +180,14 @@ export default {
 @media screen and (max-width: 1440px) {
   .plan {
     height: 700px;
+
     &-title {
       font-size: 18px;
     }
+
     &-wrapper {
       max-width: 1200px;
+
       &__header {
         max-width: 1200px;
       }

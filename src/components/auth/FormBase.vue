@@ -16,34 +16,34 @@
   border-radius: 10px;
   border: none;
   box-shadow: $shadow-big;
+
   &-title {
     text-align: center;
     font-size: 20px;
     color: $black;
     margin-bottom: 20px;
   }
+
   &-form {
     &__input {
       margin-top: 30px;
     }
+
     &__item {
       margin-top: 20px;
-      width: 100%;
-      height: 44px;
-      font-size: 16px;
-      background: $white;
     }
   }
+
   &-remember {
     display: flex;
     margin-top: 20px;
     width: 100%;
+
     &__text {
       margin-left: 10px;
       color: $text-grey;
       font-size: 14px;
     }
   }
-  
 }
 </style>

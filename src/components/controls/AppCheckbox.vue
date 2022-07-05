@@ -56,12 +56,15 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .checkbox__input {
   display: none;
+
   &:checked + .checkbox-fake::before {
     opacity: 1;
   }
 }
+
 .checkbox-fake {
   position: relative;
 
@@ -98,13 +101,15 @@ export default {
   transform: translate(-50%, -50%);
   transition: 0.1s ease-out;
 }
+
 .mini {
   width: 16px;
   height: 16px;
+
   &::before {
     width: 16px;
     height: 16px;
-    
+
     font-size: 10px;
     text-align: center;
   }

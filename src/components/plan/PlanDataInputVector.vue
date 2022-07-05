@@ -3,21 +3,29 @@
     <h6 class="c-title">{{ title }}</h6>
     <div class="c-content">
       <div class="c-text">
-        {{ areaSelected ? 'Выбрана' : 'Не выбрана'}}
+        {{ areaSelected ? "Выбрана" : "Не выбрана" }}
       </div>
       <div class="c-btns">
         <div class="button__wrapper">
           <router-link to="area" custom v-slot="{ navigate }">
-            <button @click="navigate" class="button button-svg button-white-gr c-btn">
+            <app-button
+              type="button-svg button-white-gr"
+              @click="navigate"
+              class="c-btn"
+            >
               <i class="icon icon-ic_fluent_cursor_20_regular"></i>
-            </button>
+            </app-button>
           </router-link>
           <span class="tooltiptext">Выбрать</span>
         </div>
-        <div class="button__wrapper c-btn" >
-          <button class="button button-svg button-white-gr" @click="$emit('center')">
+
+        <div class="button__wrapper c-btn">
+          <app-button
+            type="button-svg button-white-gr"
+            @click="$emit('center')"
+          >
             <i class="icon icon-ic_fluent_my_location_20_regular"></i>
-          </button>
+          </app-button>
           <span class="tooltiptext">Показать</span>
         </div>
       </div>
@@ -27,10 +35,12 @@
 
 <script>
 import PlanDataInput from "@/components/plan/PlanDataInput";
+import AppButton from "@/components/controls/AppButton";
 
 export default {
   components: {
     PlanDataInput,
+    AppButton,
   },
   props: {
     title: String,

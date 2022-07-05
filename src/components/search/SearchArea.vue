@@ -49,7 +49,12 @@
         @remove="removeCircle()"
       ></search-area-circle>
 
-      <search-area-file @submit="setFilePolygon({file: $event})" @remove="removeFilePolygon" v-show="searchZoneType == 3"> </search-area-file>
+      <search-area-file
+        @submit="setFilePolygon({ file: $event })"
+        @remove="removeFilePolygon"
+        v-show="searchZoneType == 3"
+      >
+      </search-area-file>
     </template>
   </search-base>
 </template>
@@ -110,7 +115,7 @@ export default {
       "setFilePolygonActive",
       "removeFilePolygon",
     ]),
-parseCoords(coord) {
+    parseCoords(coord) {
       let str = coord;
       let deg = "";
       let degEnd = false;
@@ -158,7 +163,6 @@ parseCoords(coord) {
       this.addCoordinate({ coordinate: this.getBounds.getSouthEast() });
       this.setZoom({ value: this.getZoom - 1 });
     },
-
 
     changeZoneType(type) {
       this.searchZoneType = type;
@@ -213,35 +217,38 @@ label.active {
   &-nav {
     display: flex;
     margin-top: 10px;
+
     ul {
       line-height: 1;
       display: flex;
       align-items: center;
       padding: 0;
       margin: 0;
-
       list-style: none;
     }
+
     .line {
       height: 12px;
-
       border-left: 1px solid $color-main;
     }
+
     li {
       margin: 0 4px;
       list-style-type: none;
+
       button {
         padding: 0;
         margin: 0;
-
         font-family: inherit;
         border: none;
         background: none;
         color: $black;
         cursor: pointer;
+
         &:hover {
           color: $color-main;
         }
+
         &.active {
           color: $color-main;
         }
@@ -253,20 +260,24 @@ label.active {
 @media screen and (max-width: 1440px) {
   .search-zone {
     padding: 14px;
+
     &__input {
       span {
         font-size: 0.875rem;
       }
     }
   }
+
   .search-zone__card {
     padding: 10px;
   }
+
   .coordinates-wrapper__input {
     width: 94px;
     margin-right: 10px;
     padding: 7px 10px;
   }
+
   .coordinates-wrapper__button {
     margin-top: 10px;
   }

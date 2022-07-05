@@ -37,6 +37,7 @@ export default {
   &-wrapper {
     padding: 30px;
   }
+  
   &-content {
     width: 100%;
     height: 100%;

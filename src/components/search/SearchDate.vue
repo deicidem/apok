@@ -107,9 +107,7 @@
                 <app-checkbox
                   :mini="true"
                   :model-value="option.active"
-                  @change="
-                    onSelect(i)
-                  "
+                  @change="onSelect(i)"
                 ></app-checkbox>
                 <span>{{ option.name }}</span>
               </label>
@@ -190,7 +188,7 @@ export default {
   },
   mounted() {
     // this.getTimeInterval.months.forEach((el) => {
-      // this.monthsOptions[el.cnt - 1].active = true;
+    // this.monthsOptions[el.cnt - 1].active = true;
     // });
   },
   methods: {
@@ -198,9 +196,9 @@ export default {
 
     onAllCheck($event) {
       let months = [];
-      this.getTimeInterval.months.forEach(el => {
-        months.push({...el})
-      })
+      this.getTimeInterval.months.forEach((el) => {
+        months.push({ ...el });
+      });
       if ($event) {
         months.forEach((el) => {
           el.active = true;
@@ -223,15 +221,15 @@ export default {
 
     onSelect(i) {
       let months = [];
-      this.getTimeInterval.months.forEach(el => {
-        months.push({...el})
-      })
+      this.getTimeInterval.months.forEach((el) => {
+        months.push({ ...el });
+      });
       months[i].active = !months[i].active;
       this.setTimeInterval({
         from: this.getTimeInterval.from,
         to: this.getTimeInterval.to,
         months: months,
-      })
+      });
     },
 
     submitForm() {
@@ -264,27 +262,34 @@ label.active {
     box-shadow: $shadow-small;
     border-radius: 7px;
     background: $gradient-w;
+
     .input-calendar {
       color: #585858 !important;
+
       .next::after {
         border-left: 10px solid $color-main !important;
       }
+
       .prev::after {
         border-right: 10px solid $color-main !important;
       }
+
       .cell.selected {
         background: $color-main;
       }
     }
+
     &__wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     &__inputs {
       display: flex;
       align-items: center;
     }
+
     &__label {
       left: 0;
       top: 6px;
@@ -293,6 +298,7 @@ label.active {
 
       pointer-events: none;
     }
+
     &__input {
       font-size: 12px;
       &:focus-within .search-date__label {
@@ -301,12 +307,14 @@ label.active {
         font-size: 12px;
       }
     }
+
     &__arrow {
       display: flex;
       margin: 0 20px;
       color: $color-main;
       font-size: 30px;
     }
+
     &__background {
       position: absolute;
       right: 0;
@@ -321,6 +329,7 @@ label.active {
       display: flex;
       justify-content: center;
       align-items: center;
+
       i {
         color: $white;
         font-size: 20px;
@@ -328,18 +337,19 @@ label.active {
     }
   }
 }
+
 .select {
   position: relative;
-
   margin-left: 30px;
+
   &-label {
     top: 6px;
     left: 0;
     padding-left: 14px;
-
     font-size: 14px;
     color: $text-grey;
   }
+
   &-img i {
     position: absolute;
     top: 50%;
@@ -349,10 +359,12 @@ label.active {
     font-size: 12px;
     color: $color-main;
   }
+
   &-data {
     &:focus-within .input-label {
       top: -20px;
     }
+
     input {
       width: 180px;
       height: 35px;
@@ -362,6 +374,7 @@ label.active {
       margin: 0;
       color: $text-grey;
       cursor: pointer;
+
       &:focus ~ .input-label,
       &:not(:placeholder-shown) ~ label {
         top: -20px;
@@ -370,6 +383,7 @@ label.active {
       }
     }
   }
+
   &-options {
     position: absolute;
     top: 110%;
@@ -378,38 +392,42 @@ label.active {
     display: flex;
     flex-direction: column;
     width: 100%;
-
     background: $white;
     box-shadow: $shadow-small;
     border-radius: 7px;
   }
+
   &-option {
     display: flex;
     align-items: center;
     padding: 4px 7px;
-
     font-size: 12px;
-
     color: $text-grey;
     border-radius: 0;
     cursor: pointer;
+
     span {
       margin-left: 8px;
     }
+
     &.active {
       background: $color-main;
       color: $white;
     }
   }
 }
+
 .input-calendar {
   color: #585858 !important;
+
   .next::after {
     border-left: 10px solid $color-main !important;
   }
+
   .prev::after {
     border-right: 10px solid $color-main !important;
   }
+
   .cell.selected {
     background: $color-main;
   }
@@ -420,15 +438,16 @@ label.active {
 .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
   border: 1px solid $color-main !important;
 }
+
 .vdp-datepicker {
   input {
     width: 180px;
     height: 34px;
     color: $text-grey;
   }
+
   &__calendar {
     top: 110%;
-
     width: 260px !important;
     border-radius: 7px;
     border: none !important;
@@ -447,21 +466,26 @@ label.active {
     }
   }
 }
+
 .cell {
   color: $text-grey !important;
+
   &:hover {
     border: 1px solid $color-main;
   }
 }
+
 .selected {
   background: $color-main !important;
   color: $white !important;
 }
+
 @media screen and (max-width: 1440px) {
   .vdp-datepicker input {
     width: 140px;
     height: 28px;
   }
+
   .select-data {
     width: 140px;
     height: 28px;

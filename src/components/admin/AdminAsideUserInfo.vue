@@ -23,29 +23,40 @@
           </div>
         </div>
       </div>
+
       <div class="person-wrapper__buttons">
-        <button
-          class="button button-white-gr person-wrapper__button"
+        <app-button
+          type="button-white-gr"
+          class="person-wrapper__button"
           v-show="!editable"
           @click="editable = !editable"
         >
           Редактировать
-        </button>
-        <button
+        </app-button>
+
+        <app-button
+          type="button-g"
           v-show="editable"
           @click="onEditDone"
-          class="button button-g person-wrapper__button"
+          class="person-wrapper__button"
         >
           Готово
-        </button>
-        <button class="button button-r person-wrapper__button">Удалить</button>
+        </app-button>
+
+        <app-button type="button-r" class="person-wrapper__button"
+          >Удалить</app-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   data() {
     return {
       user: {
@@ -102,23 +113,28 @@ export default {
   background: $white;
   box-shadow: $shadow-small;
   margin-top: 20px;
+
   &-edit {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+
   &-title {
     font-weight: 400;
     font-size: 18px;
     color: $black;
     margin-bottom: 20px;
   }
+
   &-wrapper {
     display: flex;
     justify-content: space-between;
+
     &__text {
       display: flex;
     }
+
     &__title {
       margin: 0;
       color: $color-main;
@@ -126,54 +142,61 @@ export default {
       font-size: 14px;
       width: 80px;
     }
+
     &__info {
       color: $black;
       margin-bottom: 14px;
       font-size: 14px;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
+
     &__buttons {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
+
     &__button {
       margin-bottom: 20px;
       width: 220px;
     }
+
     &__editable {
       display: flex;
       align-items: center;
       margin-bottom: 14px;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
   }
 }
+
 .editme {
   width: 200px;
   height: 30px;
-
   border-radius: 10px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;
   padding-left: 10px;
+
   &:focus-visible {
     border: 1px solid $color-main;
     outline: none;
   }
 }
+
 .check {
   color: $text-grey;
   font-size: 14px;
   margin-left: 30px;
   padding-left: 10px;
   line-height: 30px;
-
   width: 200px;
 }
 </style>

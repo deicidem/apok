@@ -13,12 +13,15 @@
         <tbody>
           <tr v-for="(coord, i) in coordinates" :key="i">
             <td class="number">{{ i + 1 }}</td>
+
             <td>{{ coord.lat }}</td>
+
             <td>{{ coord.lng }}</td>
+
             <td class="col delete" @click="$emit('delete', i)">
-              <button class="button button-svg button-svg-r">
+              <app-button type="button-svg button-svg-r">
                 <i class="icon icon-ic_fluent_delete_20_regular"></i>
-              </button>
+              </app-button>
               <div class="tooltiptext tooltiptext-r">Удалить</div>
             </td>
           </tr>
@@ -46,12 +49,12 @@
             </td>
             <td class="col">
               <div class="c-table__delete">
-                <button
+                <app-button
+                  type="button-svg button-white-gr"
                   @click="onAddCoordinate"
-                  class="button button-svg button-white-gr"
                 >
                   <i class="icon icon-ic_fluent_add_20_filled"></i>
-                </button>
+                </app-button>
               </div>
             </td>
           </tr>
@@ -60,27 +63,31 @@
     </div>
 
     <div class="c-buttons">
-      <button
-        class="button c-button"
+      <app-button
+        type="button-white-gr"
+        class="c-button"
         :class="drawable ? 'button-white-gr' : 'button-g'"
         @click="onDraw"
       >
         {{ drawable ? "Сохранить полигон" : "Использовать карту" }}
-      </button>
+      </app-button>
 
-      <button
-        class="button button-white-gr c-button"
+      <app-button
+        type="button-white-gr "
+        class="c-button"
         @click="$emit('select-screen-area')"
       >
         Видимая область
-      </button>
-      <button
+      </app-button>
+
+      <app-button
+        type="button-r "
         @click="$emit('clear')"
         :disabled="coordinates.length == 0"
-        class="button button-r c-button"
+        class="c-button"
       >
         Очистить координаты
-      </button>
+      </app-button>
     </div>
   </search-area-base>
 </template>
@@ -88,11 +95,13 @@
 <script>
 import MaskedInput from "vue-masked-input";
 import SearchAreaBase from "@/components/search/SearchAreaBase.vue";
+import AppButton from "@/components/controls/AppButton";
 export default {
   props: ["coordinates"],
   components: {
     SearchAreaBase,
     MaskedInput,
+    AppButton,
   },
   data: () => ({
     inputMaskLat: {
@@ -123,7 +132,7 @@ export default {
   }),
   methods: {
     onDraw() {
-      this.$emit('set-drawable', !this.drawable);
+      this.$emit("set-drawable", !this.drawable);
       this.drawable = !this.drawable;
     },
     parseCoords(coord) {
@@ -185,20 +194,25 @@ export default {
   box-shadow: $shadow-big;
   border-radius: 10px;
   background: $white;
+
   label.active {
     top: -20px;
     font-size: 12px;
     color: $color-main;
   }
+
   .number {
     max-width: 40px;
     text-align: center !important;
   }
+
   .delete {
     position: relative;
   }
+
   &-table {
     flex: 1;
+
     &__input {
       display: block;
       flex: 1;
@@ -209,46 +223,51 @@ export default {
       font-family: inherit;
       border: none;
       line-height: 1.5;
+
       &__td {
         padding: 0;
       }
+
       &__wrapper {
         display: flex;
         height: 100%;
       }
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
+
       thead {
         border-bottom: 1px solid rgba(71, 109, 112, 0.3);
       }
+
       tr {
         border-bottom: 1px solid rgba(71, 109, 112, 0.3);
+
         &:last-child {
           border-bottom: none;
         }
+
         th {
           width: 130px;
           padding: 0 6px 6px;
-
           text-align: left;
           font-size: 12px;
-
           border: none;
           color: $black;
           box-sizing: border-box;
         }
+
         td {
           padding: 6px;
-
           text-align: left;
           font-size: 12px;
-
           border: none;
           color: $color-main;
           box-sizing: border-box;
         }
+
         .col {
           max-width: 40px;
           text-align: center;
@@ -256,16 +275,19 @@ export default {
       }
     }
   }
+
   &__coordinates {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
   }
+
   &-buttons {
     display: flex;
     flex-direction: column;
     margin: 20px 0 0 20px;
   }
+
   &-button {
     margin: 10px 0;
     width: 230px;

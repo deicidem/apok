@@ -11,10 +11,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img
-                src="@/assets/img/header-icons/АВИМ.svg"
-                alt="Логотип"
-              />
+              <img src="@/assets/img/header-icons/АВИМ.svg" alt="Логотип" />
             </router-link>
           </li>
 
@@ -34,23 +31,24 @@
             class="button__wrapper header-menu__button-wrapper"
             v-if="isAuth"
           >
-            <button
-              class="button button-svg header-menu__button"
+            <app-button
+              type="button-svg"
+              class="header-menu__button"
               @click="onLogout"
-            >
-              <i class="icon icon-ic_fluent_sign_out_20_regular"></i>
-            </button>
+              ><i class="icon icon-ic_fluent_sign_out_20_regular"></i
+            ></app-button>
             <span class="tooltiptext">Выйти</span>
           </div>
 
           <div class="button__wrapper header-menu__button-wrapper" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
-              <button
-                class="button button-svg header-menu__button"
+              <app-button
+                type="button-svg"
+                class="header-menu__button"
                 @click="navigate"
               >
                 <i class="icon icon-ic_fluent_person_20_filled"></i>
-              </button>
+              </app-button>
             </router-link>
             <span class="tooltiptext">Авторизоваться</span>
           </div>
@@ -62,7 +60,12 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import AppButton from "@/components/controls/AppButton";
+
 export default {
+  components: {
+    AppButton,
+  },
   props: ["showMenu"],
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
@@ -80,14 +83,11 @@ export default {
 <style lang="scss" scoped>
 .title {
   position: relative;
-
   padding: 10px;
   margin: 0;
-
   font-size: 1.5rem;
   text-align: center;
   font-weight: 400;
-
   background: $gradient;
   box-shadow: $shadow-big;
   color: $white;
@@ -111,6 +111,7 @@ export default {
 .header {
   z-index: 10;
   position: relative;
+
   &-user {
     display: none;
   }
@@ -120,7 +121,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 20px 100px;
-
     background: $white;
     box-shadow: $shadow-big;
   }
@@ -159,14 +159,13 @@ export default {
     }
 
     &__button {
-      font-size: 26px;
-      height: 46px;
-      width: 46px;
       padding: 0;
       background: $white;
-      height: 40px;
-      width: 40px;
+      i {
+        font-size: 24px;
+      }
     }
+
     // На IE 11 не работает
     // @supports (background-clip: text) {
     //   i {
@@ -177,10 +176,10 @@ export default {
     // }
   }
 }
+
 @media screen and (max-width: 1440px) {
   .title {
     padding: 8px;
-
     font-size: 1.125rem;
   }
   .header {

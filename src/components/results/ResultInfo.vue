@@ -44,24 +44,31 @@
       </table>
     </div>
     <div class="card-buttons">
-      <button
-        class="button button-g card-button"
+      <app-button
+        type="button-g "
+        class="card-button"
         @click="$emit('PolygonButtonClick')"
       >
         Скрыть контур
-      </button>
-      <button
-        class="button button-white-gr card-button"
+      </app-button>
+
+      <app-button
+        type="button-white-gr "
+        class="card-button"
         @click="$emit('ImageButtonClick')"
       >
         Показать изображение
-      </button>
+      </app-button>
     </div>
   </div>
 </template>
 
 <script>
+import AppButton from "@/components/controls/AppButton";
 export default {
+  components: {
+    AppButton,
+  },
   props: ["cardData"],
 };
 </script>
@@ -92,20 +99,24 @@ export default {
     align-items: center;
     cursor: pointer;
     color: $color-main;
+
     &:hover {
       color: $color-main-dark;
     }
   }
+
   &-title {
     font-size: 16px;
     color: $black;
     margin-bottom: 15px;
   }
+
   &-img {
     width: 200px;
     margin-bottom: 20px;
     border: 1px solid $black;
   }
+
   &-table {
     &__wrapper {
       flex: 1;
@@ -114,25 +125,30 @@ export default {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+
     th {
       color: $color-main;
       text-align: left;
       font-size: 12px;
     }
+
     td {
       vertical-align: top;
       padding: 10px 10px 10px 0;
       font-size: 12px;
     }
+
     tr {
       border-bottom: 1px solid rgba($color-main, 0.2);
     }
   }
+
   &-buttons {
     display: flex;
     flex-direction: column;
     align-items: stretch;
   }
+
   &-button {
     margin-top: 15px;
     min-width: 230px;

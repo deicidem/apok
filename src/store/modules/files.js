@@ -1,4 +1,4 @@
-import * as filesApi from "@/api/files";
+import * as userApi from "@/api/user";
   
 export default {
   namespaced: true,
@@ -60,7 +60,7 @@ export default {
       store.commit('selectFile', data);
     },
     async loadFiles(store) {
-      let {data} = await filesApi.getUserFiles();
+      let {data} = await userApi.getFiles();
       data.files.forEach(el => {
         el.selected = false;
       })
@@ -74,7 +74,7 @@ export default {
           ids.push(getters.getFiles[i].id);
         } 
       }
-      let {data} = await filesApi.deleteUserFiles(ids);
+      let {data} = await userApi.deleteFiles(ids);
       data.deleted.forEach(el => {
         if (!el.delete) {
           console.log(el);
@@ -85,7 +85,7 @@ export default {
     },
     async deleteFile({commit, getters}, i) {
       let id = getters.getFiles[i].id;
-      let {status} = await filesApi.deleteUserFile(id);
+      let {status} = await userApi.deleteFile(id);
       if (status == 200) {
         commit('removeFile', i);
       }

@@ -1,5 +1,5 @@
 <template>
-  <admin-aside-block title="Информация о пользователе">
+  <admin-aside-block title="Личные данные">
     <div class="person-wrapper">
       <div class="person-wrapper__text">
         <div class="person-wrapper__information">

@@ -1,10 +1,10 @@
 <template>
-  <div class="hero">
-    <app-input label="Введите..."></app-input>
+  <form class="hero" @submit.prevent="$emit('submit', localValue)">
+    <app-input label="Введите..." :model-value="localValue" @input="localValue = $event"></app-input>
     <app-button class="hero-button" type="button-white"
-      >Найти пользователя
+      >Найти
     </app-button>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -15,6 +15,9 @@ export default {
     AppButton,
     AppInput,
   },
+  data: () => ({
+    localValue: null
+  }),
 };
 </script>
 

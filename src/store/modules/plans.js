@@ -1,5 +1,5 @@
 import * as plansApi from '@/api/plans';
-import * as tasksApi from '@/api/tasks';
+import * as userApi from '@/api/user';
 
 export default {
   namespaced: true,
@@ -104,7 +104,7 @@ export default {
         }
       })
       console.log({ dzzs, params, vectors, files, planId, links });
-      tasksApi.add({ dzzs, params, vectors, files, planId, links }).catch((e) => {
+      userApi.createTask({ dzzs, params, vectors, files, planId, links }).catch((e) => {
         console.log(e);
       });
     }

@@ -1,7 +1,11 @@
 <template>
-  <page-base :show-menu="true">
-    <template>
-      <p class="error-number">404</p>
+  <page-with-scroll :show-menu="true">
+    <template v-slot:header>
+      <h1 class="page-title">Страница не найдена</h1>
+    </template>
+    <template v-slot:content>
+      <div class="error-content">
+        <p class="error-number">404</p>
       <p class="error-text">
         Неверный адрес, либо страница больше не существует
       </p>
@@ -12,15 +16,16 @@
         >
         сайта
       </p>
+      </div>
     </template>
-  </page-base>
+  </page-with-scroll>
 </template>
 
 <script>
-import PageBase from "@/components/PageBase.vue";
+import PageWithScroll from "@/components/PageWithScroll.vue";
 export default {
   components: {
-    PageBase,
+    PageWithScroll,
   },
 };
 </script>

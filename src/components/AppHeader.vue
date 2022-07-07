@@ -6,7 +6,7 @@
       <!-- Автоматизация процессов оценки качества данных ДЗЗ -->
     </h1>
 
-    <div v-if="showMenu == true" class="header-items">
+    <div v-if="showMenu" class="header-items">
       <nav class="header-nav">
         <ul>
           <li class="header-nav__item">
@@ -66,7 +66,12 @@ export default {
   components: {
     AppButton,
   },
-  props: ["showMenu"],
+  props: {
+    showMenu: {
+      type: Boolean,
+      default: true
+    },  
+  },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
   },

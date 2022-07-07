@@ -1,6 +1,6 @@
 <template>
   <div class="admin-main">
-    <h1 ref="header" class="admin-main-title">Пользователи</h1>
+    <h1 ref="header" class="admin-main-title">{{title}}</h1>
     <div class="admin-main-wrapper" :style="height">
       <div class="admin-main-content">
         <slot name="content"></slot>

@@ -68,27 +68,22 @@
                     <app-button
                       v-if="item.result != null"
                       @click="showResult(i, item)"
+                      tooltip="Результат"
                       type="button-svg"
                     >
                       <i class="icon icon-ic_fluent_open_20_regular"></i>
                     </app-button>
-                    <span class="tooltiptext">Посмотреть результат</span>
                   </div>
 
                   <div class="button__wrapper">
                     <app-button
                       type="button-svg button-svg-r"
                       :disabled="!item.deletable || pending"
+                      tooltip="Удалить"
                       @click="onDelete(i)"
                     >
                       <i class="icon icon-ic_fluent_delete_20_regular"></i>
                     </app-button>
-
-                    <span
-                      v-if="item.deletable"
-                      class="tooltiptext tooltiptext-r"
-                      >Удалить</span
-                    >
                   </div>
                 </div>
               </td>
@@ -111,13 +106,18 @@
         </app-table>
         <div class="tasks-buttons">
           <app-button
+            class="tasks-button"
             type="button-r"
             :disabled="noItemsSelected || notDeletableItemSelected || pending"
             @click="onDeleteBanch"
           >
             Удалить выбранное
           </app-button>
-          <app-button type="button-g" :disabled="noItemsSelected || pending">
+          <app-button
+            class="tasks-button"
+            type="button-g"
+            :disabled="noItemsSelected || pending"
+          >
             Добавить в избранное
           </app-button>
         </div>
@@ -249,7 +249,7 @@ export default {
         title: "Вы уверены, что хотите удалить эту задачу?",
         message:
           "Удаление этой задачи приведет к потере всех связанных с ней данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;
@@ -262,7 +262,7 @@ export default {
         title: "Вы уверены, что хотите удалить эти задачи?",
         message:
           "Удаление этих задач приведет к потере всех связанных с ними данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;
@@ -293,17 +293,15 @@ export default {
     margin-top: 30px;
     display: flex;
     justify-content: center;
+  }
+  &-button {
+    width: auto;
+    margin-right: 30px;
 
-    .button {
-      width: auto;
-      margin-right: 30px;
-
-      &:last-child {
-        margin-right: 0;
-      }
+    &:last-child {
+      margin-right: 0;
     }
   }
-
   .tr_preview {
     border: none;
   }

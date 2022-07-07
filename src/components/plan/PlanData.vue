@@ -9,7 +9,9 @@
           @close="onPopupClose"
         ></plan-upload-requirements-popup>
       </portal>
+
       <div class="data-title">Запланировать задачу</div>
+
       <div class="data-wrapper">
         <plan-data-input-select
           title="Задача"
@@ -17,6 +19,7 @@
           :selected="activePlanIndex"
           @select="onSelect($event)"
         ></plan-data-input-select>
+
         <template v-if="activePlan != null">
           <div v-for="(data, i) in activePlan.data" :key="i">
             <template v-if="data.type == 1">
@@ -32,6 +35,7 @@
                 @upload="onUploadClick(i)"
               ></plan-data-input-image>
             </template>
+
             <template v-else-if="data.type == 2">
               <plan-data-input-vector
                 :title="data.title"
@@ -39,6 +43,7 @@
                 @center="activePolygonFitBounds"
               ></plan-data-input-vector>
             </template>
+
             <template v-else>
               <plan-data-input-text
                 :title="data.title"
@@ -49,6 +54,7 @@
           </div>
         </template>
       </div>
+
       <app-button
         type="button-g"
         @click="planNewTask(activePlanIndex)"
@@ -57,6 +63,7 @@
         Начать
       </app-button>
     </div>
+
     <div class="data-line" @click="setDataCardState(!getDataCardState)">
       <div class="data-close">
         <i class="icon icon-ic_fluent_chevron_left_20_filled"></i>

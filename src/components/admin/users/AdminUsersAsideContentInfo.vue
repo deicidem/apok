@@ -160,9 +160,10 @@ export default {
   &-wrapper {
     display: flex;
     justify-content: space-between;
-
+    flex-direction: column;
     &__text {
       display: flex;
+      flex-direction: column;
     }
 
     &__title {
@@ -184,14 +185,16 @@ export default {
     }
 
     &__buttons {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     &__button {
-      margin-bottom: 20px;
-      width: 220px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__editable {

@@ -72,7 +72,8 @@
         :value="password.confirm"
         @input="$v.password.confirm.$model = $event"
         :invalid="
-          (!$v.password.confirm.sameAs || !$v.password.confirm.required) &&
+          (!$v.password.confirm.sameAsPassword ||
+            !$v.password.confirm.required) &&
           formInvalid
         "
         icon="icon icon-ic_fluent_mail_20_regular"
@@ -167,9 +168,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("users", {
-      authorize: "authorizeUser",
-    }),
+    ...mapActions("users", ["regUser"]),
 
     async submitForm() {
       this.showMessage = false;
@@ -193,6 +192,7 @@ export default {
             this.$router.push("main");
           }, 1500);
         } catch (error) {
+          console.log(error);
           if (error?.response?.status == 422) {
             this.message =
               "Учетная запись  с указанными логином и паролем не существует";

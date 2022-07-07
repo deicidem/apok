@@ -35,9 +35,9 @@
               type="button-svg"
               class="header-menu__button"
               @click="onLogout"
+              tooltip="Выйти"
               ><i class="icon icon-ic_fluent_sign_out_20_regular"></i
             ></app-button>
-            <span class="tooltiptext">Выйти</span>
           </div>
 
           <div class="button__wrapper header-menu__button-wrapper" v-else>
@@ -45,12 +45,12 @@
               <app-button
                 type="button-svg"
                 class="header-menu__button"
+                tooltip="Авторизоваться"
                 @click="navigate"
               >
                 <i class="icon icon-ic_fluent_person_20_filled"></i>
               </app-button>
             </router-link>
-            <span class="tooltiptext">Авторизоваться</span>
           </div>
         </div>
       </div>
@@ -69,8 +69,8 @@ export default {
   props: {
     showMenu: {
       type: Boolean,
-      default: true
-    },  
+      default: true,
+    },
   },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),

@@ -30,10 +30,9 @@
     </div>
 
     <div class="alert-delete">
-      <app-button @click="$emit('delete')" type="button-svg  button-svg-r">
+      <app-button @click="$emit('delete')" type="button-svg  button-svg-r" tooltip="Удалить">
         <i class="icon icon-ic_fluent_delete_20_regular"></i>
       </app-button>
-      <div class="tooltiptext tooltiptext-r">Удалить</div>
     </div>
   </div>
 </template>

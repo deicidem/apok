@@ -39,7 +39,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("admin/tasks", ["updateUser", "deleteUser", "blockUser", "unblockUser"]),
+    ...mapActions("admin/users", ["updateUser", "deleteUser", "blockUser", "unblockUser"]),
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить этого пользователя?",

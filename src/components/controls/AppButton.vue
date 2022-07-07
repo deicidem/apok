@@ -127,10 +127,6 @@ export default {
     &::after {
       background: $gradient;
     }
-
-    svg path {
-      fill: $white;
-    }
   }
 
   &-white-gr {
@@ -139,40 +135,16 @@ export default {
     &::after {
       background: $gradient-w;
     }
-
-    svg path {
-      fill: $color-main;
-    }
-
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
   }
   &-white {
     background: $white;
     color: $color-main;
-
-    svg path {
-      fill: $color-main;
-    }
-
-    &:hover {
-      svg path {
-        fill: $color-main-dark;
-      }
-    }
   }
   &-r {
     color: $white;
 
     &::after {
       background: $gradient-r;
-    }
-
-    svg path {
-      fill: $white;
     }
   }
 
@@ -194,10 +166,7 @@ export default {
       &::after {
         background: $gradient;
       }
-
-      svg path {
-        color: $white;
-      }
+      color: $white;
     }
   }
 

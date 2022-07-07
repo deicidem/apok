@@ -79,7 +79,6 @@
               <input
                 placeholder=" "
                 type="text"
-                class="input"
                 :value="monthsValue"
                 readonly
                 required
@@ -368,7 +367,7 @@ label.active {
     input {
       width: 180px;
       height: 35px;
-      padding: 5px 30px 5px 14px;
+      padding: 5px 0 5px 14px;
 
       overflow: hidden;
       margin: 0;

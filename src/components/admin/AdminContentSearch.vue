@@ -23,7 +23,7 @@ export default {
 
 <style lang="scss" scoped>
 .hero {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   height: auto;
 

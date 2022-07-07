@@ -11,6 +11,7 @@ import map from './modules/map'
 import search from './modules/search'
 import results from './modules/results'
 import files from './modules/files'
+import admin from './modules/admin'
 
 export default new Vuex.Store({
   state: {
@@ -79,7 +80,8 @@ export default new Vuex.Store({
     map,
     search,
     results,
-    files
+    files,
+    admin
   },
   strict: process.env.NODE_ENV !== 'production'
 })

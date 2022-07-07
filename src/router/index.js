@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import * as usersApi from "@/api/users";
+import * as usersApi from "@/api/user";
 Vue.use(VueRouter)
 
 const routes = [
@@ -85,11 +85,26 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/views/AdminViews/AdminUsersView')
+        redirect: 'users'
       },
       {
         path: 'users',
         component: () => import('@/views/AdminViews/AdminUsersView'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'tasks',
+        component: () => import('@/views/AdminViews/AdminTasksView'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'files',
+        component: () => import('@/views/AdminViews/AdminFilesView'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'groups',
+        component: () => import('@/views/AdminViews/AdminGroupsView'),
         meta: { requiresAuth: true }
       },
     ]

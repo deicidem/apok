@@ -37,5 +37,8 @@ export default {
   flex-direction: column;
   height: 100%;
   max-height: 100%;
+  &-content {
+    flex: 1 1 auto;
+  }
 }
 </style>

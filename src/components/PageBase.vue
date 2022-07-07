@@ -11,7 +11,12 @@
 import AppHeader from "@/components/AppHeader.vue";
 
 export default {
-  props: ["showMenu"],
+  props: {
+    showMenu: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
     AppHeader,
   },

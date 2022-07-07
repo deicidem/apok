@@ -1,4 +1,4 @@
-import * as tasksApi from "@/api/tasks";
+import * as userApi from "@/api/user";
 
 export default {
   namespaced: true,
@@ -80,7 +80,7 @@ export default {
   },
   actions: {
     async load({commit, dispatch}) {
-      let tasks = await tasksApi.all();
+      let tasks = await userApi.getTasks();
       tasks.forEach(el => {
         el.selected = false;
         if (el.result != null) {
@@ -94,7 +94,7 @@ export default {
       return tasks;
     },
     async reload({commit, dispatch, getters}) {
-      let tasks = await tasksApi.all();
+      let tasks = await userApi.getTasks();
       getters.getTasks.forEach((task, i) => {
         if (tasks.find(e => e.id == task.id) == null) {
           commit('removeTask', i)
@@ -123,7 +123,7 @@ export default {
       return tasks;
     },
     async update({commit}, id) {
-      let task = await tasksApi.one(id);
+      let task = await userApi.getTask(id);
       task.selected = false;
       if (task.result != null) {
         task.result.active = false;
@@ -149,14 +149,14 @@ export default {
           ids.push(getters.getTasks[i].id);
         } 
       }
-      let res = await tasksApi.deleteTasks(ids);
+      let res = await userApi.deleteTasks(ids);
       await dispatch('load');
       console.log(res, commit);
     },
     
     async deleteTask({commit, getters}, i) {
       let id = getters.getTasks[i].id;
-      let {status} = await tasksApi.deleteUserTask(id);
+      let {status} = await userApi.deleteTask(id);
       if (status == 200) {
         commit('removeTask', i);
       }

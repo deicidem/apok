@@ -1,5 +1,5 @@
 <template>
-  <admin-main title="Пользователи">
+  <admin-main title="Группы">
     <template v-slot:content>
       <admin-users-content></admin-users-content>
     </template>

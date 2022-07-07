@@ -1,5 +1,5 @@
 <template>
-  <app-button type="button-g" class="add-user">Создать пользователя</app-button>
+  <app-button type="button-g" class="add-user" @click="$emit('show-create')">Создать пользователя</app-button>
 </template>
 
 <script>

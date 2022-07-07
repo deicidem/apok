@@ -25,23 +25,29 @@ export async function download(fileId) {
   return data;
 }
 
-export async function getUserFiles() {
-  let data = await server.get('user/files');
-  data.data.files.forEach(el => {
-    el.date = new Date(el.date);
-  })
-  return data;
+export async function all() {
+  let res = await server.get('files');
+  return res;
+}
+export async function allFiltered() {
+  let res = await server.get('files');
+  return res;
+}
+export async function one(id) {
+  let res = await server.get('files/' + id);
+  return res;
 }
 
-export async function deleteUserFiles(filesIds) {
+export async function deleteFiles(ids) {
   let params = {};
-  for (let i = 0; i < filesIds.length; i++) {
-    params[`filesIds[${i}]`] = filesIds[i];    
+  for (let i = 0; i < ids.length; i++) {
+    params[`ids[${i}]`] = ids[i];
   }
-  return await server.delete('user/files', {params});
-  
+  return await server.delete('files', {
+    params
+  })
 }
 
-export async function deleteUserFile(id) {
-  return await server.delete('files/'+id);
+export async function deleteFile(id) {
+  return await server.delete('files/' + id);
 }

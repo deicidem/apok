@@ -1,5 +1,5 @@
 <template>
-  <page-base>
+  <page-with-scroll>
     <template v-slot:header>
       <router-link to="/main/plan" custom v-slot="{ navigate }">
         <div class="back" @click="navigate">
@@ -47,16 +47,16 @@
         </div>
       </div>
     </template>
-  </page-base>
+  </page-with-scroll>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import PageBase from "@/components/PageBase.vue";
+import PageWithScroll from "@/components/PageWithScroll.vue";
 import AppButton from "@/components/controls/AppButton";
 export default {
   components: {
-    PageBase,
+    PageWithScroll,
     AppButton,
   },
   methods: {

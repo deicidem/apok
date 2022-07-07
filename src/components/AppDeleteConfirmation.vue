@@ -5,7 +5,7 @@
       <div class="confirm-text">{{ message }}</div>
       <div class="confirm-buttons">
         <app-button type="button-white-gr" @click="_cancel">Отмена</app-button>
-        <app-button type="button-r" @click="_confirm">Удалить</app-button>
+        <app-button type="button-r" @click="_confirm">{{actionMessage}}</app-button>
       </div>
       <div class="confirm-cross">
         <i @click="_cancel" class="fa-solid fa-xmark"></i>
@@ -21,18 +21,20 @@ export default {
     AppButton,
   },
   data: () => ({
-    title: undefined,
-    message: undefined,
+    title: null,
+    message: null,
+    actionMessage: null,
     showPopup: false,
 
-    resolvePromise: undefined,
-    rejectPromise: undefined,
+    resolvePromise: null,
+    rejectPromise: null,
   }),
 
   methods: {
     show(opts = {}) {
       this.title = opts.title;
       this.message = opts.message;
+      this.actionMessage = opts.actionMessage;
       this.showPopup = true;
 
       return new Promise((resolve, reject) => {

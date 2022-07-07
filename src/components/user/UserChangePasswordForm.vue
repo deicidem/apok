@@ -109,7 +109,11 @@ export default {
   methods: {
     submitForm() {
       if (!this.$v.$invalid) {
-        console.log("Form successfully submitted");
+        this.$emit("submit", {
+          currentPassword: this.currentPassword,
+          password: this.password,
+          passwordConfirmation: this.passwordConfirmation,
+        });
         this.submitStatus = "PENDING";
       } else {
         this.submitStatus = "ERROR";

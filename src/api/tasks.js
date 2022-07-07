@@ -5,28 +5,37 @@ function fixTask(task) {
 }
 
 export async function all() {
-    let { data } = await server.get('tasks');
-    data.tasks.forEach(el => {
-      fixTask(el);
-    });
-    return data.tasks;
+  let res = await server.get('tasks');
+  res.data.tasks.forEach(el => {
+    fixTask(el);
+  });
+  return res;
+}
+export async function allFiltered() {
+  let res = await server.get('tasks');
+  res.data.tasks.forEach(el => {
+    fixTask(el);
+  });
+  return res;
 }
 export async function one(id) {
-  let {data} = await server.get('tasks/'+id);
-  fixTask(data.task);
-  return data.task;
+  let res = await server.get('tasks/' + id);
+  fixTask(res.data.task);
+  return res;
 }
 
 export async function deleteTasks(ids) {
   let params = {};
   for (let i = 0; i < ids.length; i++) {
-    params[`ids[${i}]`] = ids[i];    
+    params[`ids[${i}]`] = ids[i];
   }
-  return await server.delete('tasks', {params})
+  return await server.delete('tasks', {
+    params
+  })
 }
 
-export async function deleteUserTask(id) {
-  return await server.delete('tasks/'+id);
+export async function deleteTask(id) {
+  return await server.delete('tasks/' + id);
 }
 
 export async function add({

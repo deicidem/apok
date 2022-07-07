@@ -57,12 +57,7 @@
 
               <td v-if="!isNaN(+item.status)">
                 Выполняется: {{ item.status }}%
-                <div class="tasks-table__progress">
-                  <div
-                    class="tasks-table__progress__value"
-                    :style="{ width: +item.status + '%' }"
-                  ></div>
-                </div>
+                <app-progress :value="+item.status"></app-progress>
               </td>
 
               <td v-else>{{ item.status }}</td>
@@ -139,6 +134,7 @@ import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton";
+import AppProgress from "@/components/controls/AppProgress";
 export default {
   name: "SidebarTasks",
   components: {
@@ -149,6 +145,7 @@ export default {
     TaskResult,
     SidebarBase,
     AppButton,
+    AppProgress,
   },
   data() {
     return {
@@ -252,6 +249,7 @@ export default {
         title: "Вы уверены, что хотите удалить эту задачу?",
         message:
           "Удаление этой задачи приведет к потере всех связанных с ней данных.",
+          actionMessage: "Удалить"
       });
       if (ok) {
         this.pending = true;
@@ -264,6 +262,7 @@ export default {
         title: "Вы уверены, что хотите удалить эти задачи?",
         message:
           "Удаление этих задач приведет к потере всех связанных с ними данных.",
+          actionMessage: "Удалить"
       });
       if (ok) {
         this.pending = true;
@@ -339,31 +338,6 @@ export default {
         color: $color-main-light;
       }
     }
-
-    &__progress {
-      margin-top: 5px;
-      width: 120px;
-      border-radius: 3px;
-      height: 10px;
-      background: $gradient-w;
-      box-shadow: inset 1px 1px 3px rgba($black, 0.15);
-      overflow: hidden;
-
-      &__value {
-        border-radius: 3px;
-        height: 100%;
-        background-image: linear-gradient(
-          to right,
-          $color-main-dark,
-          $color-main-light,
-          $color-main-dark
-        );
-        transition: width 0.3s ease-out;
-        box-shadow: $shadow-small;
-        background-size: 400%;
-        animation: progress 16s ease-out infinite;
-      }
-    }
   }
   &__wrapper {
     margin: 30px;
@@ -421,15 +395,6 @@ export default {
       border-radius: 50%;
       border: none;
     }
-  }
-}
-
-@keyframes progress {
-  0% {
-    background-position: 400%;
-  }
-  100% {
-    background-position: -400%;
   }
 }
 

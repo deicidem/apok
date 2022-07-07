@@ -30,7 +30,7 @@ export default {
         AppDeleteConfirmation,
   },
   computed: {
-    ...mapGetters("admin/users", ["getActiveUser"]),
+    ...mapGetters("admin", ["getActiveUser"]),
     title() {
       if (this.getActiveUser != null) {
         return `Пользователь: ${this.getActiveUser.firstName} ${this.getActiveUser.lastName}`;
@@ -39,7 +39,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("admin/tasks", ["updateUser", "deleteUser", "blockUser", "unblockUser"]),
+    ...mapActions("admin", ["updateUser", "deleteUser", "blockUser", "unblockUser"]),
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить этого пользователя?",

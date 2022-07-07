@@ -1,16 +1,16 @@
 <template>
-  <page-base>
+  <page-with-scroll>
     <template v-slot:header>
       <h1 class="page-title">Руководства пользователя</h1>
     </template>
-  </page-base>
+  </page-with-scroll>
 </template>
 
 <script>
-import PageBase from "@/components/PageBase";
+import PageWithScroll from "@/components/PageWithScroll";
 export default {
   components: {
-    PageBase
+    PageWithScroll
   }
 }
 </script>

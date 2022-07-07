@@ -21,10 +21,10 @@ export default {
     AdminContentSearch,
   },
   computed: {
-    ...mapGetters("admin/users", ["getUsers", "getActiveUser"]),
+    ...mapGetters("admin", ["getUsers", "getActiveUser"]),
   },
   methods: {
-    ...mapActions("admin/users", ["loadUsers", "searchUsers", "setActiveUser"]),
+    ...mapActions("admin", ["loadUsers", "searchUsers", "setActiveUser"]),
   },
   mounted() {
     this.loadUsers();

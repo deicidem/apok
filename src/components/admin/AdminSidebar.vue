@@ -2,6 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-wrapper">
       <h4 class="sidebar-title">Панель администратора</h4>
+      
       <ul class="sidebar-list">
         <li class="sidebar-list__item" v-for="(route, i) in routes" :key="i">
           <router-link

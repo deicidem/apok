@@ -6,6 +6,7 @@
         <th>Название</th>
         <th>Дата создания</th>
         <th>Статус</th>
+        <th>Пользователь</th>
       </tr>
     </thead>
 
@@ -26,6 +27,7 @@
         </td>
 
         <td v-else>{{ task.status }}</td>
+        <td >{{ task.userName }}</td>
       </tr>
     </tbody>
   </admin-content-table>

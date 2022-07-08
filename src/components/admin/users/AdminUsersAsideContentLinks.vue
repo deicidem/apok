@@ -3,17 +3,23 @@
     <nav class="admin-aside-links">
       <ul>
         <li>
-          <router-link to="/admin/tasks">Задачи</router-link>
-          </li>
+          <router-link
+            :to="{ path: '/admin/tasks', query: { userId: user.id } }"
+            >Задачи</router-link
+          >
+        </li>
         <li>
-          <router-link to="/admin/files">Файлы</router-link>
-          </li>
-        <li>
+          <router-link
+            :to="{ path: '/admin/files', query: { userId: user.id } }"
+            >Файлы</router-link
+          >
+        </li>
+        <li>  
           <router-link to="/admin/dzzs">Снимки</router-link>
-          </li>
+        </li>
         <li>
           <router-link to="/admin/groups">Группы</router-link>
-          </li>
+        </li>
       </ul>
     </nav>
   </admin-aside-block>
@@ -22,25 +28,26 @@
 <script>
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 export default {
+  props: ["user"],
   components: {
-    AdminAsideBlock
-  }
+    AdminAsideBlock,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .admin-aside-links {
-    ul {
-      margin: 0;
-      display: flex;
-      padding: 0;
-      list-style: none;
-      
-      li {
-        font-size: 14px;
-        margin-right: 20px;
-        text-decoration: underline;
-      }
+  ul {
+    margin: 0;
+    display: flex;
+    padding: 0;
+    list-style: none;
+
+    li {
+      font-size: 14px;
+      margin-right: 20px;
+      text-decoration: underline;
     }
+  }
 }
 </style>

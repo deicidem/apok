@@ -5,10 +5,14 @@ export default {
   state: {
     files: null,
     activeFileIndex: null,
+    filesUser: null
   },
   getters: {
     getFiles(state) {
       return state.files;
+    },
+    getFilesUser(state) {
+      return state.filesUser;
     },
     getActiveFileIndex(state) {
       return state.activeFileIndex;
@@ -59,6 +63,9 @@ export default {
     },
     addFile(state, payload) {
       state.files.push(payload);
+    },
+    setFilesUser(state, payload) {
+      state.filesUser = payload;
     }
   },
   actions: {
@@ -81,8 +88,21 @@ export default {
       files.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setFiles', res.data.files);
+      commit('setFiles', files);
+      commit('setFilesUser', null);
       return res;
+    },
+    async loadFilesByUser({commit}, payload) {
+      let res = await filesApi.allByUser(payload);
+      let files = res.data.files;
+      files.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+      });
+      commit('setFiles', files);
+      commit('setFilesUser', {
+        id: res.data.files[0].userId,
+        name: res.data.files[0].userName
+      });
     },
     async searchFiles({
       commit

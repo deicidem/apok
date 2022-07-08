@@ -5,7 +5,7 @@
       @select="setActiveTask"
       :activeTask="getActiveTask"
     ></admin-tasks-content-table>
-    <admin-content-search @submit="searchTasks($event)"></admin-content-search>
+    <admin-content-search @submit="searchTasks($event)" @all="loadTasks()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -26,9 +26,7 @@ export default {
   methods: {
     ...mapActions("admin/tasks", ["loadTasks", "searchTasks", "setActiveTask"]),
   },
-  mounted() {
-    this.loadTasks();
-  },
+ 
 };
 </script>
 

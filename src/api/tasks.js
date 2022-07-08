@@ -11,6 +11,13 @@ export async function all() {
   });
   return res;
 }
+export async function allByUser(userId) {
+  let res = await server.get('tasks', {params: {userId}});
+  res.data.tasks.forEach(el => {
+    fixTask(el);
+  });
+  return res;
+}
 export async function allFiltered() {
   let res = await server.get('tasks');
   res.data.tasks.forEach(el => {

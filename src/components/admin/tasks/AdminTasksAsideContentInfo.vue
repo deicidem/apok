@@ -33,7 +33,9 @@
           >
             <p class="person-wrapper__title">Пользователь</p>
             <div class="person-edit">
-              Андрей Почитаев
+              <router-link :to="{ path: '/admin/users', query: { userId: task.userId }}">
+                {{task.userName}}
+              </router-link>
             </div>
           </div>
         </div>

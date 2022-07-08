@@ -1,10 +1,15 @@
 <template>
-  <form class="hero" @submit.prevent="$emit('submit', localValue)">
-    <app-input label="Введите..." :model-value="localValue" @input="localValue = $event"></app-input>
-    <app-button class="hero-button" type="button-white"
-      >Найти
-    </app-button>
-  </form>
+  <div class="component">
+    <form class="component-form" @submit.prevent="$emit('submit', localValue)">
+      <app-input
+        label="Введите..."
+        :model-value="localValue"
+        @input="localValue = $event"
+      ></app-input>
+      <app-button class="component-button" type="button-white">Найти </app-button>
+    </form>
+    <app-button class="component-button" type="button-white" @click="$emit('all')">Все записи </app-button>
+  </div>
 </template>
 
 <script>
@@ -16,17 +21,20 @@ export default {
     AppInput,
   },
   data: () => ({
-    localValue: null
+    localValue: null,
   }),
 };
 </script>
 
 <style lang="scss" scoped>
-.hero {
-  margin-top: 20px;
+.component {
+  margin-top: 30px;
   display: flex;
-  height: auto;
-
+  justify-content: space-between;
+  &-form {
+    display: flex;
+    height: auto;
+  }
   &-button {
     margin-left: 20px;
   }

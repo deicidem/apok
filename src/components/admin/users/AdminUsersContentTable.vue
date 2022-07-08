@@ -38,8 +38,8 @@ export default {
   computed: {
     activeUserId() {
       return this.activeUser == null ? null : this.activeUser.id;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -47,8 +47,9 @@ export default {
 .row {
   cursor: pointer;
 }
+
 .active {
   color: $white;
-  background: $color-main-light;
+  background: $gradient;
 }
 </style>

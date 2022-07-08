@@ -49,6 +49,6 @@ export default {
 }
 .active {
   color: $white;
-  background: $color-main-light;
+  background: $gradient;
 }
 </style>

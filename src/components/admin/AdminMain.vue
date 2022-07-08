@@ -1,6 +1,6 @@
 <template>
   <div class="admin-main">
-    <h1 ref="header" class="admin-main-title">{{title}}</h1>
+    <h1 ref="header" class="admin-main-title">{{ title }}</h1>
     <div class="admin-main-wrapper" :style="height">
       <div class="admin-main-content">
         <slot name="content"></slot>
@@ -14,11 +14,11 @@
 
 <script>
 export default {
-  props: ['title'],
+  props: ["title"],
   data() {
     return {
       contentHeight: 0,
-      didMount: false
+      didMount: false,
     };
   },
   computed: {
@@ -27,9 +27,9 @@ export default {
         let styles = window.getComputedStyle(this.$refs.header);
         let mb = parseInt(styles.marginBottom);
         let height = this.$refs.header.offsetHeight;
-        return { maxHeight: "calc(100% - " +  (mb + height)+ "px)" };
-      } 
-      return { maxHeight: "auto" }
+        return { maxHeight: "calc(100% - " + (mb + height) + "px)" };
+      }
+      return { maxHeight: "auto" };
     },
   },
   mounted() {

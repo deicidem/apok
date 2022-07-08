@@ -221,7 +221,7 @@ export default {
       font-family: inherit;
       border: none;
       line-height: 1.5;
-
+      outline: none;
       &__td {
         padding: 0;
       }

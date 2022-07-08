@@ -1,11 +1,6 @@
 <template>
-  <div class="button__wrapper">
-    <button
-      class="button"
-      :disabled="disabled"
-      :class="classes"
-      @click="$emit('click', true)"
-    >
+  <div class="button__wrapper" :class="classes">
+    <button class="button" :disabled="disabled" @click="$emit('click', true)">
       <slot></slot>
     </button>
     <span class="tooltiptext" v-if="tooltip != null">
@@ -47,7 +42,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 0 24px;
-  height: 35px;
+  height: 100%;
   width: 100%;
   font-family: inherit;
   text-align: center;
@@ -63,6 +58,7 @@ export default {
   transition-delay: 0.2s;
 
   &__wrapper {
+    height: 35px;
     position: relative;
     display: flex;
     align-items: center;
@@ -74,6 +70,8 @@ export default {
   }
 
   &:disabled {
+    cursor: no-drop;
+
     &:before {
       content: "";
       display: block;
@@ -85,8 +83,6 @@ export default {
       z-index: 1;
       background: rgba(#eee, 0.65);
     }
-
-    cursor: no-drop;
   }
 
   &::after {
@@ -124,55 +120,74 @@ export default {
   }
 
   &-g {
-    &::after {
-      background: $gradient;
+    .button {
+      &::after {
+        background: $gradient;
+      }
     }
   }
 
   &-white-gr {
-    color: $color-main;
+    .button {
+      color: $color-main;
 
-    &::after {
-      background: $gradient-w;
+      &::after {
+        background: $gradient-w;
+      }
     }
   }
   &-white {
-    background: $white;
-    color: $color-main;
+    .button {
+      background: $white;
+      color: $color-main;
+    }
   }
   &-r {
-    color: $white;
+    .button {
+      color: $white;
 
-    &::after {
-      background: $gradient-r;
+      &::after {
+        background: $gradient-r;
+      }
     }
   }
 
   &-svg {
-    padding: 16px;
     width: 30px;
     height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $color-main;
-    font-size: 20px;
 
-    &::after {
-      background: $gradient-w;
-    }
+    .button {
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color-main;
+      font-size: 20px;
 
-    &.active {
       &::after {
-        background: $gradient;
+        background: $gradient-w;
       }
-      color: $white;
+
+      &.active {
+        color: $white;
+
+        &::after {
+          background: $gradient;
+        }
+      }
     }
   }
 
   &-svg-r {
-    color: $color-red;
-    font-size: 20px;
+    .button {
+      color: $color-red;
+      font-size: 20px;
+
+      &:hover + .tooltiptext {
+        display: block;
+        color: $color-red;
+      }
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <app-table class="user-table">
-      <slot></slot>
-    </app-table>
+  <app-table class="user-table">
+    <slot></slot>
+  </app-table>
 </template>
 
 <script>
@@ -16,5 +16,6 @@ export default {
 <style lang="scss" scoped>
 .user-table {
   width: 100%;
+  overflow: hidden;
 }
 </style>

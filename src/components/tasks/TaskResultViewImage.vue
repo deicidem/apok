@@ -5,7 +5,7 @@
     </div>
     <div class="button-group">
       <app-button class="image-wrapper-button" type="button-white-gr"
-        ><a :href="downloadPath" target="_blank" download>
+        ><a :href="downloadPath" target="_blank" download class="link">
           Скачать
         </a></app-button
       >
@@ -41,4 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.link {
+  color: $color-main;
+}
 </style>

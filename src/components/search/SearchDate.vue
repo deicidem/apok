@@ -82,6 +82,7 @@
                 :value="monthsValue"
                 readonly
                 required
+                class="input"
                 :class="{ invalid: monthsValue == '' }"
               />
               <label class="input-label select-label">Выбрать месяцы:</label>

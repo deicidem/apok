@@ -6,6 +6,15 @@
       <!-- Автоматизация процессов оценки качества данных ДЗЗ -->
     </h1>
 
+    <router-link to="/main" custom v-slot="{ navigate }">
+      <div class="back" @click="navigate">
+        <div class="back-arrow">
+          <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
+        </div>
+        <span class="back-subtitle">Назад</span>
+      </div>
+    </router-link>
+
     <div v-if="showMenu" class="header-items">
       <nav class="header-nav">
         <ul>
@@ -35,9 +44,9 @@
               type="button-svg"
               class="header-menu__button"
               @click="onLogout"
+              tooltip="Выйти"
               ><i class="icon icon-ic_fluent_sign_out_20_regular"></i
             ></app-button>
-            <span class="tooltiptext">Выйти</span>
           </div>
 
           <div class="button__wrapper header-menu__button-wrapper" v-else>
@@ -45,12 +54,26 @@
               <app-button
                 type="button-svg"
                 class="header-menu__button"
+                tooltip="Авторизоваться"
                 @click="navigate"
               >
                 <i class="icon icon-ic_fluent_person_20_filled"></i>
               </app-button>
             </router-link>
-            <span class="tooltiptext">Авторизоваться</span>
+          </div>
+
+          <div class="button__wrapper header-menu__button-wrapper">
+            <router-link to="/admin" custom v-slot="{ navigate }">
+              <app-button
+                type="button-svg"
+                class="header-menu__button"
+                button-class="header-menu__button_custom"
+                tooltip="Авторизоваться"
+                @click="navigate"
+              >
+                <i class="icon icon-ic_fluent_settings_20_regular"></i>
+              </app-button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -69,8 +92,8 @@ export default {
   props: {
     showMenu: {
       type: Boolean,
-      default: true
-    },  
+      default: true,
+    },
   },
   computed: {
     ...mapGetters("users", ["getUser", "isAuth"]),
@@ -96,6 +119,18 @@ export default {
   background: $gradient;
   box-shadow: $shadow-big;
   color: $white;
+}
+
+.back {
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
+  &-arrow {
+    color: $white;
+  }
+  &-subtitle {
+    color: $white;
+  }
 }
 
 .user-box {
@@ -163,22 +198,20 @@ export default {
       color: $black;
     }
 
+    &__buttons {
+      display: flex;
+    }
+
     &__button {
       padding: 0;
       background: $white;
+      margin-left: 10px;
+      width: 40px;
+      height: 40px;
       i {
-        font-size: 24px;
+        font-size: 30px;
       }
     }
-
-    // На IE 11 не работает
-    // @supports (background-clip: text) {
-    //   i {
-    //     background: $gradient;
-    //     background-clip: text;
-    //     color: rgba(0, 0, 0, 0);
-    //   }
-    // }
   }
 }
 

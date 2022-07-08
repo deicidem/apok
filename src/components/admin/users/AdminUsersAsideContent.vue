@@ -30,8 +30,9 @@ export default {
     AdminAsideContent,
     AdminUsersAsideContentInfo,
     AdminUsersAsideContentLinks,
-        AppDeleteConfirmation,
+    AppDeleteConfirmation,
   },
+
   computed: {
     ...mapGetters("admin/users", ["getActiveUser"]),
     title() {
@@ -41,14 +42,21 @@ export default {
       return "Пользователь не выбран";
     },
   },
+
   methods: {
-    ...mapActions("admin/tasks", ["updateUser", "deleteUser", "blockUser", "unblockUser"]),
+    ...mapActions("admin/users", [
+      "updateUser",
+      "deleteUser",
+      "blockUser",
+      "unblockUser",
+    ]),
+
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить этого пользователя?",
         message:
           "Удаление этого пользователя приведет к потере всех связанных с ним данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;
@@ -56,18 +64,18 @@ export default {
         this.pending = false;
       }
     },
+
     async onBlock(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите заблокировать этого пользователя?",
-        actionMessage: "Заблокировать"
+        actionMessage: "Заблокировать",
       });
       if (ok) {
         this.pending = true;
         await this.blockUser(id);
         this.pending = false;
       }
-    }
-
+    },
   },
 };
 </script>

@@ -15,11 +15,13 @@
 <script>
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+
 export default {
   components: {
     AppButton,
     AppInput,
   },
+
   data: () => ({
     localValue: null,
   }),

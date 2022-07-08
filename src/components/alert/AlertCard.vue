@@ -13,10 +13,12 @@
             v-if="[theme] == 'task'"
             class="icon icon-ic_fluent_clipboard_task_20_regular"
           ></i>
+
           <i
             v-if="[theme] == 'access'"
             class="icon icon-ic_fluent_lock_open_20_regular"
           ></i>
+
           <i
             v-if="[theme] == 'data'"
             class="icon icon-ic_fluent_arrow_download_20_regular"
@@ -25,15 +27,19 @@
       </div>
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
+
         <p :class="'alert-item__' + [theme]">Посмотреть результат</p>
       </div>
     </div>
 
     <div class="alert-delete">
-      <app-button @click="$emit('delete')" type="button-svg  button-svg-r">
+      <app-button
+        @click="$emit('delete')"
+        type="button-svg  button-svg-r"
+        tooltip="Удалить"
+      >
         <i class="icon icon-ic_fluent_delete_20_regular"></i>
       </app-button>
-      <div class="tooltiptext tooltiptext-r">Удалить</div>
     </div>
   </div>
 </template>
@@ -44,6 +50,7 @@ export default {
   components: {
     AppButton,
   },
+
   props: {
     text: String,
     icon: String,
@@ -51,6 +58,7 @@ export default {
     result: String,
     theme: String,
   },
+
   methods: {
     getTheme(theme) {
       console.log(theme);

@@ -24,20 +24,22 @@ export default {
   data() {
     return {
       contentHeight: 0,
-      didMount: false
+      didMount: false,
     };
   },
+
   computed: {
     height() {
       if (this.didMount) {
         let styles = window.getComputedStyle(this.$refs.header);
         let mb = parseInt(styles.marginBottom);
         let height = this.$refs.header.offsetHeight;
-        return { maxHeight: "calc(100% - " +  (mb + height)+ "px)" };
-      } 
-      return { maxHeight: "auto" }
+        return { maxHeight: "calc(100% - " + (mb + height) + "px)" };
+      }
+      return { maxHeight: "auto" };
     },
   },
+
   mounted() {
     this.didMount = true;
   },
@@ -57,6 +59,7 @@ export default {
   flex-direction: column;
   align-items: center;
   max-height: 100%;
+
   &-content {
     flex: 1 1 60%;
     max-height: 100%;

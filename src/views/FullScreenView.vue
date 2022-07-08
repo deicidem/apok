@@ -6,6 +6,7 @@
           <div class="back-arrow">
             <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
+
           <span class="back-subtitle">Назад</span>
         </div>
       </router-link>
@@ -15,7 +16,12 @@
       </h2>
 
       <app-button type="button-g" class="page-button">
-        <a :href="$route.query.downloadPath" target="_blank" download>
+        <a
+          :href="$route.query.downloadPath"
+          target="_blank"
+          class="link"
+          download
+        >
           Скачать
         </a>
       </app-button>
@@ -58,8 +64,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.link {
+  color: $white;
+}
+
 .image {
-  padding: 20px;
   width: auto;
   max-width: 100%;
   background: $white;
@@ -67,7 +76,7 @@ export default {
   box-shadow: $shadow-big;
 
   &-wrapper {
-    padding: 10px 50px;
+    padding: 0 50px;
     margin: 0 auto;
     display: flex;
     justify-content: center;

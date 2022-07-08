@@ -2,22 +2,22 @@
   <admin-aside-block title="Связанные объекты">
     <nav class="admin-aside-links">
       <ul>
-        <li>
+        <li class="admin-aside-links-item">
           <router-link
             :to="{ path: '/admin/tasks', query: { userId: user.id } }"
             >Задачи</router-link
           >
         </li>
-        <li>
+        <li class="admin-aside-links-item">
           <router-link
             :to="{ path: '/admin/files', query: { userId: user.id } }"
             >Файлы</router-link
           >
         </li>
-        <li>  
+        <li class="admin-aside-links-item">  
           <router-link to="/admin/dzzs">Снимки</router-link>
         </li>
-        <li>
+        <li class="admin-aside-links-item">
           <router-link to="/admin/groups">Группы</router-link>
         </li>
       </ul>
@@ -48,6 +48,10 @@ export default {
       margin-right: 20px;
       text-decoration: underline;
     }
+  }
+
+  &-item {
+    color: $text-grey;
   }
 }
 </style>

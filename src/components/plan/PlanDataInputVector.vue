@@ -12,21 +12,21 @@
               type="button-svg button-white-gr"
               @click="navigate"
               class="c-btn"
+              tooltip="Выбрать"
             >
               <i class="icon icon-ic_fluent_cursor_20_regular"></i>
             </app-button>
           </router-link>
-          <span class="tooltiptext">Выбрать</span>
         </div>
 
         <div class="button__wrapper c-btn">
           <app-button
             type="button-svg button-white-gr"
             @click="$emit('center')"
+            tooltip="Показать"
           >
             <i class="icon icon-ic_fluent_my_location_20_regular"></i>
           </app-button>
-          <span class="tooltiptext">Показать</span>
         </div>
       </div>
     </div>

@@ -7,23 +7,24 @@
         {{ activeItemTitle == null ? "Не выбран" : activeItemTitle }}
       </div>
       <div class="c-btns">
-        <div class="button__wrapper c-btn">
-          <app-button
-            type="button-svg"
-            :class="selectActive && selectable ? 'button-g' : 'button-white-gr'"
-            @click="onSelect"
-          >
-            <i class="icon icon-ic_fluent_cursor_20_regular"></i>
-          </app-button>
-          <span class="tooltiptext">Выбрать</span>
-        </div>
+        <app-button
+          class="c-btn"
+          tooltip="Выбрать"
+          type="button-svg"
+          :active="!(selectActive && selectable)"
+          @click="onSelect"
+        >
+          <i class="icon icon-ic_fluent_cursor_20_regular"></i>
+        </app-button>
 
-        <div class="button__wrapper c-btn">
-          <app-button type="button-svg button-white-gr" @click="onUpload">
-            <i class="icon icon-ic_fluent_share_ios_20_regular"></i>
-          </app-button>
-          <span class="tooltiptext">Загрузить</span>
-        </div>
+        <app-button
+          class="c-btn"
+          type="button-svg button-white-gr"
+          tooltip="Загрузить"
+          @click="onUpload"
+        >
+          <i class="icon icon-ic_fluent_share_ios_20_regular"></i>
+        </app-button>
       </div>
     </div>
   </plan-data-input>

@@ -4,7 +4,7 @@
       <slot name="content"></slot>
     </div>
     <div class="admin-aside-actions" ref="actions">
-      <slot name="actions" ></slot>
+      <slot name="actions"></slot>
     </div>
   </div>
 </template>
@@ -13,17 +13,21 @@
 export default {
   data() {
     return {
-      didMount: false
+      didMount: false,
     };
   },
+
   computed: {
     height() {
       if (this.didMount) {
-        return { maxHeight: "calc(100% - " +  (this.$refs.actions.offsetHeight)+ "px)" };
-      } 
-      return { maxHeight: "auto" }
+        return {
+          maxHeight: "calc(100% - " + this.$refs.actions.offsetHeight + "px)",
+        };
+      }
+      return { maxHeight: "auto" };
     },
   },
+
   mounted() {
     this.didMount = true;
   },

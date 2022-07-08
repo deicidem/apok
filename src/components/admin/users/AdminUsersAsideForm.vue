@@ -64,7 +64,8 @@
         :value="password.confirm"
         @input="$v.password.confirm.$model = $event"
         :invalid="
-          (!$v.password.confirm.sameAs || !$v.password.confirm.required) &&
+          (!$v.password.confirm.sameAsPassword ||
+            !$v.password.confirm.required) &&
           formInvalid
         "
         icon="icon icon-ic_fluent_mail_20_regular"
@@ -90,17 +91,19 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+
 export default {
   components: {
     AdminAsideContent,
     AppInput,
     AppButton,
   },
+
   data() {
     return {
       firstName: null,
@@ -115,6 +118,7 @@ export default {
       message: null,
     };
   },
+
   validations() {
     return {
       firstName: {
@@ -139,13 +143,15 @@ export default {
       },
     };
   },
+
   computed: {
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
     },
   },
+
   methods: {
-    ...mapActions('admin/users', ['createUser']),
+    ...mapActions("admin/users", ["createUser"]),
     async submitForm() {
       this.showMessage = false;
 
@@ -160,11 +166,9 @@ export default {
           });
 
           this.submitStatus = "SUBMIT";
-          this.message =
-            "Пользователь успешно создан";
+          this.message = "Пользователь успешно создан";
         } catch (error) {
-          this.message =
-              "При регистрации произошла ошибка";
+          this.message = "При регистрации произошла ошибка";
 
           this.submitStatus = "ERROR";
         }
@@ -175,7 +179,7 @@ export default {
         return;
       }
     },
-  }
+  },
 };
 </script>
 
@@ -187,12 +191,14 @@ export default {
   padding: 30px 40px 30px 40px;
   border-radius: 10px;
   border: none;
+
   &-title {
     text-align: center;
     font-size: 20px;
     color: $black;
     margin-bottom: 20px;
   }
+
   &-form {
     margin: 30px auto 0 auto;
     width: 400px;
@@ -200,12 +206,15 @@ export default {
     border-radius: 10px;
     box-shadow: $shadow-small;
     padding: 30px;
+
     &__input {
       margin-top: 30px;
+
       &:first-child {
         margin: 0;
       }
     }
+
     &__item {
       margin-top: 20px;
       width: 100%;
@@ -214,10 +223,12 @@ export default {
       background: $white;
     }
   }
+
   &-remember {
     display: flex;
     margin-top: 20px;
     width: 100%;
+
     &__text {
       margin-left: 10px;
       color: $text-grey;

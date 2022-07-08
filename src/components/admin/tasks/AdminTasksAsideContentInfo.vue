@@ -1,32 +1,28 @@
 <template>
   <admin-aside-block title="Информация о задаче">
-    <div class="person-wrapper">
-      <div class="person-wrapper__text">
-        <div class="person-wrapper__information">
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Название</p>
-            <div class="person-edit">
-              {{task.title}}
+    <div class="content-info">
+      <div class="content-info__text">
+        <div class="content-info__information">
+          <div class="content-info__editable">
+            <p class="content-info__title">Название</p>
+            <div class="content-edit">
+              <div class="check">{{ task.title }}</div>
             </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Дата добавления</p>
-            <div class="person-edit">
-              {{task.date}}
+          <div class="content-info__editable">
+            <p class="content-info__title">Дата добавления</p>
+            <div class="content-edit">
+              <div class="check">{{ task.date }}</div>
             </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Статус</p>
-              <div class="person-edit" v-if="!isNaN(+task.status)">
-                Выполняется: {{ task.status }}%
-              </div>
-              <div class="person-edit" v-else>{{ task.status }}</div>
+          <div class="content-info__editable">
+            <p class="content-info__title">Статус</p>
+            <div class="content-edit" v-if="!isNaN(+task.status)">
+              <div class="check">Выполняется: {{ task.status }}%</div>
+            </div>
+            <div class="content-edit" v-else>
+              <div class="check">{{ task.status }}</div>
+            </div>
           </div>
           <div
             class="person-wrapper__editable"
@@ -41,18 +37,45 @@
         </div>
       </div>
 
-      <div class="person-wrapper__buttons">
+      <div class="content-info__buttons">
         <app-button
           type="button-r"
           @click="$emit('delete', task.id)"
           :disabled="!task.deletable"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Удалить
         </app-button>
-
       </div>
     </div>
+
+    <!-- <div class="content-wrapper">
+      <div class="content-wrapper__text">
+        <div class="content-info__information">
+          <div
+            class="content-info__editable"
+            v-for="(item, key) in info"
+            :key="key"
+          >
+            <p class="content-info__title">{{ item.title }}</p>
+            <div class="content-edit">
+              <div class="check">{{ item.value }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-info__buttons">
+        <app-button
+          type="button-r"
+          @click="$emit('delete', task.id)"
+          :disabled="!task.deletable"
+          class="content-info__button"
+        >
+          Удалить
+        </app-button>
+      </div>
+    </div> -->
   </admin-aside-block>
 </template>
 
@@ -66,15 +89,57 @@ export default {
     AppButton,
   },
   props: ["task"],
+  // data() {
+  //   return {
+  //     info: {
+  //       title: {
+  //         title: "Название",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       date: {
+  //         title: "Дата добавления",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       status: {
+  //         title: "Статус",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       user: {
+  //         title: "Пользователь",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //     },
+
+  //     editable: false,
+  //     showPopup: false,
+  //   };
+  // },
+  // mounted() {
+  //   this.info.title.value = this.task.title;
+  //   this.info.date.value = this.task.date;
+  //   this.info.status.value = this.task.status;
+  //   this.info.user.value = this.task.user;
+  // },
+  // watch: {
+  //   task() {
+  //     this.info.title.value = this.task.title;
+  //     this.info.date.value = this.task.date;
+  //     this.info.status.value = this.task.status;
+  //     this.info.user.value = this.task.user;
+  //   },
+  // },
 };
 </script>
 
 
 
 <style scoped lang="scss">
-.person {
+.content {
   padding: 20px;
-
   border-radius: 10px;
   background: $white;
   box-shadow: $shadow-small;
@@ -93,20 +158,21 @@ export default {
     margin-bottom: 20px;
   }
 
-  &-wrapper {
+  &-info {
     display: flex;
     justify-content: space-between;
-
+    flex-direction: column;
     &__text {
       display: flex;
+      flex-direction: column;
     }
 
     &__title {
       margin: 0;
       color: $color-main;
-      line-height: 30px;
+      line-height: 20px;
       font-size: 14px;
-      margin-right: 10px;
+      width: 100px;
     }
 
     &__info {
@@ -120,14 +186,16 @@ export default {
     }
 
     &__buttons {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     &__button {
-      margin-bottom: 20px;
-      width: 220px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__editable {
@@ -142,27 +210,10 @@ export default {
   }
 }
 
-.editme {
-  width: 200px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgb($text-grey, 0.2);
-  box-shadow: $shadow-small;
-  color: $color-main;
-  padding-left: 10px;
-
-  &:focus-visible {
-    border: 1px solid $color-main;
-    outline: none;
-  }
-}
-
 .check {
   color: $text-grey;
   font-size: 14px;
-  margin-left: 30px;
-  padding-left: 10px;
-  line-height: 30px;
-  width: 200px;
+  padding-left: 20px;
+  line-height: 20px;
 }
 </style>

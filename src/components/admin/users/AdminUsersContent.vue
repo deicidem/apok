@@ -14,15 +14,18 @@ import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminUsersContentTable from "@/components/admin/users/AdminUsersContentTable.vue";
 import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   components: {
     AdminContent,
     AdminUsersContentTable,
     AdminContentSearch,
   },
+
   computed: {
     ...mapGetters("admin/users", ["getUsers", "getActiveUser"]),
   },
+
   methods: {
     ...mapActions("admin/users", ["loadUsers", "searchUsers", "setActiveUser"]),
   },

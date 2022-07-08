@@ -47,8 +47,9 @@ export default {
 .row {
   cursor: pointer;
 }
+
 .active {
   color: $white;
-  background: $color-main-light;
+  background: $gradient;
 }
 </style>

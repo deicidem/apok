@@ -1,15 +1,15 @@
 <template>
   <admin-aside-block title="Информация о пользователе">
-    <div class="person-wrapper">
-      <div class="person-wrapper__text">
-        <div class="person-wrapper__information">
+    <div class="content-info">
+      <div class="content-info__text">
+        <div class="content-info__information">
           <div
-            class="person-wrapper__editable"
+            class="content-info__editable"
             v-for="(item, key) in info"
             :key="key"
           >
-            <p class="person-wrapper__title">{{ item.title }}</p>
-            <div class="person-edit">
+            <p class="content-info__title">{{ item.title }}</p>
+            <div class="content-edit">
               <div
                 :contenteditable="item.editable && editable"
                 @blur="onEdit($event, key)"
@@ -23,10 +23,10 @@
         </div>
       </div>
 
-      <div class="person-wrapper__buttons">
+      <div class="content-info__buttons">
         <app-button
           type="button-white-gr"
-          class="person-wrapper__button"
+          class="content-info__button"
           v-show="!editable"
           @click="editable = !editable"
         >
@@ -37,7 +37,7 @@
           type="button-g"
           v-show="editable"
           @click="onEditDone"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Готово
         </app-button>
@@ -45,23 +45,25 @@
         <app-button
           type="button-r"
           @click="$emit('delete', user.id)"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Удалить
         </app-button>
+
         <app-button
           v-if="user.blocked"
           type="button-r"
           @click="$emit('unblock', user.id)"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Разблокировать
         </app-button>
+
         <app-button
           v-else
           type="button-r"
           @click="$emit('block', user.id)"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Заблокировать
         </app-button>
@@ -133,10 +135,8 @@ export default {
 };
 </script>
 
-
-
 <style scoped lang="scss">
-.person {
+.content {
   padding: 20px;
 
   border-radius: 10px;
@@ -157,12 +157,13 @@ export default {
     margin-bottom: 20px;
   }
 
-  &-wrapper {
+  &-info {
     display: flex;
     justify-content: space-between;
-
+    flex-direction: column;
     &__text {
       display: flex;
+      flex-direction: column;
     }
 
     &__title {
@@ -170,7 +171,7 @@ export default {
       color: $color-main;
       line-height: 30px;
       font-size: 14px;
-      width: 80px;
+      width: 90px;
     }
 
     &__info {
@@ -184,14 +185,16 @@ export default {
     }
 
     &__buttons {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     &__button {
-      margin-bottom: 20px;
-      width: 220px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__editable {
@@ -207,13 +210,12 @@ export default {
 }
 
 .editme {
-  width: 200px;
+  width: 280px;
   height: 30px;
   border-radius: 10px;
   border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
   color: $color-main;
-  padding-left: 10px;
 
   &:focus-visible {
     border: 1px solid $color-main;
@@ -224,9 +226,7 @@ export default {
 .check {
   color: $text-grey;
   font-size: 14px;
-  margin-left: 30px;
-  padding-left: 10px;
+  padding-left: 20px;
   line-height: 30px;
-  width: 200px;
 }
 </style>

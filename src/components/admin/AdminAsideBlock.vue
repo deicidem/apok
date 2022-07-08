@@ -1,13 +1,13 @@
 <template>
   <div class="admin-aside-block">
-    <h3 class="admin-aside-block-title">{{title}}</h3>
+    <h3 class="admin-aside-block-title">{{ title }}</h3>
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title']
+  props: ["title"],
 };
 </script>
 
@@ -18,11 +18,13 @@ export default {
   box-shadow: $shadow-small;
   margin-bottom: 20px;
   padding: 20px;
+
   &:last-child {
     margin-bottom: 0;
   }
+
   &-title {
-    margin: 0 0 10px;
+    margin: 0 0 20px;
     font-size: 18px;
     font-weight: 400;
   }

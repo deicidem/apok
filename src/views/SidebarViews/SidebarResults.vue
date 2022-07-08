@@ -83,24 +83,24 @@
 
                   <div class="button__wrapper results-table__button">
                     <app-button
-                      type="button-svg"
                       class="results-button"
-                      :class="results[i].polygonActive ? 'active' : ''"
+                      type="button-svg"
+                      tooltip="Границы"
+                      :active="results[i].polygonActive"
                       @click="onPolygonButtonClick(i, item.id, item.geography)"
                     >
                       <i
                         class="icon icon-ic_fluent_select_object_20_regular"
                       ></i>
                     </app-button>
-
-                    <span class="tooltiptext">Границы</span>
                   </div>
 
                   <div class="button__header results-table__button">
                     <app-button
-                      type="button-svg button-white"
                       class="results-button"
-                      :class="results[i].imageActive ? 'active' : ''"
+                      type="button-svg"
+                      tooltip="Изображение"
+                      :active="results[i].imageActive"
                       @click="
                         onImageButtonClick(
                           i,
@@ -112,8 +112,6 @@
                     >
                       <i class="icon icon-ic_fluent_image_20_regular"></i>
                     </app-button>
-
-                    <span class="tooltiptext">Изображение</span>
                   </div>
                 </td>
 
@@ -128,17 +126,16 @@
                 <td class="results-table__buttons">
                   <div class="button__wrapper results-table__button">
                     <app-button
-                      type="button-svg button-white"
+                      type="button-svg"
                       class="results-button"
-                      :class="results[i].cardActive ? 'active' : ''"
+                      tooltip="Подробнее"
+                      :active="results[i].cardActive"
                       @click="onCardButtonClick(i)"
                     >
                       <i
                         class="icon icon-ic_fluent_textbox_more_20_regular"
                       ></i>
                     </app-button>
-
-                    <span class="tooltiptext">Подробнее</span>
                   </div>
                 </td>
               </tr>

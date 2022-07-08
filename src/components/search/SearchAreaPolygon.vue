@@ -19,10 +19,9 @@
             <td>{{ coord.lng }}</td>
 
             <td class="col delete" @click="$emit('delete', i)">
-              <app-button type="button-svg button-svg-r">
+              <app-button tooltip="Удалить" type="button-svg button-svg-r">
                 <i class="icon icon-ic_fluent_delete_20_regular"></i>
               </app-button>
-              <div class="tooltiptext tooltiptext-r">Удалить</div>
             </td>
           </tr>
           <tr>
@@ -64,9 +63,8 @@
 
     <div class="c-buttons">
       <app-button
-        type="button-white-gr"
         class="c-button"
-        :class="drawable ? 'button-white-gr' : 'button-g'"
+        :type="drawable ? 'button-white-gr' : 'button-g'"
         @click="onDraw"
       >
         {{ drawable ? "Сохранить полигон" : "Использовать карту" }}
@@ -223,7 +221,7 @@ export default {
       font-family: inherit;
       border: none;
       line-height: 1.5;
-
+      outline: none;
       &__td {
         padding: 0;
       }

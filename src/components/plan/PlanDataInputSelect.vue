@@ -6,10 +6,12 @@
         <div class="c-select__icon">
           <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
         </div>
+
         <template v-if="selectedOption != null">
           {{ selectedOption.title }}
         </template>
       </div>
+      
       <div class="c-select" v-show="showSelect">
         <div
           class="c-select__option"

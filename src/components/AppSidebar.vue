@@ -127,7 +127,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .notification {
   position: absolute;
   top: 8px;
@@ -149,6 +149,7 @@ export default {
     position: relative;
   }
 }
+
 .slide {
   &-enter {
     transform: translateX(-100%);
@@ -174,6 +175,7 @@ export default {
     transform: translateX(-100%);
   }
 }
+
 .fade {
   &-enter-active,
   &-leave-active {
@@ -190,11 +192,9 @@ export default {
 .sidebar {
   position: absolute;
   left: 50px;
-
   display: block;
   height: 100%;
   width: calc(100% - 50px);
-
   z-index: 5;
   box-shadow: $shadow-big;
   transition: transform 0.3s ease-out;
@@ -208,7 +208,6 @@ export default {
     position: relative;
     margin: 0;
     padding: 6px;
-
     background: $gradient;
     color: $white;
     text-align: center;

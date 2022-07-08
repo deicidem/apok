@@ -2,50 +2,29 @@
   <admin-aside-block title="Информация о файле">
     <div class="person-wrapper">
       <div class="person-wrapper__text">
-        <div class="person-wrapper__information">
+        <div class="content-info__information">
           <div
-            class="person-wrapper__editable"
+            class="content-info__editable"
+            v-for="(item, key) in info"
+            :key="key"
           >
-            <p class="person-wrapper__title">Имя</p>
-            <div class="person-edit">
-              {{file.name}}
-            </div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Дата добавления</p>
-            <div class="person-edit">
-              {{file.date}}
-            </div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Тип</p>
-              <div class="person-edit" >{{ file.type }}</div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Пользователь</p>
-            <div class="person-edit">
-              Андрей Почитаев
+            <p class="content-info__title">{{ item.title }}</p>
+            <div class="content-edit">
+              <div class="check">{{ item.value }}</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="person-wrapper__buttons">
+      <div class="content-info__buttons">
         <app-button
           type="button-r"
           @click="$emit('delete', file.id)"
           :disabled="!file.deletable"
-          class="person-wrapper__button"
+          class="content-info__button"
         >
           Удалить
         </app-button>
-
       </div>
     </div>
   </admin-aside-block>
@@ -61,13 +40,48 @@ export default {
     AppButton,
   },
   props: ["file"],
+  data() {
+    return {
+      info: {
+        name: {
+          title: "Имя",
+          value: null,
+        },
+        date: {
+          title: "Фамилия",
+          value: null,
+        },
+        type: {
+          title: "Почта",
+          value: null,
+        },
+        user: {
+          title: "Пользователь",
+          value: null,
+        },
+      },
+      showPopup: false,
+    };
+  },
+  mounted() {
+    this.info.name.value = this.file.name;
+    this.info.date.value = this.file.date;
+    this.info.type.value = this.file.type;
+    this.info.user.value = this.file.user;
+  },
+  watch: {
+    file() {
+      this.info.name.value = this.file.name;
+      this.info.date.value = this.file.date;
+      this.info.type.value = this.file.type;
+      this.info.user.value = this.file.user;
+    },
+  },
 };
 </script>
 
-
-
 <style scoped lang="scss">
-.person {
+.content {
   padding: 20px;
 
   border-radius: 10px;
@@ -88,20 +102,21 @@ export default {
     margin-bottom: 20px;
   }
 
-  &-wrapper {
+  &-info {
     display: flex;
     justify-content: space-between;
-
+    flex-direction: column;
     &__text {
       display: flex;
+      flex-direction: column;
     }
 
     &__title {
       margin: 0;
       color: $color-main;
-      line-height: 30px;
+      line-height: 20px;
       font-size: 14px;
-      margin-right: 10px;
+      width: 110px;
     }
 
     &__info {
@@ -115,14 +130,16 @@ export default {
     }
 
     &__buttons {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     &__button {
-      margin-bottom: 20px;
-      width: 220px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__editable {
@@ -137,27 +154,10 @@ export default {
   }
 }
 
-.editme {
-  width: 200px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgb($text-grey, 0.2);
-  box-shadow: $shadow-small;
-  color: $color-main;
-  padding-left: 10px;
-
-  &:focus-visible {
-    border: 1px solid $color-main;
-    outline: none;
-  }
-}
-
 .check {
   color: $text-grey;
   font-size: 14px;
-  margin-left: 30px;
-  padding-left: 10px;
-  line-height: 30px;
-  width: 200px;
+  padding-left: 20px;
+  line-height: 20px;
 }
 </style>

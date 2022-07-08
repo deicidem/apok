@@ -64,7 +64,7 @@
         :value="password.confirm"
         @input="$v.password.confirm.$model = $event"
         :invalid="
-          (!$v.password.confirm.sameAs || !$v.password.confirm.required) &&
+          (!$v.password.confirm.sameAsPassword || !$v.password.confirm.required) &&
           formInvalid
         "
         icon="icon icon-ic_fluent_mail_20_regular"

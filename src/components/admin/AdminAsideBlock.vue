@@ -22,7 +22,7 @@ export default {
     margin-bottom: 0;
   }
   &-title {
-    margin: 0 0 10px;
+    margin: 0 0 20px;
     font-size: 18px;
     font-weight: 400;
   }

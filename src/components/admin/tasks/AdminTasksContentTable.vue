@@ -6,6 +6,7 @@
         <th>Название</th>
         <th>Дата создания</th>
         <th>Статус</th>
+        <th>Пользователь</th>
       </tr>
     </thead>
 
@@ -26,6 +27,7 @@
         </td>
 
         <td v-else>{{ task.status }}</td>
+        <td>{{ task.user }}</td>
       </tr>
     </tbody>
   </admin-content-table>
@@ -38,13 +40,13 @@ export default {
   props: ["tasks", "activeTask"],
   components: {
     AdminContentTable,
-    AppProgress
+    AppProgress,
   },
   computed: {
     activeTaskId() {
       return this.activeTask == null ? null : this.activeTask.id;
-    }
-  }
+    },
+  },
 };
 </script>
 

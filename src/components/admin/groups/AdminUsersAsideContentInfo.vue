@@ -136,7 +136,7 @@ export default {
 
 
 <style scoped lang="scss">
-.person {
+.content {
   padding: 20px;
 
   border-radius: 10px;
@@ -157,12 +157,13 @@ export default {
     margin-bottom: 20px;
   }
 
-  &-wrapper {
+  &-info {
     display: flex;
     justify-content: space-between;
-
+    flex-direction: column;
     &__text {
       display: flex;
+      flex-direction: column;
     }
 
     &__title {
@@ -170,7 +171,7 @@ export default {
       color: $color-main;
       line-height: 30px;
       font-size: 14px;
-      width: 80px;
+      width: 110px;
     }
 
     &__info {
@@ -184,14 +185,16 @@ export default {
     }
 
     &__buttons {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     &__button {
-      margin-bottom: 20px;
-      width: 220px;
+      margin-right: 20px;
+      flex: 1 1 auto;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__editable {
@@ -206,27 +209,10 @@ export default {
   }
 }
 
-.editme {
-  width: 200px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgb($text-grey, 0.2);
-  box-shadow: $shadow-small;
-  color: $color-main;
-  padding-left: 10px;
-
-  &:focus-visible {
-    border: 1px solid $color-main;
-    outline: none;
-  }
-}
-
 .check {
   color: $text-grey;
   font-size: 14px;
-  margin-left: 30px;
-  padding-left: 10px;
-  line-height: 30px;
-  width: 200px;
+  padding-left: 20px;
+  line-height: 20px;
 }
 </style>

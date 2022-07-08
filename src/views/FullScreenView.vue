@@ -6,6 +6,7 @@
           <div class="back-arrow">
             <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
           </div>
+
           <span class="back-subtitle">Назад</span>
         </div>
       </router-link>

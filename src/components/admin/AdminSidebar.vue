@@ -4,7 +4,14 @@
       <h4 class="sidebar-title">Панель администратора</h4>
       <ul class="sidebar-list">
         <li class="sidebar-list__item" v-for="(route, i) in routes" :key="i">
-          <router-link :to="route.path" class="sidebar-link" active-class="active"> <i class="icon" :class="route.icon"></i> {{route.name}}</router-link>
+          <router-link
+            :to="route.path"
+            class="sidebar-link"
+            active-class="active"
+          >
+            <i class="icon" :class="route.icon"></i>
+            {{ route.name }}</router-link
+          >
         </li>
       </ul>
     </div>
@@ -35,8 +42,8 @@ export default {
         path: "/admin/groups",
         icon: "icon-ic_fluent_people_team_20_regular",
       },
-    ]
-  })
+    ],
+  }),
 };
 </script>
 
@@ -63,8 +70,10 @@ export default {
     list-style: none;
     margin: 20px 0 0 0;
     padding: 0;
+
     &__item {
       margin-bottom: 20px;
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -78,14 +87,17 @@ export default {
     color: $black;
     transition: color 0.2s ease-out;
     line-height: 20px;
+
     .icon {
       margin-right: 10px;
       font-size: 20px;
     }
+
     &.active {
       color: $color-main;
     }
-     &:hover {
+
+    &:hover {
       color: $color-main-light;
     }
   }

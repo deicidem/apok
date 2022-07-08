@@ -35,9 +35,11 @@ import AdminContentTable from "@/components/admin/AdminContentTable";
 
 export default {
   props: ["tasks", "activeTask"],
+
   components: {
     AdminContentTable,
   },
+
   computed: {
     activeTaskId() {
       return this.activeTask == null ? null : this.activeTask.id;

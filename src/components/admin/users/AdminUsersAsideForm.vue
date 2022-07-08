@@ -96,12 +96,14 @@ import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+
 export default {
   components: {
     AdminAsideContent,
     AppInput,
     AppButton,
   },
+
   data() {
     return {
       firstName: null,
@@ -116,6 +118,7 @@ export default {
       message: null,
     };
   },
+
   validations() {
     return {
       firstName: {
@@ -140,11 +143,13 @@ export default {
       },
     };
   },
+
   computed: {
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
     },
   },
+
   methods: {
     ...mapActions("admin/users", ["createUser"]),
     async submitForm() {

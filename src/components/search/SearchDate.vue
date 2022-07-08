@@ -126,17 +126,20 @@ import { ru } from "vuejs-datepicker/dist/locale";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { mapActions, mapGetters } from "vuex";
-
 import useVuelidate from "@vuelidate/core";
 import SearchBase from "@/components/search/SearchBase";
+
 export default {
   mixins: [clickaway],
+
   components: {
     DatePicker,
     SearchBase,
     AppCheckbox,
   },
+
   setup: () => ({ v$: useVuelidate() }),
+
   data() {
     return {
       month: "",
@@ -146,6 +149,7 @@ export default {
       selectActive: false,
     };
   },
+
   computed: {
     ...mapGetters("search", ["getTimeInterval", "getSearchStatus"]),
     monthsValue() {
@@ -191,6 +195,7 @@ export default {
     // this.monthsOptions[el.cnt - 1].active = true;
     // });
   },
+
   methods: {
     ...mapActions("search", ["setTimeInterval"]),
 

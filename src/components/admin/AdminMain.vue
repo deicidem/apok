@@ -15,12 +15,14 @@
 <script>
 export default {
   props: ["title"],
+
   data() {
     return {
       contentHeight: 0,
       didMount: false,
     };
   },
+
   computed: {
     height() {
       if (this.didMount) {
@@ -32,6 +34,7 @@ export default {
       return { maxHeight: "auto" };
     },
   },
+
   mounted() {
     this.didMount = true;
   },
@@ -51,6 +54,7 @@ export default {
   flex-direction: column;
   align-items: center;
   max-height: 100%;
+
   &-content {
     flex: 1 1 60%;
     max-height: 100%;

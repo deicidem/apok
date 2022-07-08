@@ -79,7 +79,9 @@ export default {
     AdminAsideBlock,
     AppButton,
   },
+
   props: ["user"],
+
   data() {
     return {
       info: {
@@ -104,11 +106,13 @@ export default {
       showPopup: false,
     };
   },
+
   mounted() {
     this.info.firstName.value = this.user.firstName;
     this.info.lastName.value = this.user.lastName;
     this.info.email.value = this.user.email;
   },
+
   methods: {
     onEditDone() {
       this.editable = false;
@@ -119,10 +123,12 @@ export default {
         email: this.info.email.value,
       });
     },
+
     onEdit(evt, key) {
       this.info[key].value = evt.target.innerText;
     },
   },
+
   watch: {
     user() {
       this.info.firstName.value = this.user.firstName;
@@ -138,7 +144,6 @@ export default {
 <style scoped lang="scss">
 .content {
   padding: 20px;
-
   border-radius: 10px;
   background: $white;
   box-shadow: $shadow-small;

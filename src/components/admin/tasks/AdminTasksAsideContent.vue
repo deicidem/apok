@@ -3,12 +3,14 @@
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
+
     <admin-tasks-aside-content-info
       v-if="getActiveTask != null"
       :task="getActiveTask"
       @update="updateTask"
       @delete="onDelete"
     ></admin-tasks-aside-content-info>
+
     <admin-tasks-aside-content-links></admin-tasks-aside-content-links>
   </admin-aside-content>
 </template>
@@ -25,8 +27,9 @@ export default {
     AdminAsideContent,
     AdminTasksAsideContentInfo,
     AdminTasksAsideContentLinks,
-        AppDeleteConfirmation,
+    AppDeleteConfirmation,
   },
+
   computed: {
     ...mapGetters("admin/tasks", ["getActiveTask"]),
     title() {
@@ -36,6 +39,7 @@ export default {
       return "Задача не выбрана";
     },
   },
+
   methods: {
     ...mapActions("admin/tasks", ["updateTask", "deleteTask"]),
     async onDelete(id) {
@@ -43,7 +47,7 @@ export default {
         title: "Вы уверены, что хотите удалить эту задачу?",
         message:
           "Удаление этой задачи приведет к потере всех связанных с ней данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;

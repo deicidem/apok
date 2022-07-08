@@ -18,15 +18,19 @@
         Запланировать задачу
       </app-button>
     </template>
+
     <template v-slot:content>
       <div class="plan-wrapper">
         <div class="plan-wrapper__cards">
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Описание</div>
+
             <div class="plan-wrapper__text" v-html="plan.description"></div>
           </div>
+
           <div class="plan-wrapper__card">
             <div class="plan-wrapper__title">Требования к данным</div>
+
             <div class="plan-table">
               <div
                 class="plan-table__item"
@@ -34,6 +38,7 @@
                 :key="i"
               >
                 <p class="plan-table__subtitle">{{ req.title }}:</p>
+
                 <p class="plan-table__text">
                   {{ req.description }}
                 </p>
@@ -54,11 +59,13 @@
 import { mapGetters, mapActions } from "vuex";
 import PageWithScroll from "@/components/PageWithScroll.vue";
 import AppButton from "@/components/controls/AppButton";
+
 export default {
   components: {
     PageWithScroll,
     AppButton,
   },
+
   methods: {
     ...mapActions("plans", ["selectPlan"]),
     ...mapActions(["setDataCardState"]),
@@ -68,6 +75,7 @@ export default {
       this.$router.push("/main/plan");
     },
   },
+
   computed: {
     ...mapGetters(["scrollOps"]),
     id() {

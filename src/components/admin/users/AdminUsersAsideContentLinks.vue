@@ -3,22 +3,25 @@
     <nav class="admin-aside-links">
       <ul>
         <li>
-          <router-link class="admin-aside-link" to="/admin/tasks"
+          <router-link class="admin-aside-links-item" to="/admin/tasks"
             >Задачи</router-link
           >
         </li>
+        
         <li>
-          <router-link class="admin-aside-link" to="/admin/files"
+          <router-link class="admin-aside-links-item" to="/admin/files"
             >Файлы</router-link
           >
         </li>
+
         <li>
-          <router-link class="admin-aside-link" to="/admin/dzzs"
+          <router-link class="admin-aside-links-item" to="/admin/dzzs"
             >Снимки</router-link
           >
         </li>
+
         <li>
-          <router-link class="admin-aside-link" to="/admin/groups"
+          <router-link class="admin-aside-links-item" to="/admin/groups"
             >Группы</router-link
           >
         </li>
@@ -50,10 +53,9 @@ export default {
       text-decoration: underline;
     }
   }
-}
 
-.admin-aside-link {
-  color: $text-grey;
+  &-item {
+    color: $text-grey;
+  }
 }
-
 </style>

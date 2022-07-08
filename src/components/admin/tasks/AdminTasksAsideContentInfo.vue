@@ -136,7 +136,6 @@ export default {
 <style scoped lang="scss">
 .content {
   padding: 20px;
-
   border-radius: 10px;
   background: $white;
   box-shadow: $shadow-small;

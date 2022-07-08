@@ -20,6 +20,7 @@ export default {
       default: null,
     },
   },
+  
   computed: {
     image() {
       if (this.icon != undefined) {

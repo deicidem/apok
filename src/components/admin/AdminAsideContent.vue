@@ -2,11 +2,11 @@
   <div class="aside-info">
     <slot name="popups"></slot>
     <h3 class="aside-info-title">{{ title }}</h3>
-      <vuescroll :ops="scrollOps">
-        <div class="aside-info-content">
-          <slot></slot>
-        </div>
-      </vuescroll>
+    <vuescroll :ops="scrollOps">
+      <div class="aside-info-content">
+        <slot></slot>
+      </div>
+    </vuescroll>
   </div>
 </template>
 
@@ -19,7 +19,9 @@ export default {
   components: {
     vuescroll,
   },
+
   props: ["title"],
+
   computed: {
     ...mapGetters(["scrollOps"]),
   },
@@ -40,6 +42,7 @@ export default {
   align-items: center;
   padding-top: 20px;
   overflow: hidden;
+
   &-title {
     font-weight: 400;
     font-size: 18px;
@@ -47,6 +50,7 @@ export default {
     margin: 0;
     margin-bottom: 10px;
   }
+
   &-content {
     padding: 10px 20px 20px;
   }

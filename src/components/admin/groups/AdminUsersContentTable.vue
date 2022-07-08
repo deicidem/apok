@@ -30,16 +30,19 @@
 
 <script>
 import AdminContentTable from "@/components/admin/AdminContentTable";
+
 export default {
   props: ["users", "activeUser"],
+
   components: {
     AdminContentTable,
   },
+
   computed: {
     activeUserId() {
       return this.activeUser == null ? null : this.activeUser.id;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -47,6 +50,7 @@ export default {
 .row {
   cursor: pointer;
 }
+
 .active {
   color: $white;
   background: $gradient;

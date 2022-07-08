@@ -2,28 +2,23 @@
   <admin-aside-block title="Связанные объекты">
     <nav class="admin-aside-links">
       <ul>
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/tasks"
+        <li class="admin-aside-links-item">
+          <router-link
+            :to="{ path: '/admin/tasks', query: { userId: user.id } }"
             >Задачи</router-link
           >
         </li>
-        
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/files"
+        <li class="admin-aside-links-item">
+          <router-link
+            :to="{ path: '/admin/files', query: { userId: user.id } }"
             >Файлы</router-link
           >
         </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/dzzs"
-            >Снимки</router-link
-          >
+        <li class="admin-aside-links-item">  
+          <router-link to="/admin/dzzs">Снимки</router-link>
         </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/groups"
-            >Группы</router-link
-          >
+        <li class="admin-aside-links-item">
+          <router-link to="/admin/groups">Группы</router-link>
         </li>
       </ul>
     </nav>
@@ -33,6 +28,7 @@
 <script>
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 export default {
+  props: ["user"],
   components: {
     AdminAsideBlock,
   },

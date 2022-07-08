@@ -8,9 +8,33 @@
             v-for="(item, key) in info"
             :key="key"
           >
-            <p class="content-info__title">{{ item.title }}</p>
-            <div class="content-edit">
-              <div class="check">{{ item.value }}</div>
+            <p class="person-wrapper__title">Имя</p>
+            <div class="person-edit">
+              {{file.name}}
+            </div>
+          </div>
+          <div
+            class="person-wrapper__editable"
+          >
+            <p class="person-wrapper__title">Дата добавления</p>
+            <div class="person-edit">
+              {{file.date}}
+            </div>
+          </div>
+          <div
+            class="person-wrapper__editable"
+          >
+            <p class="person-wrapper__title">Тип</p>
+              <div class="person-edit" >{{ file.type }}</div>
+          </div>
+          <div
+            class="person-wrapper__editable"
+          >
+            <p class="person-wrapper__title">Пользователь</p>
+            <div class="person-edit">
+              <router-link :to="{ path: '/admin/users', query: { userId: file.userId }}">
+                {{file.userName}}
+              </router-link>
             </div>
           </div>
         </div>

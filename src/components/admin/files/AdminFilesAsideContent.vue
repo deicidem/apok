@@ -9,7 +9,10 @@
       @update="updateFile"
       @delete="onDelete"
     ></admin-files-aside-content-info>
-    <admin-files-aside-content-links></admin-files-aside-content-links>
+    <admin-files-aside-content-links
+      v-if="getActiveFile != null"
+      :file="getActiveFile"
+    ></admin-files-aside-content-links>
   </admin-aside-content>
 </template>
 
@@ -25,7 +28,7 @@ export default {
     AdminAsideContent,
     AdminFilesAsideContentInfo,
     AdminFilesAsideContentLinks,
-        AppDeleteConfirmation,
+    AppDeleteConfirmation,
   },
   computed: {
     ...mapGetters("admin/files", ["getActiveFile"]),
@@ -43,7 +46,7 @@ export default {
         title: "Вы уверены, что хотите удалить этот файл?",
         message:
           "Удаление этого файла приведет к потере всех связанных с ним данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;

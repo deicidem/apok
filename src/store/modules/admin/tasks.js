@@ -5,10 +5,14 @@ export default {
   state: {
     tasks: null,
     activeTaskIndex: null,
+    tasksUser: null
   },
   getters: {
     getTasks(state) {
       return state.tasks;
+    },
+    getTasksUser(state) {
+      return state.tasksUser;
     },
     getActiveTaskIndex(state) {
       return state.activeTaskIndex;
@@ -51,6 +55,9 @@ export default {
     },
     addTask(state, payload) {
       state.tasks.push(payload);
+    },
+    setTasksUser(state, payload) {
+      state.tasksUser = payload;
     }
   },
   actions: {
@@ -69,6 +76,21 @@ export default {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setTasks', res.data.tasks);
+      commit('setTasksUser', null);
+      return res;
+    },
+    async loadTasksByUser({commit}, payload) {
+      let res = await tasksApi.allByUser(payload);
+      console.log(res);
+      let tasks = res.data.tasks;
+      tasks.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+      });
+      commit('setTasks', res.data.tasks);
+      commit('setTasksUser', {
+        id: res.data.tasks[0].userId,
+        name: res.data.tasks[0].userName
+      });
       return res;
     },
     async searchTasks({commit}, payload) {

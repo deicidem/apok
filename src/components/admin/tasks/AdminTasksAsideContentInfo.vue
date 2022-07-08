@@ -24,10 +24,14 @@
               <div class="check">{{ task.status }}</div>
             </div>
           </div>
-          <div class="content-info__editable">
-            <p class="content-info__title">Пользователь</p>
-            <div class="content-edit">
-              <div class="check">Андрей Почитаев</div>
+          <div
+            class="person-wrapper__editable"
+          >
+            <p class="person-wrapper__title">Пользователь</p>
+            <div class="person-edit">
+              <router-link :to="{ path: '/admin/users', query: { userId: task.userId }}">
+                {{task.userName}}
+              </router-link>
             </div>
           </div>
         </div>

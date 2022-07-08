@@ -5,8 +5,7 @@
       @select="setActiveUser"
       :activeUser="getActiveUser"
     ></admin-users-content-table>
-
-    <admin-content-search @submit="searchUsers($event)"></admin-content-search>
+    <admin-content-search @submit="searchUsers($event)" @all="loadUsers()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -29,10 +28,6 @@ export default {
 
   methods: {
     ...mapActions("admin/users", ["loadUsers", "searchUsers", "setActiveUser"]),
-  },
-
-  mounted() {
-    this.loadUsers();
   },
 };
 </script>

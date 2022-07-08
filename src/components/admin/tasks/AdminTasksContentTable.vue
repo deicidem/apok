@@ -24,7 +24,7 @@
         <td v-if="!isNaN(+task.status)">Выполняется: {{ task.status }}%</td>
 
         <td v-else>{{ task.status }}</td>
-        <td>{{ task.user }}</td>
+        <td >{{ task.userName }}</td>
       </tr>
     </tbody>
   </admin-content-table>

@@ -6,6 +6,7 @@
         <th>Имя</th>
         <th>Тип</th>
         <th>Дата создания</th>
+        <th>Пользователь</th>
       </tr>
     </thead>
 
@@ -21,6 +22,7 @@
         <td>{{ file.name }}</td>
         <td>{{ file.type }}</td>
         <td>{{ file.date }}</td>
+        <td>{{ file.userName}}</td>
       </tr>
     </tbody>
   </admin-content-table>

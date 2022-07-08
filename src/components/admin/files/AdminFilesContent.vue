@@ -5,7 +5,7 @@
       @select="setActiveFile"
       :activeFile="getActiveFile"
     ></admin-files-content-table>
-    <admin-content-search @submit="searchFiles($event)"></admin-content-search>
+    <admin-content-search @submit="searchFiles($event)" @all="loadFiles()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -25,9 +25,6 @@ export default {
   },
   methods: {
     ...mapActions("admin/files", ["loadFiles", "searchFiles", "setActiveFile"]),
-  },
-  mounted() {
-    this.loadFiles();
   },
 };
 </script>

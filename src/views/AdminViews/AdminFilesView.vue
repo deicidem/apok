@@ -1,5 +1,5 @@
 <template>
-  <admin-main title="Файлы">
+  <admin-main :title="title" :loading="loading">
     <template v-slot:content>
       <admin-files-content></admin-files-content>
     </template>
@@ -13,11 +13,36 @@
 import AdminMain from "@/components/admin/AdminMain.vue";
 import AdminFilesContent from "@/components/admin/files/AdminFilesContent.vue";
 import AdminFilesAside from "@/components/admin/files/AdminFilesAside.vue";
+import {mapGetters, mapActions} from "vuex";
 export default {
   components: {
     AdminMain,
     AdminFilesContent,
     AdminFilesAside,
+  },
+  data: () => ({
+    loading: true
+  }),
+  computed: {
+    ...mapGetters('admin/files', ['getFilesUser']),
+    title() {
+      if (this.getFilesUser != null) {
+        return `Файлы (Пользователь - ${this.getFilesUser.name})`
+      } else {
+        return `Файлы`
+      }
+    }
+  },
+  methods: {
+    ...mapActions('admin/files', ['loadFiles', 'loadFilesByUser'])
+  },
+  async mounted() {
+    if (this.$route.query?.userId) {
+      await this.loadFilesByUser(this.$route.query?.userId);
+    } else {
+      await this.loadFiles();
+    }
+    this.loading = false;
   },
 };
 </script>

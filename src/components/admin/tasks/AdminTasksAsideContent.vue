@@ -10,8 +10,7 @@
       @update="updateTask"
       @delete="onDelete"
     ></admin-tasks-aside-content-info>
-
-    <admin-tasks-aside-content-links></admin-tasks-aside-content-links>
+    <admin-tasks-aside-content-links v-if="getActiveTask != null" ></admin-tasks-aside-content-links>
   </admin-aside-content>
 </template>
 

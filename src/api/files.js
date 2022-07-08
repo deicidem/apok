@@ -29,6 +29,10 @@ export async function all() {
   let res = await server.get('files');
   return res;
 }
+export async function allByUser(userId) {
+  let res = await server.get('files', {params: {userId}});
+  return res;
+}
 export async function allFiltered() {
   let res = await server.get('files');
   return res;

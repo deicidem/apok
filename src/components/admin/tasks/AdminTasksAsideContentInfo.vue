@@ -24,13 +24,13 @@
               <div class="check">{{ task.status }}</div>
             </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Пользователь</p>
-            <div class="person-edit">
-              <router-link :to="{ path: '/admin/users', query: { userId: task.userId }}">
-                {{task.userName}}
+          <div class="content-info__editable">
+            <p class="content-info__title">Пользователь</p>
+            <div class="content-edit">
+              <router-link class="check link"
+                :to="{ path: '/admin/users', query: { userId: task.userId } }"
+              >
+                {{ task.userName }}
               </router-link>
             </div>
           </div>
@@ -135,8 +135,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped lang="scss">
 .content {
   padding: 20px;
@@ -215,5 +213,10 @@ export default {
   font-size: 14px;
   padding-left: 20px;
   line-height: 20px;
+}
+
+.link{
+  text-decoration: underline;
+  color: $color-main-dark;
 }
 </style>

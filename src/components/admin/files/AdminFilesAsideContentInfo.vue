@@ -1,39 +1,34 @@
 <template>
   <admin-aside-block title="Информация о файле">
-    <div class="person-wrapper">
-      <div class="person-wrapper__text">
+    <div class="content-info">
+      <div class="content-info__text">
         <div class="content-info__information">
-          <div
-            class="content-info__editable"
-            v-for="(item, key) in info"
-            :key="key"
-          >
-            <p class="person-wrapper__title">Имя</p>
-            <div class="person-edit">
-              {{file.name}}
+          <div class="content-info__editable">
+            <p class="content-info__title">Имя</p>
+            <div class="content-edit">
+              <div class="check">{{ file.name }}</div>
             </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Дата добавления</p>
-            <div class="person-edit">
-              {{file.date}}
+          <div class="content-info__editable">
+            <p class="content-info__title">Дата добавления</p>
+            <div class="content-edit">
+              <div class="check">{{ file.date }}</div>
             </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Тип</p>
-              <div class="person-edit" >{{ file.type }}</div>
+          <div class="content-info__editable">
+            <p class="content-info__title">Тип</p>
+            <div class="content-edit">
+              <div class="check">{{ file.type }}</div>
+            </div>
           </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Пользователь</p>
-            <div class="person-edit">
-              <router-link :to="{ path: '/admin/users', query: { userId: file.userId }}">
-                {{file.userName}}
+          <div class="content-info__editable">
+            <p class="content-info__title">Пользователь</p>
+            <div class="content-edit">
+              <router-link
+                class="check link"
+                :to="{ path: '/admin/users', query: { userId: file.userId } }"
+              >
+                {{ file.userName }}
               </router-link>
             </div>
           </div>
@@ -64,50 +59,12 @@ export default {
     AppButton,
   },
   props: ["file"],
-  data() {
-    return {
-      info: {
-        name: {
-          title: "Имя",
-          value: null,
-        },
-        date: {
-          title: "Фамилия",
-          value: null,
-        },
-        type: {
-          title: "Почта",
-          value: null,
-        },
-        user: {
-          title: "Пользователь",
-          value: null,
-        },
-      },
-      showPopup: false,
-    };
-  },
-  mounted() {
-    this.info.name.value = this.file.name;
-    this.info.date.value = this.file.date;
-    this.info.type.value = this.file.type;
-    this.info.user.value = this.file.user;
-  },
-  watch: {
-    file() {
-      this.info.name.value = this.file.name;
-      this.info.date.value = this.file.date;
-      this.info.type.value = this.file.type;
-      this.info.user.value = this.file.user;
-    },
-  },
 };
 </script>
 
 <style scoped lang="scss">
 .content {
   padding: 20px;
-
   border-radius: 10px;
   background: $white;
   box-shadow: $shadow-small;
@@ -140,7 +97,7 @@ export default {
       color: $color-main;
       line-height: 20px;
       font-size: 14px;
-      width: 110px;
+      width: 130px;
     }
 
     &__info {
@@ -183,5 +140,10 @@ export default {
   font-size: 14px;
   padding-left: 20px;
   line-height: 20px;
+}
+
+.link {
+  text-decoration: underline;
+  color: $color-main-dark;
 }
 </style>

@@ -50,12 +50,12 @@ export default {
     li {
       font-size: 14px;
       margin-right: 20px;
-      text-decoration: underline;
     }
   }
 
   &-item {
-    color: $text-grey;
+    color: $color-main-dark;
+    text-decoration: underline;
   }
 }
 </style>

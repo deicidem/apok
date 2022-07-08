@@ -11,7 +11,6 @@
       </portal>
 
       <div class="data-title">Запланировать задачу</div>
-
       <div class="data-wrapper">
         <plan-data-input-select
           title="Задача"

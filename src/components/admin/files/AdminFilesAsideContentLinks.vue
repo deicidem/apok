@@ -13,7 +13,7 @@
             >Файлы</router-link
           >
         </li>
-        
+
         <li>
           <router-link class="admin-aside-links-item" to="/admin/dzzs"
             >Снимки</router-link
@@ -55,7 +55,8 @@ export default {
   }
 
   &-item {
-    color: $text-grey;
+    color: $color-main-dark;
+    text-decoration: underline;
   }
 }
 </style>

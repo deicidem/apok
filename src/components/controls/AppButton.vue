@@ -1,6 +1,10 @@
 <template>
   <div class="button__wrapper" :class="classes">
-    <button class="button" :disabled="disabled" @click="$emit('click', true)">
+    <button
+      class="button"
+      :disabled="disabled"
+      @click="$emit('click', true)"
+    >
       <slot></slot>
     </button>
     <span class="tooltiptext" v-if="tooltip != null">
@@ -20,7 +24,7 @@ export default {
       default: null,
     },
   },
-  
+
   computed: {
     image() {
       if (this.icon != undefined) {
@@ -29,6 +33,7 @@ export default {
       }
       return "";
     },
+
     classes() {
       return this.active ? this.type + " active" : this.type;
     },
@@ -39,24 +44,26 @@ export default {
 <style lang="scss" scoped>
 .button {
   position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 0 24px;
   height: 100%;
   width: 100%;
   font-family: inherit;
+  color: $white;
   text-align: center;
   font-size: 0.875rem;
   border-radius: 7px;
   border: none;
   box-shadow: $shadow_small;
-  transition: all 0.2s ease-out;
   cursor: pointer;
-  z-index: 1;
   overflow: hidden;
-  color: $white;
   transition-delay: 0.2s;
+  transition: all 0.2s ease-out;
 
   &__wrapper {
     height: 35px;
@@ -157,6 +164,16 @@ export default {
     width: 30px;
     height: 30px;
 
+    &.active {
+      .button {
+        color: $white;
+
+        &::after {
+          background: $gradient;
+        }
+      }
+    }
+
     .button {
       padding: 16px;
       display: flex;
@@ -167,14 +184,6 @@ export default {
 
       &::after {
         background: $gradient-w;
-      }
-
-      &.active {
-        color: $white;
-
-        &::after {
-          background: $gradient;
-        }
       }
     }
   }

@@ -52,11 +52,12 @@ export default {
       font-size: 14px;
       margin-right: 20px;
       text-decoration: underline;
+      a {
+        color: $text-grey;
+
+      }
     }
   }
 
-  &-item {
-    color: $text-grey;
-  }
 }
 </style>

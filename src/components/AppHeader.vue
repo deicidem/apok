@@ -68,7 +68,7 @@
                 type="button-svg"
                 class="header-menu__button"
                 button-class="header-menu__button_custom"
-                tooltip="Авторизоваться"
+                tooltip="Панель администратора"
                 @click="navigate"
               >
                 <i class="icon icon-ic_fluent_settings_20_regular"></i>

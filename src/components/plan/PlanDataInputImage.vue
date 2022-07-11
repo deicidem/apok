@@ -11,7 +11,7 @@
           class="c-btn"
           tooltip="Выбрать"
           type="button-svg"
-          :active="!(selectActive && selectable)"
+          :active="(selectActive && selectable)"
           @click="onSelect"
         >
           <i class="icon icon-ic_fluent_cursor_20_regular"></i>

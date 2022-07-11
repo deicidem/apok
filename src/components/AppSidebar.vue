@@ -183,6 +183,7 @@ export default {
     transition-property: opacity;
     transition-timing-function: ease;
   }
+
   &-enter,
   &-leave-active {
     opacity: 0;
@@ -219,7 +220,6 @@ export default {
   &-content {
     position: relative;
     height: 100%;
-
     background: $white-dark;
     overflow: hidden;
   }
@@ -239,7 +239,6 @@ export default {
     border-top: 1px solid transparent;
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
-
     transition: background-color 0.2s ease-out;
 
     &:focus-within {
@@ -265,10 +264,8 @@ export default {
     left: 0;
     top: 0;
     z-index: 10;
-
     height: 100%;
     width: 50px;
-
     background: $white;
     box-shadow: $shadow-small;
     display: flex;

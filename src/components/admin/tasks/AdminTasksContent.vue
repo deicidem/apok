@@ -5,7 +5,10 @@
       @select="setActiveTask"
       :activeTask="getActiveTask"
     ></admin-tasks-content-table>
-    <admin-content-search @submit="searchTasks($event)" @all="loadTasks()"></admin-content-search>
+    <admin-content-search
+      @submit="searchTasks($event)"
+      @all="loadTasks()"
+    ></admin-content-search>
   </admin-content>
 </template>
 

@@ -3,6 +3,7 @@
     <template v-slot:header>
       <h2 class="c-title">Доступные задачи</h2>
     </template>
+
     <template v-slot:content>
       <div class="plan-wrapper">
         <app-plan-card
@@ -27,6 +28,7 @@ import AppPlanCard from "@/components/plan/PlanCard.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 // import AppPlanPopup from "@/components/AppPlanPopup.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
+
 export default {
   components: {
     AppPlanCard,
@@ -34,15 +36,18 @@ export default {
     // VsPagination,
     SidebarBase,
   },
+
   data() {
     return {
       planPopup: false,
       loaded: false,
     };
   },
+
   mounted() {
     this.loaded = true;
   },
+
   methods: {
     ...mapActions("plans", ["selectPlan"]),
     ...mapActions(["setDataCardState"]),
@@ -51,6 +56,7 @@ export default {
       this.setDataCardState(true);
     },
   },
+
   computed: {
     ...mapGetters("users", ["isAuth"]),
     ...mapGetters("plans", {

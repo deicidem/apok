@@ -163,6 +163,7 @@ export default {
     SidebarBase,
     AppButton,
   },
+
   data() {
     return {
       headers: [
@@ -205,15 +206,18 @@ export default {
       },
     };
   },
+
   mounted() {
     this.loaded = true;
   },
+
   computed: {
     ...mapGetters("results", {
       results: "getResults",
       selectable: "getSelectable",
       sortDir: "getSortDir",
     }),
+
     cardData() {
       if (this.card.ind != null) {
         return this.results[this.card.ind];
@@ -222,6 +226,7 @@ export default {
       }
     },
   },
+
   methods: {
     ...mapActions("map", [
       "addGeoJsonPolygon",
@@ -229,11 +234,13 @@ export default {
       "addImage",
       "removeImage",
     ]),
+
     ...mapActions("results", [
       "setResultProperty",
       "selectResult",
       "sortResultsBy",
     ]),
+
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;
@@ -288,6 +295,7 @@ export default {
         });
       }
     },
+
     onCardButtonClick(ind) {
       if (this.results[ind].cardActive) {
         this.card.active = false;
@@ -314,6 +322,7 @@ export default {
         this.card.data = { ...this.results[ind] };
       }
     },
+
     onCardClose() {
       for (let i = 0; i < this.results.length; i++) {
         this.setResultProperty({
@@ -325,6 +334,7 @@ export default {
       this.card.active = false;
     },
   },
+
   created() {
     this.loaded = true;
   },
@@ -439,11 +449,6 @@ export default {
 
     background: $gradient-w;
     font-size: 24px;
-
-    &.active {
-      background: $color-main;
-      color: $white;
-    }
 
     &:first-child {
       margin-left: 0;

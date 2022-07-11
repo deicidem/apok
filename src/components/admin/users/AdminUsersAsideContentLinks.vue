@@ -15,11 +15,11 @@
             >Файлы</router-link
           >
         </li>
-        <li>  
-          <router-link  class="admin-aside-links-item" to="/admin/dzzs">Снимки</router-link>
+        <li>
+          <router-link class="admin-aside-links-item" :to="{ path: '/admin/groups', query: { ownerId: user.id } }">Группы (владелец)</router-link>
         </li>
         <li>
-          <router-link class="admin-aside-links-item" to="/admin/groups">Группы</router-link>
+          <router-link class="admin-aside-links-item" :to="{ path: '/admin/groups', query: { userId: user.id } }">Группы (участник)</router-link>
         </li>
       </ul>
     </nav>

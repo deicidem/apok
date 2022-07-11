@@ -1,5 +1,5 @@
 import * as groupsApi from "@/api/groups";
-
+import * as usersApi from "@/api/users";
 export default {
   namespaced: true,
   state: {
@@ -92,17 +92,37 @@ export default {
       commit('setGroupsUser', null);
       return res;
     },
-    async loadGroupsByUser({commit}, payload) {
-      let res = await groupsApi.allByUser(payload);
-      let groups = res.data.groups;
+    async loadGroupsByUser({
+      commit
+    }, payload) {
+      let groupsRes = await groupsApi.allByUser(payload);
+      let userRes = await usersApi.one(payload);
+      let groups = groupsRes.data.groups;
       groups.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setGroups', groups);
       commit('setGroupsUser', {
-        id: res.data.groups[0].userId,
-        name: res.data.groups[0].userName
+        id: userRes.data.user.id,
+        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
       });
+      return groupsRes;
+    },
+    async loadGroupsByOwner({
+      commit
+    }, payload) {
+      let groupsRes = await groupsApi.allByOwner(payload);
+      let userRes = await usersApi.one(payload);
+      let groups = groupsRes.data.groups;
+      groups.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+      });
+      commit('setGroups', groups);
+      commit('setGroupsUser', {
+        id: userRes.data.user.id,
+        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
+      });
+      return groupsRes;
     },
     async searchGroups({
       commit

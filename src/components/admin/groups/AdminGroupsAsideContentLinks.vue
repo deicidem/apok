@@ -9,11 +9,11 @@
         </li>
 
         <li>
-          <router-link class="admin-aside-links-item" to="/admin/files"
+          <router-link class="admin-aside-links-item" to="/admin/groups"
             >Файлы</router-link
           >
         </li>
-
+        
         <li>
           <router-link class="admin-aside-links-item" to="/admin/dzzs"
             >Снимки</router-link
@@ -32,7 +32,6 @@
 
 <script>
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
-
 export default {
   components: {
     AdminAsideBlock,

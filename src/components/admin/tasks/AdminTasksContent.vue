@@ -29,14 +29,7 @@ export default {
   methods: {
     ...mapActions("admin/tasks", ["loadTasks", "searchTasks", "setActiveTask"]),
   },
-<<<<<<< HEAD
  
-=======
-
-  mounted() {
-    this.loadTasks();
-  },
->>>>>>> main
 };
 </script>
 

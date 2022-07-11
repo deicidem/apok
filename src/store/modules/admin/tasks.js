@@ -1,4 +1,5 @@
 import * as tasksApi from "@/api/tasks";
+import * as usersApi from "@/api/users";
 
 export default {
   namespaced: true,
@@ -80,18 +81,18 @@ export default {
       return res;
     },
     async loadTasksByUser({commit}, payload) {
-      let res = await tasksApi.allByUser(payload);
-      console.log(res);
-      let tasks = res.data.tasks;
+      let tasksRes = await tasksApi.allByUser(payload);
+      let userRes = await usersApi.one(payload);
+      let tasks = tasksRes.data.tasks;
       tasks.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setTasks', res.data.tasks);
+      commit('setTasks', tasks);
       commit('setTasksUser', {
-        id: res.data.tasks[0].userId,
-        name: res.data.tasks[0].userName
+        id: userRes.data.user.id,
+        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
       });
-      return res;
+      return tasksRes;
     },
     async searchTasks({commit}, payload) {
       let res =  await tasksApi.allFiltered(payload);

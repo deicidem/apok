@@ -34,11 +34,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/groups', ['loadGroups', 'loadGroupsByUser'])
+    ...mapActions('admin/groups', ['loadGroups', 'loadGroupsByUser', 'loadGroupsByOwner'])
   },
   async mounted() {
     if (this.$route.query?.userId) {
       await this.loadGroupsByUser(this.$route.query?.userId);
+    } else if (this.$route.query?.ownerId) {
+      await this.loadGroupsByOwner(this.$route.query?.ownerId);
     } else {
       await this.loadGroups();
     }

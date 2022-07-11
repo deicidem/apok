@@ -1,4 +1,5 @@
 import * as filesApi from "@/api/files";
+import * as usersApi from "@/api/users";
 
 export default {
   namespaced: true,
@@ -93,15 +94,16 @@ export default {
       return res;
     },
     async loadFilesByUser({commit}, payload) {
-      let res = await filesApi.allByUser(payload);
-      let files = res.data.files;
+      let filesRes = await filesApi.allByUser(payload);
+      let userRes = await usersApi.one(payload);
+      let files = filesRes.data.files;
       files.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setFiles', files);
       commit('setFilesUser', {
-        id: res.data.files[0].userId,
-        name: res.data.files[0].userName
+        id: userRes.data.user.id,
+        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
       });
     },
     async searchFiles({

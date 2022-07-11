@@ -35,7 +35,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/background/katod.png");
+  background: url("@/assets/img/background/avim.png");
   background-size: cover;
 }
 

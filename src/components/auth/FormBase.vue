@@ -36,13 +36,14 @@
 
   &-remember {
     display: flex;
+    align-items: flex-start;
     margin-top: 20px;
     width: 100%;
-
     &__text {
       margin-left: 10px;
       color: $text-grey;
       font-size: 14px;
+      line-height: 20px;
     }
   }
 }

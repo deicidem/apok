@@ -24,9 +24,9 @@
         </div>
 
         <div class="search-buttons">
-          <app-button type="button-r" @click="clearData"> Очистить </app-button>
-          <app-button type="button-g" @click="onSearch">
-            Запросить данные
+          <app-button class="search-button" type="button-r" @click="clearData"> Очистить </app-button>
+          <app-button class="search-button" type="button-g" @click="onSearch">
+            Начать поиск
           </app-button>
         </div>
       </div>
@@ -113,7 +113,13 @@ export default {
   &-buttons {
     margin-top: 20px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+  }
+  &-button {
+    margin-right: 20px;
+    &::last-child {
+      margin-right: 0;
+    }
   }
 }
 

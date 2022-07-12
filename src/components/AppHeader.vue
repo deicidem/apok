@@ -6,12 +6,12 @@
       <!-- Автоматизация процессов оценки качества данных ДЗЗ -->
     </h1>
 
-    <router-link to="/main" custom v-slot="{ navigate }">
+    <router-link to="/main" custom v-slot="{ navigate }" v-show="!showMenu">
       <div class="back" @click="navigate">
         <div class="back-arrow">
           <i class="icon icon-ic_fluent_arrow_left_20_regular"></i>
         </div>
-        <span class="back-subtitle">Назад</span>
+        <span class="back-subtitle">На главную страницу</span>
       </div>
     </router-link>
 
@@ -62,7 +62,7 @@
             </router-link>
           </div>
 
-          <div class="button__wrapper header-menu__button-wrapper">
+          <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
             <router-link to="/admin" custom v-slot="{ navigate }">
               <app-button
                 type="button-svg"

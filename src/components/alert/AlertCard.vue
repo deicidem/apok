@@ -28,7 +28,7 @@
       <div class="alert-item__info">
         <h2>{{ text }}</h2>
 
-        <p :class="'alert-item__' + [theme]">Посмотреть результат</p>
+        <!-- <p :class="'alert-item__' + [theme]">Посмотреть результат</p> -->
       </div>
     </div>
 
@@ -201,6 +201,7 @@ export default {
     &-item {
       margin-bottom: 16px;
       padding: 8px;
+
       &:last-child {
         margin-bottom: 0;
       }

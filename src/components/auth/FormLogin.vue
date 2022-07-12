@@ -13,14 +13,14 @@
         class="c-form__input"
         :value="login"
         @input="$v.login.$model = $event"
-        :invalid="(!$v.login.minLength || !$v.login.required) && formInvalid"
+        :invalid="(!$v.login.email || !$v.login.required) && formInvalid"
         icon="icon icon-ic_fluent_person_20_regular"
-        label="Логин"
+        label="Электронная почта"
         :error="
           !$v.login.required
             ? 'Введите значение'
-            : !$v.login.minLength
-            ? 'Логин должен содержать больше 8 символов'
+            : !$v.login.email
+            ? 'Введите корректный почтовый адрес'
             : null
         "
       ></app-input>
@@ -68,7 +68,6 @@
         >
           Зарегистироваться
         </app-button>
-
       </router-link>
     </form>
   </form-base>
@@ -77,7 +76,7 @@
 <script>
 import { mapActions } from "vuex";
 
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength,email } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
@@ -105,7 +104,7 @@ export default {
   validations: {
     login: {
       required,
-      minLength: minLength(8),
+      email,
     },
     password: {
       required,

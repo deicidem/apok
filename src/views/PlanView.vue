@@ -14,7 +14,7 @@
         {{ plan.title }}
       </h2>
 
-      <app-button type="button-g" class="page-button" @click="onPlan">
+      <app-button type="button-g" :disabled="!isAuth" class="page-button" @click="onPlan">
         Запланировать задачу
       </app-button>
     </template>
@@ -78,6 +78,7 @@ export default {
 
   computed: {
     ...mapGetters(["scrollOps"]),
+    ...mapGetters('users', ["isAuth"]),
     id() {
       return +this.$route.params.id;
     },

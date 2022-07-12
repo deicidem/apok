@@ -56,7 +56,7 @@
           (!$v.password.password.minLength || !$v.password.password.required) &&
           formInvalid
         "
-        icon="icon icon-ic_fluent_mail_20_regular"
+        icon="icon icon-ic_fluent_lock_closed_20_regular"
         label="Пароль"
         :error="
           !$v.password.password.required
@@ -76,7 +76,7 @@
             !$v.password.confirm.required) &&
           formInvalid
         "
-        icon="icon icon-ic_fluent_mail_20_regular"
+        icon="icon icon-ic_fluent_lock_closed_20_regular"
         label="Повторите пароль"
         :error="
           !$v.password.confirm.required
@@ -86,6 +86,11 @@
             : null
         "
       ></app-input>
+
+      <div class="c-remember">
+        <app-checkbox></app-checkbox>
+        <span class="c-remember__text">Даю согласие на обработку персональных данных</span>
+      </div>
 
       <app-button
         type="button-g "
@@ -113,6 +118,7 @@
 import { mapActions } from "vuex";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
+import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
@@ -123,6 +129,7 @@ export default {
     FormBase,
     AppInput,
     AppButton,
+    AppCheckbox
   },
   data() {
     return {

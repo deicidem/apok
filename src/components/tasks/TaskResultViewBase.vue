@@ -20,7 +20,12 @@
     margin: 20px auto;
 
     &-button {
-      width: 190px;
+    flex: 1 1 auto;
+      margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
     }
   }
 }
@@ -30,13 +35,6 @@
   display: flex;
   justify-content: space-evenly;
 
-  .button {
-    flex: 1 1 auto;
-    margin-right: 20px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+  
 }
 </style>

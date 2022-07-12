@@ -18,7 +18,7 @@
               @click="changeZoneType(2)"
               :class="searchZoneType == 2 ? 'active' : ''"
             >
-              Круглая зона
+              Отметить круглую зону
             </button>
           </li>
           <li class="line"></li>

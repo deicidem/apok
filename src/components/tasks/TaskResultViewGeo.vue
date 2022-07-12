@@ -9,6 +9,7 @@
     </label>
     <div class="button-group">
       <app-button
+      class="image-wrapper-button"
         type="button-g"
         :class="showImage ? 'button-g' : 'button-white-gr'"
         @click="onClick"
@@ -17,6 +18,7 @@
       </app-button>
       <!-- <router-link to="/full-screen" custom v-slot="{ navigate }"> -->
       <app-button
+      class="image-wrapper-button"
         type="button-g"
         @click="
           $router.push({

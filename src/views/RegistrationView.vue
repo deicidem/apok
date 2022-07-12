@@ -1,5 +1,5 @@
 <template>
-  <page-base>
+  <page-base :show-menu="false">
     <section class="authorize">
       <form-registration></form-registration>
     </section>

@@ -9,17 +9,17 @@
       @update="updateGroup"
       @delete="onDelete"
     ></admin-groups-aside-content-info>
-    <admin-groups-aside-content-links
+    <!-- <admin-groups-aside-content-links
       v-if="getActiveGroup != null"
       :group="getActiveGroup"
-    ></admin-groups-aside-content-links>
+    ></admin-groups-aside-content-links> -->
   </admin-aside-content>
 </template>
 
 <script>
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AdminGroupsAsideContentInfo from "@/components/admin/groups/AdminGroupsAsideContentInfo.vue";
-import AdminGroupsAsideContentLinks from "@/components/admin/groups/AdminGroupsAsideContentLinks.vue";
+// import AdminGroupsAsideContentLinks from "@/components/admin/groups/AdminGroupsAsideContentLinks.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 
@@ -27,16 +27,16 @@ export default {
   components: {
     AdminAsideContent,
     AdminGroupsAsideContentInfo,
-    AdminGroupsAsideContentLinks,
+    // AdminGroupsAsideContentLinks,
     AppDeleteConfirmation,
   },
   computed: {
     ...mapGetters("admin/groups", ["getActiveGroup"]),
     title() {
       if (this.getActiveGroup != null) {
-        return `Файл: ${this.getActiveGroup.name}`;
+        return `Группа: ${this.getActiveGroup.title}`;
       }
-      return "Файл не выбрана";
+      return "Группа не выбрана";
     },
   },
   methods: {

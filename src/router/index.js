@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import * as usersApi from "@/api/user";
+import store from '@/store/index';
 Vue.use(VueRouter)
 
 const routes = [
@@ -123,8 +123,8 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.meta?.requiresAuth == true && to.name !== 'login') {
-    let {data} = await usersApi.isAuth();
-    if (!data.isAuth) {
+    let res = await store.dispatch('users/auth');
+    if (res.user == null) {
       next({ name: 'login' });
     } else {
       next();

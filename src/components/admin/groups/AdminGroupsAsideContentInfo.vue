@@ -1,40 +1,55 @@
 <template>
-  <admin-aside-block title="Информация о файле">
-    <div class="person-wrapper">
-      <div class="person-wrapper__text">
+  <admin-aside-block title="Информация о задаче">
+    <div class="content-info">
+      <div class="content-info__text">
+        <div class="content-info__information">
+          <div class="content-info__editable">
+            <p class="content-info__title">Название</p>
+            <div class="content-edit">
+              <div class="check">{{ group.title }}</div>
+            </div>
+          </div>
+          <div class="content-info__editable">
+            <p class="content-info__title">Дата добавления</p>
+            <div class="content-edit">
+              <div class="check">{{ group.type }}</div>
+            </div>
+          </div>
+          <div class="content-info__editable">
+            <p class="content-info__title">Владелец</p>
+            <div class="content-edit">
+              <router-link class="check link"
+                :to="{ path: '/admin/users', query: { userId: group.ownerId } }"
+              >
+                {{ group.ownerName }}
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-info__buttons">
+        <app-button
+          type="button-r"
+          @click="$emit('delete', group.id)"
+          class="content-info__button"
+        >
+          Удалить
+        </app-button>
+      </div>
+    </div>
+
+    <!-- <div class="content-wrapper">
+      <div class="content-wrapper__text">
         <div class="content-info__information">
           <div
             class="content-info__editable"
             v-for="(item, key) in info"
             :key="key"
           >
-            <p class="person-wrapper__title">Имя</p>
-            <div class="person-edit">
-              {{group.name}}
-            </div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Дата добавления</p>
-            <div class="person-edit">
-              {{group.date}}
-            </div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Тип</p>
-              <div class="person-edit" >{{ group.type }}</div>
-          </div>
-          <div
-            class="person-wrapper__editable"
-          >
-            <p class="person-wrapper__title">Пользователь</p>
-            <div class="person-edit">
-              <router-link :to="{ path: '/admin/users', query: { userId: group.userId }}">
-                {{group.userName}}
-              </router-link>
+            <p class="content-info__title">{{ item.title }}</p>
+            <div class="content-edit">
+              <div class="check">{{ item.value }}</div>
             </div>
           </div>
         </div>
@@ -50,7 +65,7 @@
           Удалить
         </app-button>
       </div>
-    </div>
+    </div> -->
   </admin-aside-block>
 </template>
 
@@ -64,50 +79,55 @@ export default {
     AppButton,
   },
   props: ["group"],
-  data() {
-    return {
-      info: {
-        name: {
-          title: "Имя",
-          value: null,
-        },
-        date: {
-          title: "Фамилия",
-          value: null,
-        },
-        type: {
-          title: "Почта",
-          value: null,
-        },
-        user: {
-          title: "Пользователь",
-          value: null,
-        },
-      },
-      showPopup: false,
-    };
-  },
-  mounted() {
-    this.info.name.value = this.group.name;
-    this.info.date.value = this.group.date;
-    this.info.type.value = this.group.type;
-    this.info.user.value = this.group.user;
-  },
-  watch: {
-    group() {
-      this.info.name.value = this.group.name;
-      this.info.date.value = this.group.date;
-      this.info.type.value = this.group.type;
-      this.info.user.value = this.group.user;
-    },
-  },
+  // data() {
+  //   return {
+  //     info: {
+  //       title: {
+  //         title: "Название",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       date: {
+  //         title: "Дата добавления",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       status: {
+  //         title: "Статус",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //       user: {
+  //         title: "Пользователь",
+  //         value: null,
+  //         editable: true,
+  //       },
+  //     },
+
+  //     editable: false,
+  //     showPopup: false,
+  //   };
+  // },
+  // mounted() {
+  //   this.info.title.value = this.group.title;
+  //   this.info.date.value = this.group.date;
+  //   this.info.status.value = this.group.status;
+  //   this.info.user.value = this.group.user;
+  // },
+  // watch: {
+  //   group() {
+  //     this.info.title.value = this.group.title;
+  //     this.info.date.value = this.group.date;
+  //     this.info.status.value = this.group.status;
+  //     this.info.user.value = this.group.user;
+  //   },
+  // },
 };
 </script>
 
 <style scoped lang="scss">
 .content {
   padding: 20px;
-
   border-radius: 10px;
   background: $white;
   box-shadow: $shadow-small;
@@ -140,7 +160,7 @@ export default {
       color: $color-main;
       line-height: 20px;
       font-size: 14px;
-      width: 110px;
+      width: 100px;
     }
 
     &__info {
@@ -183,5 +203,10 @@ export default {
   font-size: 14px;
   padding-left: 20px;
   line-height: 20px;
+}
+
+.link{
+  text-decoration: underline;
+  color: $color-main-dark;
 }
 </style>

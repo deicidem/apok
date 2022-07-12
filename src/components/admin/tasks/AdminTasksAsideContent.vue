@@ -10,14 +10,14 @@
       @update="updateTask"
       @delete="onDelete"
     ></admin-tasks-aside-content-info>
-    <admin-tasks-aside-content-links v-if="getActiveTask != null" ></admin-tasks-aside-content-links>
+    <!-- <admin-tasks-aside-content-links v-if="getActiveTask != null" ></admin-tasks-aside-content-links> -->
   </admin-aside-content>
 </template>
 
 <script>
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AdminTasksAsideContentInfo from "@/components/admin/tasks/AdminTasksAsideContentInfo.vue";
-import AdminTasksAsideContentLinks from "@/components/admin/tasks/AdminTasksAsideContentLinks.vue";
+// import AdminTasksAsideContentLinks from "@/components/admin/tasks/AdminTasksAsideContentLinks.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 
@@ -25,7 +25,7 @@ export default {
   components: {
     AdminAsideContent,
     AdminTasksAsideContentInfo,
-    AdminTasksAsideContentLinks,
+    // AdminTasksAsideContentLinks,
     AppDeleteConfirmation,
   },
 

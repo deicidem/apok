@@ -115,7 +115,7 @@ export default {
   margin: 0;
   font-size: 1.5rem;
   text-align: center;
-  font-weight: 400;
+  font-weight: 500;
   background: $gradient;
   box-shadow: $shadow-big;
   color: $white;

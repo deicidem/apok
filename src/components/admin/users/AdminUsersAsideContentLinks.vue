@@ -53,6 +53,10 @@ export default {
   &-item {
     color: $color-main-dark;
     text-decoration: underline;
+    transition: color 0.1s ease-out;
+    &:hover {
+      color: $color-main-light
+    }
   }
 }
 </style>

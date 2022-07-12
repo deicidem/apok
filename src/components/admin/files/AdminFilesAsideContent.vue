@@ -9,17 +9,17 @@
       @update="updateFile"
       @delete="onDelete"
     ></admin-files-aside-content-info>
-    <admin-files-aside-content-links
+    <!-- <admin-files-aside-content-links
       v-if="getActiveFile != null"
       :file="getActiveFile"
-    ></admin-files-aside-content-links>
+    ></admin-files-aside-content-links> -->
   </admin-aside-content>
 </template>
 
 <script>
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AdminFilesAsideContentInfo from "@/components/admin/files/AdminFilesAsideContentInfo.vue";
-import AdminFilesAsideContentLinks from "@/components/admin/files/AdminFilesAsideContentLinks.vue";
+// import AdminFilesAsideContentLinks from "@/components/admin/files/AdminFilesAsideContentLinks.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 
@@ -27,7 +27,7 @@ export default {
   components: {
     AdminAsideContent,
     AdminFilesAsideContentInfo,
-    AdminFilesAsideContentLinks,
+    // AdminFilesAsideContentLinks,
     AppDeleteConfirmation,
   },
   computed: {

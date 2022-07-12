@@ -26,6 +26,5 @@ export default {
   height: 100%;
   position: relative;
   display: flex;
-  padding: 20px;
 }
 </style>

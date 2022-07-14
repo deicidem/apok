@@ -38,7 +38,7 @@ export default {
 
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/background/avim.png");
+  background: url("@/assets/img/background/apok.png");
   background-size: cover;
 }
 </style>

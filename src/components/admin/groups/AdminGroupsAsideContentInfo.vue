@@ -1,5 +1,5 @@
 <template>
-  <admin-aside-block title="Информация о задаче">
+  <admin-aside-block title="Информация о группе">
     <div class="content-info">
       <div class="content-info__text">
         <div class="content-info__information">
@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="content-info__editable">
-            <p class="content-info__title">Дата добавления</p>
+            <p class="content-info__title">Тип группы</p>
             <div class="content-edit">
               <div class="check">{{ group.type }}</div>
             </div>

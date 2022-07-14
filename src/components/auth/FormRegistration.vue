@@ -31,6 +31,35 @@
       >
       </app-input>
 
+      <!-- <div class="input-wrapper c-inputs">
+        <masked-input
+          mask="\+\7 (111) 111-11-11"
+          placeholder=" "
+          class="input c-input"
+        />
+        <label class="input-label c-label"> Контактный номер </label>
+        <div class="c-input-img">
+          <i class="icon icon-ic_fluent_call_20_regular"></i>
+        </div>
+      </div> -->
+
+      <app-input
+        class="c-form__input"
+        :value="phone"
+        @input="$v.phone.$model = $event"
+        :invalid="(!$v.phone.numeric || !$v.mail.required) && formInvalid"
+        icon="icon icon-ic_fluent_call_20_regular"
+        label="Контактный номер"
+        :error="
+          !$v.phone.required
+            ? 'Введите значение'
+            : !$v.phone.numeric
+            ? 'Поле принимает на вход только цифры'
+            : null
+        "
+      >
+      </app-input>
+
       <app-input
         class="c-form__input"
         :value="mail"
@@ -38,6 +67,23 @@
         :invalid="(!$v.mail.email || !$v.mail.required) && formInvalid"
         icon="icon icon-ic_fluent_mail_20_regular"
         label="Почтовый адрес"
+        :error="
+          !$v.mail.required
+            ? 'Введите значение'
+            : !$v.mail.email
+            ? 'Введите корректный почтовый адрес'
+            : null
+        "
+      >
+      </app-input>
+
+      <app-input
+        class="c-form__input"
+        :value="organization"
+        @input="$v.mail.$model = $event"
+        :invalid="(!$v.mail.email || !$v.mail.required) && formInvalid"
+        icon="icon icon-ic_fluent_mail_20_regular"
+        label="Организация"
         :error="
           !$v.mail.required
             ? 'Введите значение'
@@ -89,7 +135,9 @@
 
       <div class="c-remember">
         <app-checkbox></app-checkbox>
-        <span class="c-remember__text">Даю согласие на обработку персональных данных</span>
+        <span class="c-remember__text"
+          >Даю согласие на обработку персональных данных</span
+        >
       </div>
 
       <app-button
@@ -119,23 +167,27 @@ import { mapActions } from "vuex";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
-import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import { required, minLength, sameAs, email, numeric } from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
+// import MaskedInput from "vue-masked-input";
 
 export default {
   components: {
+    // MaskedInput,
     FormMessage,
     FormBase,
     AppInput,
     AppButton,
-    AppCheckbox
+    AppCheckbox,
   },
   data() {
     return {
       firstName: null,
       lastName: null,
       mail: null,
+      organization: null,
+      phone: null,
       password: {
         password: null,
         confirm: null,
@@ -153,9 +205,17 @@ export default {
       lastName: {
         required,
       },
+      phone: {
+        required,
+        numeric
+      },
       mail: {
         required,
         email,
+      },
+      organization: {
+        required,
+        minLength: minLength(8),
       },
       password: {
         password: {
@@ -222,4 +282,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.c {
+  &-inputs {
+    &:focus-within .c-label {
+      font-size: 13px;
+      top: -25%;
+    }
+  }
+
+  &-label {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &-input {
+    margin-top: 30px;
+    padding: 15px 60px 15px 24px;
+    width: 320px;
+    height: 50px;
+
+    &:focus .c-label,
+    &:not(:placeholder-shown) ~ label {
+      font-size: 13px;
+      top: -25%;
+    }
+
+    &-img {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      margin: 0;
+      i {
+        font-size: 30px;
+      }
+    }
+  }
+}
 </style>

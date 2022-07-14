@@ -73,13 +73,13 @@
           >
             Удалить выбранное
           </app-button>
-          <app-button
+          <!-- <app-button
             class="files-button"
             type="button-g"
             :disabled="noItemsSelected || pending"
           >
             Добавить в избранное
-          </app-button>
+          </app-button> -->
         </div>
       </div>
     </template>

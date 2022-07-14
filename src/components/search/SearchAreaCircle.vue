@@ -4,7 +4,7 @@
       <div class="input-wrapper c-inputs">
         <masked-input
           placeholder=" "
-          class="input input-withIcon c-input"
+          class="input c-input"
           v-model.trim="$v.lat.$model"
           :class="{
             invalid:
@@ -202,7 +202,7 @@ export default {
     align-items: flex-start;
 
     &__input {
-      max-width: 120px;
+      max-width: 126px;
     }
   }
 
@@ -215,13 +215,13 @@ export default {
 
     &:focus-within .c-label {
       top: -20px;
-      font-size: 12px;
+      font-size: 13px;
     }
   }
 
   &-label {
     top: 8px;
-    left: -10px;
+    left: -1px;
   }
 
   .invalid {
@@ -253,7 +253,7 @@ export default {
   }
 
   &-input {
-    width: 120px;
+    width: 126px;
     height: 35px;
     margin: 0;
 

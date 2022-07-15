@@ -47,7 +47,7 @@
         class="c-form__input"
         :value="phone"
         @input="$v.phone.$model = $event"
-        :invalid="(!$v.phone.numeric || !$v.mail.required) && formInvalid"
+        :invalid="(!$v.phone.numeric || !$v.phone.required) && formInvalid"
         icon="icon icon-ic_fluent_call_20_regular"
         label="Контактный номер"
         :error="

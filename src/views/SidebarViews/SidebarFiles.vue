@@ -3,9 +3,11 @@
     <template v-slot:header>
       <h2 class="c-title">Мои файлы</h2>
     </template>
+    
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
+
     <template v-slot:content>
       <div class="files__wrapper">
         <app-table>
@@ -64,6 +66,7 @@
             </tr>
           </tbody>
         </app-table>
+
         <div class="files-buttons">
           <app-button
             class="files-button"

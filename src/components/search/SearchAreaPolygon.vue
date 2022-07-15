@@ -188,8 +188,6 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   padding: 15px;
-
-  box-shadow: $shadow-big;
   border-radius: 10px;
   background: $white;
 

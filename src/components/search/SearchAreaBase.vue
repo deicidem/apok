@@ -7,7 +7,7 @@
 <style lang="scss" scoped>
 .c {
   padding: 20px;
-  box-shadow: $shadow-big;
+  box-shadow: $shadow-small;
   border-radius: 10px;
   background: $white;
 }

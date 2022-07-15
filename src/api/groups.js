@@ -35,7 +35,17 @@ export async function deleteGroup(id) {
   return await server.delete('groups/' + id);
 }
 
-export async function add() {
-  let data = await server.post('groups');
-  return data.tasks;
+export async function create(params) {
+  return await server.post('groups', params);
+}
+export async function addUsers({groupId, users}) {
+  let formData = new FormData();
+  for (let i = 0; i < users.length; i++) {
+    formData.append(`users[${i}]`, users[i]);
+  }
+  return await server.post(`groups/${groupId}/users`, formData);
+}
+export async function getTypes() {
+  let {data} = await server.get('group-types');
+  return data.types;
 }

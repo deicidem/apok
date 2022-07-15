@@ -9,6 +9,7 @@
 
     <template v-slot:actions v-if="getActiveUser != null">
       <admin-aside-actions
+        title="Создать пользователя"
         @show-create="setActiveUser(null)"
       ></admin-aside-actions>
     </template>

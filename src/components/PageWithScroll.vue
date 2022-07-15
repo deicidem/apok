@@ -60,7 +60,7 @@ export default {
     width: 100%;
 
     &-wrapper {
-      padding: 30px 0 100px 0;
+      padding: 30px 0 30px 0;
       margin: 0 auto;
       height: 100%;
       max-width: 1700px;

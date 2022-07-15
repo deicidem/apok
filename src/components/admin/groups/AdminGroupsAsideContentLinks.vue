@@ -3,26 +3,8 @@
     <nav class="admin-aside-links">
       <ul>
         <li>
-          <router-link class="admin-aside-links-item" to="/admin/tasks"
-            >Задачи</router-link
-          >
-        </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/groups"
-            >Файлы</router-link
-          >
-        </li>
-        
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/dzzs"
-            >Снимки</router-link
-          >
-        </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/groups"
-            >Группы</router-link
+          <router-link class="admin-aside-links-item" :to="{path: '/admin/users', query: {groupId: group.id}}"
+            >Пользователи</router-link
           >
         </li>
       </ul>
@@ -33,6 +15,7 @@
 <script>
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 export default {
+  props: ['group'],
   components: {
     AdminAsideBlock,
   },

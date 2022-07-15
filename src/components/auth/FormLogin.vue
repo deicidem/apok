@@ -28,6 +28,7 @@
       <app-input
         class="c-form__input"
         :value="password"
+        type="password"
         @input="$v.password.$model = $event"
         :invalid="
           (!$v.password.minLength || !$v.password.required) && formInvalid

@@ -13,12 +13,13 @@ export default {
 
 <style lang="scss" scoped>
 .admin-aside-block {
+  position: relative;
   background: $white;
   border-radius: 10px;
   box-shadow: $shadow-small;
   margin-bottom: 20px;
   padding: 20px;
-
+flex: 1 1 auto;
   &:last-child {
     margin-bottom: 0;
   }

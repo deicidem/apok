@@ -4,8 +4,8 @@
       <h5 class="confirm-title">{{ title }}</h5>
       <div class="confirm-text">{{ message }}</div>
       <div class="confirm-buttons">
-        <app-button type="button-white-gr" @click="_cancel">Отмена</app-button>
-        <app-button type="button-r" @click="_confirm">{{actionMessage}}</app-button>
+        <app-button class="confirm-button" type="button-white-gr" @click="_cancel">Отмена</app-button>
+        <app-button class="confirm-button" type="button-r" @click="_confirm">{{actionMessage}}</app-button>
       </div>
       <div class="confirm-cross">
         <i @click="_cancel" class="fa-solid fa-xmark"></i>
@@ -80,7 +80,13 @@ export default {
   border-radius: 10px;
   box-shadow: $shadow-big;
   text-align: center;
-
+  &-button {
+    flex: 1 1 auto;
+    margin-right: 20px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
   &-buttons {
     margin-top: 20px;
     display: flex;

@@ -9,6 +9,7 @@
             :key="key"
           >
             <p class="content-info__title">{{ item.title }}</p>
+
             <div class="content-edit">
               <div
                 :contenteditable="item.editable && editable"

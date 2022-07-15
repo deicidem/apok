@@ -6,7 +6,11 @@
       :activeUser="getActiveUser"
       @check="selectUser"
     ></admin-users-content-table>
-    <admin-content-search @submit="searchUsers($event)" @all="loadUsers()"></admin-content-search>
+
+    <admin-content-search
+      @submit="searchUsers($event)"
+      @all="loadUsers()"
+    ></admin-content-search>
   </admin-content>
 </template>
 

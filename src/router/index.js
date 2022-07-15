@@ -52,7 +52,12 @@ const routes = [
       {
         path: 'area',
         component: () => import('@/views/SidebarViews/SidebarArea')
-      }
+      },
+      {
+        path: 'groups',
+        component: () => import('@/views/SidebarViews/SidebarGroups'),
+        meta: { requiresAuth: true }
+      },
     ]
   },
   {
@@ -110,9 +115,9 @@ const routes = [
     ]
   },
   {
-		path: '*',
-		component: () => import('@/views/E404View.vue')
-	},
+    path: '*',
+    component: () => import('@/views/E404View.vue')
+  },
 ]
 
 const router = new VueRouter({

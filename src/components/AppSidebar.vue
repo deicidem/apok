@@ -93,6 +93,12 @@ export default {
           path: "/main/user",
           icon: "icon-ic_fluent_person_20_regular",
         },
+        {
+          name: "Мои группы",
+          needAuth: true,
+          path: "/main/groups",
+          icon: "icon-ic_fluent_people_20_regular",
+        },
       ],
     };
   },

@@ -3,6 +3,7 @@
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
+
     <admin-users-aside-content-info
       v-if="getActiveUser != null"
       :user="getActiveUser"
@@ -11,6 +12,7 @@
       @block="onBlock"
       @unblock="unblockUser"
     ></admin-users-aside-content-info>
+
     <admin-users-aside-content-links
       v-if="getActiveUser != null"
       :user="getActiveUser"

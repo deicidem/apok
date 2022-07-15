@@ -2,8 +2,8 @@
   <header class="header">
     <h1 class="title">
       <!-- Комплексная тематическая обработка данных космической съемки -->
-      Автоматизированное выявление изменений на местности
-      <!-- Автоматизация процессов оценки качества данных ДЗЗ -->
+      <!-- Автоматизированное выявление изменений на местности -->
+      Автоматизация процессов оценки качества данных ДЗЗ
     </h1>
 
     <router-link to="/main" custom v-slot="{ navigate }" v-show="!showMenu">
@@ -20,7 +20,7 @@
         <ul>
           <li class="header-nav__item">
             <router-link to="/">
-              <img src="@/assets/img/header-icons/АВИМ.svg" alt="Логотип" />
+              <img src="@/assets/img/header-icons/АПОК.svg" alt="Логотип" />
             </router-link>
           </li>
 

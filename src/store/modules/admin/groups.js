@@ -5,11 +5,15 @@ export default {
   state: {
     groups: null,
     activeGroupIndex: null,
-    groupsUser: null
+    groupsUser: null,
+    types: null
   },
   getters: {
     getGroups(state) {
       return state.groups;
+    },
+    getTypes(state) {
+      return state.types;
     },
     getGroupsUser(state) {
       return state.groupsUser;
@@ -38,6 +42,9 @@ export default {
   mutations: {
     setGroups(state, payload) {
       state.groups = payload;
+    },
+    setTypes(state, payload) {
+      state.types = payload;
     },
     setGroup(state, {
       index,
@@ -160,5 +167,26 @@ export default {
       }
       return res;
     },
+    async createGroup({commit}, payload) {
+      let res = await groupsApi.create({
+        title: payload.title,
+        type: payload.type,
+        ownerId: payload.ownerId
+      });
+      let group = res.data.group;
+      commit('addGroup', group)
+    },
+    async addUsers({commit}, payload) {
+      let res = await groupsApi.addUsers({
+        users: payload.users.map(e => e.id),
+        groupId: payload.groupId
+      });
+      let group = res.data.group;
+      commit('addGroup', group)
+    },
+    async loadTypes({commit}) {
+      let res = await groupsApi.getTypes();
+      commit('setTypes', res)
+    }
   },
 }

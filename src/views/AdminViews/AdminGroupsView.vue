@@ -1,5 +1,8 @@
 <template>
   <admin-main :title="title" :loading="loading">
+    <template v-slot:header-block>
+      <admin-content-group-user></admin-content-group-user>
+    </template>
     <template v-slot:content>
       <admin-groups-content></admin-groups-content>
     </template>
@@ -13,12 +16,14 @@
 import AdminMain from "@/components/admin/AdminMain.vue";
 import AdminGroupsContent from "@/components/admin/groups/AdminGroupsContent.vue";
 import AdminGroupsAside from "@/components/admin/groups/AdminGroupsAside.vue";
+import AdminContentGroupUser from "@/components/admin/AdminContentGroupUser.vue";
 import {mapGetters, mapActions} from "vuex";
 export default {
   components: {
     AdminMain,
     AdminGroupsContent,
     AdminGroupsAside,
+    AdminContentGroupUser
   },
   data: () => ({
     loading: true
@@ -34,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/groups', ['loadGroups', 'loadGroupsByUser', 'loadGroupsByOwner'])
+    ...mapActions('admin/groups', ['loadGroups', 'loadGroupsByUser', 'loadGroupsByOwner', 'loadTypes'])
   },
   async mounted() {
     if (this.$route.query?.userId) {
@@ -44,6 +49,7 @@ export default {
     } else {
       await this.loadGroups();
     }
+    await this.loadTypes();
     this.loading = false;
   },
 };

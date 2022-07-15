@@ -21,7 +21,7 @@
 
         <template v-if="activePlan != null">
           <div v-for="(data, i) in activePlan.data" :key="i">
-            <template v-if="data.type == 1">
+            <template v-if="data.type == 2">
               <plan-data-input-image
                 :title="data.title"
                 :active-item-title="planDataValueTitle(data)"
@@ -35,7 +35,7 @@
               ></plan-data-input-image>
             </template>
 
-            <template v-else-if="data.type == 2">
+            <template v-else-if="data.type == 3">
               <plan-data-input-vector
                 :title="data.title"
                 :area-selected="getActivePolygonJson != null"

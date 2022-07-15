@@ -12,6 +12,7 @@ import search from './modules/search'
 import results from './modules/results'
 import files from './modules/files'
 import admin from './modules/admin'
+import groups from './modules/groups'
 
 export default new Vuex.Store({
   state: {
@@ -81,7 +82,8 @@ export default new Vuex.Store({
     search,
     results,
     files,
-    admin
+    admin,
+    groups
   },
   strict: process.env.NODE_ENV !== 'production'
 })

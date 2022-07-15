@@ -1,13 +1,17 @@
 <template>
   <div class="admin-main">
-    <h1 ref="header" class="admin-main-title">{{ loading ? 'Загрузка...' :title}}</h1>
+    <h1 ref="header" class="admin-main-title">{{ loading ? 'Загрузка...' :title}}
+      <div class="admin-main-header-block">
+        <slot name="header-block"></slot>
+      </div>
+    </h1>
     
     <div class="admin-main-wrapper" :style="height" >
       <app-loader v-show="loading"> </app-loader>
-      <div class="admin-main-content" v-show="!loading">
+      <div class="admin-main-content" v-if="!loading">
         <slot name="content"></slot>
       </div>
-      <div class="admin-main-aside" v-show="!loading">
+      <div class="admin-main-aside" v-if="!loading">
         <slot name="aside"></slot>
       </div>
     </div>
@@ -59,7 +63,15 @@ export default {
   flex-direction: column;
   align-items: center;
   max-height: 100%;
-
+  &-header-block {
+    background: #fff;
+    box-shadow: $shadow-big;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
   &-content {
     flex: 1 1 60%;
     max-height: 100%;
@@ -75,6 +87,7 @@ export default {
   }
 
   &-title {
+    position: relative;
     width: 100%;
     margin: 0;
     margin-bottom: 30px;

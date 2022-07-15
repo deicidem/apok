@@ -51,6 +51,7 @@
       <app-input
         class="c-form__input"
         :value="password.password"
+        type="password"
         @input="$v.password.password.$model = $event"
         :invalid="
           (!$v.password.password.minLength || !$v.password.password.required) &&
@@ -70,6 +71,7 @@
       <app-input
         class="c-form__input"
         :value="password.confirm"
+        type="password"
         @input="$v.password.confirm.$model = $event"
         :invalid="
           (!$v.password.confirm.sameAsPassword ||

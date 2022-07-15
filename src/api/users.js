@@ -8,6 +8,14 @@ export async function one(id) {
   return await server.get('users/'+id);
 }
 
+export async function getLogs(id) {
+  return await server.get('users/'+id+'/logs');
+}
+
+export async function allByGroup(groupId) {
+  return await server.get('users', {params: {groupId}});
+}
+
 export async function allFiltered(search) {
   let params = search == null ? null : {search};
   return await server.get('users', {params});
@@ -37,8 +45,8 @@ export async function remove(id) {
   return await server.delete('users/'+id);
 }
 export async function block(id) {
-  return await server.post('users/block/'+id);
+  return await server.post(`users/${id}/block`);
 }
 export async function unblock(id) {
-  return await server.post('users/unblock/'+id);
+  return await server.post(`users/${id}/unblock`);
 }

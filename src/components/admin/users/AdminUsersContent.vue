@@ -4,6 +4,7 @@
       :users="getUsers"
       @select="setActiveUser"
       :activeUser="getActiveUser"
+      @check="selectUser"
     ></admin-users-content-table>
     <admin-content-search @submit="searchUsers($event)" @all="loadUsers()"></admin-content-search>
   </admin-content>
@@ -27,7 +28,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("admin/users", ["loadUsers", "searchUsers", "setActiveUser"]),
+    ...mapActions("admin/users", ["loadUsers", "searchUsers", "setActiveUser", "selectUser"]),
   },
 };
 </script>

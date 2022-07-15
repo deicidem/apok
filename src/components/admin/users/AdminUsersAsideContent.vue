@@ -15,6 +15,7 @@
       v-if="getActiveUser != null"
       :user="getActiveUser"
     ></admin-users-aside-content-links>
+    <admin-users-aside-content-log @show-logs="loadLogs(getActiveUser.id)" :logs="getActiveUser.logs"></admin-users-aside-content-log>
   </admin-aside-content>
 </template>
 
@@ -22,6 +23,7 @@
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AdminUsersAsideContentInfo from "@/components/admin/users/AdminUsersAsideContentInfo.vue";
 import AdminUsersAsideContentLinks from "@/components/admin/users/AdminUsersAsideContentLinks.vue";
+import AdminUsersAsideContentLog from "@/components/admin/users/AdminUsersAsideContentLog.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 
@@ -30,11 +32,12 @@ export default {
     AdminAsideContent,
     AdminUsersAsideContentInfo,
     AdminUsersAsideContentLinks,
+    AdminUsersAsideContentLog,
     AppDeleteConfirmation,
   },
 
   computed: {
-    ...mapGetters("admin/users", ["getActiveUser"]),
+    ...mapGetters("admin/users", ["getActiveUser", "getLogs"]),
     title() {
       if (this.getActiveUser != null) {
         return `Пользователь: ${this.getActiveUser.firstName} ${this.getActiveUser.lastName}`;
@@ -49,6 +52,7 @@ export default {
       "deleteUser",
       "blockUser",
       "unblockUser",
+      "loadLogs"
     ]),
 
     async onDelete(id) {

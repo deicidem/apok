@@ -49,7 +49,7 @@ export default {
 
   &-wrapper {
     padding: 20px;
-    box-shadow: $shadow-small;
+    box-shadow: $shadow-big;
     border-radius: 10px;
     background: $gradient-w;
   }

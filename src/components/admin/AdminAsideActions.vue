@@ -1,6 +1,6 @@
 <template>
   <app-button type="button-g" class="add-user" @click="$emit('show-create')"
-    >Создать пользователя</app-button
+    >{{title}}</app-button
   >
 </template>
 
@@ -11,6 +11,7 @@ export default {
   components: {
     AppButton,
   },
+  props: ['title']
 };
 </script>
 

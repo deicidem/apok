@@ -50,12 +50,6 @@
         Добавить новую группу
       </app-button>
     </div>
-    <portal to="group-popup">
-      <add-group
-        v-show="showPopup"
-        @close="showPopup = false"
-      ></add-group>
-    </portal>
   </div>
 </template>
 
@@ -63,13 +57,11 @@
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppButton from "@/components/controls/AppButton";
-import AddGroup from "@/components/groups/AddGroup";
 export default {
   components: {
     AppTable,
     AppCheckbox,
     AppButton,
-    AddGroup,
   },
   data() {
     return {

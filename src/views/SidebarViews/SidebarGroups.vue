@@ -3,6 +3,11 @@
     <template v-slot:header>
       <h2 class="c-title">Мои группы</h2>
     </template>
+
+    <template v-slot:popups>
+      <add-group v-show="showPopup" @close="showPopup = false"></add-group>
+    </template>
+
     <template v-slot:content>
       <div class="person-wrapper">
         <div class="person-content">
@@ -14,13 +19,15 @@
 </template>
 
 <script>
-import GroupsInformation from "@/components/groups/GroupsInformation.vue";
-import SidebarBase from "@/components/SidebarBase.vue";
+import GroupsInformation from "@/components/groups/GroupsInformation";
+import AddGroup from "@/components/groups/AddGroup";
+import SidebarBase from "@/components/SidebarBase";
 import "vuescroll/dist/vuescroll.css";
 export default {
   components: {
     GroupsInformation,
     SidebarBase,
+    AddGroup,
   },
   data: () => ({
     loaded: false,

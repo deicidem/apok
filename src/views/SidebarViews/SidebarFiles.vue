@@ -3,7 +3,7 @@
     <template v-slot:header>
       <h2 class="c-title">Мои файлы</h2>
     </template>
-    
+
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
@@ -76,6 +76,7 @@
           >
             Удалить выбранное
           </app-button>
+          
           <!-- <app-button
             class="files-button"
             type="button-g"

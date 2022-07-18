@@ -5,6 +5,7 @@
       @select="setActiveFile"
       :activeFile="getActiveFile"
     ></admin-files-content-table>
+    
     <admin-content-search @submit="searchFiles($event)" @all="loadFiles()"></admin-content-search>
   </admin-content>
 </template>
@@ -25,7 +26,15 @@ export default {
   },
   methods: {
     ...mapActions("admin/files", ["loadFiles", "searchFiles", "setActiveFile"]),
+    
   },
+  data() {
+      return {
+        pageNo: 1,
+        pageSize: 20,
+        list: [1, 2 ,3]
+      }
+    },
 };
 </script>
 

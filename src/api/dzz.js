@@ -17,5 +17,5 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
   }
   let result = await server.get('dzzs', {params});
   console.log(result);
-  return result.data.dzzs;
+  return result.data.data;
 }

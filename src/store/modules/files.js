@@ -61,10 +61,10 @@ export default {
     },
     async loadFiles(store) {
       let {data} = await userApi.getFiles();
-      data.files.forEach(el => {
+      data.data.forEach(el => {
         el.selected = false;
       })
-      store.commit('setFiles', data.files)
+      store.commit('setFiles', data.data)
       return data;
     },
     async deleteFiles({ commit, dispatch,  getters}) {

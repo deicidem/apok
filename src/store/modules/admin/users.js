@@ -7,7 +7,15 @@ export default {
     users: null,
     activeUserIndex: null,
     usersGroup: null,
-    activeUserLogs: null
+    activeUserLogs: null,
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    }
   },
   getters: {
     getUsers(state) {
@@ -22,13 +30,16 @@ export default {
       }
       return null;
     },
+    getPagination(state) {
+      return state.pagination
+    },
     getSelectedUsers(state) {
       if (state.users == null) return [];
       return state.users.filter(el => el.selected);
     },
     getUsersMap(state) {
       let map = {};
-      for (let i = 0; i < state.users.length; i++) {
+      for (let i = 0; i < state.users?.length; i++) {
         let user = state.users[i];
         map[user.id] = {
           data: user,
@@ -84,6 +95,9 @@ export default {
     },
     setUserLogs(state, {index, logs}) {
       state.users[index].logs = logs;
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
     }
   },
   actions: {
@@ -101,14 +115,29 @@ export default {
       }
       commit('selectUser', {index, value: payload.value});
     },
-    async loadUsers({commit}) {
-      let res = await usersApi.all();
-      commit('setUsers', res.data.users);
+    async loadUsers({commit}, page = 1) {
+      let res = await usersApi.all(page);
+      let meta = res.data.meta;
+      console.log(res);
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
+      })
+      commit('setUsers', res.data.data);
+      return res;
+    },
+    async loadUsersByPage({commit, getters}) {
+      let page = getters.getPagination.next;
+      let res = await usersApi.all(page);
+      commit('setUsers', res.data.data);
       return res;
     },
     async reloadUsers({commit, getters}) {
       let res = await usersApi.all();
-      let users = res.data.users;
+      let users = res.data.data;
       getters.getUsers.forEach((user, i) => {
         if (users.find(e => e.id == user.id) == null ) {
           commit('removeUser', i)
@@ -135,17 +164,17 @@ export default {
     }, payload) {
       let usersRes = await usersApi.allByGroup(payload);
       let groupRes = await groupsApi.one(payload);
-      let users = usersRes.data.users;
+      let users = usersRes.data.data;
       commit('setUsers', users);
       commit('setUsersGroup', {
-        id: groupRes.data.group.id,
-        title: groupRes.data.group.title
+        id: groupRes.data.data.id,
+        title: groupRes.data.data.title
       });
       return usersRes;
     },
     async searchUsers({commit}, payload) {
       let res =  await usersApi.allFiltered(payload);
-      commit('setUsers', res.data.users);
+      commit('setUsers', res.data.data);
       return res;
     },
     async updateUser({commit,getters}, payload) {
@@ -189,14 +218,14 @@ export default {
         password_confirmation: payload.password.confirm
       });
       console.log(res);
-      let user = res.data.user;
+      let user = res.data.data;
       user.date = new Date(user.date).toLocaleDateString();
       commit('addUser', user)
     },
     async loadLogs({getters, commit}, payload) {
       let res = await usersApi.getLogs(payload);
       let index = getters.getUsersMap[payload].index;
-      commit('setUserLogs', {index, logs: res.data.logs})
+      commit('setUserLogs', {index, logs: res.data.data})
     }
   
   },

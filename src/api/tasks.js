@@ -6,28 +6,28 @@ function fixTask(task) {
 
 export async function all() {
   let res = await server.get('tasks');
-  res.data.tasks.forEach(el => {
+  res.data.data.forEach(el => {
     fixTask(el);
   });
   return res;
 }
 export async function allByUser(userId) {
   let res = await server.get('tasks', {params: {userId}});
-  res.data.tasks.forEach(el => {
+  res.data.data.forEach(el => {
     fixTask(el);
   });
   return res;
 }
 export async function allFiltered() {
   let res = await server.get('tasks');
-  res.data.tasks.forEach(el => {
+  res.data.data.forEach(el => {
     fixTask(el);
   });
   return res;
 }
 export async function one(id) {
   let res = await server.get('tasks/' + id);
-  fixTask(res.data.task);
+  fixTask(res.data.data);
   return res;
 }
 
@@ -74,5 +74,5 @@ export async function add({
 
   let data = await server.post('tasks', formData);
   console.log(data);
-  return data.tasks;
+  return data.data;
 }

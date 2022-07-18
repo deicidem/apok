@@ -85,7 +85,8 @@ export default {
     }) {
       let res = await filesApi.all();
       console.log(res);
-      let files = res.data.files;
+      let files = res.data.data;
+
       files.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
@@ -96,25 +97,27 @@ export default {
     async loadFilesByUser({commit}, payload) {
       let filesRes = await filesApi.allByUser(payload);
       let userRes = await usersApi.one(payload);
-      let files = filesRes.data.files;
+      let files = filesRes.data.data;
+
       files.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
+
       commit('setFiles', files);
       commit('setFilesUser', {
-        id: userRes.data.user.id,
-        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
+        id: userRes.data.data.id,
+        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
       });
     },
     async searchFiles({
       commit
     }, payload) {
       let res = await filesApi.allFiltered(payload);
-      let files = res.data.files;
+      let files = res.data.data;
       files.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setFiles', res.data.files);
+      commit('setFiles', files);
       return res;
     },
     async updateFile({

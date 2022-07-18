@@ -47,5 +47,5 @@ export async function addUsers({groupId, users}) {
 }
 export async function getTypes() {
   let {data} = await server.get('group-types');
-  return data.types;
+  return data.data;
 }

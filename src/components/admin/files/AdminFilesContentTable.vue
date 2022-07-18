@@ -22,7 +22,7 @@
         <td>{{ file.name }}</td>
         <td>{{ file.type }}</td>
         <td>{{ file.date }}</td>
-        <td>{{ file.userName != null ? file.userName : "Администратор"}} </td>
+        <td>{{ file.user != null ? file.user.firstName + ' ' + file.user.lastName : "Администратор"}} </td>
       </tr>
     </tbody>
   </admin-content-table>

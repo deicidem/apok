@@ -11,7 +11,7 @@ export async function all() {
   //   console.log(data);
     let res = await server.get('plans');
     console.log(res);
-    return res.data.plans;
+    return res.data.data;
   // })
   
   // return plans;

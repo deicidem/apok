@@ -45,7 +45,7 @@ export default {
     
     async auth(store) {
       let {data} = await userApi.auth();
-      store.dispatch('setUser', data.user);
+      store.dispatch('setUser', data.data);
       return data;
     },
     async updateUser(store, data) {

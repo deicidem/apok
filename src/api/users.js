@@ -1,7 +1,9 @@
 import server from "@/api/http";
 
-export async function all() {
-  return await server.get('users');
+export async function all(page) {
+  return await server.get('users', {params: {
+    page
+  }}); 
 }
 
 export async function one(id) {

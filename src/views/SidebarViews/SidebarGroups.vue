@@ -11,7 +11,7 @@
     <template v-slot:content>
       <div class="person-wrapper">
         <div class="person-content">
-          <groups-information></groups-information>
+          <groups-information :groups="getGroups"></groups-information>
         </div>
       </div>
     </template>
@@ -23,6 +23,7 @@ import GroupsInformation from "@/components/groups/GroupsInformation";
 import AddGroup from "@/components/groups/AddGroup";
 import SidebarBase from "@/components/SidebarBase";
 import "vuescroll/dist/vuescroll.css";
+import {mapGetters, mapActions} from "vuex"
 export default {
   components: {
     GroupsInformation,
@@ -32,9 +33,16 @@ export default {
   data: () => ({
     loaded: false,
   }),
-  mounted() {
+  async mounted() {
+    await this.loadGroups();
     this.loaded = true;
   },
+  computed: {
+    ...mapGetters('groups', ['getGroups'])
+  },
+  methods: {
+    ...mapActions('groups', ['loadGroups'])
+  }
 };
 </script>
 

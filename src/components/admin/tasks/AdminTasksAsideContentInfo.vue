@@ -28,9 +28,9 @@
             <p class="content-info__title">Пользователь</p>
             <div class="content-edit">
               <router-link class="check link"
-                :to="{ path: '/admin/users', query: { userId: task.userId } }"
+                :to="{ path: '/admin/users', query: { userId: task.user.id } }"
               >
-                {{ task.userName }}
+                {{ task.user.firstName }} {{task.user.lastName}}
               </router-link>
             </div>
           </div>

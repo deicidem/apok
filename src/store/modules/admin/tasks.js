@@ -72,35 +72,35 @@ export default {
     async loadTasks({commit}) {
       let res = await tasksApi.all();
       console.log(res);
-      let tasks = res.data.tasks;
+      let tasks = res.data.data;
       tasks.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setTasks', res.data.tasks);
+      commit('setTasks', tasks);
       commit('setTasksUser', null);
       return res;
     },
     async loadTasksByUser({commit}, payload) {
       let tasksRes = await tasksApi.allByUser(payload);
       let userRes = await usersApi.one(payload);
-      let tasks = tasksRes.data.tasks;
+      let tasks = tasksRes.data.data;
       tasks.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setTasks', tasks);
       commit('setTasksUser', {
-        id: userRes.data.user.id,
-        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
+        id: userRes.data.data.id,
+        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
       });
       return tasksRes;
     },
     async searchTasks({commit}, payload) {
       let res =  await tasksApi.allFiltered(payload);
-      let tasks = res.data.tasks;
+      let tasks = res.data.data;
       tasks.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setTasks', res.data.tasks);
+      commit('setTasks', tasks);
       return res;
     },
     async updateTask({commit,getters}, payload) {

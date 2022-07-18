@@ -23,6 +23,7 @@ export default {
       type: String,
       default: null,
     },
+    static: Boolean
   },
 
   computed: {
@@ -35,7 +36,10 @@ export default {
     },
 
     classes() {
-      return this.active ? this.type + " active" : this.type;
+      let result = this.type;
+      if (this.active) result += " active";
+      if (this.static) result += " static";
+      return result;
     },
   },
 };
@@ -108,14 +112,14 @@ export default {
   &:not(:disabled) {
     &:hover {
       transition-delay: 0s;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 10px rgba($black, 0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba($black, 0.2);
     }
 
     &:active {
       transition: all 0.1s ease-out;
       transform: translateY(1px);
-      box-shadow: 0 2px 4px rgba($black, 0.1);
+      box-shadow: 0 0px 2px rgba($black, 0.1);
     }
 
     &:hover:after {
@@ -163,17 +167,6 @@ export default {
   &-svg {
     width: 30px;
     height: 30px;
-
-    &.active {
-      .button {
-        color: $white;
-
-        &::after {
-          background: $gradient;
-        }
-      }
-    }
-
     .button {
       padding: 16px;
       display: flex;
@@ -181,18 +174,39 @@ export default {
       align-items: center;
       color: $color-main;
       font-size: 20px;
-
+      box-shadow: 0 1px 3px rgba(#000, 0.15);
       &::after {
         background: $gradient-w;
       }
+      &:hover {
+        box-shadow: 0 2px 4px rgba(#000, 0.2);
+      }
+      &:active {
+        transition: all 0.1s ease-out;
+        transform: translateY(1px);
+        box-shadow: 0 0px 2px rgba($black, 0.1);
+      }
+    }
+    &-white {
+      .button {
+        &::after {
+          background: $white;
+        }
+      }
+    }
+    &.active {
+      .button {
+        color: $white;
+        &::after {
+          background: $gradient;
+        }
+      }
     }
   }
-
   &-svg-r {
     .button {
       color: $color-red;
       font-size: 20px;
-
       &:hover + .tooltiptext {
         display: block;
         color: $color-red;

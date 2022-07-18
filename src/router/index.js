@@ -129,7 +129,7 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   if (to.meta?.requiresAuth == true && to.name !== 'login') {
     let res = await store.dispatch('users/auth');
-    if (res.user == null) {
+    if (res.data == null) {
       next({ name: 'login' });
     } else {
       next();

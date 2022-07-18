@@ -194,7 +194,7 @@ export default {
         title: "Вы уверены, что хотите удалить этот файл?",
         message:
           "Удаление этого файла приведет к потере всех связанных с ним данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить"
       });
       if (ok) {
         this.pending = true;
@@ -204,7 +204,7 @@ export default {
     },
 
     async onDeleteBanch() {
-      const ok = await this.$refs.deleteConfirm.show({
+      const ok =   this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эти файлы?",
         message:
           "Удаление этих файлов приведет к потере всех связанных с ними данных.",

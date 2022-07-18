@@ -91,7 +91,7 @@ export default {
     }) {
       let res = await groupsApi.all();
       console.log(res);
-      let groups = res.data.groups;
+      let groups = res.data.data;
       groups.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
@@ -104,14 +104,14 @@ export default {
     }, payload) {
       let groupsRes = await groupsApi.allByUser(payload);
       let userRes = await usersApi.one(payload);
-      let groups = groupsRes.data.groups;
+      let groups = groupsRes.data.data;
       groups.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setGroups', groups);
       commit('setGroupsUser', {
-        id: userRes.data.user.id,
-        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
+        id: userRes.data.data.id,
+        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
       });
       return groupsRes;
     },
@@ -120,14 +120,14 @@ export default {
     }, payload) {
       let groupsRes = await groupsApi.allByOwner(payload);
       let userRes = await usersApi.one(payload);
-      let groups = groupsRes.data.groups;
+      let groups = groupsRes.data.data;
       groups.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
       commit('setGroups', groups);
       commit('setGroupsUser', {
-        id: userRes.data.user.id,
-        name: userRes.data.user.firstName + ' ' + userRes.data.user.lastName
+        id: userRes.data.data.id,
+        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
       });
       return groupsRes;
     },
@@ -135,11 +135,11 @@ export default {
       commit
     }, payload) {
       let res = await groupsApi.allFiltered(payload);
-      let groups = res.data.groups;
+      let groups = res.data.data;
       groups.forEach(el => {
         el.date = new Date(el.date).toLocaleDateString();
       });
-      commit('setGroups', res.data.groups);
+      commit('setGroups', groups);
       return res;
     },
     async updateGroup({
@@ -173,7 +173,7 @@ export default {
         type: payload.type,
         ownerId: payload.ownerId
       });
-      let group = res.data.group;
+      let group = res.data.data;
       commit('addGroup', group)
     },
     async addUsers({commit}, payload) {
@@ -181,7 +181,7 @@ export default {
         users: payload.users.map(e => e.id),
         groupId: payload.groupId
       });
-      let group = res.data.group;
+      let group = res.data.data;
       commit('addGroup', group)
     },
     async loadTypes({commit}) {

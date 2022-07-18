@@ -19,7 +19,7 @@
             <p class="content-info__title">Владелец</p>
             <div class="content-edit">
               <router-link class="check link"
-                :to="{ path: '/admin/users', query: { userId: group.ownerId } }"
+                :to="{ path: '/admin/users', query: { userId: group.owner.id } }"
               >
                 {{ group.ownerName }}
               </router-link>

@@ -55,15 +55,15 @@ export async function updatePassword({email, currentPassword, password, password
 
 export async function getTasks() {
   let { data } = await server.get('user/tasks');
-  data.tasks.forEach(el => {
+  data.data.forEach(el => {
     fixTask(el);
   });
-  return data.tasks;
+  return data.data;
 }
 export async function getTask(id) {
   let {data} = await server.get('user/tasks/'+id);
-  fixTask(data.task);
-  return data.task;
+  fixTask(data.data);
+  return data.data;
 }
 export async function createTask({
   planId,
@@ -93,7 +93,7 @@ export async function createTask({
 
   let data = await server.post('user/tasks', formData);
   console.log(data);
-  return data.tasks;
+  return data.data;
 }
 export async function deleteTasks(ids) {
   let params = {};
@@ -108,21 +108,38 @@ export async function deleteTask(id) {
 }
 
 export async function getFiles() {
-  let data = await server.get('user/files');
-  data.data.files.forEach(el => {
+  let res = await server.get('user/files');
+  res.data.data.forEach(el => {
     el.date = new Date(el.date);
   })
-  return data;
+  return res;
 }
 
 export async function deleteFiles(filesIds) {
   let params = {};
   for (let i = 0; i < filesIds.length; i++) {
-    params[`filesIds[${i}]`] = filesIds[i];    
+    params[`ids[${i}]`] = filesIds[i];    
   }
   return await server.delete('user/files', {params});
 }
 
 export async function deleteFile(id) {
   return await server.delete('user/files/'+id);
+}
+
+export async function getGroups() {
+  let res = await server.get('user/groups  ');
+  return res;
+}
+
+export async function deleteGroups(groupsIds) {
+  let params = {};
+  for (let i = 0; i < groupsIds.length; i++) {
+    params[`ids[${i}]`] = groupsIds[i];    
+  }
+  return await server.delete('user/groups', {params});
+}
+
+export async function deleteGroup(id) {
+  return await server.delete('user/groups/' + id);
 }

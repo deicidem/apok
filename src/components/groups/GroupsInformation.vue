@@ -23,14 +23,14 @@
             </td>
 
             <td class="group-wrapper-value">
-              {{ item.name }}
+              {{ item.title }}
             </td>
             <td class="group-wrapper-value">
               {{ item.type }}
             </td>
 
             <td class="group-wrapper-value">
-              {{ item.owner }}
+              {{ item.ownerName }}
             </td>
 
             <td>
@@ -71,6 +71,7 @@ export default {
     AppButton,
     AddGroup,
   },
+  props: ['groups'],
   data() {
     return {
       headers: [
@@ -90,21 +91,11 @@ export default {
           active: false,
         },
       ],
-      groups: [
-        {
-          name: "Центр Инновационных технологий",
-          type: "Закрытая",
-          owner: "Анастасия Живых",
-        },
-        {
-          name: "Центр Инновационных технологий",
-          type: "Закрытая",
-          owner: "Анастасия Живых",
-        },
-      ],
       showPopup: false,
     };
   },
+  
+  
 };
 </script>
 

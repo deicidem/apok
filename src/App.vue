@@ -73,6 +73,10 @@ svg:focus {
   background: $white-dark;
 }
 
+.dzz-name {
+  word-break: break-all;
+}
+
 .icon {
   line-height: 0;
 }

@@ -1,7 +1,8 @@
 import server from "@/api/http";
 
-export async function all({startDate, endDate, startCloudiness, endCloudiness, months, satelites, polygon}) {
+export async function all({page, startDate, endDate, startCloudiness, endCloudiness, months, satelites, polygon}) {
   let params = {
+    page: page,
     startDate: startDate.toJSON(),
     endDate: endDate.toJSON(),
     startCloudiness,
@@ -15,7 +16,5 @@ export async function all({startDate, endDate, startCloudiness, endCloudiness, m
   for (let i = 0; i < satelites.length; i++) {
     params[`satelites[${i}]`] = satelites[i];    
   }
-  let result = await server.get('dzzs', {params});
-  console.log(result);
-  return result.data.data;
+  return await server.get('dzzs', {params});
 }

@@ -50,9 +50,9 @@
                 />
               </td>
               <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
+              <td class="dzz-name">{{ item.name }}</td>
               <td>{{ item.type }}</td>
-              <td>{{ item.date.toLocaleDateString() }}</td>
+              <td>{{ item.date }}</td>
               <td>
                 <app-button
                   type="button-svg button-svg-r"
@@ -66,7 +66,11 @@
             </tr>
           </tbody>
         </app-table>
-
+        <app-pagination
+          :page-count="getPagination.last"
+          @changePage="fetchFiles"
+          :current-page="getPagination.currentPage"
+        ></app-pagination>
         <div class="files-buttons">
           <app-button
             class="files-button"
@@ -98,6 +102,7 @@ import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppButton from "@/components/controls/AppButton";
 import SidebarBase from "@/components/SidebarBase.vue";
+import AppPagination from "@/components/controls/AppPagination";
 export default {
   name: "SidebarFiles",
   components: {
@@ -107,6 +112,7 @@ export default {
     AppDeleteConfirmation,
     // VsPagination,
     SidebarBase,
+    AppPagination,
   },
   data() {
     return {
@@ -140,6 +146,8 @@ export default {
     ...mapGetters("files", {
       files: "getFiles",
       sortDir: "getSortDir",
+      getPagination: "getPagination",
+      isPending: "isPending",
     }),
 
     allSelected() {
@@ -178,13 +186,13 @@ export default {
     },
   },
   async mounted() {
-    await this.loadFiles();
+    await this.fetchFiles();
     this.loaded = true;
   },
   methods: {
     ...mapActions("files", [
       "sortFilesBy",
-      "loadFiles",
+      "fetchFiles",
       "deleteFiles",
       "selectFile",
       "deleteFile",
@@ -195,7 +203,7 @@ export default {
         title: "Вы уверены, что хотите удалить этот файл?",
         message:
           "Удаление этого файла приведет к потере всех связанных с ним данных.",
-        actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;
@@ -205,11 +213,11 @@ export default {
     },
 
     async onDeleteBanch() {
-      const ok =   this.$refs.deleteConfirm.show({
+      const ok = this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эти файлы?",
         message:
           "Удаление этих файлов приведет к потере всех связанных с ними данных.",
-          actionMessage: "Удалить"
+        actionMessage: "Удалить",
       });
       if (ok) {
         this.pending = true;

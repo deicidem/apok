@@ -15,7 +15,9 @@ export default {
       last: null,
       prev: null,
       next: null,
-    }
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getUsers(state) {
@@ -43,7 +45,7 @@ export default {
         let user = state.users[i];
         map[user.id] = {
           data: user,
-          index: i  
+          index: i
         }
       }
       return map;
@@ -51,6 +53,12 @@ export default {
     getUsersGroup(state) {
       return state.usersGroup;
     },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
+    }
   },
   mutations: {
     setUsers(state, payload) {
@@ -61,12 +69,20 @@ export default {
       });
       state.users = payload;
     },
-    updateUser(state, {index, firstName, lastName, email}) {
+    updateUser(state, {
+      index,
+      firstName,
+      lastName,
+      email
+    }) {
       state.users[index].firstName = firstName;
       state.users[index].lastName = lastName;
       state.users[index].email = email;
     },
-    setUser(state, {index, user}) {
+    setUser(state, {
+      index,
+      user
+    }) {
       user.date = new Date(user.date).toLocaleDateString();
       user.selected = false;
       user.logs = null;
@@ -78,7 +94,10 @@ export default {
     setActiveUserIndex(state, payload) {
       state.activeUserIndex = payload;
     },
-    setBlocked(state, {index, value}) {
+    setBlocked(state, {
+      index,
+      value
+    }) {
       state.users[index].blocked = value;
     },
     addUser(state, payload) {
@@ -87,38 +106,73 @@ export default {
     removeUser(state, payload) {
       state.users.splice(payload, 1);
     },
-    selectUser(state, {index, value}) {
+    selectUser(state, {
+      index,
+      value
+    }) {
       state.users[index].selected = value;
     },
     setUsersGroup(state, payload) {
       state.usersGroup = payload;
     },
-    setUserLogs(state, {index, logs}) {
+    setUserLogs(state, {
+      index,
+      logs
+    }) {
       state.users[index].logs = logs;
     },
     setPagination(state, payload) {
       state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
-    setActiveUser({commit, getters}, payload) {
+    setActiveUser({
+      commit,
+      getters
+    }, payload) {
       let index = null;
-      if (payload != null)  {
+
+      if (payload != null) {
         index = getters.getUsersMap[payload].index
       }
+
       commit('setActiveUserIndex', index);
     },
-    selectUser({commit, getters}, payload) {
+
+    selectUser({
+      commit,
+      getters
+    }, payload) {
       let index = null;
-      if (payload.id != null)  {
+
+      if (payload.id != null) {
         index = getters.getUsersMap[payload.id].index
       }
-      commit('selectUser', {index, value: payload.value});
+
+      commit('selectUser', {
+        index,
+        value: payload.value
+      });
     },
-    async loadUsers({commit}, page = 1) {
-      let res = await usersApi.all(page);
+
+    async fetchUsers({
+      commit,
+      getters
+    }, page = 1) {
+      commit('setPending', true);
+      let res = await usersApi.all({
+        page,
+        search: getters.getSearchBy,
+        groupId: getters.getUsersGroup?.id
+      });
       let meta = res.data.meta;
-      console.log(res);
+
       commit('setPagination', {
         currentPage: meta.current_page,
         first: 1,
@@ -126,90 +180,147 @@ export default {
         prev: meta.current_page == 1 ? null : meta.current_page - 1,
         next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
       })
+
       commit('setUsers', res.data.data);
+      commit('setPending', false);
       return res;
     },
-    async loadUsersByPage({commit, getters}) {
-      let page = getters.getPagination.next;
-      let res = await usersApi.all(page);
-      commit('setUsers', res.data.data);
-      return res;
-    },
-    async reloadUsers({commit, getters}) {
-      let res = await usersApi.all();
+
+    async reloadUsers({
+      commit,
+      getters
+    }) {
+      commit('setPending', true);
+      let res = await usersApi.all({
+        page: getters.getPagination.currentPage,
+        search: getters.getSearchBy,
+        groupId: getters.getUsersGroup?.id
+      });
       let users = res.data.data;
+
       getters.getUsers.forEach((user, i) => {
-        if (users.find(e => e.id == user.id) == null ) {
+        if (users.find(e => e.id == user.id) == null) {
           commit('removeUser', i)
         }
       })
+
       users.forEach(user => {
         if (getters.getUsersMap[user.id] != null) {
           let oldDate = new Date(getters.getUsersMap[user.id].data.updated);
           let newDate = new Date(user.updated);
+
           if (newDate > oldDate) {
             user.selected = false;
-            commit('setUser', {index: getters.getUsersMap[user.id].index, user});
+            commit('setUser', {
+              index: getters.getUsersMap[user.id].index,
+              user
+            });
           }
         } else {
           user.selected = false;
           commit('addUser', user);
         }
       })
-      
+      commit('setPending', false);
       return users;
     },
-    async loadUsersByGroup({
-      commit
+
+    async fetchAll({
+      commit,
+      dispatch
+    }) {
+      commit('setPending', true);
+      commit('setUsersGroup', null);
+      commit('setSearchBy', null);
+
+      return await dispatch('fetchUsers');
+    },
+
+    async filterByGroup({
+      commit,
+      dispatch
     }, payload) {
-      let usersRes = await usersApi.allByGroup(payload);
-      let groupRes = await groupsApi.one(payload);
-      let users = usersRes.data.data;
-      commit('setUsers', users);
+      commit('setPending', true);
+      let res = await groupsApi.one(payload);
+      let group = res.data.data;
+
       commit('setUsersGroup', {
-        id: groupRes.data.data.id,
-        title: groupRes.data.data.title
+        id: group.id,
+        title: group.title
       });
-      return usersRes;
+
+      return await dispatch('fetchUsers');
     },
-    async searchUsers({commit}, payload) {
-      let res =  await usersApi.allFiltered(payload);
-      commit('setUsers', res.data.data);
-      return res;
+
+    async filterBySearch({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSearchBy', payload);
+      return await dispatch('fetchUsers');
     },
-    async updateUser({commit,getters}, payload) {
-      let res =  await usersApi.update(payload);
+
+    async updateUser({
+      commit,
+      getters
+    }, payload) {
+      let res = await usersApi.update(payload);
       if (res.status == 200) {
         let index = getters.getUsersMap[payload.id].index;
-        commit('updateUser', {index, ...payload});
+        commit('updateUser', {
+          index,
+          ...payload
+        });
       }
       return res;
     },
-    async deleteUser({commit,getters}, payload) {
-      let res =  await usersApi.remove(payload);
+
+    async deleteUser({
+      commit,
+      getters
+    }, payload) {
+      let res = await usersApi.remove(payload);
       if (res.status == 200) {
         let index = getters.getUsersMap[payload].index;
         commit('deleteUser', index);
       }
       return res;
     },
-    async blockUser({commit, getters}, payload) {
-      let res =  await usersApi.block(payload);
+
+    async blockUser({
+      commit,
+      getters
+    }, payload) {
+      let res = await usersApi.block(payload);
       if (res.status == 200) {
         let index = getters.getUsersMap[payload].index;
-        commit('setBlocked', {index, value: true});
+        commit('setBlocked', {
+          index,
+          value: true
+        });
       }
       return res;
     },
-    async unblockUser({commit, getters}, payload) {
-      let res =  await usersApi.unblock(payload);
+
+    async unblockUser({
+      commit,
+      getters
+    }, payload) {
+      let res = await usersApi.unblock(payload);
       if (res.status == 200) {
         let index = getters.getUsersMap[payload].index;
-        commit('setBlocked', {index, value: false});
+        commit('setBlocked', {
+          index,
+          value: false
+        });
       }
       return res;
     },
-    async createUser({commit}, payload) {
+
+    async createUser({
+      commit
+    }, payload) {
       let res = await usersApi.create({
         firstName: payload.firstName,
         lastName: payload.lastName,
@@ -222,11 +333,17 @@ export default {
       user.date = new Date(user.date).toLocaleDateString();
       commit('addUser', user)
     },
-    async loadLogs({getters, commit}, payload) {
+
+    async loadLogs({
+      getters,
+      commit
+    }, payload) {
       let res = await usersApi.getLogs(payload);
       let index = getters.getUsersMap[payload].index;
-      commit('setUserLogs', {index, logs: res.data.data})
+      commit('setUserLogs', {
+        index,
+        logs: res.data.data
+      })
     }
-  
   },
 }

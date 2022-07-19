@@ -1,9 +1,7 @@
 import server from "@/api/http";
 
-export async function all(page) {
-  return await server.get('users', {params: {
-    page
-  }}); 
+export async function all(params) {
+  return await server.get('users', {params}); 
 }
 
 export async function one(id) {
@@ -12,15 +10,6 @@ export async function one(id) {
 
 export async function getLogs(id) {
   return await server.get('users/'+id+'/logs');
-}
-
-export async function allByGroup(groupId) {
-  return await server.get('users', {params: {groupId}});
-}
-
-export async function allFiltered(search) {
-  let params = search == null ? null : {search};
-  return await server.get('users', {params});
 }
 
 export async function update({id, firstName, lastName, email}) {

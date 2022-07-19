@@ -29,25 +29,28 @@ export default {
     loading: true
   }),
   computed: {
-    ...mapGetters('admin/groups', ['getGroupsUser']),
+    ...mapGetters('admin/groups', ['getGroupsUser', 'getGroupsOwner']),
     title() {
+      let extension = [];
       if (this.getGroupsUser != null) {
-        return `Группы (Пользователь - ${this.getGroupsUser.name})`
-      } else {
-        return `Группы`
+        extension.push(`Пользователь - ${this.getGroupsUser.name}`)
       }
+      if (this.getGroupsOwner != null) {
+        extension.push(`Владелец - ${this.getGroupsOwner.name}`)
+      }
+      return extension.length > 0 ? `Группы (${extension.join(', ')})` : "Группы";
     }
   },
   methods: {
-    ...mapActions('admin/groups', ['loadGroups', 'loadGroupsByUser', 'loadGroupsByOwner', 'loadTypes'])
+    ...mapActions('admin/groups', ['fetchGroups', 'filterByUser', 'filterByOwner', 'loadTypes', 'fetchAll'])
   },
   async mounted() {
     if (this.$route.query?.userId) {
-      await this.loadGroupsByUser(this.$route.query?.userId);
+      await this.filterByUser(this.$route.query?.userId);
     } else if (this.$route.query?.ownerId) {
-      await this.loadGroupsByOwner(this.$route.query?.ownerId);
+      await this.filterByOwner(this.$route.query?.ownerId);
     } else {
-      await this.loadGroups();
+      await this.fetchAll();
     }
     await this.loadTypes();
     this.loading = false;

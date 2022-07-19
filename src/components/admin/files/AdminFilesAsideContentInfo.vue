@@ -24,12 +24,17 @@
           <div class="content-info__editable">
             <p class="content-info__title">Пользователь</p>
             <div class="content-edit">
+              
               <router-link
                 class="check link"
+                v-if="file.user != null"
                 :to="{ path: '/admin/users', query: { userId: file.user.id } }"
               >
                 {{ file.user.firstName }} {{file.user.lastName}}
               </router-link>
+              <div class="check" v-else>
+                Администратор
+              </div>
             </div>
           </div>
         </div>

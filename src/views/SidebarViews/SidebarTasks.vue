@@ -53,7 +53,7 @@
 
               <td>{{ item.title }}</td>
 
-              <td>{{ item.date.toLocaleDateString() }}</td>
+              <td>{{ item.date }}</td>
 
               <td v-if="!isNaN(+item.status)">
                 Выполняется: {{ item.status }}%
@@ -104,6 +104,11 @@
             </tr>
           </tbody>
         </app-table>
+        <app-pagination
+          :page-count="getPagination.last"
+          @changePage="fetchTasks"
+          :current-page="getPagination.currentPage"
+        ></app-pagination>
         <div class="tasks-buttons">
           <app-button
             class="tasks-button"
@@ -135,6 +140,7 @@ import AppCheckbox from "@/components/controls/AppCheckbox";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton";
 import AppProgress from "@/components/controls/AppProgress";
+import AppPagination from "@/components/controls/AppPagination";
 export default {
   name: "SidebarTasks",
   components: {
@@ -146,6 +152,7 @@ export default {
     SidebarBase,
     AppButton,
     AppProgress,
+    AppPagination,
   },
   data() {
     return {
@@ -181,6 +188,8 @@ export default {
     ...mapGetters("tasks", {
       tasks: "getTasks",
       sortDir: "getSortDir",
+      getPagination: "getPagination",
+      isPending: "isPending",
     }),
     allSelected() {
       let res = true;
@@ -222,7 +231,7 @@ export default {
     ...mapActions("tasks", [
       "setTaskActive",
       "sortTasksBy",
-      "load",
+      "fetchTasks",
       "reload",
       "selectTask",
       "deleteTasks",
@@ -274,7 +283,7 @@ export default {
   async created() {
     console.log("start");
     if (this.tasks == null) {
-      await this.load();
+      await this.fetchTasks();
     } else {
       await this.reload();
     }

@@ -34,13 +34,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/tasks', ['loadTasks', 'loadTasksByUser'])
+    ...mapActions('admin/tasks', ['fetchTasks', 'filterByUser', 'fetchAll'])
   },
   async mounted() {
     if (this.$route.query?.userId) {
-      await this.loadTasksByUser(this.$route.query?.userId);
+      await this.filterByUser(this.$route.query?.userId);
     } else {
-      await this.loadTasks();
+      await this.fetchAll();
     }
     this.loading = false;
   },

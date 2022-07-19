@@ -6,7 +6,17 @@ export default {
   state: {
     files: null,
     activeFileIndex: null,
-    filesUser: null
+    filesUser: null,
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getFiles(state) {
@@ -34,10 +44,22 @@ export default {
         }
       }
       return map;
+    },
+    getPagination(state) {
+      return state.pagination
+    },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
     }
   },
   mutations: {
     setFiles(state, payload) {
+      payload.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+      })
       state.files = payload;
     },
     setFile(state, {
@@ -67,6 +89,15 @@ export default {
     },
     setFilesUser(state, payload) {
       state.filesUser = payload;
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
@@ -80,46 +111,66 @@ export default {
       }
       commit('setActiveFileIndex', index);
     },
-    async loadFiles({
-      commit
-    }) {
-      let res = await filesApi.all();
-      console.log(res);
-      let files = res.data.data;
 
-      files.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
+    async fetchFiles({
+      commit,
+      getters
+    }, page = 1) {
+      commit('setPending', true);
+
+      let res = await filesApi.all({
+        page,
+        search: getters.getSearchBy,
+        userId: getters.getFilesUser?.id
       });
+
+      let files = res.data.data;
+      let meta = res.data.meta;
+
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
+      })
+
       commit('setFiles', files);
+      commit('setPending', false);
+      return res;
+    },
+
+    async fetchAll({commit, dispatch}) {
+      commit('setPending', true);
       commit('setFilesUser', null);
-      return res;
+      commit('setSearchBy', null);
+
+      return await dispatch('fetchFiles');
     },
-    async loadFilesByUser({commit}, payload) {
-      let filesRes = await filesApi.allByUser(payload);
-      let userRes = await usersApi.one(payload);
-      let files = filesRes.data.data;
 
-      files.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
+    async filterByUser({commit, dispatch}, payload) {
+      commit('setPending', true);
 
-      commit('setFiles', files);
+      let res = await usersApi.one(payload);
+      let user = res.data.data;
+
       commit('setFilesUser', {
-        id: userRes.data.data.id,
-        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
+        id: user.id,
+        name: user.firstName + ' ' + user.lastName
       });
+
+      return await dispatch('fetchFiles');
     },
-    async searchFiles({
-      commit
+
+    async filterBySearch({
+      commit,
+      dispatch
     }, payload) {
-      let res = await filesApi.allFiltered(payload);
-      let files = res.data.data;
-      files.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setFiles', files);
-      return res;
+      commit('setPending', true);
+      commit('setSearchBy', payload);
+      return await dispatch('fetchFiles');
     },
+
     async updateFile({
       commit,
       getters
@@ -134,6 +185,7 @@ export default {
       }
       return res;
     },
+
     async deleteFile({
       commit,
       getters

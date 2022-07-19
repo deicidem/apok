@@ -141,6 +141,11 @@
               </tr>
             </tbody>
           </app-table>
+          <app-pagination
+          :page-count="getPagination.last"
+          @changePage="fetchResults({page: $event})"
+          :current-page="getPagination.currentPage"
+        ></app-pagination>
         </div>
       </div>
     </template>
@@ -153,6 +158,7 @@ import AppTable from "@/components/table/AppTable";
 import ResultInfo from "@/components/results/ResultInfo.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton";
+import AppPagination from "@/components/controls/AppPagination";
 // import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
@@ -162,6 +168,7 @@ export default {
     // VsPagination,
     SidebarBase,
     AppButton,
+    AppPagination,
   },
 
   data() {
@@ -216,6 +223,8 @@ export default {
       results: "getResults",
       selectable: "getSelectable",
       sortDir: "getSortDir",
+      getPagination: "getPagination",
+      isPending: "isPending",
     }),
 
     cardData() {
@@ -239,6 +248,7 @@ export default {
       "setResultProperty",
       "selectResult",
       "sortResultsBy",
+      "fetchResults"
     ]),
 
     sortBy(key, ind) {
@@ -342,9 +352,7 @@ export default {
 </script>
 
 <style lang="scss">
-.dzz-name {
-  word-break: break-all;
-}
+
 
 .results {
   &-back {

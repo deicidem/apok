@@ -19,7 +19,7 @@
         :class="{ active: activeFileId == file.id }"
       >
         <td>{{ file.id }}</td>
-        <td>{{ file.name }}</td>
+        <td class="dzz-name">{{ file.name }}</td>
         <td>{{ file.type }}</td>
         <td>{{ file.date }}</td>
         <td>{{ file.user != null ? file.user.firstName + ' ' + file.user.lastName : "Администратор"}} </td>

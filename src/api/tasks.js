@@ -4,22 +4,8 @@ function fixTask(task) {
   task.date = new Date(task.date);
 }
 
-export async function all() {
-  let res = await server.get('tasks');
-  res.data.data.forEach(el => {
-    fixTask(el);
-  });
-  return res;
-}
-export async function allByUser(userId) {
-  let res = await server.get('tasks', {params: {userId}});
-  res.data.data.forEach(el => {
-    fixTask(el);
-  });
-  return res;
-}
-export async function allFiltered() {
-  let res = await server.get('tasks');
+export async function all(params) {
+  let res = await server.get('tasks', {params});
   res.data.data.forEach(el => {
     fixTask(el);
   });

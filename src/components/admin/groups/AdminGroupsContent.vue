@@ -5,7 +5,12 @@
       @select="setActiveGroup"
       :activeGroup="getActiveGroup"
     ></admin-groups-content-table>
-    <admin-content-search @submit="searchGroups($event)" @all="loadGroups()"></admin-content-search>
+    <app-pagination
+      :page-count="getPagination.last"
+      @changePage="fetchGroups"
+      :current-page="getPagination.currentPage"
+    ></app-pagination>
+    <admin-content-search @submit="filterBySearch($event)" @all="fetchAll()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -13,18 +18,20 @@
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminGroupsContentTable from "@/components/admin/groups/AdminGroupsContentTable.vue";
 import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AdminContent,
     AdminGroupsContentTable,
     AdminContentSearch,
+    AppPagination,
   },
   computed: {
-    ...mapGetters("admin/groups", ["getGroups", "getActiveGroup"]),
+    ...mapGetters("admin/groups", ["getGroups", "getActiveGroup", "getPagination", "isPending"]),
   },
   methods: {
-    ...mapActions("admin/groups", ["loadGroups", "searchGroups", "setActiveGroup"]),
+    ...mapActions("admin/groups", ["fetchGroups", "filterBySearch", "setActiveGroup", "fetchAll"]),
   },
 };
 </script>

@@ -97,7 +97,7 @@ export default {
           name: "Мои группы",
           needAuth: true,
           path: "/main/groups",
-          icon: "icon-ic_fluent_people_20_regular",
+          icon: "icon-ic_fluent_people_team_20_regular",
         },
       ],
     };

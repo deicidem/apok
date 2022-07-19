@@ -20,7 +20,7 @@
         <td>{{ group.id }}</td>
         <td>{{ group.title }}</td>
         <td>{{ group.type }}</td>
-        <td>{{ group.ownerName }}</td>
+        <td>{{ group.owner.firstName }} {{ group.owner.lastName }}</td>
       </tr>
     </tbody>
   </admin-content-table>

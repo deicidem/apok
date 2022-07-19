@@ -12,6 +12,11 @@
       <div class="person-wrapper">
         <div class="person-content">
           <groups-information :groups="getGroups"></groups-information>
+            <app-pagination
+            :page-count="getPagination.last"
+            @changePage="fetchGroups"
+            :current-page="getPagination.currentPage"
+          ></app-pagination>
         </div>
       </div>
     </template>
@@ -19,29 +24,31 @@
 </template>
 
 <script>
-import GroupsInformation from "@/components/groups/GroupsInformation";
+import GroupsInformation from "@/components/groups/GroupsInformation.vue";
+import SidebarBase from "@/components/SidebarBase.vue";
 import AddGroup from "@/components/groups/AddGroup";
-import SidebarBase from "@/components/SidebarBase";
+import AppPagination from "@/components/controls/AppPagination";
 import "vuescroll/dist/vuescroll.css";
 import {mapGetters, mapActions} from "vuex"
 export default {
   components: {
     GroupsInformation,
     SidebarBase,
+    AppPagination,
     AddGroup,
   },
   data: () => ({
     loaded: false,
   }),
   async mounted() {
-    await this.loadGroups();
+    await this.fetchGroups();
     this.loaded = true;
   },
   computed: {
-    ...mapGetters('groups', ['getGroups'])
+    ...mapGetters('groups', ['getGroups', "getPagination", "isPending"])
   },
   methods: {
-    ...mapActions('groups', ['loadGroups'])
+    ...mapActions('groups', ['fetchGroups'])
   }
 };
 </script>

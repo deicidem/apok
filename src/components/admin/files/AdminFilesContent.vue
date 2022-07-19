@@ -5,8 +5,12 @@
       @select="setActiveFile"
       :activeFile="getActiveFile"
     ></admin-files-content-table>
-    
-    <admin-content-search @submit="searchFiles($event)" @all="loadFiles()"></admin-content-search>
+    <app-pagination
+      :page-count="getPagination.last"
+      @changePage="fetchFiles"
+      :current-page="getPagination.currentPage"
+    ></app-pagination>
+    <admin-content-search @submit="filterBySearch($event)" @all="fetchAll()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -14,27 +18,22 @@
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminFilesContentTable from "@/components/admin/files/AdminFilesContentTable.vue";
 import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AdminContent,
     AdminFilesContentTable,
     AdminContentSearch,
+    AppPagination,
   },
   computed: {
-    ...mapGetters("admin/files", ["getFiles", "getActiveFile"]),
+    ...mapGetters("admin/files", ["getFiles", "getActiveFile", "getPagination", "isPending"]),
   },
   methods: {
-    ...mapActions("admin/files", ["loadFiles", "searchFiles", "setActiveFile"]),
+    ...mapActions("admin/files", ["fetchFiles", "filterBySearch", "setActiveFile", "fetchAll"]),
     
   },
-  data() {
-      return {
-        pageNo: 1,
-        pageSize: 20,
-        list: [1, 2 ,3]
-      }
-    },
 };
 </script>
 

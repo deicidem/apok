@@ -17,10 +17,14 @@
           <div class="c-select__icon">
             <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
           </div>
-            Тип группы: {{ selectedOption != null ? selectedOption.title : "" }}
+          Тип группы: {{ selectedOption != null ? selectedOption.title : "" }}
         </div>
 
-        <div class="c-select__options" v-show="showSelect" v-if="getTypes != null">
+        <div
+          class="c-select__options"
+          v-show="showSelect"
+          v-if="getTypes != null"
+        >
           <div
             class="c-select__option"
             @click="onSelect(i)"
@@ -76,7 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('admin/groups', ['getTypes']),
+    ...mapGetters("admin/groups", ["getTypes"]),
     ...mapGetters("users", ["getUser"]),
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
@@ -84,10 +88,11 @@ export default {
     selectedOption() {
       if (this.selectedOptionIndex != null) {
         return this.getTypes[this.selectedOptionIndex];
-      } 
+      }
       return null;
     },
   },
+
   methods: {
     ...mapActions("admin/groups", ["createGroup"]),
     onSelect(index) {
@@ -103,7 +108,7 @@ export default {
           await this.createGroup({
             title: this.title,
             type: this.selectedOption.id,
-            ownerId: this.getUser.id
+            ownerId: this.getUser.id,
           });
 
           this.submitStatus = "SUBMIT";
@@ -180,16 +185,17 @@ export default {
     position: relative;
     margin-top: 30px;
     width: 100%;
+
     &__options {
       width: 100%;
-    margin-top: 4px;
-    z-index: 10;
-    position: absolute;
-    top: calc(100% + 3px);
-    left: 0;
-    background: $white;
-    box-shadow: $shadow-big;
-    border-radius: 7px;
+      margin-top: 4px;
+      z-index: 10;
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 0;
+      background: $white;
+      box-shadow: $shadow-big;
+      border-radius: 7px;
     }
 
     &__option {

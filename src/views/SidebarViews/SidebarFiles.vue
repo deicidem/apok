@@ -80,6 +80,7 @@
           >
             Удалить выбранное
           </app-button>
+          
           <!-- <app-button
             class="files-button"
             type="button-g"

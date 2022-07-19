@@ -5,16 +5,17 @@
       @select="setActiveUser"
       :activeUser="getActiveUser"
       @check="selectUser"
+      :disabled="isPending"
     ></admin-users-content-table>
     <app-pagination
       :page-count="getPagination.last"
-      @changePage="loadUsers"
+      @changePage="fetchUsers"
       :current-page="getPagination.currentPage"
     >
     </app-pagination>
     <admin-content-search
-      @submit="searchUsers($event)"
-      @all="loadUsers()"
+      @submit="filterBySearch($event)"
+      @all="fetchAll()"
     ></admin-content-search>
   </admin-content>
 </template>
@@ -35,19 +36,17 @@ export default {
   },
 
   computed: {
-    ...mapGetters("admin/users", ["getUsers", "getActiveUser", "getPagination"]),
+    ...mapGetters("admin/users", ["getUsers", "getActiveUser", "getPagination", "isPending"]),
   },
 
   methods: {
     ...mapActions("admin/users", [
-      "loadUsers",
-      "searchUsers",
+      "fetchUsers",
+      "filterBySearch",
       "setActiveUser",
       "selectUser",
+      "fetchAll",
     ]),
-    onPageChanged(currentPage) {
-      this.pageNo = currentPage;
-    },
   },
 };
 </script>

@@ -20,23 +20,15 @@ export async function loadDzzArchive(formData) {
   return data;
 }
 export async function download(fileId) {
-  let data = await server.get('files/download', {params: {fileId}});
+  let data = await server.get('download', {params: {fileId}});
   console.log(data);
   return data;
 }
 
-export async function all() {
-  let res = await server.get('files');
-  return res;
+export async function all(params) {
+  return await server.get('files', {params});
 }
-export async function allByUser(userId) {
-  let res = await server.get('files', {params: {userId}});
-  return res;
-}
-export async function allFiltered() {
-  let res = await server.get('files');
-  return res;
-}
+
 export async function one(id) {
   let res = await server.get('files/' + id);
   return res;

@@ -21,7 +21,7 @@
               <router-link class="check link"
                 :to="{ path: '/admin/users', query: { userId: group.owner.id } }"
               >
-                {{ group.ownerName }}
+                {{ group.owner.firstName }} {{ group.owner.lastName }}
               </router-link>
             </div>
           </div>

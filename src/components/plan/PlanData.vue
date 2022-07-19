@@ -110,12 +110,11 @@ export default {
     },
 
     planDataValueTitle() {
-      let map = this.resultsMap;
       return (data) => {
         if (data.file != null) {
           return data.file.name;
-        } else if (data.dzzIndex != null) {
-          return map[data.dzzIndex].name;
+        } else if (data.dzz != null) {
+          return data.dzz.name;
         } else {
           return null;
         }
@@ -160,7 +159,7 @@ export default {
         this.setDataObject({
           planIndex: this.activePlanIndex,
           dataIndex: this.planPopup.dataIndex,
-          dzzIndex: null,
+          dzz: null,
         });
         this.resetResultSelection({ planIndex: this.activePlanIndex });
         this.setDataFile({

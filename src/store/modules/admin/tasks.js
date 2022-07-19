@@ -6,7 +6,17 @@ export default {
   state: {
     tasks: null,
     activeTaskIndex: null,
-    tasksUser: null
+    tasksUser: null,
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getTasks(state) {
@@ -30,17 +40,34 @@ export default {
         let task = state.tasks[i];
         map[task.id] = {
           data: task,
-          index: i  
+          index: i
         }
       }
       return map;
+    },
+    getPagination(state) {
+      return state.pagination
+    },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
     }
   },
   mutations: {
     setTasks(state, payload) {
+      payload.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+      })
       state.tasks = payload;
     },
-    setTask(state, {index, firstName, lastName, email}) {
+    setTask(state, {
+      index,
+      firstName,
+      lastName,
+      email
+    }) {
       state.tasks[index].firstName = firstName;
       state.tasks[index].lastName = lastName;
       state.tasks[index].email = email;
@@ -51,7 +78,10 @@ export default {
     setActiveTaskIndex(state, payload) {
       state.activeTaskIndex = payload;
     },
-    setBlocked(state, {index, value}) {
+    setBlocked(state, {
+      index,
+      value
+    }) {
       state.tasks[index].blocked = value;
     },
     addTask(state, payload) {
@@ -59,60 +89,109 @@ export default {
     },
     setTasksUser(state, payload) {
       state.tasksUser = payload;
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
-    setActiveTask({commit, getters}, payload) {
+    setActiveTask({
+      commit,
+      getters
+    }, payload) {
       let index = null;
-      if (payload != null)  {
+      if (payload != null) {
         index = getters.getTasksMap[payload].index
       }
       commit('setActiveTaskIndex', index);
     },
-    async loadTasks({commit}) {
-      let res = await tasksApi.all();
-      console.log(res);
-      let tasks = res.data.data;
-      tasks.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
+
+    async fetchTasks({
+      commit,
+      getters
+    }, page = 1) {
+      commit('setPending', true);
+
+      let res = await tasksApi.all({
+        page,
+        search: getters.getSearchBy,
+        userId: getters.getTasksUser?.id
       });
+
+      let tasks = res.data.data;
+      let meta = res.data.meta;
+
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
+      })
+
       commit('setTasks', tasks);
+      commit('setPending', false);
+      return res;
+    },
+
+    async fetchAll({commit, dispatch}) {
+      commit('setPending', true);
       commit('setTasksUser', null);
-      return res;
+      commit('setSearchBy', null);
+
+      return await dispatch('fetchTasks');
     },
-    async loadTasksByUser({commit}, payload) {
-      let tasksRes = await tasksApi.allByUser(payload);
-      let userRes = await usersApi.one(payload);
-      let tasks = tasksRes.data.data;
-      tasks.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setTasks', tasks);
+
+    async filterByUser({commit, dispatch}, payload) {
+      commit('setPending', true);
+
+      let res = await usersApi.one(payload);
+      let user = res.data.data;
+
       commit('setTasksUser', {
-        id: userRes.data.data.id,
-        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
+        id: user.id,
+        name: user.firstName + ' ' + user.lastName
       });
-      return tasksRes;
+
+      return await dispatch('fetchTasks');
     },
-    async searchTasks({commit}, payload) {
-      let res =  await tasksApi.allFiltered(payload);
-      let tasks = res.data.data;
-      tasks.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setTasks', tasks);
-      return res;
+
+    async filterBySearch({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSearchBy', payload);
+
+      return await dispatch('fetchTasks');
     },
-    async updateTask({commit,getters}, payload) {
-      let res =  await tasksApi.one(payload);
+
+    async updateTask({
+      commit,
+      getters
+    }, payload) {
+      let res = await tasksApi.one(payload);
       if (res.status == 200) {
         let index = getters.getTasksMap[payload.id].index;
-        commit('setTask', {index, ...payload});
+        commit('setTask', {
+          index,
+          ...payload
+        });
       }
       return res;
     },
-    async deleteTask({commit,getters}, payload) {
-      let res =  await tasksApi.deleteTask(payload);
+    
+    async deleteTask({
+      commit,
+      getters
+    }, payload) {
+      let res = await tasksApi.deleteTask(payload);
       if (res.status == 200) {
         let index = getters.getTasksMap[payload].index;
         commit('deleteTask', index);

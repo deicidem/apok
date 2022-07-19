@@ -39,17 +39,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/users', ['loadUsers', 'loadUsersByGroup', 'setActiveUser', 'reloadUsers'])
+    ...mapActions('admin/users', ['fetchUsers', 'filterByGroup', 'setActiveUser', 'reloadUsers', 'fetchAll'])
   },
   async mounted() {
     
     if (this.$route.query?.groupId) {
-      await this.loadUsersByGroup(this.$route.query?.groupId);
+      await this.filterByGroup(this.$route.query?.groupId);
     } else {
       if (this.getUsers != null) {
         await this.reloadUsers();
       } else {
-        await this.loadUsers();
+        await this.fetchAll();
       }
     }
     if (this.$route.query?.userId) {

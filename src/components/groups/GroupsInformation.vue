@@ -30,7 +30,7 @@
             </td>
 
             <td class="group-wrapper-value">
-              {{ item.ownerName }}
+              {{ item.owner.firstName }} {{ item.owner.lastName }}
             </td>
 
             <td>

@@ -34,13 +34,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/files', ['loadFiles', 'loadFilesByUser'])
+    ...mapActions('admin/files', ['fetchFiles', 'filterByUser', "fetchAll"])
   },
   async mounted() {
     if (this.$route.query?.userId) {
-      await this.loadFilesByUser(this.$route.query?.userId);
+      await this.filterByUser(this.$route.query?.userId);
     } else {
-      await this.loadFiles();
+      await this.fetchAll();
     }
     this.loading = false;
   },

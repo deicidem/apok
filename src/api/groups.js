@@ -1,24 +1,10 @@
 import server from "@/api/http";
 
-export async function all() {
-  let res = await server.get('groups');
-  return res;
-}
-export async function allByUser(userId) {
-  let res = await server.get('groups', {params: {userId}});
-  return res;
-}
-export async function allByOwner(ownerId) {
-  let res = await server.get('groups', {params: {ownerId}});
-  return res;
-}
-export async function allFiltered() {
-  let res = await server.get('groups');
-  return res;
+export async function all(params) {
+  return await server.get('groups', {params});
 }
 export async function one(id) {
-  let res = await server.get('groups/' + id);
-  return res;
+  return await server.get('groups/' + id);
 }
 
 export async function deleteGroups(ids) {

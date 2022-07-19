@@ -6,7 +6,18 @@ export default {
     groups: null,
     activeGroupIndex: null,
     groupsUser: null,
-    types: null
+    groupsOwner: null,
+    types: null,
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getGroups(state) {
@@ -17,6 +28,9 @@ export default {
     },
     getGroupsUser(state) {
       return state.groupsUser;
+    },
+    getGroupsOwner(state) {
+      return state.groupsOwner;
     },
     getActiveGroupIndex(state) {
       return state.activeGroupIndex;
@@ -37,6 +51,15 @@ export default {
         }
       }
       return map;
+    },
+    getPagination(state) {
+      return state.pagination
+    },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
     }
   },
   mutations: {
@@ -73,6 +96,18 @@ export default {
     },
     setGroupsUser(state, payload) {
       state.groupsUser = payload;
+    },
+    setGroupsOwner(state, payload) {
+      state.groupsOwner = payload;
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
@@ -86,62 +121,86 @@ export default {
       }
       commit('setActiveGroupIndex', index);
     },
-    async loadGroups({
-      commit
+
+    async fetchGroups({
+      commit,
+      getters
+    }, page = 1) {
+      commit('setPending', true);
+      let res = await groupsApi.all({
+        page,
+        search: getters.getSearchBy,
+        userId: getters.getGroupsUser?.id,
+        ownerId: getters.getGroupsOwner?.id,
+      });
+      let meta = res.data.meta;
+
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
+      })
+
+      commit('setGroups', res.data.data);
+      commit('setPending', false);
+      return res;
+    },
+
+    async fetchAll({
+      commit,
+      dispatch
     }) {
-      let res = await groupsApi.all();
-      console.log(res);
-      let groups = res.data.data;
-      groups.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setGroups', groups);
+      commit('setPending', true);
       commit('setGroupsUser', null);
-      return res;
+      commit('setGroupsOwner', null);
+      commit('setSearchBy', null);
+
+      return await dispatch('fetchGroups');
     },
-    async loadGroupsByUser({
-      commit
+
+    async filterByUser({
+      commit,
+      dispatch
     }, payload) {
-      let groupsRes = await groupsApi.allByUser(payload);
-      let userRes = await usersApi.one(payload);
-      let groups = groupsRes.data.data;
-      groups.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setGroups', groups);
+      commit('setPending', true);
+      let res = await usersApi.one(payload);
+      let user = res.data.data;
+
       commit('setGroupsUser', {
-        id: userRes.data.data.id,
-        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
+        id: user.id,
+        name: user.firstName + ' ' + user.lastName
       });
-      return groupsRes;
+
+      return await dispatch('fetchGroups');
     },
-    async loadGroupsByOwner({
-      commit
+
+    async filterByOwner({
+      commit,
+      dispatch
     }, payload) {
-      let groupsRes = await groupsApi.allByOwner(payload);
-      let userRes = await usersApi.one(payload);
-      let groups = groupsRes.data.data;
-      groups.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
+      commit('setPending', true);
+      let res = await usersApi.one(payload);
+      let user = res.data.data;
+
+      commit('setGroupsOwner', {
+        id: user.id,
+        name: user.firstName + ' ' + user.lastName
       });
-      commit('setGroups', groups);
-      commit('setGroupsUser', {
-        id: userRes.data.data.id,
-        name: userRes.data.data.firstName + ' ' + userRes.data.data.lastName
-      });
-      return groupsRes;
+
+      return await dispatch('fetchGroups');
     },
-    async searchGroups({
-      commit
+
+    async filterBySearch({
+      commit,
+      dispatch
     }, payload) {
-      let res = await groupsApi.allFiltered(payload);
-      let groups = res.data.data;
-      groups.forEach(el => {
-        el.date = new Date(el.date).toLocaleDateString();
-      });
-      commit('setGroups', groups);
-      return res;
+      commit('setPending', true);
+      commit('setSearchBy', payload);
+      return await dispatch('fetchGroups');
     },
+
     async updateGroup({
       commit,
       getters
@@ -156,6 +215,7 @@ export default {
       }
       return res;
     },
+
     async deleteGroup({
       commit,
       getters
@@ -167,6 +227,7 @@ export default {
       }
       return res;
     },
+
     async createGroup({commit}, payload) {
       let res = await groupsApi.create({
         title: payload.title,
@@ -176,6 +237,7 @@ export default {
       let group = res.data.data;
       commit('addGroup', group)
     },
+
     async addUsers({commit}, payload) {
       let res = await groupsApi.addUsers({
         users: payload.users.map(e => e.id),
@@ -184,6 +246,7 @@ export default {
       let group = res.data.data;
       commit('addGroup', group)
     },
+
     async loadTypes({commit}) {
       let res = await groupsApi.getTypes();
       commit('setTypes', res)

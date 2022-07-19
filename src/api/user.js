@@ -1,7 +1,4 @@
 import server from "@/api/http";
-function fixTask(task) {
-  task.date = new Date(task.date);
-}
 export async function setCookie() {
   return await server.get('csrf-cookie');
 }
@@ -53,17 +50,11 @@ export async function updatePassword({email, currentPassword, password, password
   });
 }
 
-export async function getTasks() {
-  let { data } = await server.get('user/tasks');
-  data.data.forEach(el => {
-    fixTask(el);
-  });
-  return data.data;
+export async function getTasks(params) {
+  return await server.get('user/tasks', {params});
 }
 export async function getTask(id) {
-  let {data} = await server.get('user/tasks/'+id);
-  fixTask(data.data);
-  return data.data;
+  return await server.get('user/tasks/'+id);
 }
 export async function createTask({
   planId,
@@ -107,12 +98,9 @@ export async function deleteTask(id) {
   return await server.delete('user/tasks/'+id);
 }
 
-export async function getFiles() {
-  let res = await server.get('user/files');
-  res.data.data.forEach(el => {
-    el.date = new Date(el.date);
-  })
-  return res;
+export async function getFiles(params) {
+  return await server.get('user/files', {params});
+  
 }
 
 export async function deleteFiles(filesIds) {
@@ -127,9 +115,8 @@ export async function deleteFile(id) {
   return await server.delete('user/files/'+id);
 }
 
-export async function getGroups() {
-  let res = await server.get('user/groups  ');
-  return res;
+export async function getGroups(params) {
+  return await server.get('user/groups', {params});
 }
 
 export async function deleteGroups(groupsIds) {

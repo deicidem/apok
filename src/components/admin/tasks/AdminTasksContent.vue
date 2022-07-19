@@ -5,9 +5,14 @@
       @select="setActiveTask"
       :activeTask="getActiveTask"
     ></admin-tasks-content-table>
+    <app-pagination
+      :page-count="getPagination.last"
+      @changePage="fetchTasks"
+      :current-page="getPagination.currentPage"
+    ></app-pagination>
     <admin-content-search
-      @submit="searchTasks($event)"
-      @all="loadTasks()"
+      @submit="filterBySearch($event)"
+      @all="fetchAll()"
     ></admin-content-search>
   </admin-content>
 </template>
@@ -16,6 +21,7 @@
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminTasksContentTable from "@/components/admin/tasks/AdminTasksContentTable.vue";
 import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -23,14 +29,15 @@ export default {
     AdminContent,
     AdminTasksContentTable,
     AdminContentSearch,
+    AppPagination,
   },
 
   computed: {
-    ...mapGetters("admin/tasks", ["getTasks", "getActiveTask"]),
+    ...mapGetters("admin/tasks", ["getTasks", "getActiveTask", "getPagination", "isPending"]),
   },
 
   methods: {
-    ...mapActions("admin/tasks", ["loadTasks", "searchTasks", "setActiveTask"]),
+    ...mapActions("admin/tasks", ["fetchTasks", "filterBySearch", "setActiveTask", "fetchAll"]),
   },
  
 };

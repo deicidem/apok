@@ -33,7 +33,7 @@ export default {
       state.plans = items;
     },
     setDataObject(state, data) {
-      state.plans[data.planIndex].data[data.dataIndex].dzzIndex = data.dzzIndex;
+      state.plans[data.planIndex].data[data.dataIndex].dzz = data.dzz;
     },
     setDataFile(state, data) {
       state.plans[data.planIndex].data[data.dataIndex].file = data.file;
@@ -65,7 +65,7 @@ export default {
       let plans = await plansApi.all();
       plans.forEach(el => {
         el.data.forEach(d => {
-          d.dzzIndex = null;
+          d.dzz = null;
           d.file = null;
           d.text = null;
         });
@@ -92,8 +92,8 @@ export default {
         if (el.file != null) {
           files.push(el.file);
           links.files.push(el.id);
-        } else if (el.dzzIndex != null) {
-          dzzs.push(el.dzzIndex)
+        } else if (el.dzz != null) {
+          dzzs.push(el.dzz.id)
           links.dzzs.push(el.id);
         } else if (el.text != null) {
           params.push(el.text)

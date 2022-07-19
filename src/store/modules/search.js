@@ -1,4 +1,3 @@
-import * as dzzApi from "@/api/dzz";
 import * as satelitesApi from "@/api/satelites";
 export default {
   namespaced: true,
@@ -231,11 +230,7 @@ export default {
         satelites: [1, 2, 3, 4, 5, 6],
         polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[163.300781,85.051129],[-4.921875,85.051129],[-4.921875,-13.410994],[163.300781,-13.410994],[163.300781,85.051129]]]}}'
       }
-      let results = await dzzApi.all(params);
-
-      dispatch('results/setResults', results, {
-        root: true
-      });
+      await dispatch('results/fetchResults', {params}, {root: true});
     },
     async search({
       dispatch,
@@ -269,10 +264,7 @@ export default {
         polygon
       }
 
-      let results = await dzzApi.all(params);
-      dispatch('results/setResults', results, {
-        root: true
-      });
+      await dispatch('results/fetchResults', {params}, {root: true});
     },
     async loadSatelites({
       dispatch

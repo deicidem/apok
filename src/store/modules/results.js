@@ -1,5 +1,5 @@
 // import router from "@/router";
-
+import * as dzzApi from "@/api/dzz";
 export default {
   namespaced: true,
   state: {
@@ -11,7 +11,17 @@ export default {
       dataIndex: null
     },
     currentSort: null,
-    currentSortDir: 'asc'
+    currentSortDir: 'asc',
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getResults(state) {
@@ -31,6 +41,15 @@ export default {
     },
     getSortDir(state) {
       return state.currentSortDir;
+    },
+    getPagination(state) {
+      return state.pagination
+    },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
     }
   },
   mutations: {
@@ -38,6 +57,15 @@ export default {
       state.results[data.index][data.property] = data.value;
     },
     setResults(state, results) {
+      results.forEach(el => {
+        el.polygonActive = false;
+        el.imageActive = false;
+        el.cardActive = false;
+        el.selected = {
+          type: null,
+          value: false
+        }
+      })
       state.results = results;
     },
     selectResult(state, data) {
@@ -89,6 +117,15 @@ export default {
       state.selectable.type = null;
       state.selectable.value = false;
       state.selectable.dataIndex = null;
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
@@ -101,7 +138,10 @@ export default {
         }
         store.dispatch('plans/setDataObject', {
           planIndex: store.getters.getSelectable.planIndex,
-          dzzIndex: store.getters.getResults[data.index].id,
+          dzz: {
+            id: store.getters.getResults[data.index].id,
+            name: store.getters.getResults[data.index].name
+          },
           dataIndex: store.getters.getSelectable.dataIndex,
         }, {
           root: true
@@ -109,33 +149,13 @@ export default {
       } else {
         store.dispatch('plans/setDataObject', {
           planIndex: store.getters.getSelectable.planIndex,
-          dzzIndex: null,
+          dzz: null,
           dataIndex: store.getters.getSelectable.dataIndex,
         }, {
           root: true
         });
       }
       store.commit('clearSelectable');
-    },
-    setResults({dispatch, commit}, results) {
-      results.forEach(el => {
-        el.polygonActive = false;
-        el.imageActive = false;
-        el.cardActive = false;
-        el.selected = {
-          type: null,
-          value: false
-        }
-      })
-
-      commit('setResults', results);
-      dispatch('map/clearImages', true, {
-        root: true
-      });
-      dispatch('map/clearGeoJsons', true, {
-        root: true
-      });
-      // router.push('/main/results');
     },
     setResultProperty(store, data) {
       store.commit('setResultProperty', data);
@@ -148,9 +168,9 @@ export default {
         store.commit('selectResult', {index: i, type: null, value: false});
       } 
       store.rootGetters['plans/getPlans'][data.planIndex].data.forEach((el, i) => {
-        if (el.dzzIndex != null) {
+        if (el.dzz != null) {
           for (let j = 0; j < store.getters.getResults.length; j++) {
-            if (store.getters.getResults[j].id == el.dzzIndex) {
+            if (store.getters.getResults[j].id == el.dzz.id) {
               store.commit('selectResult', {index: j, type: i, value: true});
               break;
             }
@@ -160,7 +180,51 @@ export default {
     },
     sortResultsBy(store, key) {
       store.commit('sortResultsBy', key)
-    }
+    },
+    async fetchResults({commit,
+      getters,
+      rootGetters,
+      dispatch
+    }, {params, page}) {
+      commit('setPending', true);
+
+      if (params != null) {
+        commit('setSearchBy', params);
+      }
+
+      let res = await dzzApi.all({
+        page,
+        ...getters.getSearchBy
+      });
+
+      let files = res.data.data;
+      let meta = res.data.meta;
+
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
+      })
+
+
+      commit('setResults', files);
+      commit('setPending', false);
+
+      dispatch('map/clearImages', true, {
+        root: true
+      });
+      dispatch('map/clearGeoJsons', true, {
+        root: true
+      });
+      let planIndex = rootGetters['plans/activePlanIndex'];
+      if (planIndex != null) {
+        dispatch('resetResultSelection', {planIndex});
+      } 
+      
+      return files;
+    },
   },
 
 }

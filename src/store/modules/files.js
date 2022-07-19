@@ -5,7 +5,17 @@ export default {
   state: {
     files: null,
     currentSort: null,
-    currentSortDir: 'asc'
+    currentSortDir: 'asc',
+    pagination: {
+      currentPage: null,
+      totalPages: null,
+      first: null,
+      last: null,
+      prev: null,
+      next: null,
+    },
+    searchBy: null,
+    pending: false
   },
   getters: {
     getFiles(state){
@@ -13,10 +23,23 @@ export default {
     },
     getSortDir(state) {
       return state.currentSortDir;
+    },
+    getPagination(state) {
+      return state.pagination
+    },
+    getSearchBy(state) {
+      return state.searchBy;
+    },
+    isPending(state) {
+      return state.pending;
     }
   },
   mutations: {
     setFiles(state, files) {
+      files.forEach(el => {
+        el.date = new Date(el.date).toLocaleDateString();
+        el.selected = false;
+      });
       state.files = files;
     },
     selectFile(state, data) {
@@ -50,23 +73,70 @@ export default {
         }
         break;
       }
+    },
+    setPagination(state, payload) {
+      state.pagination = payload;
+    },
+    setSearchBy(state, payload) {
+      state.searchBy = payload;
+    },
+    setPending(state, payload) {
+      state.pending = payload;
     }
   },
   actions: {
     sortFilesBy(store, key) {
-      store.commit('sortFilesBy', key)
+      store.commit('sortFilesBy', key);
     },
     selectFile(store, data) {
       store.commit('selectFile', data);
     },
-    async loadFiles(store) {
-      let {data} = await userApi.getFiles();
-      data.data.forEach(el => {
-        el.selected = false;
+    async fetchFiles({commit,
+      getters
+    }, page = 1) {
+      commit('setPending', true);
+
+      let res = await userApi.getFiles({
+        page,
+        search: getters.getSearchBy,
+      });
+
+      let files = res.data.data;
+      let meta = res.data.meta;
+
+      commit('setPagination', {
+        currentPage: meta.current_page,
+        first: 1,
+        last: meta.last_page,
+        prev: meta.current_page == 1 ? null : meta.current_page - 1,
+        next: meta.current_page == meta.last_page ? null : meta.current_page + 1,
       })
-      store.commit('setFiles', data.data)
-      return data;
+
+
+      commit('setFiles', files);
+      commit('setPending', false);
+      return files;
     },
+    async fetchAll({
+      commit,
+      dispatch
+    }) {
+      commit('setPending', true);
+      commit('setSearchBy', null);
+
+      return await dispatch('fetch');
+    },
+    async filterBySearch({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSearchBy', payload);
+
+      return await dispatch('fetch');
+    },
+
+
     async deleteFiles({ commit, dispatch,  getters}) {
       let ids = [];
       for (let i = 0; i < getters.getFiles.length; i++) {
@@ -80,7 +150,7 @@ export default {
           console.log(el);
         }
       });
-      await dispatch('loadFiles');
+      await dispatch('fetchFiles');
       console.log(commit);
     },
     async deleteFile({commit, getters}, i) {
@@ -94,7 +164,7 @@ export default {
       //     console.log(el);
       //   }
       // });
-      // await dispatch('loadFiles');
+      // await dispatch('fetchFiles');
       console.log(commit);
     },
   }

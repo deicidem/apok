@@ -1,6 +1,8 @@
 <template>
-  <admin-aside-content title="Создать группу">
+  <admin-aside-content>
     <form class="c-form" @submit.prevent="submitForm()">
+      <div class="c-title">Создать группу</div>
+
       <app-input
         class="c-form__input"
         :value="title"

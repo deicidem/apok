@@ -19,7 +19,7 @@ export default {
   box-shadow: $shadow-small;
   margin-bottom: 20px;
   padding: 20px;
-flex: 1 1 auto;
+  flex: 1 1 auto;
   &:last-child {
     margin-bottom: 0;
   }

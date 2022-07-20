@@ -2,15 +2,16 @@
   <admin-aside>
     <template v-slot:content>
       <admin-users-aside-form
-        v-if="getActiveUser == null"
+        v-show="showPopup"
       ></admin-users-aside-form>
-      <admin-users-aside-content v-else></admin-users-aside-content>
+
+      <admin-users-aside-content></admin-users-aside-content>
     </template>
 
-    <template v-slot:actions v-if="getActiveUser != null">
+    <template v-slot:actions>
       <admin-aside-actions
         title="Создать пользователя"
-        @show-create="setActiveUser(null)"
+        @click="showPopup = true"
       ></admin-aside-actions>
     </template>
   </admin-aside>
@@ -24,6 +25,12 @@ import AdminAsideActions from "@/components/admin/AdminAsideActions.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      showPopup:true,
+    };
+  },
+
   components: {
     AdminAside,
     AdminUsersAsideContent,

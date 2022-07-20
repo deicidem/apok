@@ -58,15 +58,15 @@ export default {
 }
 
 .checkbox__input {
-  display: none;
-
+  position: relative;
+  opacity: 0;
   &:checked + .checkbox-fake::before {
     opacity: 1;
   }
 }
 
 .checkbox-fake {
-  position: relative;
+  position: absolute;
 
   display: inline-block;
   width: 20px;

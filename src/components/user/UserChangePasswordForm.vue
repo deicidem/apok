@@ -3,10 +3,12 @@
     <div class="password-popup__card">
       <div class="password-popup__line">
         <p>Поменять пароль</p>
+
         <div class="password-popup__cross" @click="$emit('close')">
           <i class="fa-solid fa-xmark"></i>
         </div>
       </div>
+
       <div class="password-popup-form">
         <form class="c-form" @submit.prevent="submitForm()">
           <app-input
@@ -75,6 +77,7 @@
 import { required, minLength, sameAs } from "vuelidate/lib/validators";
 import AppButton from "@/components/controls/AppButton";
 import AppInput from "@/components/controls/AppInput";
+
 export default {
   components: {
     AppButton,
@@ -94,10 +97,12 @@ export default {
     currentPassword: {
       required,
     },
+
     password: {
       required,
       minLength: minLength(8),
     },
+    
     passwordConfirmation: {
       required,
       sameAs: sameAs("password"),
@@ -183,5 +188,4 @@ export default {
     padding: 40px 30px;
   }
 }
-
 </style>

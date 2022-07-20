@@ -70,8 +70,20 @@
                       @click="showResult(i, item)"
                       tooltip="Результат"
                       type="button-svg"
+                      class="tasks-table__button"
                     >
                       <i class="icon icon-ic_fluent_open_20_regular"></i>
+                    </app-button>
+                  </div>
+
+                  <div class="button__wrapper">
+                    <app-button
+                      @click="showResult(i, item)"
+                      tooltip="Заметки"
+                      type="button-svg"
+                      class="tasks-table__button"
+                    >
+                      <i class="icon icon-ic_fluent_pen_20_regular"></i>
                     </app-button>
                   </div>
 
@@ -118,13 +130,6 @@
           >
             Удалить выбранное
           </app-button>
-          <!-- <app-button
-            class="tasks-button"
-            type="button-g"
-            :disabled="noItemsSelected || pending"
-          >
-            Добавить в избранное
-          </app-button> -->
         </div>
       </div>
     </template>
@@ -141,19 +146,21 @@ import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton";
 import AppProgress from "@/components/controls/AppProgress";
 import AppPagination from "@/components/controls/AppPagination";
+
 export default {
   name: "SidebarTasks",
+
   components: {
     AppCheckbox,
     AppTable,
     AppDeleteConfirmation,
-    // VsPagination,
     TaskResult,
     SidebarBase,
     AppButton,
     AppProgress,
     AppPagination,
   },
+
   data() {
     return {
       headers: [
@@ -184,6 +191,7 @@ export default {
       loaded: false,
     };
   },
+
   computed: {
     ...mapGetters("tasks", {
       tasks: "getTasks",
@@ -191,6 +199,7 @@ export default {
       getPagination: "getPagination",
       isPending: "isPending",
     }),
+
     allSelected() {
       let res = true;
       for (let i = 0; i < this.tasks.length; i++) {
@@ -201,6 +210,7 @@ export default {
       }
       return res;
     },
+
     noItemsSelected() {
       let tasks = this.tasks;
       let res = true;
@@ -212,6 +222,7 @@ export default {
       }
       return res;
     },
+
     notDeletableItemSelected() {
       let tasks = this.tasks;
       let res = false;
@@ -227,6 +238,7 @@ export default {
       return res;
     },
   },
+
   methods: {
     ...mapActions("tasks", [
       "setTaskActive",
@@ -237,22 +249,26 @@ export default {
       "deleteTasks",
       "deleteTask",
     ]),
+
     selectAll(val) {
       for (let i = 0; i < this.tasks.length; i++) {
         this.selectTask({ index: i, value: val });
       }
     },
+
     sortBy(key, ind) {
       this.headers.forEach((el, i) => {
         el.active = i == ind;
       });
       this.sortTasksBy(key);
     },
+
     showResult(i, task) {
       if (task.result != null) {
         this.setTaskActive({ index: i, val: !task.result.active });
       }
     },
+
     async onDelete(i) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эту задачу?",
@@ -266,6 +282,7 @@ export default {
         this.pending = false;
       }
     },
+
     async onDeleteBanch() {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эти задачи?",
@@ -280,6 +297,7 @@ export default {
       }
     },
   },
+
   async created() {
     console.log("start");
     if (this.tasks == null) {
@@ -330,19 +348,14 @@ export default {
   &-table {
     &__buttons {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
 
     &__button {
-      text-align: left;
-      font-size: 12px;
-      background: none;
-      border: none;
-      color: $color-main;
+      margin-right: 10px;
 
       &:hover {
         cursor: pointer;
-        color: $color-main-light;
       }
     }
   }

@@ -6,7 +6,15 @@
       :message="message"
     ></form-message>
 
-    <div class="c-title">Регистрация</div>
+    <div class="c-title">{{ title }}</div>
+
+    <div
+      v-show="title == 'Создание пользователя'"
+      class="c-cross"
+      @click="$emit('close')"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </div>
 
     <form class="c-form" @submit.prevent="submitForm()">
       <app-input
@@ -30,18 +38,6 @@
         :error="!$v.lastName.required ? 'Введите значение' : null"
       >
       </app-input>
-
-      <!-- <div class="input-wrapper c-inputs">
-        <masked-input
-          mask="\+\7 (111) 111-11-11"
-          placeholder=" "
-          class="input c-input"
-        />
-        <label class="input-label c-label"> Контактный номер </label>
-        <div class="c-input-img">
-          <i class="icon icon-ic_fluent_call_20_regular"></i>
-        </div>
-      </div> -->
 
       <app-input
         class="c-form__input"
@@ -82,7 +78,7 @@
         :value="organization"
         @input="$v.mail.$model = $event"
         :invalid="(!$v.mail.email || !$v.mail.required) && formInvalid"
-        icon="icon icon-ic_fluent_mail_20_regular"
+        icon="icon icon-ic_fluent_people_team_20_regular"
         label="Организация"
         :error="
           !$v.mail.required
@@ -138,11 +134,12 @@
       <div class="c-remember">
         <app-checkbox></app-checkbox>
         <span class="c-remember__text"
-          >Даю согласие на обработку персональных данных</span
+          >Cогласие на обработку персональных данных</span
         >
       </div>
 
       <app-button
+        v-show="title == 'Регистрация'"
         type="button-g "
         class="c-form__item"
         :disabled="submitStatus === 'PENDING'"
@@ -150,7 +147,20 @@
         Зарегистироваться
       </app-button>
 
-      <router-link to="/login" v-slot="{ navigate }">
+      <app-button
+        v-show="title == 'Создание пользователя'"
+        type="button-g "
+        class="c-form__item"
+        :disabled="submitStatus === 'PENDING'"
+      >
+        Создать
+      </app-button>
+
+      <router-link
+        v-show="title == 'Регистрация'"
+        to="/login"
+        v-slot="{ navigate }"
+      >
         <app-button
           type="button-white"
           @click="navigate"
@@ -169,7 +179,13 @@ import { mapActions } from "vuex";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
-import { required, minLength, sameAs, email, numeric } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  sameAs,
+  email,
+  numeric,
+} from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
 // import MaskedInput from "vue-masked-input";
@@ -183,6 +199,8 @@ export default {
     AppButton,
     AppCheckbox,
   },
+  props: ["title"],
+
   data() {
     return {
       firstName: null,
@@ -199,6 +217,7 @@ export default {
       message: null,
     };
   },
+
   validations() {
     return {
       firstName: {
@@ -209,7 +228,7 @@ export default {
       },
       phone: {
         required,
-        numeric
+        numeric,
       },
       mail: {
         required,
@@ -231,11 +250,13 @@ export default {
       },
     };
   },
+
   computed: {
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
     },
   },
+
   methods: {
     ...mapActions("users", ["regUser"]),
 
@@ -290,6 +311,15 @@ export default {
       font-size: 13px;
       top: -25%;
     }
+  }
+
+  &-cross {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 20px;
+    cursor: pointer;
+    color: $color-main;
   }
 
   &-label {

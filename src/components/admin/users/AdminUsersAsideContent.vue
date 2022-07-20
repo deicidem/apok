@@ -17,6 +17,7 @@
       v-if="getActiveUser != null"
       :user="getActiveUser"
     ></admin-users-aside-content-links>
+    
     <admin-users-aside-content-log @show-logs="loadLogs(getActiveUser.id)" :logs="getActiveUser.logs"></admin-users-aside-content-log>
   </admin-aside-content>
 </template>

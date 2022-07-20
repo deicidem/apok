@@ -3,12 +3,14 @@
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
+    
     <admin-groups-aside-content-info
       v-if="getActiveGroup != null"
       :group="getActiveGroup"
       @update="updateGroup"
       @delete="onDelete"
     ></admin-groups-aside-content-info>
+
     <admin-groups-aside-content-links
       v-if="getActiveGroup != null"
       :group="getActiveGroup"

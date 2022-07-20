@@ -1,12 +1,13 @@
 <template>
   <div class="admin-main">
-    <h1 ref="header" class="admin-main-title">{{ loading ? 'Загрузка...' :title}}
+    <h1 ref="header" class="admin-main-title">
+      {{ loading ? "Загрузка..." : title }}
       <div class="admin-main-header-block">
         <slot name="header-block"></slot>
       </div>
     </h1>
-    
-    <div class="admin-main-wrapper" :style="height" >
+
+    <div class="admin-main-wrapper" :style="height">
       <app-loader v-show="loading"> </app-loader>
       <div class="admin-main-content" v-if="!loading">
         <slot name="content"></slot>
@@ -19,12 +20,12 @@
 </template>
 
 <script>
-import AppLoader from "@/components/controls/AppLoader"
+import AppLoader from "@/components/controls/AppLoader";
 export default {
   components: {
-    AppLoader
+    AppLoader,
   },
-  props: ['title', 'loading'],
+  props: ["title", "loading"],
   data() {
     return {
       contentHeight: 0,
@@ -63,6 +64,9 @@ export default {
   flex-direction: column;
   align-items: center;
   max-height: 100%;
+  position: relative;
+  overflow: hidden;
+
   &-header-block {
     background: #fff;
     box-shadow: $shadow-big;
@@ -101,7 +105,6 @@ export default {
     display: flex;
     width: 100%;
     max-height: 100%;
-    position: relative;
   }
 }
 </style>

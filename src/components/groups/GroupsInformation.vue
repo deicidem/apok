@@ -41,14 +41,6 @@
           </tr>
         </tbody>
       </app-table>
-
-      <app-button
-        class="group-button"
-        type="button-g"
-        @click="showPopup = true"
-      >
-        Добавить новую группу
-      </app-button>
     </div>
   </div>
 </template>
@@ -57,13 +49,16 @@
 import AppTable from "@/components/table/AppTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppButton from "@/components/controls/AppButton";
+
 export default {
   components: {
     AppTable,
     AppCheckbox,
     AppButton,
   },
-  props: ['groups'],
+
+  props: ["groups"],
+
   data() {
     return {
       headers: [
@@ -83,19 +78,10 @@ export default {
           active: false,
         },
       ],
-      showPopup: false,
     };
   },
-  
-  
 };
 </script>
 
 <style scoped lang="scss">
-.group {
-  &-button {
-    max-width: 230px;
-    margin: 20px auto;
-  }
-}
 </style>

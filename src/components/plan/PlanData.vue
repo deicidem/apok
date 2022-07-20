@@ -52,6 +52,8 @@
             </template>
           </div>
         </template>
+
+        <plan-data-textarea v-if="activePlan != null"></plan-data-textarea>
       </div>
 
       <app-button
@@ -80,6 +82,7 @@ import PlanDataInputImage from "@/components/plan/PlanDataInputImage";
 import PlanDataInputVector from "@/components/plan/PlanDataInputVector";
 import PlanDataInputText from "@/components/plan/PlanDataInputText";
 import AppButton from "@/components/controls/AppButton";
+import PlanDataTextarea from "@/components/plan/PlanDataTextarea";
 export default {
   components: {
     PlanUploadRequirementsPopup,
@@ -87,6 +90,7 @@ export default {
     PlanDataInputImage,
     PlanDataInputVector,
     PlanDataInputText,
+    PlanDataTextarea,
     AppButton,
   },
   data() {

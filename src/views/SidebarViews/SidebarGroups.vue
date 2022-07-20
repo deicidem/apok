@@ -3,6 +3,11 @@
     <template v-slot:header>
       <h2 class="c-title">Мои группы</h2>
     </template>
+
+    <template v-slot:popups>
+      <add-group v-show="showPopup" @close="showPopup = false"></add-group>
+    </template>
+
     <template v-slot:content>
       <div class="person-wrapper">
         <div class="person-content">
@@ -21,6 +26,7 @@
 <script>
 import GroupsInformation from "@/components/groups/GroupsInformation.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
+import AddGroup from "@/components/groups/AddGroup";
 import AppPagination from "@/components/controls/AppPagination";
 import "vuescroll/dist/vuescroll.css";
 import {mapGetters, mapActions} from "vuex"
@@ -29,6 +35,7 @@ export default {
     GroupsInformation,
     SidebarBase,
     AppPagination,
+    AddGroup,
   },
   data: () => ({
     loaded: false,

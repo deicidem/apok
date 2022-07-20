@@ -213,7 +213,7 @@ export default {
     },
 
     async onDeleteBanch() {
-      const ok = this.$refs.deleteConfirm.show({
+      const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эти файлы?",
         message:
           "Удаление этих файлов приведет к потере всех связанных с ними данных.",

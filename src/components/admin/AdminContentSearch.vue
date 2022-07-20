@@ -1,44 +1,144 @@
 <template>
   <div class="component">
-    <form class="component-form" @submit.prevent="$emit('submit', localValue)">
-      <app-input
-        label="Введите..."
-        :model-value="localValue"
-        @input="localValue = $event"
-      ></app-input>
-      <app-button class="component-button" type="button-white">Найти </app-button>
+    <form class="component-form" @submit.prevent>
+      <div class="component-form__item">
+        <!-- <div class="component-form__title">Сортировка</div> -->
+        <div class="component-form__wrapper">
+          <app-select
+            ref="sort-select"
+            label="Сортировать:"
+            class="component-form__input"
+            @change="onSortSelect"
+            :options="sortOptions"
+          ></app-select>
+          <app-button
+            class="component-form__input"
+            type="button-svg button-svg-white"
+            @click="onDescChange"
+          >
+            <i
+              v-if="desc"
+              class="icon icon-ic_fluent_arrow_sort_down_20_regular"
+            ></i>
+            <i v-else class="icon icon-ic_fluent_arrow_sort_up_20_regular"></i>
+          </app-button>
+        </div>
+      </div>
+
+      <div class="component-form__item">
+        <!-- <div class="component-form__title">Фильтр</div> -->
+        <div class="component-form__wrapper">
+          <app-select
+            ref="search-select"
+            label="Поиск:"
+            class="component-form__input"
+            @change="searchField = $event"
+            :options="searchOptions"
+          ></app-select>
+          <app-input
+            class="component-form__input"
+            :value="searchValue"
+            @input="searchValue = $event"
+          ></app-input>
+          <app-button
+            class="component-button"
+            type="button-white"
+            @click="$emit('search', {field: searchField, value: searchValue})"
+            >Применить
+          </app-button>
+        </div>
+      </div>
     </form>
-    <app-button class="component-button" type="button-white" @click="$emit('all')">Все записи </app-button>
+    <app-button
+        class="component-button component-button__clear"
+        type="button-white"
+        @click="onClear()"
+        >Сбросить
+      </app-button>
   </div>
 </template>
 
 <script>
 import AppButton from "@/components/controls/AppButton.vue";
+import AppSelect from "@/components/controls/AppSelect.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 
 export default {
+  props: ['searchOptions', 'sortOptions'],
   components: {
     AppButton,
+    AppSelect,
     AppInput,
   },
-
   data: () => ({
-    localValue: null,
+    searchField: null,
+    sortField: null,
+    searchValue: null,
+    desc: false,
   }),
+  methods: {
+    onSortSelect(field) {
+      this.sortField = field;
+      this.$emit('sort', {field: this.sortField, desc: this.desc})
+    },
+    onDescChange() {
+      this.desc = !this.desc;
+      this.$emit('sort', {field: this.sortField, desc: this.desc})
+    },
+    onClear() {
+      this.$refs['search-select'].clear();
+      this.$refs['sort-select'].clear();
+      this.searchField = this.searchOptions[0].value;
+      this.sortField = this.sortOptions[0].value;
+      this.desc = false;
+      this.searchValue = null;
+      this.$emit('clear');
+    }
+  },
+  mounted() {
+    this.searchField = this.searchOptions[0].value;
+    this.sortField = this.sortOptions[0].value;
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .component {
-  margin-top: 30px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;  
+  width: 100%;
   &-form {
-    display: flex;
+    width: 100%;
     height: auto;
+    &__title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    &__item {
+      margin-bottom: 15px;
+      margin-right: 30px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &__wrapper {
+      display: flex;
+      align-items: center;
+    }
+    &__input {
+      min-height: 36px;
+      min-width: 36px;
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
-  &-button {
-    margin-left: 20px;
+  &-button__clear {
+    margin-left: auto;
   }
 }
 </style>

@@ -45,10 +45,10 @@ export default {
 
   &-title {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
   }
 
   &-content {

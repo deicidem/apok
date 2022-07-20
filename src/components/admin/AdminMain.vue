@@ -59,7 +59,7 @@ export default {
   border-radius: 20px;
   box-shadow: $shadow-big;
   height: 100%;
-  padding: 30px;
+  padding: 30px 40px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,7 +83,7 @@ export default {
 
   &-aside {
     flex: 1 1 40%;
-    margin-left: 20px;
+    margin-left: 30px;
     max-height: 100%;
     display: flex;
     flex-direction: column;

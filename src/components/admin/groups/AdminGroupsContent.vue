@@ -1,5 +1,12 @@
 <template>
   <admin-content>
+    <admin-content-search
+      @search="filterBySearch($event)"
+      @sort="sortBy($event)"
+      @clear="fetchAll()"
+      :sortOptions="getSortOptions"
+      :searchOptions="getSearchOptions"
+    ></admin-content-search>
     <admin-groups-content-table
       :groups="getGroups"
       @select="setActiveGroup"
@@ -10,7 +17,6 @@
       @changePage="fetchGroups"
       :current-page="getPagination.currentPage"
     ></app-pagination>
-    <admin-content-search @submit="filterBySearch($event)" @all="fetchAll()"></admin-content-search>
   </admin-content>
 </template>
 
@@ -28,10 +34,10 @@ export default {
     AppPagination,
   },
   computed: {
-    ...mapGetters("admin/groups", ["getGroups", "getActiveGroup", "getPagination", "isPending"]),
+    ...mapGetters("admin/groups", ["getGroups", "getActiveGroup", "getPagination", "isPending", "getSearchOptions", "getSortOptions"]),
   },
   methods: {
-    ...mapActions("admin/groups", ["fetchGroups", "filterBySearch", "setActiveGroup", "fetchAll"]),
+    ...mapActions("admin/groups", ["fetchGroups", "filterBySearch", "setActiveGroup", "fetchAll", "sortBy"]),
   },
 };
 </script>

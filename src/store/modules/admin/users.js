@@ -16,8 +16,12 @@ export default {
       prev: null,
       next: null,
     },
+    paginationSize: 15,
     searchBy: null,
-    pending: false
+    pending: false,
+    sort: null,
+    sortOptions: setSortOptions(),
+    searchOptions: setSearchOptions()
   },
   getters: {
     getUsers(state) {
@@ -58,6 +62,18 @@ export default {
     },
     isPending(state) {
       return state.pending;
+    },
+    getSort(state) {
+      return state.sort;
+    },
+    getSortOptions(state) {
+      return state.sortOptions;
+    },
+    getSearchOptions(state) {
+      return state.searchOptions;
+    },
+    getPaginationSize(state) {
+      return state.paginationSize;
     }
   },
   mutations: {
@@ -129,6 +145,9 @@ export default {
     },
     setPending(state, payload) {
       state.pending = payload;
+    },
+    setSort(state, payload) {
+      state.sort = payload;
     }
   },
   actions: {
@@ -166,10 +185,15 @@ export default {
       getters
     }, page = 1) {
       commit('setPending', true);
+      let searchField = getters.getSearchBy?.field;
+      let searchValue = getters.getSearchBy?.value;
       let res = await usersApi.all({
         page,
-        search: getters.getSearchBy,
-        groupId: getters.getUsersGroup?.id
+        groupId: getters.getUsersGroup?.id,
+        [searchField]: searchValue,
+        desc: getters.getSort?.desc,
+        sortBy: getters.getSort?.field,
+        size: getters.getPaginationSize
       });
       let meta = res.data.meta;
 
@@ -193,7 +217,7 @@ export default {
       commit('setPending', true);
       let res = await usersApi.all({
         page: getters.getPagination.currentPage,
-        search: getters.getSearchBy,
+        any: getters.getSearchBy,
         groupId: getters.getUsersGroup?.id
       });
       let users = res.data.data;
@@ -232,6 +256,7 @@ export default {
       commit('setPending', true);
       commit('setUsersGroup', null);
       commit('setSearchBy', null);
+      commit('setSort', null);
 
       return await dispatch('fetchUsers');
     },
@@ -258,6 +283,15 @@ export default {
     }, payload) {
       commit('setPending', true);
       commit('setSearchBy', payload);
+      return await dispatch('fetchUsers');
+    },
+
+    async sortBy({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSort', payload);
       return await dispatch('fetchUsers');
     },
 
@@ -346,4 +380,53 @@ export default {
       })
     }
   },
+}
+
+function setSearchOptions() {
+  return [
+    {
+      text: "Все",
+      value: "any",
+    },
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Имя",
+      value: "firstName",
+    },
+    {
+      text: "Фамилия",
+      value: "lastName",
+    },
+    {
+      text: "Почта",
+      value: "email",
+    },
+  ];
+}
+function setSortOptions() {
+  return [
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Имя",
+      value: "firstName",
+    },
+    {
+      text: "Фамилия",
+      value: "lastName",
+    },
+    {
+      text: "Почта",
+      value: "email",
+    },
+    {
+      text: "Дата регистрации",
+      value: "date",
+    },
+  ];
 }

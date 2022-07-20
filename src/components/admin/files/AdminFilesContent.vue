@@ -1,5 +1,12 @@
 <template>
   <admin-content>
+    <admin-content-search
+      @search="filterBySearch($event)"
+      @sort="sortBy($event)"
+      @clear="fetchAll()"
+      :sortOptions="getSortOptions"
+      :searchOptions="getSearchOptions"
+    ></admin-content-search>
     <admin-files-content-table
       :files="getFiles"
       @select="setActiveFile"
@@ -10,7 +17,7 @@
       @changePage="fetchFiles"
       :current-page="getPagination.currentPage"
     ></app-pagination>
-    <admin-content-search @submit="filterBySearch($event)" @all="fetchAll()"></admin-content-search>
+   
   </admin-content>
 </template>
 
@@ -28,10 +35,10 @@ export default {
     AppPagination,
   },
   computed: {
-    ...mapGetters("admin/files", ["getFiles", "getActiveFile", "getPagination", "isPending"]),
+    ...mapGetters("admin/files", ["getFiles", "getActiveFile", "getPagination", "isPending", "getSearchOptions", "getSortOptions"]),
   },
   methods: {
-    ...mapActions("admin/files", ["fetchFiles", "filterBySearch", "setActiveFile", "fetchAll"]),
+    ...mapActions("admin/files", ["fetchFiles", "filterBySearch", "setActiveFile", "fetchAll", "sortBy"]),
     
   },
 };

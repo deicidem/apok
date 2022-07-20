@@ -1,5 +1,12 @@
 <template>
   <admin-content>
+     <admin-content-search
+      @search="filterBySearch($event)"
+      @sort="sortBy($event)"
+      @clear="fetchAll()"
+      :sortOptions="getSortOptions"
+      :searchOptions="getSearchOptions"
+    ></admin-content-search>
     <admin-tasks-content-table
       :tasks="getTasks"
       @select="setActiveTask"
@@ -10,10 +17,6 @@
       @changePage="fetchTasks"
       :current-page="getPagination.currentPage"
     ></app-pagination>
-    <admin-content-search
-      @submit="filterBySearch($event)"
-      @all="fetchAll()"
-    ></admin-content-search>
   </admin-content>
 </template>
 
@@ -33,11 +36,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters("admin/tasks", ["getTasks", "getActiveTask", "getPagination", "isPending"]),
+    ...mapGetters("admin/tasks", ["getTasks", "getActiveTask", "getPagination", "isPending","getSearchOptions", "getSortOptions"]),
   },
 
   methods: {
-    ...mapActions("admin/tasks", ["fetchTasks", "filterBySearch", "setActiveTask", "fetchAll"]),
+    ...mapActions("admin/tasks", ["fetchTasks", "filterBySearch", "setActiveTask", "fetchAll", "sortBy"]),
   },
  
 };

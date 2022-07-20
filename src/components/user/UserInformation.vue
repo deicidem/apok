@@ -9,7 +9,9 @@
             v-for="(item, key) in user"
             :key="key"
           >
+
             <p class="person-wrapper__title">{{ item.title }}</p>
+
             <div class="person-edit">
               <div
                 :contenteditable="item.editable && editable"
@@ -23,6 +25,7 @@
           </div>
         </div>
       </div>
+
       <div class="person-wrapper__buttons">
         <app-button
           type="button-white-gr"
@@ -51,6 +54,7 @@
         </app-button>
       </div>
     </div>
+
     <portal to="password-popup">
       <user-change-password-form
         v-show="showPopup"
@@ -65,11 +69,13 @@
 import UserChangePasswordForm from "@/components/user/UserChangePasswordForm";
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton";
+
 export default {
   components: {
     UserChangePasswordForm,
     AppButton,
   },
+
   data() {
     return {
       user: {
@@ -88,20 +94,33 @@ export default {
           value: "Ann@mail.ru",
           editable: true,
         },
+        phone: {
+          title: "Телефон",
+          value: "8987654321",
+          editable: true,
+        },
+        organization: {
+          title: "Организация",
+          value: "Центр инновационных технологий",
+          editable: true,
+        },
       },
 
       editable: false,
       showPopup: false,
     };
   },
+
   computed: {
     ...mapGetters("users", ["getUser"]),
   },
+
   mounted() {
     this.user.firstName.value = this.getUser.firstName;
     this.user.lastName.value = this.getUser.lastName;
     this.user.email.value = this.getUser.email;
   },
+
   methods: {
     ...mapActions("users", ["updateUser", "updatePassword"]),
 
@@ -142,15 +161,15 @@ export default {
   }
   &-wrapper {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     &__text {
       display: flex;
     }
     &__title {
       margin: 0;
       color: $color-main;
-      line-height: 30px;
-      width: 80px;
+      line-height: 34px;
+      width: 120px;
     }
     &__info {
       color: $black;
@@ -161,12 +180,11 @@ export default {
       }
     }
     &__buttons {
+      margin-top: 30px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-evenly;
     }
     &__button {
-      margin-bottom: 20px;
       width: 220px;
     }
     &__editable {
@@ -179,14 +197,15 @@ export default {
     }
   }
 }
+
 .editme {
-  width: 200px;
-  height: 30px;
+  width: 360px;
+  padding: 0 10px;
   border-radius: 10px;
-  border: 1px solid rgb($text-grey, 0.2);
   box-shadow: $shadow-small;
+  border: 1px solid transparent;
   color: $color-main;
-  padding-left: 10px;
+  margin-left: -10px;
 
   &:focus-visible {
     border: 1px solid $color-main;
@@ -198,8 +217,7 @@ export default {
   color: $text-grey;
   font-size: 14px;
   margin-left: 30px;
-  padding-left: 10px;
-  line-height: 30px;
-  width: 200px;
+  padding-left: 8px;
+  line-height: 32px;
 }
 </style>

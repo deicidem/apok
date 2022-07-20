@@ -11,13 +11,14 @@ export default {
   components: {
     AppButton,
   },
+
   props: ['title']
 };
 </script>
 
 <style>
 .add-user {
-  margin-top: 20px;
+  margin: 20px 0 0 auto;
   max-width: 240px;
 }
 </style>

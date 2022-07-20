@@ -9,15 +9,18 @@
             >Задачи</router-link
           >
         </li>
+
         <li >
           <router-link class="admin-aside-links-item"
             :to="{ path: '/admin/files', query: { userId: user.id } }"
             >Файлы</router-link
           >
         </li>
+
         <li>
           <router-link class="admin-aside-links-item" :to="{ path: '/admin/groups', query: { ownerId: user.id } }">Группы (владелец)</router-link>
         </li>
+
         <li>
           <router-link class="admin-aside-links-item" :to="{ path: '/admin/groups', query: { userId: user.id } }">Группы (участник)</router-link>
         </li>
@@ -30,6 +33,7 @@
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 export default {
   props: ["user"],
+  
   components: {
     AdminAsideBlock,
   },

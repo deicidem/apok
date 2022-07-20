@@ -14,6 +14,7 @@
       @check="selectUser"
       :disabled="isPending"
     ></admin-users-content-table>
+
     <app-pagination
       :page-count="getPagination.last"
       @changePage="fetchUsers"
@@ -57,5 +58,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

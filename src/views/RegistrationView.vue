@@ -1,7 +1,7 @@
 <template>
   <page-base :show-menu="false">
     <section class="authorize">
-      <form-registration></form-registration>
+      <form-registration title="Регистрация"></form-registration>
     </section>
   </page-base>
 </template>
@@ -16,6 +16,7 @@ export default {
     FormRegistration,
     PageBase,
   },
+  
   methods: {
     ...mapActions("users", {
       addUser: "addUser",

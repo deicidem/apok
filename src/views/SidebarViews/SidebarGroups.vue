@@ -12,11 +12,20 @@
       <div class="person-wrapper">
         <div class="person-content">
           <groups-information :groups="getGroups"></groups-information>
-            <app-pagination
+
+          <app-pagination
             :page-count="getPagination.last"
             @changePage="fetchGroups"
             :current-page="getPagination.currentPage"
           ></app-pagination>
+
+          <app-button
+            class="group-button"
+            type="button-g"
+            @click="showPopup = true"
+          >
+            Добавить новую группу
+          </app-button>
         </div>
       </div>
     </template>
@@ -29,27 +38,35 @@ import SidebarBase from "@/components/SidebarBase.vue";
 import AddGroup from "@/components/groups/AddGroup";
 import AppPagination from "@/components/controls/AppPagination";
 import "vuescroll/dist/vuescroll.css";
-import {mapGetters, mapActions} from "vuex"
+import AppButton from "@/components/controls/AppButton";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   components: {
     GroupsInformation,
     SidebarBase,
     AppPagination,
     AddGroup,
+    AppButton,
   },
+
   data: () => ({
     loaded: false,
+    showPopup: false,
   }),
+
   async mounted() {
     await this.fetchGroups();
     this.loaded = true;
   },
+
   computed: {
-    ...mapGetters('groups', ['getGroups', "getPagination", "isPending"])
+    ...mapGetters("groups", ["getGroups", "getPagination", "isPending"]),
   },
+
   methods: {
-    ...mapActions('groups', ['fetchGroups'])
-  }
+    ...mapActions("groups", ["fetchGroups"]),
+  },
 };
 </script>
 
@@ -63,6 +80,13 @@ export default {
   &-content {
     width: 100%;
     height: 100%;
+  }
+}
+
+.group {
+  &-button {
+    max-width: 230px;
+    margin: 20px auto;
   }
 }
 </style>

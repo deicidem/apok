@@ -84,7 +84,7 @@ export default {
   border: 1px solid transparent;
   box-shadow: $shadow-small;
   color: $color-main;
-
+  line-height: 18px;
   &[type="password"] {
     font-family: Verdana, sans-serif;
   }

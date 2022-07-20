@@ -12,29 +12,7 @@
       >
       </app-input>
 
-      <div class="c-select">
-        <div class="c-text c-selected" @click="showSelect = !showSelect">
-          <div class="c-select__icon">
-            <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
-          </div>
-          Тип группы: {{ selectedOption != null ? selectedOption.title : "" }}
-        </div>
-
-        <div
-          class="c-select__options"
-          v-show="showSelect"
-          v-if="getTypes != null"
-        >
-          <div
-            class="c-select__option"
-            @click="onSelect(i)"
-            v-for="(option, i) in getTypes"
-            :key="option.id"
-          >
-            {{ option.title }}
-          </div>
-        </div>
-      </div>
+      <app-select label="Тип группы:" :options="options" @change="selectedOption = $event"></app-select>
 
       <app-button
         type="button-g"
@@ -53,12 +31,14 @@ import { required } from "vuelidate/lib/validators";
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
+import AppSelect from "@/components/controls/AppSelect.vue";
 
 export default {
   components: {
     AdminAsideContent,
     AppInput,
     AppButton,
+    AppSelect
   },
 
   data() {
@@ -66,8 +46,7 @@ export default {
       title: null,
       type: null,
       submitStatus: null,
-      showSelect: false,
-      selectedOptionIndex: null,
+      selectedOption: null
     };
   },
 
@@ -85,20 +64,15 @@ export default {
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
     },
-    selectedOption() {
-      if (this.selectedOptionIndex != null) {
-        return this.getTypes[this.selectedOptionIndex];
-      }
-      return null;
+    options() {
+      return this.getTypes.map((el) => {
+        return {text: el.title, value: el.id}
+      })
     },
   },
 
   methods: {
     ...mapActions("admin/groups", ["createGroup"]),
-    onSelect(index) {
-      this.showSelect = false;
-      this.selectedOptionIndex = index;
-    },
     async submitForm() {
       this.showMessage = false;
 
@@ -107,7 +81,7 @@ export default {
         try {
           await this.createGroup({
             title: this.title,
-            type: this.selectedOption.id,
+            type: this.selectedOption,
             ownerId: this.getUser.id,
           });
 
@@ -181,70 +155,6 @@ export default {
       font-size: 14px;
     }
   }
-  &-select {
-    position: relative;
-    margin-top: 30px;
-    width: 100%;
-
-    &__options {
-      width: 100%;
-      margin-top: 4px;
-      z-index: 10;
-      position: absolute;
-      top: calc(100% + 3px);
-      left: 0;
-      background: $white;
-      box-shadow: $shadow-big;
-      border-radius: 7px;
-    }
-
-    &__option {
-      position: relative;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: $black;
-      transition: all 0.2s ease-out;
-      border-bottom: 1px solid #dfdfdf;
-      cursor: pointer;
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &:hover {
-        color: $color-main;
-      }
-    }
-
-    &__icon {
-      display: flex;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      color: $color-main;
-    }
-  }
-
-  &-selected {
-    position: relative;
-    background: $white;
-    min-height: 50px;
-    box-shadow: $shadow-small;
-    border: 1px solid transparent;
-    font-size: 14px;
-    color: #333;
-    background: #fff;
-    width: 100%;
-    padding: 5px 30px 5px 24px;
-    display: flex;
-    align-items: center;
-    border-radius: 7px;
-    cursor: pointer;
-
-    &:hover {
-      border: 1px solid rgba($color-main, 0.5);
-    }
-  }
+  
 }
 </style>

@@ -16,8 +16,12 @@ export default {
       prev: null,
       next: null,
     },
+    paginationSize: 15,
     searchBy: null,
-    pending: false
+    pending: false,
+    sort: null,
+    sortOptions: setSortOptions(),
+    searchOptions: setSearchOptions()
   },
   getters: {
     getGroups(state) {
@@ -60,6 +64,18 @@ export default {
     },
     isPending(state) {
       return state.pending;
+    },
+    getSort(state) {
+      return state.sort;
+    },
+    getSortOptions(state) {
+      return state.sortOptions;
+    },
+    getSearchOptions(state) {
+      return state.searchOptions;
+    },
+    getPaginationSize(state) {
+      return state.paginationSize;
     }
   },
   mutations: {
@@ -108,6 +124,9 @@ export default {
     },
     setPending(state, payload) {
       state.pending = payload;
+    },
+    setSort(state, payload) {
+      state.sort = payload;
     }
   },
   actions: {
@@ -127,11 +146,16 @@ export default {
       getters
     }, page = 1) {
       commit('setPending', true);
+      let searchField = getters.getSearchBy?.field;
+      let searchValue = getters.getSearchBy?.value;
       let res = await groupsApi.all({
         page,
-        search: getters.getSearchBy,
         userId: getters.getGroupsUser?.id,
         ownerId: getters.getGroupsOwner?.id,
+        [searchField]: searchValue,
+        desc: getters.getSort?.desc,
+        sortBy: getters.getSort?.field,
+        size: getters.getPaginationSize
       });
       let meta = res.data.meta;
 
@@ -156,6 +180,7 @@ export default {
       commit('setGroupsUser', null);
       commit('setGroupsOwner', null);
       commit('setSearchBy', null);
+      commit('setSort', null);
 
       return await dispatch('fetchGroups');
     },
@@ -198,6 +223,15 @@ export default {
     }, payload) {
       commit('setPending', true);
       commit('setSearchBy', payload);
+      return await dispatch('fetchGroups');
+    },
+
+    async sortBy({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSort', payload);
       return await dispatch('fetchGroups');
     },
 
@@ -252,4 +286,37 @@ export default {
       commit('setTypes', res)
     }
   },
+}
+
+function setSearchOptions() {
+  return [
+    {
+      text: "Все",
+      value: "any",
+    },
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Название",
+      value: "title",
+    },
+  ];
+}
+function setSortOptions() {
+  return [
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Название",
+      value: "title",
+    },
+    {
+      text: "Дата создания",
+      value: "date",
+    },
+  ];
 }

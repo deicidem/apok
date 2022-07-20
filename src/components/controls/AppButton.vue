@@ -70,7 +70,7 @@ export default {
   transition: all 0.2s ease-out;
 
   &__wrapper {
-    height: 35px;
+    height: 36px;
     position: relative;
     display: flex;
     align-items: center;
@@ -174,12 +174,12 @@ export default {
       align-items: center;
       color: $color-main;
       font-size: 20px;
-      box-shadow: 0 1px 3px rgba(#000, 0.15);
+      box-shadow: 0 2px 4px rgba(#000, 0.15);
       &::after {
         background: $gradient-w;
       }
       &:hover {
-        box-shadow: 0 2px 4px rgba(#000, 0.2);
+        box-shadow: 0 2px 6px rgba(#000, 0.2);
       }
       &:active {
         transition: all 0.1s ease-out;

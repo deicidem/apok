@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-groups-aside-form">
+  <div class="groups-sidebar-form">
     <add-group @close="$emit('close')"></add-group>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.admin-groups-aside-form {
+.groups-sidebar-form {
   position: absolute;
   top: 0;
   left: 0;

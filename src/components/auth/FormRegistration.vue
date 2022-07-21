@@ -188,11 +188,9 @@ import {
 } from "vuelidate/lib/validators";
 import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
-// import MaskedInput from "vue-masked-input";
 
 export default {
   components: {
-    // MaskedInput,
     FormMessage,
     FormBase,
     AppInput,

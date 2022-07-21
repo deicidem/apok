@@ -15,6 +15,8 @@ store.dispatch('users/setCookie').then(async () => {
 }).then(() => {
   return store.dispatch('search/loadSatelites');
 }).then(() => {
+  return store.dispatch('groupTypes/fetchGroupTypes');
+}).then(() => {
   return store.dispatch('users/auth');
 }).then(() => {
   new Vue({

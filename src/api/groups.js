@@ -1,5 +1,8 @@
 import server from "@/api/http";
-
+export async function getTypes() {
+  let {data} = await server.get('group-types');
+  return data.data;
+}
 export async function all(params) {
   return await server.get('groups', {params});
 }
@@ -30,8 +33,4 @@ export async function addUsers({groupId, users}) {
     formData.append(`users[${i}]`, users[i]);
   }
   return await server.post(`groups/${groupId}/users`, formData);
-}
-export async function getTypes() {
-  let {data} = await server.get('group-types');
-  return data.data;
 }

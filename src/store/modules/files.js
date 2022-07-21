@@ -14,8 +14,12 @@ export default {
       prev: null,
       next: null,
     },
+    paginationSize: 8,
     searchBy: null,
-    pending: false
+    pending: false,
+    sort: null,
+    sortOptions: setSortOptions(),
+    searchOptions: setSearchOptions()
   },
   getters: {
     getFiles(state){
@@ -32,6 +36,18 @@ export default {
     },
     isPending(state) {
       return state.pending;
+    },
+    getSort(state) {
+      return state.sort;
+    },
+    getSortOptions(state) {
+      return state.sortOptions;
+    },
+    getSearchOptions(state) {
+      return state.searchOptions;
+    },
+    getPaginationSize(state) {
+      return state.paginationSize;
     }
   },
   mutations: {
@@ -82,6 +98,9 @@ export default {
     },
     setPending(state, payload) {
       state.pending = payload;
+    },
+    setSort(state, payload) {
+      state.sort = payload;
     }
   },
   actions: {
@@ -95,10 +114,14 @@ export default {
       getters
     }, page = 1) {
       commit('setPending', true);
-
+      let searchField = getters.getSearchBy?.field;
+      let searchValue = getters.getSearchBy?.value;
       let res = await userApi.getFiles({
         page,
-        search: getters.getSearchBy,
+        [searchField]: searchValue,
+        desc: getters.getSort?.desc,
+        sortBy: getters.getSort?.field,
+        size: getters.getPaginationSize
       });
 
       let files = res.data.data;
@@ -123,6 +146,7 @@ export default {
     }) {
       commit('setPending', true);
       commit('setSearchBy', null);
+      commit('setSort', null);
 
       return await dispatch('fetch');
     },
@@ -134,6 +158,14 @@ export default {
       commit('setSearchBy', payload);
 
       return await dispatch('fetch');
+    },
+    async sortBy({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSort', payload);
+      return await dispatch('fetchFiles');
     },
 
 
@@ -168,4 +200,37 @@ export default {
       console.log(commit);
     },
   }
+}
+
+function setSearchOptions() {
+  return [
+    {
+      text: "Все",
+      value: "any",
+    },
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Имя",
+      value: "name",
+    },
+  ];
+}
+function setSortOptions() {
+  return [
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Имя",
+      value: "name",
+    },
+    {
+      text: "Дата регистрации",
+      value: "date",
+    },
+  ];
 }

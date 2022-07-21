@@ -1,12 +1,12 @@
 <template>
   <admin-content>
-     <admin-content-search
+     <app-search
       @search="filterBySearch($event)"
       @sort="sortBy($event)"
       @clear="fetchAll()"
       :sortOptions="getSortOptions"
       :searchOptions="getSearchOptions"
-    ></admin-content-search>
+    ></app-search>
     <admin-tasks-content-table
       :tasks="getTasks"
       @select="setActiveTask"
@@ -23,7 +23,7 @@
 <script>
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminTasksContentTable from "@/components/admin/tasks/AdminTasksContentTable.vue";
-import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppSearch from "@/components/AppSearch.vue";
 import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 
@@ -31,7 +31,7 @@ export default {
   components: {
     AdminContent,
     AdminTasksContentTable,
-    AdminContentSearch,
+    AppSearch,
     AppPagination,
   },
 

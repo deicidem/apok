@@ -140,7 +140,6 @@ export default {
       let searchValue = getters.getSearchBy?.value;
       let res = await tasksApi.all({
         page,
-        any: getters.getSearchBy,
         userId: getters.getTasksUser?.id,
         [searchField]: searchValue,
         desc: getters.getSort?.desc,

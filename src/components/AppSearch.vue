@@ -2,8 +2,6 @@
   <div class="component">
     <form class="component-form" @submit.prevent>
       <div class="component-form__item">
-        <!-- <div class="component-form__title">Сортировка</div> -->
-        <div class="component-form__wrapper">
           <app-select
             ref="sort-select"
             label="Сортировать:"
@@ -22,12 +20,9 @@
             ></i>
             <i v-else class="icon icon-ic_fluent_arrow_sort_up_20_regular"></i>
           </app-button>
-        </div>
       </div>
 
       <div class="component-form__item">
-        <!-- <div class="component-form__title">Фильтр</div> -->
-        <div class="component-form__wrapper">
           <app-select
             ref="search-select"
             label="Поиск:"
@@ -41,12 +36,12 @@
             @input="searchValue = $event"
           ></app-input>
           <app-button
-            class="component-button"
-            type="button-white"
+            class="component-form__input"
+            type="button-svg button-svg-white"
             @click="$emit('search', {field: searchField, value: searchValue})"
-            >Применить
+            >
+            <i class="icon icon-ic_fluent_search_20_regular"></i>
           </app-button>
-        </div>
       </div>
     </form>
     <app-button
@@ -120,13 +115,11 @@ export default {
     &__item {
       margin-bottom: 15px;
       margin-right: 30px;
+      display: flex;
+      align-items: center;
       &:last-child {
         margin-bottom: 0;
       }
-    }
-    &__wrapper {
-      display: flex;
-      align-items: center;
     }
     &__input {
       min-height: 36px;

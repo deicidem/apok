@@ -14,6 +14,13 @@
     <template v-slot:content>
       <div class="person-wrapper">
         <div class="person-content">
+          <app-search
+          @search="filterBySearch($event)"
+          @sort="sortBy($event)"
+          @clear="fetchAll()"
+          :sortOptions="getSortOptions"
+          :searchOptions="getSearchOptions"
+        ></app-search>
           <groups-information :groups="getGroups"></groups-information>
 
           <app-pagination
@@ -43,7 +50,7 @@ import AppPagination from "@/components/controls/AppPagination";
 import "vuescroll/dist/vuescroll.css";
 import AppButton from "@/components/controls/AppButton";
 import { mapGetters, mapActions } from "vuex";
-
+import AppSearch from "@/components/AppSearch.vue";
 export default {
   components: {
     GroupsInformation,
@@ -51,6 +58,7 @@ export default {
     AppPagination,
     GroupsSidebarForm,
     AppButton,
+    AppSearch,
   },
 
   data: () => ({
@@ -64,11 +72,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters("groups", ["getGroups", "getPagination", "isPending"]),
+    ...mapGetters("groups", ["getGroups", "getPagination", "isPending","getSortOptions","getSearchOptions"]),
   },
 
   methods: {
-    ...mapActions("groups", ["fetchGroups"]),
+    ...mapActions("groups", ["fetchGroups","fetchAll", 
+      "sortBy",
+      "filterBySearch"]),
   },
 };
 </script>

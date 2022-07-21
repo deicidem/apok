@@ -1,12 +1,12 @@
 <template>
   <admin-content>
-    <admin-content-search
+    <app-search
       @search="filterBySearch($event)"
       @sort="sortBy($event)"
       @clear="fetchAll()"
       :sortOptions="getSortOptions"
       :searchOptions="getSearchOptions"
-    ></admin-content-search>
+    ></app-search>
     <admin-files-content-table
       :files="getFiles"
       @select="setActiveFile"
@@ -24,14 +24,14 @@
 <script>
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminFilesContentTable from "@/components/admin/files/AdminFilesContentTable.vue";
-import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppSearch from "@/components/AppSearch.vue";
 import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AdminContent,
     AdminFilesContentTable,
-    AdminContentSearch,
+    AppSearch,
     AppPagination,
   },
   computed: {

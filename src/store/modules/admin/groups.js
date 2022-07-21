@@ -266,7 +266,6 @@ export default {
       let res = await groupsApi.create({
         title: payload.title,
         type: payload.type,
-        ownerId: payload.ownerId
       });
       let group = res.data.data;
       commit('addGroup', group)

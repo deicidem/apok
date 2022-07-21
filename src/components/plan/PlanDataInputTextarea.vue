@@ -1,8 +1,8 @@
 <template>
   <plan-data-input>
-    <h6 class="c-title">Заметки</h6>
+    <h6 class="c-title">{{ title }}</h6>
     <div class="c-content">
-      <textarea required class="c-input" />
+      <textarea class="c-input" v-model="localValue" />
     </div>
   </plan-data-input>
 </template>
@@ -13,6 +13,27 @@ import PlanDataInput from "@/components/plan/PlanDataInput";
 export default {
   components: {
     PlanDataInput,
+  },
+  props: {
+    title: String,
+    value: String,
+  },
+  data() {
+    return {
+      localValue: null,
+    };
+  },
+  mounted() {
+    this.localValue = this.value;
+  },
+  watch: {
+    localValue: function () {
+      console.log(1);
+      this.$emit("input", this.localValue);
+    },
+    value: function () {
+      this.localValue = this.value;
+    },
   },
 };
 </script>

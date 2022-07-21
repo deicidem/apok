@@ -62,7 +62,8 @@ export async function createTask({
   dzzs,
   vectors,
   params,
-  links
+  links,
+  note
 }) {
   let formData = new FormData();
   formData.append('planId', planId);
@@ -81,6 +82,7 @@ export async function createTask({
   }
 
   formData.append('links', JSON.stringify(links));
+  formData.append('note', note);
 
   let data = await server.post('user/tasks', formData);
   console.log(data);
@@ -116,7 +118,7 @@ export async function deleteFile(id) {
 }
 
 export async function getGroups(params) {
-  return await server.get('user/groups', {params});
+   await server.get('user/groups', {params});
 }
 
 export async function deleteGroups(groupsIds) {

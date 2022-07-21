@@ -5,7 +5,10 @@
     </template>
 
     <template v-slot:popups>
-      <add-group v-show="showPopup" @close="showPopup = false"></add-group>
+      <groups-sidebar-form
+        v-show="showPopup"
+        @close="showPopup = false"
+      ></groups-sidebar-form>
     </template>
 
     <template v-slot:content>
@@ -35,7 +38,7 @@
 <script>
 import GroupsInformation from "@/components/groups/GroupsInformation.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
-import AddGroup from "@/components/groups/AddGroup";
+import GroupsSidebarForm from "@/components/groups/GroupsSidebarForm";
 import AppPagination from "@/components/controls/AppPagination";
 import "vuescroll/dist/vuescroll.css";
 import AppButton from "@/components/controls/AppButton";
@@ -46,7 +49,7 @@ export default {
     GroupsInformation,
     SidebarBase,
     AppPagination,
-    AddGroup,
+    GroupsSidebarForm,
     AppButton,
   },
 

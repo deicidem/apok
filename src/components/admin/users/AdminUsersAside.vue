@@ -3,6 +3,7 @@
     <template v-slot:content>
       <admin-users-aside-form
         v-show="showPopup"
+        @close="showPopup = false"
       ></admin-users-aside-form>
 
       <admin-users-aside-content></admin-users-aside-content>
@@ -11,7 +12,8 @@
     <template v-slot:actions>
       <admin-aside-actions
         title="Создать пользователя"
-        @click="showPopup = true"
+        @show-create="setActiveUser(null)"
+        @showPopup="showPopup = true"
       ></admin-aside-actions>
     </template>
   </admin-aside>
@@ -27,7 +29,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      showPopup:true,
+      showPopup: false,
     };
   },
 

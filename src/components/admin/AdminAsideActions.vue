@@ -1,7 +1,7 @@
 <template>
-  <app-button type="button-g" class="add-user" @click="$emit('show-create')"
-    >{{title}}</app-button
-  >
+  <app-button type="button-g" class="add-user" @click="$emit('showPopup')">{{
+    title
+  }}</app-button>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
     AppButton,
   },
 
-  props: ['title']
+  props: ["title"],
 };
 </script>
 

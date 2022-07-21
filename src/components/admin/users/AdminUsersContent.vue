@@ -21,7 +21,6 @@
       :current-page="getPagination.currentPage"
     >
     </app-pagination>
-    
   </admin-content>
 </template>
 
@@ -41,7 +40,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters("admin/users", ["getUsers", "getActiveUser", "getPagination", "isPending", "getSearchOptions", "getSortOptions"]),
+    ...mapGetters("admin/users", [
+      "getUsers",
+      "getActiveUser",
+      "getPagination",
+      "isPending",
+      "getSearchOptions",
+      "getSortOptions",
+    ]),
   },
 
   methods: {
@@ -51,7 +57,7 @@ export default {
       "setActiveUser",
       "selectUser",
       "fetchAll",
-      "sortBy"
+      "sortBy",
     ]),
   },
 };

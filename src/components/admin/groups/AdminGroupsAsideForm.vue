@@ -1,7 +1,11 @@
 <template>
-  <admin-aside-content>
+  <admin-groups-aside-form>
     <form class="c-form" @submit.prevent="submitForm()">
       <div class="c-title">Создать группу</div>
+
+      <div class="c-cross" @click="$emit('close')">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
 
       <app-input
         class="c-form__input"
@@ -14,7 +18,12 @@
       >
       </app-input>
 
-      <app-select label="Тип группы:" :options="options" @change="selectedOption = $event"></app-select>
+      <app-select
+        class="c-select"
+        label="Тип группы:"
+        :options="options"
+        @change="selectedOption = $event"
+      ></app-select>
 
       <app-button
         type="button-g"
@@ -24,23 +33,21 @@
         Создать
       </app-button>
     </form>
-  </admin-aside-content>
+  </admin-groups-aside-form>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { required } from "vuelidate/lib/validators";
-import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppSelect from "@/components/controls/AppSelect.vue";
 
 export default {
   components: {
-    AdminAsideContent,
     AppInput,
     AppButton,
-    AppSelect
+    AppSelect,
   },
 
   data() {
@@ -48,7 +55,7 @@ export default {
       title: null,
       type: null,
       submitStatus: null,
-      selectedOption: null
+      selectedOption: null,
     };
   },
 
@@ -68,8 +75,8 @@ export default {
     },
     options() {
       return this.getTypes.map((el) => {
-        return {text: el.title, value: el.id}
-      })
+        return { text: el.title, value: el.id };
+      });
     },
   },
 
@@ -106,14 +113,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.c {
-  position: relative;
-  background: $gradient-w;
-  width: 300px;
-  padding: 30px 40px 30px 40px;
-  border-radius: 10px;
-  border: none;
+admin-groups-aside-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
 
+  width: 100%;
+  height: 100%;
+  background: rgba($black, 0.5);
+}
+
+.c {
   &-title {
     text-align: center;
     font-size: 20px;
@@ -121,12 +132,28 @@ export default {
     margin-bottom: 20px;
   }
 
+  &-cross {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 20px;
+    cursor: pointer;
+    color: $color-main;
+  }
+
+  &-select {
+    margin-top: 20px;
+  }
+
   &-form {
-    margin: 30px auto 0 auto;
-    width: 400px;
-    background: $white;
-    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     box-shadow: $shadow-small;
+    border-radius: 10px;
+    background: $gradient-w;
     padding: 30px;
 
     &__input {
@@ -157,6 +184,5 @@ export default {
       font-size: 14px;
     }
   }
-  
 }
 </style>

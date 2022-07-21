@@ -44,7 +44,7 @@ export default {
     clear() {
       this.showSelect = false;
       this.selectedOptionIndex = 0;
-    }
+    },
   },
 };
 </script>
@@ -68,7 +68,7 @@ export default {
 
     &__option {
       position: relative;
-      padding: 8px 10px;
+      padding: 10px;
       font-size: 12px;
       color: $black;
       transition: all 0.2s ease-out;
@@ -96,6 +96,7 @@ export default {
   }
 
   &-selected {
+
     position: relative;
     background: $white;
     box-shadow: $shadow-small;

@@ -3,7 +3,7 @@
     <form-registration
       class="form"
       title="Создание пользователя"
-
+      @close="$emit('close')"
     ></form-registration>
   </div>
 </template>
@@ -30,7 +30,6 @@ export default {
       submitStatus: null,
       showMessage: false,
       message: null,
-
     };
   },
 
@@ -108,6 +107,7 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba($black, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 .form {

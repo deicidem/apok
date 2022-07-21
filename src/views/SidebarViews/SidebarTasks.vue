@@ -100,6 +100,14 @@
                 </div>
               </td>
             </tr>
+            <tr class="tr_note"
+            v-if="item.note != null">
+            <td td colspan="6">
+              <task-note :note="item.note"></task-note>
+
+            </td>
+
+            </tr>
             <tr
               class="tr_preview"
               v-show="item.result.active"
@@ -139,6 +147,7 @@
 <script>
 import AppTable from "@/components/table/AppTable";
 import TaskResult from "@/components/tasks/TaskResult";
+import TaskNote from "@/components/tasks/TaskNote";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 import AppCheckbox from "@/components/controls/AppCheckbox";
@@ -155,6 +164,7 @@ export default {
     AppTable,
     AppDeleteConfirmation,
     TaskResult,
+    TaskNote,
     SidebarBase,
     AppButton,
     AppProgress,

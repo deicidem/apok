@@ -46,13 +46,17 @@ export default {
     }
   },
   actions: {
-    
+
     setDataObject(store, data) {
       store.commit('setDataObject', data);
     },
     selectPlan(store, data) {
       store.commit('setActivePlanIndex', data);
-      store.dispatch('results/resetResultSelection', { planIndex: data }, { root: true })
+      store.dispatch('results/resetResultSelection', {
+        planIndex: data
+      }, {
+        root: true
+      })
     },
     setDataFile(store, data) {
       store.commit('setDataFile', data);
@@ -61,7 +65,9 @@ export default {
       store.commit('changeText', data);
     },
 
-    async load({ commit }) {
+    async load({
+      commit
+    }) {
       let plans = await plansApi.all();
       plans.forEach(el => {
         el.data.forEach(d => {
@@ -69,6 +75,15 @@ export default {
           d.file = null;
           d.text = null;
         });
+        el.data.push({
+          description: null,
+          dzz: null,
+          file: null,
+          id: null,
+          text: null,
+          title: "Заметка",
+          type: 4,
+        })
       });
       commit("setPlans", plans)
       return plans;
@@ -77,6 +92,7 @@ export default {
     async planNewTask(store, i) {
       let dzzs = [];
       let params = [];
+      let note = null;
       let vectors = [];
       let files = [];
       let plan = store.getters.getPlans[i];
@@ -95,6 +111,8 @@ export default {
         } else if (el.dzz != null) {
           dzzs.push(el.dzz.id)
           links.dzzs.push(el.id);
+        } else if (el.text != null && el.title == "Заметка") {
+          note = el.text;
         } else if (el.text != null) {
           params.push(el.text)
           links.params.push(el.id);
@@ -103,8 +121,24 @@ export default {
           links.vectors.push(el.id);
         }
       })
-      console.log({ dzzs, params, vectors, files, planId, links });
-      userApi.createTask({ dzzs, params, vectors, files, planId, links }).catch((e) => {
+      console.log({
+        dzzs,
+        params,
+        vectors,
+        files,
+        planId,
+        links,
+        note
+      });
+      userApi.createTask({
+        dzzs,
+        params,
+        vectors,
+        files,
+        planId,
+        links,
+        note
+      }).catch((e) => {
         console.log(e);
       });
     }

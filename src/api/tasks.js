@@ -37,11 +37,14 @@ export async function add({
   dzzs,
   vectors,
   params,
-  links
+  links,
+  note
 }) {
 
   let formData = new FormData();
   formData.append('planId', planId);
+  console.log(note);
+  formData.append('planI', 1);
 
   for (let i = 0; i < dzzs.length; i++) {
     formData.append(`dzzs[${i}]`, dzzs[i]);
@@ -57,8 +60,7 @@ export async function add({
   }
 
   formData.append('links', JSON.stringify(links));
-
+  console.log(formData.getAll());
   let data = await server.post('tasks', formData);
-  console.log(data);
   return data.data;
 }

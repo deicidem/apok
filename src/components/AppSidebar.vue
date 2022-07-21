@@ -1,13 +1,12 @@
 <template>
   <div class="sidebar_wrap" :class="{ active }">
-    <!-- <transition name="slide"> -->
     <div class="sidebar" :class="{ active }">
       <plan-data v-if="isAuth"></plan-data>
+      
       <div class="sidebar-content">
         <router-view> </router-view>
       </div>
     </div>
-    <!-- </transition> -->
 
     <div class="sidebar-collapsed">
       <div @click="toggleSidebar()" class="sidebar-collapsed__item">
@@ -16,6 +15,7 @@
             v-if="active"
             class="icon icon-ic_fluent_arrow_minimize_20_regular"
           ></i>
+
           <i v-else class="icon icon-ic_fluent_arrow_maximize_20_regular"></i>
         </div>
       </div>
@@ -34,11 +34,13 @@
             class="sidebar-collapsed__link"
           >
             <i class="icon" :class="route.icon"></i>
+
             <div class="notification" v-if="route.name == 'Мои уведомления'">
               <div class="notification-number">{{ alerts.length }}</div>
             </div>
           </div>
         </router-link>
+
         <div class="sidebar-collapsed__link__name">{{ route.name }}</div>
       </div>
     </div>
@@ -48,14 +50,18 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import PlanData from "@/components/plan/PlanData.vue";
+
 export default {
   name: "AppSidebar",
+  
   components: {
     PlanData,
   },
+
   data() {
     return {
       cardDataClass: "",
+
       routes: [
         {
           name: "Мои задачи",
@@ -102,6 +108,7 @@ export default {
       ],
     };
   },
+
   computed: {
     ...mapGetters({ active: "getSidebarState" }),
     ...mapGetters("alerts", {
@@ -109,6 +116,7 @@ export default {
     }),
     ...mapGetters("users", ["isAuth"]),
   },
+
   methods: {
     ...mapActions(["setSidebarState"]),
 

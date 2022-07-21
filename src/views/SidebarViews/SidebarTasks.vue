@@ -3,9 +3,11 @@
     <template v-slot:header>
       <h2 class="c-title">Мои задачи</h2>
     </template>
+
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
     </template>
+
     <template v-slot:content>
       <div class="tasks__wrapper">
         <app-table v-if="tasks != null">
@@ -28,6 +30,7 @@
                   <span v-if="sortDir == 'asc'" class="tasks-sort">
                     <i class="fa-solid fa-arrow-down-short-wide"></i>
                   </span>
+
                   <span v-else class="tasks-sort">
                     <i class="fa-solid fa-arrow-down-wide-short"></i>
                   </span>
@@ -78,7 +81,8 @@
 
                   <div class="button__wrapper">
                     <app-button
-                      @click="showResult(i, item)"
+                      v-if="item.note != null"
+                      @click="toggleNote()"
                       tooltip="Заметки"
                       type="button-svg"
                       class="tasks-table__button"
@@ -100,14 +104,17 @@
                 </div>
               </td>
             </tr>
-            <tr class="tr_note"
-            v-if="item.note != null">
-            <td td colspan="6">
-              <task-note :note="item.note"></task-note>
 
-            </td>
-
+            <tr
+              class="tr_note tr_preview"
+              v-show="showNote"
+              v-if="item.note != null"
+            >
+              <td td colspan="6">
+                <task-note :note="item.note" @close="showNote = false"></task-note>
+              </td>
             </tr>
+
             <tr
               class="tr_preview"
               v-show="item.result.active"
@@ -124,11 +131,13 @@
             </tr>
           </tbody>
         </app-table>
+
         <app-pagination
           :page-count="getPagination.last"
           @changePage="fetchTasks"
           :current-page="getPagination.currentPage"
         ></app-pagination>
+
         <div class="tasks-buttons">
           <app-button
             class="tasks-button"
@@ -199,6 +208,7 @@ export default {
       pictureType: false,
       pending: false,
       loaded: false,
+      showNote: false,
     };
   },
 
@@ -279,6 +289,14 @@ export default {
       }
     },
 
+    toggleNote() {
+      if (this.showNote) {
+        this.showNote = false;
+      } else {
+        this.showNote = true;
+      }
+    },
+
     async onDelete(i) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эту задачу?",
@@ -326,11 +344,13 @@ export default {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
   &-buttons {
     margin-top: 30px;
     display: flex;
     justify-content: center;
   }
+
   &-button {
     width: auto;
     margin-right: 30px;
@@ -339,6 +359,7 @@ export default {
       margin-right: 0;
     }
   }
+
   .tr_preview {
     border: none;
   }
@@ -355,6 +376,7 @@ export default {
     color: $color-main;
     font-size: 12px;
   }
+
   &-table {
     &__buttons {
       display: flex;
@@ -369,6 +391,7 @@ export default {
       }
     }
   }
+
   &__wrapper {
     margin: 30px;
 

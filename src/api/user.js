@@ -118,7 +118,7 @@ export async function deleteFile(id) {
 }
 
 export async function getGroups(params) {
-   await server.get('user/groups', {params});
+  return await server.get('user/groups', {params});
 }
 
 export async function deleteGroups(groupsIds) {

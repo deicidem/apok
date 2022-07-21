@@ -8,6 +8,13 @@
     </template>
     <template v-slot:content>
       <div class="tasks__wrapper">
+        <app-search
+          @search="filterBySearch($event)"
+          @sort="sortBy($event)"
+          @clear="fetchAll()"
+          :sortOptions="getSortOptions"
+          :searchOptions="getSearchOptions"
+        ></app-search>
         <app-table v-if="tasks != null">
           <thead>
             <tr>
@@ -145,17 +152,17 @@
 </template>
 
 <script>
-import AppTable from "@/components/table/AppTable";
-import TaskResult from "@/components/tasks/TaskResult";
-import TaskNote from "@/components/tasks/TaskNote";
-import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
+import AppTable from "@/components/table/AppTable.vue";
+import TaskResult from "@/components/tasks/TaskResult.vue";
+import TaskNote from "@/components/tasks/TaskNote.vue";
+import AppDeleteConfirmation from "@/components/AppDeleteConfirmation.vue";
 import { mapGetters, mapActions } from "vuex";
-import AppCheckbox from "@/components/controls/AppCheckbox";
+import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
-import AppButton from "@/components/controls/AppButton";
-import AppProgress from "@/components/controls/AppProgress";
-import AppPagination from "@/components/controls/AppPagination";
-
+import AppButton from "@/components/controls/AppButton.vue";
+import AppProgress from "@/components/controls/AppProgress.vue";
+import AppPagination from "@/components/controls/AppPagination.vue";
+import AppSearch from "@/components/AppSearch.vue";
 export default {
   name: "SidebarTasks",
 
@@ -169,6 +176,7 @@ export default {
     AppButton,
     AppProgress,
     AppPagination,
+    AppSearch,
   },
 
   data() {
@@ -208,6 +216,8 @@ export default {
       sortDir: "getSortDir",
       getPagination: "getPagination",
       isPending: "isPending",
+      getSearchOptions: "getSearchOptions",
+      getSortOptions: "getSortOptions"
     }),
 
     allSelected() {
@@ -258,6 +268,9 @@ export default {
       "selectTask",
       "deleteTasks",
       "deleteTask",
+      "fetchAll", 
+      "sortBy",
+      "filterBySearch"
     ]),
 
     selectAll(val) {
@@ -266,12 +279,12 @@ export default {
       }
     },
 
-    sortBy(key, ind) {
-      this.headers.forEach((el, i) => {
-        el.active = i == ind;
-      });
-      this.sortTasksBy(key);
-    },
+    // sortBy(key, ind) {
+    //   this.headers.forEach((el, i) => {
+    //     el.active = i == ind;
+    //   });
+    //   this.sortTasksBy(key);
+    // },
 
     showResult(i, task) {
       if (task.result != null) {

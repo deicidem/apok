@@ -10,6 +10,13 @@
 
     <template v-slot:content>
       <div class="files__wrapper">
+        <app-search
+          @search="filterBySearch($event)"
+          @sort="sortBy($event)"
+          @clear="fetchAll()"
+          :sortOptions="getSortOptions"
+          :searchOptions="getSearchOptions"
+        ></app-search>
         <app-table>
           <thead>
             <tr>
@@ -95,6 +102,7 @@ import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppButton from "@/components/controls/AppButton";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppPagination from "@/components/controls/AppPagination";
+import AppSearch from "@/components/AppSearch.vue";
 export default {
   name: "SidebarFiles",
   components: {
@@ -105,6 +113,7 @@ export default {
     // VsPagination,
     SidebarBase,
     AppPagination,
+    AppSearch,
   },
   data() {
     return {
@@ -140,6 +149,8 @@ export default {
       sortDir: "getSortDir",
       getPagination: "getPagination",
       isPending: "isPending",
+      getSearchOptions: "getSearchOptions",
+      getSortOptions: "getSortOptions"
     }),
 
     allSelected() {
@@ -188,6 +199,9 @@ export default {
       "deleteFiles",
       "selectFile",
       "deleteFile",
+      "fetchAll", 
+      "sortBy",
+      "filterBySearch"
     ]),
 
     async onDelete(i) {
@@ -224,12 +238,12 @@ export default {
       }
     },
 
-    sortBy(key, ind) {
-      this.headers.forEach((el, i) => {
-        el.active = i == ind;
-      });
-      this.sortFilesBy(key);
-    },
+    // sortBy(key, ind) {
+    //   this.headers.forEach((el, i) => {
+    //     el.active = i == ind;
+    //   });
+    //   this.sortFilesBy(key);
+    // },
 
     onCheck(val) {
       console.log(val);

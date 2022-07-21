@@ -66,13 +66,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters("admin/groups", ["getTypes"]),
-    ...mapGetters("users", ["getUser"]),
+    ...mapGetters("groupTypes", ["getGroupTypes"]),
     formInvalid() {
       return this.submitStatus === "FORM_INVALID";
     },
     options() {
-      return this.getTypes.map((el) => {
+      return this.getGroupTypes.map((el) => {
         return { text: el.title, value: el.id };
       });
     },
@@ -88,8 +87,7 @@ export default {
         try {
           await this.createGroup({
             title: this.title,
-            type: this.selectedOption,
-            ownerId: this.getUser.id,
+            type: this.selectedOption
           });
 
           this.submitStatus = "SUBMIT";

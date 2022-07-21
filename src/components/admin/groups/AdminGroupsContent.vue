@@ -1,12 +1,12 @@
 <template>
   <admin-content>
-    <admin-content-search
+    <app-search
       @search="filterBySearch($event)"
       @sort="sortBy($event)"
       @clear="fetchAll()"
       :sortOptions="getSortOptions"
       :searchOptions="getSearchOptions"
-    ></admin-content-search>
+    ></app-search>
     <admin-groups-content-table
       :groups="getGroups"
       @select="setActiveGroup"
@@ -23,14 +23,14 @@
 <script>
 import AdminContent from "@/components/admin/AdminContent.vue";
 import AdminGroupsContentTable from "@/components/admin/groups/AdminGroupsContentTable.vue";
-import AdminContentSearch from "@/components/admin/AdminContentSearch.vue";
+import AppSearch from "@/components/AppSearch.vue";
 import AppPagination from "@/components/controls/AppPagination";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AdminContent,
     AdminGroupsContentTable,
-    AdminContentSearch,
+    AppSearch,
     AppPagination,
   },
   computed: {

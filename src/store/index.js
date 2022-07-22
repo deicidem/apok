@@ -14,6 +14,7 @@ import files from './modules/files'
 import admin from './modules/admin'
 import groups from './modules/groups'
 import groupTypes from './modules/groupTypes'
+import groupUsers from './modules/groupUsers'
 
 export default new Vuex.Store({
   state: {
@@ -86,6 +87,7 @@ export default new Vuex.Store({
     admin,
     groups,
     groupTypes,
+    groupUsers,
   },
   strict: process.env.NODE_ENV !== 'production'
 })

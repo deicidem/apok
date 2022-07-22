@@ -37,7 +37,11 @@
 
         <div class="header-menu__buttons">
           <div class="header-menu-button" v-if="isAuth">
-            <app-button type="button-big-svg" @click="onLogout" tooltip="Выйти"
+            <app-button
+              type="button-svg"
+              size="big"
+              @click="onLogout"
+              tooltip="Выйти"
               ><i class="icon icon-ic_fluent_sign_out_20_regular"></i
             ></app-button>
           </div>
@@ -45,7 +49,8 @@
           <div class="header-menu-button" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <app-button
-                type="button-big-svg"
+                type="button-svg"
+                size="big"
                 tooltip="Авторизоваться"
                 @click="navigate"
               >
@@ -57,7 +62,8 @@
           <div class="header-menu-button" v-if="isAuth">
             <router-link to="/admin" custom v-slot="{ navigate }">
               <app-button
-                type="button-big-svg"
+                type="button-svg"
+                size="big"
                 button-class="header-menu__button_custom"
                 tooltip="Панель администратора"
                 @click="navigate"

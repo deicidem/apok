@@ -20,6 +20,7 @@ export default {
       type: String,
       default: null,
     },
+    size: String,
     static: Boolean,
   },
 
@@ -36,6 +37,8 @@ export default {
       let result = this.type;
       if (this.active) result += " active";
       if (this.static) result += " static";
+      if (this.size == "big") result += " big";
+      if (this.size == "small") result += " small";
       return result;
     },
   },
@@ -193,6 +196,7 @@ export default {
 
     &-white {
       .button {
+        color: $color-main;
         &::after {
           background: $white;
         }
@@ -220,90 +224,57 @@ export default {
       }
     }
   }
+}
 
-  &-small {
-    &-white {
-      .button {
-        padding: 2px 8px;
-        font-size: 12px;
-        background: $white;
-        color: $color-main;
-      }
+.big {
+  &.button-g {
+    height: 44px;
+  }
+
+  &.button-white {
+    height: 44px;
+  }
+
+  &.button-svg {
+    width: 40px;
+    height: 40px;
+    .button {
+      padding: 10px;
+      font-size: 30px;
     }
+  }
+}
 
-    &-svg {
-      .button {
-        padding: 10px 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $color-main;
-        font-size: 20px;
-        box-shadow: 0 2px 4px rgba(#000, 0.15);
-
-        &::after {
-          background: $white;
-        }
-
-        &:hover {
-          box-shadow: 0 2px 6px rgba(#000, 0.2);
-        }
-
-        &:active {
-          transition: all 0.1s ease-out;
-          transform: translateY(1px);
-          box-shadow: 0 0px 2px rgba($black, 0.1);
-        }
-      }
+.small {
+  &.button-g {
+    height: 28px;
+    .button {
+      font-size: 12px;
     }
   }
 
-  &-big {
-    &-white {
-      height: 44px;
-
-      .button {
-        background: $white;
-        color: $color-main;
-      }
+  &.button-white {
+    height: 28px;
+    .button {
+      font-size: 12px;
     }
+  }
 
-    &-g {
-      .button {
-        height: 44px;
-
-        &::after {
-          background: $gradient;
-        }
-      }
+  &.button-svg {
+    width: 40px;
+    height: 40px;
+    .button {
+      padding: 10px;
+      font-size: 30px;
     }
+  }
 
-    &-svg {
-      .button {
-        padding: 10px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $color-main;
-        font-size: 30px;
-        box-shadow: 0 2px 4px rgba(#000, 0.15);
-
-        &::after {
-          background: $gradient-w;
-        }
-
-        &:hover {
-          box-shadow: 0 2px 6px rgba(#000, 0.2);
-        }
-
-        &:active {
-          transition: all 0.1s ease-out;
-          transform: translateY(1px);
-          box-shadow: 0 0px 2px rgba($black, 0.1);
-        }
-      }
+  &.button-svg-white {
+    width: 28px;
+    height: 28px;
+    .button {
+      padding: 10px;
+      font-size: 20px;
     }
   }
 }

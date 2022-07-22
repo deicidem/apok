@@ -124,7 +124,8 @@
 
       <app-button
         v-show="title == 'Регистрация'"
-        type="button-big-g "
+        type="button-g"
+        size="big"
         class="c-form__item"
         :disabled="pending"
       >
@@ -133,7 +134,8 @@
 
       <app-button
         v-show="title == 'Создание пользователя'"
-        type="button-big-g "
+        type="button-g"
+        size="big"
         class="c-form__item"
         :disabled="pending"
       >
@@ -146,7 +148,8 @@
         v-slot="{ navigate }"
       >
         <app-button
-          type="button-big-white"
+          type="button-white"
+          size="big"
           @click="navigate"
           :disabled="pending"
           class="c-form__item"

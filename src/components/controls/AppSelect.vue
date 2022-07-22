@@ -1,5 +1,5 @@
 <template>
-  <div class="c-select" :class="classes">
+  <div class="c-select" :class="size">
     <div class="c-selected" @click="showSelect = !showSelect">
       <div class="c-select__icon">
         <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  props: ["options", "label", 'type'],
+  props: ["options", "label", "size"],
 
   data: () => ({
     showSelect: false,
@@ -36,11 +36,6 @@ export default {
         return this.options[this.selectedOptionIndex];
       }
       return null;
-    },
-
-    classes() {
-      let result = this.type;
-      return result;
     },
   },
 
@@ -68,7 +63,7 @@ export default {
       position: absolute;
       top: calc(100% + 3px);
       left: 0;
-      z-index: 10;
+      z-index: 15;
 
       width: 100%;
       margin-top: 4px;
@@ -93,10 +88,6 @@ export default {
 
       &:hover {
         color: $color-main;
-      }
-
-      &-small {
-        padding: 6px 10px;
       }
     }
 
@@ -132,11 +123,6 @@ export default {
     &:hover {
       border: 1px solid rgba($color-main, 0.5);
     }
-
-    &-small {
-      font-size: 12px;
-      padding: 4px 30px 4px 10px;
-    }
   }
 
   &-select-small {
@@ -146,7 +132,7 @@ export default {
       position: absolute;
       top: calc(100% + 3px);
       left: 0;
-      z-index: 10;
+      z-index: 20;
 
       width: 100%;
       margin-top: 4px;
@@ -184,6 +170,19 @@ export default {
       display: flex;
       color: $color-main;
     }
+  }
+}
+
+.small {
+  .c-selected {
+    font-size: 12px;
+    padding: 4px 30px 4px 10px;
+  }
+  .c-select__option {
+    padding: 6px 10px;
+  }
+  .c-select__icon {
+    font-size: 10px;
   }
 }
 </style>

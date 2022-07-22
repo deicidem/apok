@@ -11,7 +11,7 @@
           {{ selectedOption.title }}
         </template>
       </div>
-      
+
       <div class="c-select" v-show="showSelect">
         <div
           class="c-select__option"
@@ -70,7 +70,8 @@ export default {
     z-index: 10;
     position: absolute;
     top: calc(100% + 3px);
-    left: 10px;
+    left: 0;
+    padding-left: 10px;
     background: $white;
     box-shadow: $shadow-big;
     border-radius: 7px;

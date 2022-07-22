@@ -172,6 +172,7 @@ import AppButton from "@/components/controls/AppButton.vue";
 import AppProgress from "@/components/controls/AppProgress.vue";
 import AppPagination from "@/components/controls/AppPagination.vue";
 import AppSearch from "@/components/AppSearch.vue";
+
 export default {
   name: "SidebarTasks",
 
@@ -288,13 +289,6 @@ export default {
         this.selectTask({ index: i, value: val });
       }
     },
-
-    // sortBy(key, ind) {
-    //   this.headers.forEach((el, i) => {
-    //     el.active = i == ind;
-    //   });
-    //   this.sortTasksBy(key);
-    // },
 
     showResult(i, task) {
       if (task.result != null) {

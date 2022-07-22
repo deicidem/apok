@@ -1,12 +1,9 @@
 <template>
   <div class="button__wrapper" :class="classes">
-    <button
-      class="button"
-      :disabled="disabled"
-      @click="$emit('click', true)"
-    >
+    <button class="button" :disabled="disabled" @click="$emit('click', true)">
       <slot></slot>
     </button>
+
     <span class="tooltiptext" v-if="tooltip != null">
       {{ tooltip }}
     </span>
@@ -23,7 +20,7 @@ export default {
       type: String,
       default: null,
     },
-    static: Boolean
+    static: Boolean,
   },
 
   computed: {
@@ -148,12 +145,14 @@ export default {
       }
     }
   }
+
   &-white {
     .button {
       background: $white;
       color: $color-main;
     }
   }
+
   &-r {
     .button {
       color: $white;
@@ -167,6 +166,7 @@ export default {
   &-svg {
     width: 30px;
     height: 30px;
+
     .button {
       padding: 16px;
       display: flex;
@@ -175,18 +175,22 @@ export default {
       color: $color-main;
       font-size: 20px;
       box-shadow: 0 2px 4px rgba(#000, 0.15);
+
       &::after {
         background: $gradient-w;
       }
+
       &:hover {
         box-shadow: 0 2px 6px rgba(#000, 0.2);
       }
+
       &:active {
         transition: all 0.1s ease-out;
         transform: translateY(1px);
         box-shadow: 0 0px 2px rgba($black, 0.1);
       }
     }
+
     &-white {
       .button {
         &::after {
@@ -194,15 +198,18 @@ export default {
         }
       }
     }
+
     &.active {
       .button {
         color: $white;
+
         &::after {
           background: $gradient;
         }
       }
     }
   }
+
   &-svg-r {
     .button {
       color: $color-red;
@@ -210,6 +217,92 @@ export default {
       &:hover + .tooltiptext {
         display: block;
         color: $color-red;
+      }
+    }
+  }
+
+  &-small {
+    &-white {
+      .button {
+        padding: 2px 8px;
+        font-size: 12px;
+        background: $white;
+        color: $color-main;
+      }
+    }
+
+    &-svg {
+      .button {
+        padding: 10px 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color-main;
+        font-size: 20px;
+        box-shadow: 0 2px 4px rgba(#000, 0.15);
+
+        &::after {
+          background: $white;
+        }
+
+        &:hover {
+          box-shadow: 0 2px 6px rgba(#000, 0.2);
+        }
+
+        &:active {
+          transition: all 0.1s ease-out;
+          transform: translateY(1px);
+          box-shadow: 0 0px 2px rgba($black, 0.1);
+        }
+      }
+    }
+  }
+
+  &-big {
+    &-white {
+      height: 44px;
+
+      .button {
+        background: $white;
+        color: $color-main;
+      }
+    }
+
+    &-g {
+      .button {
+        height: 44px;
+
+        &::after {
+          background: $gradient;
+        }
+      }
+    }
+
+    &-svg {
+      .button {
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color-main;
+        font-size: 30px;
+        box-shadow: 0 2px 4px rgba(#000, 0.15);
+
+        &::after {
+          background: $gradient-w;
+        }
+
+        &:hover {
+          box-shadow: 0 2px 6px rgba(#000, 0.2);
+        }
+
+        &:active {
+          transition: all 0.1s ease-out;
+          transform: translateY(1px);
+          box-shadow: 0 0px 2px rgba($black, 0.1);
+        }
       }
     }
   }

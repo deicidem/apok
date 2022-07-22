@@ -48,6 +48,7 @@ export default {
   max-width: 600px;
   padding: 5px 10px;
   border-radius: 5px;
+  font-size: 12px;
 
   &:focus,
   &:focus-visible {

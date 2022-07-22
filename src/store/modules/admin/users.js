@@ -16,7 +16,7 @@ export default {
       prev: null,
       next: null,
     },
-    paginationSize: 15,
+    paginationSize: 10,
     searchBy: null,
     pending: false,
     sort: null,
@@ -215,10 +215,15 @@ export default {
       getters
     }) {
       commit('setPending', true);
+      let searchField = getters.getSearchBy?.field;
+      let searchValue = getters.getSearchBy?.value;
       let res = await usersApi.all({
         page: getters.getPagination.currentPage,
-        any: getters.getSearchBy,
-        groupId: getters.getUsersGroup?.id
+        groupId: getters.getUsersGroup?.id,
+        [searchField]: searchValue,
+        desc: getters.getSort?.desc,
+        sortBy: getters.getSort?.field,
+        size: getters.getPaginationSize
       });
       let users = res.data.data;
 

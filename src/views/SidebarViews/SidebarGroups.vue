@@ -22,12 +22,14 @@
             :sortOptions="getSortOptions"
             :searchOptions="getSearchOptions"
           ></app-search>
+
           <groups-information
             :groups="getGroups"
             :pending="isPending"
             @delete="onDelete"
             @select="selectGroup"
           ></groups-information>
+
 
           <app-pagination
             :page-count="getPagination.last"
@@ -68,6 +70,7 @@ import "vuescroll/dist/vuescroll.css";
 import AppButton from "@/components/controls/AppButton";
 import { mapGetters, mapActions } from "vuex";
 import AppSearch from "@/components/AppSearch.vue";
+
 export default {
   components: {
     GroupsInformation,
@@ -97,6 +100,7 @@ export default {
       "getSortOptions",
       "getSearchOptions",
     ]),
+
     noItemsSelected() {
       let groups = this.getGroups;
       let res = true;
@@ -119,6 +123,7 @@ export default {
       }
       return res;
     },
+
   },
 
   methods: {
@@ -127,6 +132,7 @@ export default {
       "fetchAll",
       "sortBy",
       "filterBySearch",
+
       "deleteGroups",
       "selectGroup",
       "deleteGroup",
@@ -158,6 +164,7 @@ export default {
         this.pending = false;
       }
     },
+
   },
 };
 </script>

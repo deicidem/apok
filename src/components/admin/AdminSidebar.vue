@@ -58,12 +58,12 @@ export default {
   height: auto;
 
   &-wrapper {
-    padding: 20px;
+    padding: 30px 20px;
   }
 
   &-title {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
   }
 

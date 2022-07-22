@@ -72,8 +72,9 @@ export default {
     box-shadow: $shadow-big;
     border-radius: 10px;
     position: absolute;
-    top: 50%;
-    left: 0;
+    width: 40%;
+    bottom: 0;
+    left: 30px;
     transform: translateY(-50%);
   }
   &-content {
@@ -91,7 +92,7 @@ export default {
   }
 
   &-title {
-    position: relative;
+    // position: relative;
     width: 100%;
     margin: 0;
     margin-bottom: 30px;

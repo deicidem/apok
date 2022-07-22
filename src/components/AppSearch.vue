@@ -1,19 +1,21 @@
 <template>
   <div class="component">
     <form class="component-form" @submit.prevent>
+
       <div class="component-form__item" v-if="sortOptions != null">
           <app-select
             ref="sort-select"
             label="Сортировать:"
+            type="small"
             class="component-form__input"
             @change="onSortSelect"
             :options="sortOptions"
           ></app-select>
           <app-button
-            class="component-form__input"
-            type="button-svg button-svg-white"
-            @click="onDescChange"
-          >
+          class="component-form__input"
+          type="button-small-svg button-svg-white"
+          @click="onDescChange"
+        >
             <i
               v-if="desc"
               class="icon icon-ic_fluent_arrow_sort_down_20_regular"
@@ -28,29 +30,34 @@
             label="Поиск:"
             class="component-form__input"
             @change="searchField = $event"
+            type="small"
             :options="searchOptions"
           ></app-select>
           <app-input
             class="component-form__input"
             :value="searchValue"
+             type="c-input-small" 
             @input="searchValue = $event"
           ></app-input>
           <app-button
             class="component-form__input"
-            type="button-svg button-svg-white"
+            type="button-small-svg button-svg-white"
             @click="$emit('search', {field: searchField, value: searchValue})"
             >
             <i class="icon icon-ic_fluent_search_20_regular"></i>
           </app-button>
+
       </div>
     </form>
+
     <app-button
     v-if="searchOptions != null"
-        class="component-button component-button__clear"
-        type="button-white"
-        @click="onClear()"
-        >Сбросить
-      </app-button>
+      class="component-button component-button__clear"
+      type="button-small-white"
+      @click="onClear()"
+      >Сбросить
+    </app-button>
+
   </div>
 </template>
 
@@ -60,41 +67,49 @@ import AppSelect from "@/components/controls/AppSelect.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 
 export default {
-  props: ['searchOptions', 'sortOptions'],
+  props: ["searchOptions", "sortOptions"],
+
   components: {
     AppButton,
     AppSelect,
     AppInput,
   },
+
   data: () => ({
     searchField: null,
     sortField: null,
     searchValue: null,
     desc: false,
   }),
+
   methods: {
     onSortSelect(field) {
       this.sortField = field;
-      this.$emit('sort', {field: this.sortField, desc: this.desc})
+      this.$emit("sort", { field: this.sortField, desc: this.desc });
     },
+
     onDescChange() {
       this.desc = !this.desc;
-      this.$emit('sort', {field: this.sortField, desc: this.desc})
+      this.$emit("sort", { field: this.sortField, desc: this.desc });
     },
+
     onClear() {
       this.$refs['search-select'].clear();
       this.$refs['sort-select'].clear();
       this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
       this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
+
       this.desc = false;
       this.searchValue = null;
-      this.$emit('clear');
-    }
+      this.$emit("clear");
+    },
   },
+
   mounted() {
     this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
     this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
   }
+
 };
 </script>
 
@@ -103,35 +118,43 @@ export default {
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;  
+  align-items: flex-end;
   width: 100%;
+
   &-form {
     width: 100%;
     height: auto;
+
     &__title {
       font-size: 16px;
       color: #333;
       margin-bottom: 5px;
     }
+
     &__item {
       margin-bottom: 15px;
       margin-right: 30px;
       display: flex;
       align-items: center;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
+
     &__input {
-      min-height: 36px;
-      min-width: 36px;
+      height: 28px;
+      min-width: 20px;
       margin-right: 10px;
+
       &:last-child {
         margin-right: 0;
       }
     }
   }
+
   &-button__clear {
+    height: 28px;
     margin-left: auto;
   }
 }

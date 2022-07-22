@@ -16,7 +16,7 @@ export default {
       prev: null,
       next: null,
     },
-    paginationSize: 15,
+    paginationSize: 10,
     searchBy: null,
     pending: false,
     sort: null,

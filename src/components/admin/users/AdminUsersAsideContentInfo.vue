@@ -229,5 +229,6 @@ export default {
   font-size: 14px;
   padding-left: 20px;
   line-height: 30px;
+  overflow: hidden;
 }
 </style>

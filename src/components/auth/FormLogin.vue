@@ -47,7 +47,7 @@
       </div>
 
       <app-button
-        type="button-g"
+        type="button-big-g"
         class="c-form__item"
         :disabled="pending"
         @click="submitForm"
@@ -57,7 +57,7 @@
 
       <router-link to="/registration" custom v-slot="{ navigate }">
         <app-button
-          type="button-white"
+          type="button-big-white"
           class="c-form__item"
           @click="navigate"
           :disabled="pending"

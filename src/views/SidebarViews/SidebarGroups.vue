@@ -12,8 +12,14 @@
       ></groups-sidebar-form>
     </template>
 
+    
+
     <template v-slot:content>
       <div class="groups-wrapper">
+        <portal to="group-popup">
+      <groups-popup>
+      </groups-popup>
+    </portal>
         <div class="groups-content">
           <app-search
             @search="filterBySearch($event)"
@@ -61,6 +67,7 @@
 <script>
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import GroupsInformation from "@/components/groups/GroupsInformation.vue";
+import GroupsPopup from "@/components/groups/GroupsPopup.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 import GroupsSidebarForm from "@/components/groups/GroupsSidebarForm";
 import AppPagination from "@/components/controls/AppPagination";
@@ -72,11 +79,12 @@ export default {
   components: {
     GroupsInformation,
     SidebarBase,
-    AppPagination,
     GroupsSidebarForm,
     AppButton,
     AppSearch,
+    AppPagination,
     AppDeleteConfirmation,
+      GroupsPopup,
   },
 
   data: () => ({

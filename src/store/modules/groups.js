@@ -47,7 +47,13 @@ export default {
   },
   mutations: {
     setGroups(state, payload) {
+      payload.forEach(el => {
+        el.selected = false;
+      })
       state.groups = payload;
+    },
+    selectGroup(state, data) {
+      state.groups[data.index].selected = data.value;
     },
     deleteGroup(state, i) {
       state.groups.splice(i, 1);
@@ -66,8 +72,8 @@ export default {
     }
   },
   actions: {
-    deleteGroup(store, i) {
-      store.commit('deleteGroup', i)
+    selectGroup(store, data) {
+      store.commit('selectGroup', data);
     },
     async fetchGroups({
       commit,
@@ -127,6 +133,32 @@ export default {
       commit('setSearchBy', payload);
 
       return await dispatch('fetchGroups');
+    },
+
+    async createGroup({commit, dispatch}, payload) {
+      commit('setPending', true);
+      await userApi.createGroup({
+        title: payload.title,
+        type: payload.type,
+      });
+      // let group = res.data.data;
+      return await dispatch('fetchGroups');
+    },
+    async deleteGroups({ dispatch,  getters}) {
+      let ids = [];
+      for (let i = 0; i < getters.getGroups.length; i++) {
+        if (getters.getGroups[i].selected) {
+          ids.push(getters.getGroups[i].id);
+        } 
+      }
+      await userApi.deleteGroups(ids);
+      return await dispatch('fetchGroups',getters.getPagination.currentPage);
+    },
+    async deleteGroup({dispatch, getters}, payload) {
+      let {status} = await userApi.deleteGroup(payload);
+      if (status == 200) {
+        return await dispatch('fetchGroups',getters.getPagination.currentPage);
+      }
     },
   }
 }

@@ -1,54 +1,55 @@
 <template>
-  <div class="groups-sidebar-form">
-    <div class="groups-sidebar-form__wrapper">
-      <div class="groups-sidebar-form__cross" @click="$emit('close')">
-        <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
+  <div class="password-popup">
+    <div class="password-popup__wrapper">
+      <div class="password-popup__cross" @click="$emit('close')">
+          <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
+        </div>
+        <form-message
+          v-show="showMessage"
+          :error="error"
+          :message="message"
+        ></form-message>
+        <user-change-password-form :pending="pending" @submit="onSubmit"></user-change-password-form>
       </div>
-      <form-message
-        v-show="showMessage"
-        :error="error"
-        :message="message"
-      ></form-message>
-      <add-group
-        :pending="pending"
-        @submit="onSubmit"
-      ></add-group>
-    </div>
   </div>
 </template>
 
 <script>
-import AddGroup from "@/components/groups/AddGroup.vue";
 import { mapActions } from "vuex";
+import UserChangePasswordForm from "@/components/user/UserChangePasswordForm.vue";
 import FormMessage from "@/components/auth/FormMessage.vue";
+
 export default {
   components: {
-    AddGroup,
+    UserChangePasswordForm,
     FormMessage,
   },
+
   data: () => ({
     showMessage: false,
     message: null,
     error: false,
     pending: false,
   }),
+
   methods: {
-    ...mapActions("groups", ["createGroup"]),
+    ...mapActions("users", ["updatePassword"]),
     async onSubmit(params) {
       this.showMessage = false;
       this.pending = true;
       try {
-        await this.createGroup(params);
+        await this.updatePassword(params);
+
         this.message =
-          "Группа успешно создана";
-          this.error = false;
+          "Пароль успешно изменен";
+        this.error = false;
       } catch (error) {
         if (error?.response?.status == 422) {
           this.message =
             "Учетная запись  с указанными логином и паролем не существует";
         } else {
           this.message =
-            "При создании группы произошла ошибка";
+            "При измении пароля произошла ошибка";
         }
         this.error = true;
       }
@@ -59,8 +60,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.groups-sidebar-form {
+<style scoped lang="scss">
+.password-popup {
   position: absolute;
   top: 0;
   left: 0;
@@ -75,12 +76,13 @@ export default {
     position: relative;
   }
   &__cross {
+    z-index: 10;
     position: absolute;
     top: 10px;
-    right: 14px;
+    right: 15px;
     font-size: 20px;
     cursor: pointer;
-    color: $color-main;
+    color: $white;
   }
 }
 </style>

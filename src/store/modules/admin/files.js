@@ -205,29 +205,24 @@ export default {
       return await dispatch('fetchFiles');
     },
 
-    async updateFile({
-      commit,
-      getters
-    }, payload) {
-      let res = await filesApi.one(payload);
-      if (res.status == 200) {
-        let index = getters.getFilesMap[payload.id].index;
-        commit('setFile', {
-          index,
-          ...payload
-        });
-      }
-      return res;
-    },
+    // async updateFile({
+    //   dispatch,
+    //   getters
+    // }, payload) {
+    //   let res = await filesApi.one(payload);
+    //   if (res.status == 200) {
+    //     return await dispatch('fetchFiles',getters.getPagination.currentPage);
+    //   }
+    //   return res;
+    // },
 
     async deleteFile({
-      commit,
+      dispatch,
       getters
     }, payload) {
       let res = await filesApi.deleteFile(payload);
       if (res.status == 200) {
-        let index = getters.getFilesMap[payload].index;
-        commit('deleteFile', index);
+        return await dispatch('fetchFiles',getters.getPagination.currentPage);
       }
       return res;
     },

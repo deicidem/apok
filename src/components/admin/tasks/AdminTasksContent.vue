@@ -10,6 +10,7 @@
     <admin-tasks-content-table
       :tasks="getTasks"
       @select="setActiveTask"
+      :pending="isPending"
       :activeTask="getActiveTask"
     ></admin-tasks-content-table>
     <app-pagination

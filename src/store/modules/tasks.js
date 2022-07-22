@@ -142,6 +142,29 @@ export default {
     }
   },
   actions: {
+    selectTask({
+      commit
+    }, data) {
+      commit('selectTask', data);
+    },
+    setTaskActive({
+      commit
+    }, data) {
+      commit('setTaskActive', data);
+    },
+    setTaskViewActive({
+      commit
+    }, data) {
+      commit('setTaskViewActive', data);
+    },
+    setTaskViewFitBounds({
+      commit
+    }, data) {
+      commit('setTaskViewFitBounds', data);
+    },
+    sortTasksBy(store, key) {
+      store.commit('sortTasksBy', key)
+    },
     async fetchTasks({
       commit,
       dispatch,
@@ -279,7 +302,6 @@ export default {
 
     async deleteTasks({
       dispatch,
-      commit,
       getters
     }) {
       let ids = [];
@@ -288,13 +310,12 @@ export default {
           ids.push(getters.getTasks[i].id);
         }
       }
-      let res = await userApi.deleteTasks(ids);
-      await dispatch('load');
-      console.log(res, commit);
+      await userApi.deleteTasks(ids);
+      return await dispatch('fetchTasks', getters.getPagination.currentPage);
     },
 
     async deleteTask({
-      commit,
+      dispatch,
       getters
     }, i) {
       let id = getters.getTasks[i].id;
@@ -302,32 +323,10 @@ export default {
         status
       } = await userApi.deleteTask(id);
       if (status == 200) {
-        commit('removeTask', i);
+        return await dispatch('fetchTasks', getters.getPagination.currentPage);
       }
     },
-    selectTask({
-      commit
-    }, data) {
-      commit('selectTask', data);
-    },
-    setTaskActive({
-      commit
-    }, data) {
-      commit('setTaskActive', data);
-    },
-    setTaskViewActive({
-      commit
-    }, data) {
-      commit('setTaskViewActive', data);
-    },
-    setTaskViewFitBounds({
-      commit
-    }, data) {
-      commit('setTaskViewFitBounds', data);
-    },
-    sortTasksBy(store, key) {
-      store.commit('sortTasksBy', key)
-    }
+
   }
 }
 

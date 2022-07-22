@@ -11,6 +11,7 @@
       :files="getFiles"
       @select="setActiveFile"
       :activeFile="getActiveFile"
+      :pending="isPending"
     ></admin-files-content-table>
     <app-pagination
       :page-count="getPagination.last"

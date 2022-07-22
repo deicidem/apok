@@ -36,7 +36,11 @@
         </portal>
 
         <div class="results-wrapper">
-          <app-table class="results-table">
+          <app-search
+          @sort="sortBy($event)"
+          :sortOptions="getSortOptions"
+        ></app-search>
+          <app-table class="results-table" :disabled="isPending">
             <thead>
               <tr>
                 <th></th>
@@ -143,7 +147,7 @@
           </app-table>
           <app-pagination
           :page-count="getPagination.last"
-          @changePage="fetchResults({page: $event})"
+          @changePage="fetchResults($event)"
           :current-page="getPagination.currentPage"
         ></app-pagination>
         </div>
@@ -159,6 +163,7 @@ import ResultInfo from "@/components/results/ResultInfo.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton";
 import AppPagination from "@/components/controls/AppPagination";
+import AppSearch from "@/components/AppSearch.vue";
 // import VsPagination from "@vuesimple/vs-pagination";
 
 export default {
@@ -169,6 +174,7 @@ export default {
     SidebarBase,
     AppButton,
     AppPagination,
+    AppSearch,
   },
 
   data() {
@@ -225,6 +231,8 @@ export default {
       sortDir: "getSortDir",
       getPagination: "getPagination",
       isPending: "isPending",
+      getSearchOptions: "getSearchOptions",
+      getSortOptions: "getSortOptions"
     }),
 
     cardData() {
@@ -248,15 +256,18 @@ export default {
       "setResultProperty",
       "selectResult",
       "sortResultsBy",
-      "fetchResults"
+      "fetchResults",
+      "fetchAll", 
+      "sortBy",
+      "filterBySearch"
     ]),
 
-    sortBy(key, ind) {
-      this.headers.forEach((el, i) => {
-        el.active = i == ind;
-      });
-      this.sortResultsBy(key);
-    },
+    // sortBy(key, ind) {
+    //   this.headers.forEach((el, i) => {
+    //     el.active = i == ind;
+    //   });
+    //   this.sortResultsBy(key);
+    // },
 
     onPolygonButtonClick(ind, id, json) {
       if (this.results[ind].polygonActive) {

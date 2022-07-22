@@ -301,28 +301,23 @@ export default {
     },
 
     async updateUser({
-      commit,
+      dispatch,
       getters
     }, payload) {
       let res = await usersApi.update(payload);
       if (res.status == 200) {
-        let index = getters.getUsersMap[payload.id].index;
-        commit('updateUser', {
-          index,
-          ...payload
-        });
+        return await dispatch('fetchUsers',getters.getPagination.currentPage);
       }
       return res;
     },
 
     async deleteUser({
-      commit,
+      dispatch,
       getters
     }, payload) {
       let res = await usersApi.remove(payload);
       if (res.status == 200) {
-        let index = getters.getUsersMap[payload].index;
-        commit('deleteUser', index);
+        return await dispatch('fetchUsers',getters.getPagination.currentPage);
       }
       return res;
     },
@@ -358,19 +353,17 @@ export default {
     },
 
     async createUser({
-      commit
+      dispatch,
+      getters
     }, payload) {
-      let res = await usersApi.create({
+       await usersApi.create({
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
         password: payload.password.password,
         password_confirmation: payload.password.confirm
       });
-      console.log(res);
-      let user = res.data.data;
-      user.date = new Date(user.date).toLocaleDateString();
-      commit('addUser', user)
+      return await dispatch('fetchUsers', getters.getPagination.currentPage);
     },
 
     async loadLogs({

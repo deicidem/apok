@@ -269,7 +269,7 @@ export default {
 
   &-start {
     width: 200px;
-    margin: 10px 16px 0 auto;
+    margin: 10px 0 0 auto;
   }
 }
 </style>

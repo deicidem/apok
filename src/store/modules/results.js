@@ -20,8 +20,11 @@ export default {
       prev: null,
       next: null,
     },
+    paginationSize: 8,
     searchBy: null,
-    pending: false
+    pending: false,
+    sort: null,
+    sortOptions: setSortOptions(),
   },
   getters: {
     getResults(state) {
@@ -50,6 +53,16 @@ export default {
     },
     isPending(state) {
       return state.pending;
+    },
+    getSort(state) {
+      return state.sort;
+    },
+    getSortOptions(state) {
+      return state.sortOptions;
+    },
+
+    getPaginationSize(state) {
+      return state.paginationSize;
     }
   },
   mutations: {
@@ -126,6 +139,9 @@ export default {
     },
     setPending(state, payload) {
       state.pending = payload;
+    },
+    setSort(state, payload) {
+      state.sort = payload;
     }
   },
   actions: {
@@ -181,20 +197,26 @@ export default {
     sortResultsBy(store, key) {
       store.commit('sortResultsBy', key)
     },
+    async searchResults({commit, dispatch}, payload) {
+      commit('setSearchBy', payload);
+      return await dispatch('fetchResults');
+    },
     async fetchResults({commit,
       getters,
       rootGetters,
       dispatch
-    }, {params, page}) {
+    }, page = 1) {
       commit('setPending', true);
+      let searchField = getters.getSearchBy?.field;
+      let searchValue = getters.getSearchBy?.value;
 
-      if (params != null) {
-        commit('setSearchBy', params);
-      }
-
-      let res = await dzzApi.all({
+      let res = await dzzApi.all(getters.getSearchBy, {
         page,
-        ...getters.getSearchBy
+        [searchField]: searchValue,
+        desc: getters.getSort?.desc,
+        sortBy: getters.getSort?.field,
+        size: getters.getPaginationSize
+        ,
       });
 
       let files = res.data.data;
@@ -225,6 +247,50 @@ export default {
       
       return files;
     },
+    async fetchAll({
+      commit,
+      dispatch
+    }) {
+      commit('setPending', true);
+      commit('setSearchBy', null);
+      commit('setSort', null);
+
+      return await dispatch('fetchResults');
+    },
+
+    async sortBy({
+      commit,
+      dispatch
+    }, payload) {
+      commit('setPending', true);
+      commit('setSort', payload);
+      return await dispatch('fetchResults');
+    },
   },
 
+}
+
+function setSortOptions() {
+  return [
+    {
+      text: "ID",
+      value: "id",
+    },
+    {
+      text: "Идентификатор",
+      value: "name",
+    },
+    {
+      text: "Дата съемки",
+      value: "date",
+    },
+    {
+      text: "Спутник",
+      value: "satelite",
+    },
+    {
+      text: "Облачность",
+      value: "cloudiness",
+    },
+  ];
 }

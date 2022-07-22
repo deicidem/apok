@@ -5,6 +5,7 @@
     </template>
 
     <template v-slot:popups>
+      <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
       <groups-sidebar-form
         v-show="showPopup"
         @close="showPopup = false"
@@ -12,8 +13,8 @@
     </template>
 
     <template v-slot:content>
-      <div class="person-wrapper">
-        <div class="person-content">
+      <div class="groups-wrapper">
+        <div class="groups-content">
           <app-search
             @search="filterBySearch($event)"
             @sort="sortBy($event)"
@@ -22,7 +23,13 @@
             :searchOptions="getSearchOptions"
           ></app-search>
 
-          <groups-information :groups="getGroups"></groups-information>
+          <groups-information
+            :groups="getGroups"
+            :pending="isPending"
+            @delete="onDelete"
+            @select="selectGroup"
+          ></groups-information>
+
 
           <app-pagination
             :page-count="getPagination.last"
@@ -30,13 +37,23 @@
             :current-page="getPagination.currentPage"
           ></app-pagination>
 
-          <app-button
-            class="group-button"
-            type="button-g"
-            @click="showPopup = true"
-          >
-            Добавить новую группу
-          </app-button>
+          <div class="groups-buttons">
+            <app-button
+              class="groups-button"
+              type="button-r"
+              :disabled="noItemsSelected || notDeletableItemSelected || isPending"
+              @click="onDeleteBanch"
+            >
+              Удалить выбранное
+            </app-button>
+            <app-button
+              class="groups-button"
+              type="button-g"
+              @click="showPopup = true"
+            >
+              Добавить новую группу
+            </app-button>
+          </div>
         </div>
       </div>
     </template>
@@ -44,6 +61,7 @@
 </template>
 
 <script>
+import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import GroupsInformation from "@/components/groups/GroupsInformation.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 import GroupsSidebarForm from "@/components/groups/GroupsSidebarForm";
@@ -61,6 +79,7 @@ export default {
     GroupsSidebarForm,
     AppButton,
     AppSearch,
+    AppDeleteConfirmation,
   },
 
   data: () => ({
@@ -81,6 +100,30 @@ export default {
       "getSortOptions",
       "getSearchOptions",
     ]),
+
+    noItemsSelected() {
+      let groups = this.getGroups;
+      let res = true;
+      for (let i = 0; i < groups.length; i++) {
+        if (groups[i].selected) {
+          res = false;
+          break;
+        }
+      }
+      return res;
+    },
+     notDeletableItemSelected() {
+      let groups = this.getGroups;
+      let res = false;
+      for (let i = 0; i < groups?.length; i++) {
+        if (groups[i]?.selected && !groups[i]?.deletable) {
+          res = true;
+          break;
+        }
+      }
+      return res;
+    },
+
   },
 
   methods: {
@@ -89,14 +132,46 @@ export default {
       "fetchAll",
       "sortBy",
       "filterBySearch",
+
+      "deleteGroups",
+      "selectGroup",
+      "deleteGroup",
     ]),
+    async onDelete(id) {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить эту группу?",
+        message:
+          "Удаление этой группы приведет к потере всех связанных с ней данных.",
+        actionMessage: "Удалить",
+      });
+      if (ok) {
+        this.pending = true;
+        await this.deleteGroup(id);
+        this.pending = false;
+      }
+    },
+
+    async onDeleteBanch() {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите удалить эти группы?",
+        message:
+          "Удаление этих групп приведет к потере всех связанных с ними данных.",
+        actionMessage: "Удалить",
+      });
+      if (ok) {
+        this.pending = true;
+        await this.deleteGroups();
+        this.pending = false;
+      }
+    },
+
   },
 };
 </script>
 
 
 <style scoped lang="scss">
-.person {
+.groups {
   &-wrapper {
     padding: 30px;
   }
@@ -105,12 +180,21 @@ export default {
     width: 100%;
     height: 100%;
   }
-}
 
-.group {
+  &-buttons {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   &-button {
-    max-width: 230px;
-    margin: 20px auto;
+    flex: 1 1 auto;
+    margin-right: 20px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
+
 </style>

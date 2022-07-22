@@ -1,14 +1,8 @@
 <template>
-  <div class="message" :class="status">
+  <div class="message" :class="{ error }">
     <div class="message-icon">
-      <i
-        class="icon icon-ic_fluent_error_circle_20_regular"
-        v-if="status == 'error'"
-      ></i>
-      <i
-        class="icon icon-ic_fluent_checkmark_circle_20_regular"
-        v-else-if="status == 'valid'"
-      ></i>
+      <i class="icon icon-ic_fluent_error_circle_20_regular" v-if="error"></i>
+      <i class="icon icon-ic_fluent_checkmark_circle_20_regular" v-else></i>
     </div>
     <div class="message-text">
       {{ message }}
@@ -18,7 +12,7 @@
 
 <script>
 export default {
-  props: ["status", "message"],
+  props: ["error", "message"],
 };
 </script>
 
@@ -36,20 +30,12 @@ export default {
   border-radius: 10px;
   color: $color-main;
 
-  &.valid &-icon {
-    color: #40c545;
-  }
+  
 
   &.error {
     background: $gradient-r;
   }
-
-  &.error &-text,
-  &.error &-icon {
-    color: #fff;
-  }
-
-  &-icon {
+&-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +49,15 @@ export default {
       line-height: 0;
     }
   }
+&-icon {
+    color: #40c545;
+  }
+  &.error &-text,
+  &.error &-icon {
+    color: #fff;
+  }
 
+  
   &-text {
     text-align: left;
     font-size: 16px;

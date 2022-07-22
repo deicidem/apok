@@ -56,23 +56,23 @@
     </div>
 
     <portal to="password-popup">
-      <user-change-password-form
+      <user-change-password
         v-show="showPopup"
         @close="showPopup = false"
         @submit="updatePassword"
-      ></user-change-password-form>
+      ></user-change-password>
     </portal>
   </div>
 </template>
 
 <script>
-import UserChangePasswordForm from "@/components/user/UserChangePasswordForm";
+import UserChangePassword from "@/components/user/UserChangePassword";
 import { mapGetters, mapActions } from "vuex";
 import AppButton from "@/components/controls/AppButton";
 
 export default {
   components: {
-    UserChangePasswordForm,
+    UserChangePassword,
     AppButton,
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table :class="{disabled}">
     <slot></slot>
   </table>
 </template>
@@ -9,6 +9,7 @@ export default {
   props: {
     data: Array,
     headers: Array,
+    disabled: Boolean
   },
 };
 </script>
@@ -25,7 +26,7 @@ table {
 
   thead {
     position: relative;
-    z-index: 1;
+    z-index: 10;
 
     &::after {
       background: $gradient-w;
@@ -66,8 +67,23 @@ table {
       }
     }
   }
-
+  &.disabled {
+    tbody {
+      &::after {
+        position: absolute;
+        display: block;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(#eee, 0.5);
+      }
+    }
+  }
   tbody {
+      position: relative;
+
     text-align: left;
     font-size: 12px;
     color: #384342;

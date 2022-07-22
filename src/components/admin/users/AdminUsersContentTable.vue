@@ -1,5 +1,5 @@
 <template>
-  <admin-content-table >
+  <admin-content-table :disabled="pending">
     <thead>
       <tr>
         <th class="col-checkbox center">
@@ -17,8 +17,7 @@
       </tr>
     </thead>
 
-    <tbody :class="{disabled}">
-      <app-loader v-show="disabled"></app-loader>
+    <tbody>
       <tr
         v-for="user in users"
         :key="user.id"
@@ -46,14 +45,12 @@
 <script>
 import AdminContentTable from "@/components/admin/AdminContentTable";
 import AppCheckbox from "@/components/controls/AppCheckbox";
-import AppLoader from "@/components/controls/AppLoader";
 export default {
-  props: ["users", "activeUser", "disabled"],
+  props: ["users", "activeUser", "pending"],
 
   components: {
     AdminContentTable,
     AppCheckbox,
-    AppLoader,
   },
 
   computed: {
@@ -92,18 +89,5 @@ export default {
 .active {
   color: $white;
   background: $gradient;
-}
-.disabled {
-  position: relative;
-  &::after {
-    position: absolute;
-    display: block;
-    content: '';
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: rgba(#eee, 0.5)
-  }
 }
 </style>

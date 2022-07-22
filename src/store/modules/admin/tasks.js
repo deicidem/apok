@@ -205,29 +205,28 @@ export default {
       return await dispatch('fetchTasks');
     },
 
-    async updateTask({
-      commit,
-      getters
-    }, payload) {
-      let res = await tasksApi.one(payload);
-      if (res.status == 200) {
-        let index = getters.getTasksMap[payload.id].index;
-        commit('setTask', {
-          index,
-          ...payload
-        });
-      }
-      return res;
-    },
+    // async updateTask({
+    //   commit,
+    //   getters
+    // }, payload) {
+    //   let res = await tasksApi.one(payload);
+    //   if (res.status == 200) {
+    //     let index = getters.getTasksMap[payload.id].index;
+    //     commit('setTask', {
+    //       index,
+    //       ...payload
+    //     });
+    //   }
+    //   return res;
+    // },
     
     async deleteTask({
-      commit,
+      dispatch,
       getters
     }, payload) {
       let res = await tasksApi.deleteTask(payload);
       if (res.status == 200) {
-        let index = getters.getTasksMap[payload].index;
-        commit('deleteTask', index);
+        return await dispatch('fetchTasks',getters.getPagination.currentPage);
       }
       return res;
     },

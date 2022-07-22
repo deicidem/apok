@@ -12,7 +12,7 @@
       @select="setActiveUser"
       :activeUser="getActiveUser"
       @check="selectUser"
-      :disabled="isPending"
+      :pending="isPending"
     ></admin-users-content-table>
 
     <app-pagination

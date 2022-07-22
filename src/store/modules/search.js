@@ -230,7 +230,7 @@ export default {
         satelites: [1, 2, 3, 4, 5, 6],
         polygon: '{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[163.300781,85.051129],[-4.921875,85.051129],[-4.921875,-13.410994],[163.300781,-13.410994],[163.300781,85.051129]]]}}'
       }
-      await dispatch('results/fetchResults', {params}, {root: true});
+      await dispatch('results/searchResults', params, {root: true});
     },
     async search({
       dispatch,
@@ -264,7 +264,7 @@ export default {
         polygon
       }
 
-      await dispatch('results/fetchResults', {params}, {root: true});
+      await dispatch('results/searchResults', params, {root: true});
     },
     async loadSatelites({
       dispatch

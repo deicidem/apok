@@ -1,20 +1,6 @@
 <template>
   <form-base>
-    <form-message
-      v-show="showMessage"
-      :status="formInvalid ? 'error' : 'valid'"
-      :message="message"
-    ></form-message>
-
     <div class="c-title">{{ title }}</div>
-
-    <div
-      v-show="title == 'Создание пользователя'"
-      class="c-cross"
-      @click="$emit('close')"
-    >
-      <i class="fa-solid fa-xmark"></i>
-    </div>
 
     <form class="c-form" @submit.prevent="submitForm()">
       <app-input
@@ -75,16 +61,14 @@
 
       <app-input
         class="c-form__input"
-        :value="organization"
-        @input="$v.mail.$model = $event"
-        :invalid="(!$v.mail.email || !$v.mail.required) && formInvalid"
+        :value="organisation"
+        @input="$v.organisation.$model = $event"
+        :invalid="(!$v.organisation.required) && formInvalid"
         icon="icon icon-ic_fluent_people_team_20_regular"
         label="Организация"
         :error="
           !$v.mail.required
             ? 'Введите значение'
-            : !$v.mail.email
-            ? 'Введите корректный почтовый адрес'
             : null
         "
       >
@@ -131,7 +115,7 @@
         "
       ></app-input>
 
-      <div class="c-remember">
+      <div class="c-remember" v-show="title == 'Регистрация'">
         <app-checkbox></app-checkbox>
         <span class="c-remember__text"
           >Cогласие на обработку персональных данных</span
@@ -142,7 +126,7 @@
         v-show="title == 'Регистрация'"
         type="button-big-g "
         class="c-form__item"
-        :disabled="submitStatus === 'PENDING'"
+        :disabled="pending"
       >
         Зарегистироваться
       </app-button>
@@ -151,7 +135,7 @@
         v-show="title == 'Создание пользователя'"
         type="button-big-g "
         class="c-form__item"
-        :disabled="submitStatus === 'PENDING'"
+        :disabled="pending"
       >
         Создать
       </app-button>
@@ -164,7 +148,7 @@
         <app-button
           type="button-big-white"
           @click="navigate"
-          :disabled="submitStatus === 'PENDING'"
+          :disabled="pending"
           class="c-form__item"
         >
           Войти
@@ -175,7 +159,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
@@ -186,34 +169,31 @@ import {
   email,
   numeric,
 } from "vuelidate/lib/validators";
-import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
 
 export default {
   components: {
-    FormMessage,
     FormBase,
     AppInput,
     AppButton,
     AppCheckbox,
   },
 
-  props: ["title"],
+  props: ["title", "pending"],
+
 
   data() {
     return {
       firstName: null,
       lastName: null,
       mail: null,
-      organization: null,
+      organisation: null,
       phone: null,
       password: {
         password: null,
         confirm: null,
       },
       submitStatus: null,
-      showMessage: false,
-      message: null,
     };
   },
 
@@ -233,7 +213,7 @@ export default {
         required,
         email,
       },
-      organization: {
+      organisation: {
         required,
         minLength: minLength(8),
       },
@@ -257,43 +237,15 @@ export default {
   },
 
   methods: {
-    ...mapActions("users", ["regUser"]),
-
-    async submitForm() {
-      this.showMessage = false;
-
+    submitForm() {
       if (!this.$v.$invalid) {
-        this.submitStatus = "PENDING";
-
-        try {
-          await this.regUser({
+        this.submitStatus = "SUBMIT";
+        this.$emit('submit', {
             firstName: this.firstName,
             lastName: this.lastName,
             email: this.mail,
             password: this.password,
           });
-
-          this.submitStatus = "SUBMIT";
-          this.message =
-            "Вы успешно авторизованы. Сейчас вы будете перенаправлены на главную страницу.";
-
-          setTimeout(() => {
-            this.$router.push("main");
-          }, 1500);
-        } catch (error) {
-          console.log(error);
-          if (error?.response?.status == 422) {
-            this.message =
-              "Учетная запись  с указанными логином и паролем не существует";
-          } else {
-            this.message =
-              "При авторизации произошла ошибка, повторите попытку позже";
-          }
-
-          this.submitStatus = "ERROR";
-        }
-
-        this.showMessage = true;
       } else {
         this.submitStatus = "FORM_INVALID";
         return;

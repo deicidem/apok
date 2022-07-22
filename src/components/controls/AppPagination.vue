@@ -3,6 +3,7 @@
     <li class="pagination-page">
       <app-button
         type="button-svg button-svg-white"
+        size="small"
         class="pagination-page__link"
         @click="changePage(1)"
         :disabled="currentPage == 1"
@@ -13,6 +14,7 @@
     <li class="pagination-page">
       <app-button
         type="button-svg button-svg-white"
+        size="small"
         class="pagination-page__link"
         @click="changePage(currentPage - 1)"
         :disabled="currentPage == 1"
@@ -28,13 +30,14 @@
       <app-button
       :active="currentPage == i"
         :static="currentPage == i"
-        type="button-svg button-svg-white" class="pagination-page__link" @click="changePage(i)">
+        type="button-svg button-svg-white" size="small" class="pagination-page__link" @click="changePage(i)">
         {{ i }}
       </app-button>
     </li>
     <li class="pagination-page">
       <app-button
         type="button-svg button-svg-white"
+        size="small"
         class="pagination-page__link"
         @click="changePage(currentPage + 1)"
         :disabled="currentPage == pageCount"
@@ -45,6 +48,7 @@
     <li class="pagination-page">
       <app-button
         type="button-svg button-svg-white"
+        size="small"
         class="pagination-page__link"
         @click="changePage(pageCount)"
         :disabled="currentPage == pageCount"
@@ -101,8 +105,15 @@ export default {
   justify-content: center;
   padding: 0;
   list-style: none;
+
   &-page {
     margin: 0 5px;
+
+    &__link{
+      .button{
+        font-size: 16px !important;
+      }
+    }
   }
 }
 </style>

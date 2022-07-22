@@ -8,7 +8,7 @@
         <app-button class="confirm-button" type="button-r" @click="_confirm">{{actionMessage}}</app-button>
       </div>
       <div class="confirm-cross">
-        <i @click="_cancel" class="fa-solid fa-xmark"></i>
+        <i @click="_cancel" class="icon icon-ic_fluent_dismiss_20_regular"></i>
       </div>
     </div>
   </div>

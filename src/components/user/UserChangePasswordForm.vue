@@ -1,12 +1,9 @@
 <template>
-  <div class="password-popup">
     <div class="password-popup__card">
       <div class="password-popup__line">
         <p>Поменять пароль</p>
 
-        <div class="password-popup__cross" @click="$emit('close')">
-          <i class="fa-solid fa-xmark"></i>
-        </div>
+        
       </div>
 
       <div class="password-popup-form">
@@ -62,7 +59,7 @@
           <div class="password-popup__button">
             <app-button
               type="submit button-g"
-              :disabled="submitStatus === 'PENDING'"
+              :disabled="pending"
             >
               Подтвердить
             </app-button>
@@ -70,7 +67,6 @@
         </form>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -79,6 +75,7 @@ import AppButton from "@/components/controls/AppButton";
 import AppInput from "@/components/controls/AppInput";
 
 export default {
+  props: ['pending'],
   components: {
     AppButton,
     AppInput,
@@ -135,21 +132,7 @@ export default {
 
 <style scoped lang="scss">
 .password-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-
-  width: 100vw;
-  height: 100vh;
-  background: rgba($black, 0.5);
-
   &__card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;

@@ -3,7 +3,7 @@
     <div class="preview-wrapper">
       <div class="preview-wrapper__main">
         <div class="preview-wrapper__cross" @click="$emit('close')">
-          <i class="fa-solid fa-xmark"></i>
+          <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
         </div>
 
         <div class="preview-wrapper__title">Предпросмотр</div>

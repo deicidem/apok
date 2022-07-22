@@ -120,6 +120,9 @@ export async function getGroups(params) {
   return await server.get('user/groups', {params});
 }
 
+export async function createGroup(params) {
+  return await server.post('user/groups', params);
+}
 export async function deleteGroups(groupsIds) {
   let params = {};
   for (let i = 0; i < groupsIds.length; i++) {

@@ -17,7 +17,7 @@
           :sortOptions="getSortOptions"
           :searchOptions="getSearchOptions"
         ></app-search>
-        <app-table>
+        <app-table :disabled="isPending">
           <thead>
             <tr>
               <th class="col-checkbox center">
@@ -244,10 +244,6 @@ export default {
     //   });
     //   this.sortFilesBy(key);
     // },
-
-    onCheck(val) {
-      console.log(val);
-    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <form class="component-form" @submit.prevent>
-      <div class="component-form__item">
+      <div class="component-form__item" v-if="sortOptions != null">
           <app-select
             ref="sort-select"
             label="Сортировать:"
@@ -22,7 +22,7 @@
           </app-button>
       </div>
 
-      <div class="component-form__item">
+      <div class="component-form__item" v-if="searchOptions != null">
           <app-select
             ref="search-select"
             label="Поиск:"
@@ -45,6 +45,7 @@
       </div>
     </form>
     <app-button
+    v-if="searchOptions != null"
         class="component-button component-button__clear"
         type="button-white"
         @click="onClear()"
@@ -83,16 +84,16 @@ export default {
     onClear() {
       this.$refs['search-select'].clear();
       this.$refs['sort-select'].clear();
-      this.searchField = this.searchOptions[0].value;
-      this.sortField = this.sortOptions[0].value;
+      this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
+      this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
       this.desc = false;
       this.searchValue = null;
       this.$emit('clear');
     }
   },
   mounted() {
-    this.searchField = this.searchOptions[0].value;
-    this.sortField = this.sortOptions[0].value;
+    this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
+    this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
   }
 };
 </script>

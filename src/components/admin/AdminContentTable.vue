@@ -1,5 +1,5 @@
 <template>
-  <app-table class="user-table">
+  <app-table class="user-table" :disabled="disabled">
     <slot></slot>
   </app-table>
 </template>
@@ -10,6 +10,7 @@ export default {
   components: {
     AppTable,
   },
+  props: ['disabled']
 };
 </script>
 

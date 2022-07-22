@@ -1,7 +1,14 @@
 <template>
   <page-base :show-menu="false">
     <section class="authorize">
-      <form-login></form-login>
+      <div class="authorize-wrapper">
+        <form-message
+          v-show="showMessage"
+          :error="error"
+          :message="message"
+        ></form-message>
+        <form-login :pending="pending" @submit="onSubmit"></form-login>
+      </div>
     </section>
   </page-base>
 </template>
@@ -10,16 +17,49 @@
 import { mapActions } from "vuex";
 import PageBase from "@/components/PageBase.vue";
 import FormLogin from "../components/auth/FormLogin.vue";
+import FormMessage from "@/components/auth/FormMessage.vue";
 
 export default {
   components: {
     FormLogin,
     PageBase,
+    FormMessage,
   },
+  data: () => ({
+    showMessage: false,
+    message: null,
+    error: false,
+    pending: false,
+  }),
   methods: {
     ...mapActions("users", {
       authorize: "authorizeUser",
     }),
+    async onSubmit(params) {
+      this.showMessage = false;
+      this.pending = true;
+      try {
+        await this.authorize(params);
+
+        this.message =
+          "Вы успешно авторизованы. Сейчас вы будете перенаправлены на главную страницу.";
+        this.error = false;
+        setTimeout(() => {
+          this.$router.push("main");
+        }, 1500);
+      } catch (error) {
+        if (error?.response?.status == 422) {
+          this.message =
+            "Учетная запись  с указанными логином и паролем не существует";
+        } else {
+          this.message =
+            "При авторизации произошла ошибка, повторите попытку позже";
+        }
+        this.error = true;
+      }
+      this.pending = false;
+      this.showMessage = true;
+    },
   },
 };
 </script>
@@ -37,52 +77,8 @@ export default {
   height: 100%;
   background: url("@/assets/img/background/apok.png");
   background-size: cover;
-}
-
-.invalid {
-  border: 1px solid $color-red;
-  transition: all 1s ease-out;
-  color: $color-red;
-
-  &:focus ~ .input-label,
-  &:not(:placeholder-shown) ~ label {
-    color: $color-red;
-  }
-}
-
-.invalidIcon {
-  position: absolute;
-  max-width: 26px;
-  right: 20px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.error {
-  &-tooltip {
-    position: absolute;
-    right: -240px;
-    top: 50%;
-    transform: translate(0, -50%);
-    transition: all 2s ease-out;
-
-    display: flex;
-    align-items: center;
-
-    height: 49px;
-    width: 240px;
-    background: linear-gradient(
-      to right,
-      rgb(235, 96, 96, 0.6),
-      rgb(141, 70, 70, 0.6)
-    );
-    color: $white;
-    font-size: 14px;
-    border-radius: 10px;
-
-    p {
-      margin-left: 8px;
-    }
+  &-wrapper {
+    position: relative;
   }
 }
 </style>

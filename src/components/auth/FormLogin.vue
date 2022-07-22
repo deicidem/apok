@@ -1,14 +1,8 @@
 <template>
-  <form-base :show-menu="false">
-    <form-message
-      v-show="showMessage"
-      :status="formInvalid ? 'error' : 'valid'"
-      :message="message"
-    ></form-message>
-
+  <form-base >
     <div class="c-title">Авторизация</div>
 
-    <form class="c-form" @submit.prevent="submitForm()">
+    <form class="c-form" @submit.prevent>
       <app-input
         class="c-form__input"
         :value="login"
@@ -55,7 +49,8 @@
       <app-button
         type="button-g"
         class="c-form__item"
-        :disabled="submitStatus === 'PENDING'"
+        :disabled="pending"
+        @click="submitForm"
       >
         Войти
       </app-button>
@@ -65,7 +60,7 @@
           type="button-white"
           class="c-form__item"
           @click="navigate"
-          :disabled="submitStatus === 'PENDING'"
+          :disabled="pending"
         >
           Зарегистироваться
         </app-button>
@@ -75,21 +70,19 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 
 import { required, minLength,email } from "vuelidate/lib/validators";
 import AppCheckbox from "@/components/controls/AppCheckbox.vue";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
-import FormMessage from "@/components/auth/FormMessage.vue";
 import FormBase from "@/components/auth/FormBase.vue";
 
 export default {
+  props: ['pending'],
   components: {
     AppCheckbox,
     AppInput,
     AppButton,
-    FormMessage,
     FormBase,
   },
   data() {
@@ -98,8 +91,6 @@ export default {
       password: null,
       remember: false,
       submitStatus: null,
-      showMessage: false,
-      message: null,
     };
   },
   validations: {
@@ -118,43 +109,14 @@ export default {
     },
   },
   methods: {
-    ...mapActions("users", {
-      authorize: "authorizeUser",
-    }),
-
-    async submitForm() {
-      this.showMessage = false;
-
+    submitForm() {
       if (!this.$v.$invalid) {
-        this.submitStatus = "PENDING";
-
-        try {
-          await this.authorize({
+        this.submitStatus = "SUBMIT";
+        this.$emit('submit', {
             email: this.login,
             password: this.password,
             remember: this.remember,
           });
-
-          this.submitStatus = "SUBMIT";
-          this.message =
-            "Вы успешно авторизованы. Сейчас вы будете перенаправлены на главную страницу.";
-
-          setTimeout(() => {
-            this.$router.push("main");
-          }, 1500);
-        } catch (error) {
-          if (error?.response?.status == 422) {
-            this.message =
-              "Учетная запись  с указанными логином и паролем не существует";
-          } else {
-            this.message =
-              "При авторизации произошла ошибка, повторите попытку позже";
-          }
-
-          this.submitStatus = "ERROR";
-        }
-
-        this.showMessage = true;
       } else {
         this.submitStatus = "FORM_INVALID";
         return;

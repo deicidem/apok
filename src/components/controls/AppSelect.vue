@@ -57,7 +57,7 @@ export default {
     &__options {
       width: 100%;
       margin-top: 4px;
-      z-index: 10;
+      z-index: 15;
       position: absolute;
       top: calc(100% + 3px);
       left: 0;

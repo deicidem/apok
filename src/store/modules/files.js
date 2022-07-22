@@ -169,35 +169,22 @@ export default {
     },
 
 
-    async deleteFiles({ commit, dispatch,  getters}) {
+    async deleteFiles({ dispatch,  getters}) {
       let ids = [];
       for (let i = 0; i < getters.getFiles.length; i++) {
         if (getters.getFiles[i].selected) {
           ids.push(getters.getFiles[i].id);
         } 
       }
-      let {data} = await userApi.deleteFiles(ids);
-      data.deleted.forEach(el => {
-        if (!el.delete) {
-          console.log(el);
-        }
-      });
-      await dispatch('fetchFiles');
-      console.log(commit);
+      await userApi.deleteFiles(ids);
+      return await dispatch('fetchFiles',getters.getPagination.currentPage);
     },
-    async deleteFile({commit, getters}, i) {
+    async deleteFile({dispatch, getters}, i) {
       let id = getters.getFiles[i].id;
       let {status} = await userApi.deleteFile(id);
       if (status == 200) {
-        commit('removeFile', i);
+        return await dispatch('fetchFiles',getters.getPagination.currentPage);
       }
-      // data.deleted.forEach(el => {
-      //   if (!el.delete) {
-      //     console.log(el);
-      //   }
-      // });
-      // await dispatch('fetchFiles');
-      console.log(commit);
     },
   }
 }

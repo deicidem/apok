@@ -2,9 +2,6 @@
   <form class="c-form" @submit.prevent="submitForm()">
     <div class="c-title">Создать группу</div>
 
-    <div class="c-cross" @click="$emit('close')">
-      <i class="fa-solid fa-xmark"></i>
-    </div>
 
     <app-input
       class="c-form__input"
@@ -27,7 +24,7 @@
     <app-button
       type="button-g"
       class="c-form__item"
-      :disabled="submitStatus === 'PENDING'"
+      :disabled="pending"
     >
       Создать
     </app-button>
@@ -39,9 +36,10 @@ import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import AppSelect from "@/components/controls/AppSelect.vue";
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
+  props: ['pending'],
   components: {
     AppInput,
     AppButton,
@@ -64,7 +62,9 @@ export default {
       },
     };
   },
-
+  mounted() {
+    this.selectedOption = this.options[0].value;
+  },
   computed: {
     ...mapGetters("groupTypes", ["getGroupTypes"]),
     formInvalid() {
@@ -78,17 +78,21 @@ export default {
   },
 
   methods: {
-    ...mapActions("admin/groups", ["createGroup"]),
-    async submitForm() {
+
+    submitForm() {
       this.showMessage = false;
 
       if (!this.$v.$invalid) {
         this.submitStatus = "PENDING";
         try {
-          await this.createGroup({
+          this.$emit('submit', {
             title: this.title,
             type: this.selectedOption
-          });
+          })
+          // await this.createGroup({
+          //   title: this.title,
+          //   type: this.selectedOption
+          // });
 
           this.submitStatus = "SUBMIT";
           this.message = "Группа успешно создан";
@@ -117,25 +121,11 @@ export default {
     margin-bottom: 20px;
   }
 
-  &-cross {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    font-size: 20px;
-    cursor: pointer;
-    color: $color-main;
-  }
-
   &-select {
     margin-top: 20px;
   }
 
   &-form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
     box-shadow: $shadow-small;
     border-radius: 10px;
     background: $gradient-w;

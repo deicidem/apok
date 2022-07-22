@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-close" @click="$emit('cardClose')">
-      <i class="fa-solid fa-xmark"></i>
+      <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
     </div>
     <div class="card-title">Информация по объекту</div>
     <div class="card-img">

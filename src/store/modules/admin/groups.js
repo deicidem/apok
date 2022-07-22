@@ -235,41 +235,41 @@ export default {
       return await dispatch('fetchGroups');
     },
 
-    async updateGroup({
-      commit,
-      getters
-    }, payload) {
-      let res = await groupsApi.one(payload);
-      if (res.status == 200) {
-        let index = getters.getGroupsMap[payload.id].index;
-        commit('setGroup', {
-          index,
-          ...payload
-        });
-      }
-      return res;
-    },
+    // async updateGroup({
+    //   commit,
+    //   getters
+    // }, payload) {
+    //   let res = await groupsApi.one(payload);
+    //   if (res.status == 200) {
+    //     let index = getters.getGroupsMap[payload.id].index;
+    //     commit('setGroup', {
+    //       index,
+    //       ...payload
+    //     });
+    //   }
+    //   return res;
+    // },
 
     async deleteGroup({
-      commit,
+      dispatch,
       getters
     }, payload) {
       let res = await groupsApi.deleteGroup(payload);
       if (res.status == 200) {
-        let index = getters.getGroupsMap[payload].index;
-        commit('deleteGroup', index);
+        return await dispatch('fetchGroups',getters.getPagination.currentPage);
       }
       return res;
     },
 
-    async createGroup({commit}, payload) {
-      let res = await groupsApi.create({
+    async createGroup({dispatch, getters}, payload) {
+      await groupsApi.create({
         title: payload.title,
         type: payload.type,
       });
-      let group = res.data.data;
-      commit('addGroup', group)
+      return await dispatch('fetchGroups',getters.getPagination.currentPage);
     },
+    
+    
 
     async addUsers({commit}, payload) {
       let res = await groupsApi.addUsers({

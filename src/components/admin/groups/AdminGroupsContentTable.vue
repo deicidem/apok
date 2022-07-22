@@ -1,5 +1,5 @@
 <template>
-  <admin-content-table>
+  <admin-content-table :disabled="pending">
     <thead>
       <tr>
         <th>ID</th>
@@ -29,7 +29,7 @@
 <script>
 import AdminContentTable from "@/components/admin/AdminContentTable";
 export default {
-  props: ["groups", "activeGroup"],
+  props: ["groups", "activeGroup", "pending"],
   components: {
     AdminContentTable,
   },

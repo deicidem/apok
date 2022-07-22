@@ -1,7 +1,7 @@
 <template>
   <div class="note-wrapper">
     <div class="note-cross" @click="$emit('close')">
-      <i class="fa-solid fa-xmark"></i>
+      <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
     </div>
 
     <div class="note-title">Заметки</div>

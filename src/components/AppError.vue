@@ -4,7 +4,7 @@
       <h5 class="error-title">Ошибка 404</h5>
       <div class="error-text">Страница не найдена</div>
       <div class="error-cross">
-        <i class="fa-solid fa-xmark"></i>
+        <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
       </div>
     </div>
   </div>

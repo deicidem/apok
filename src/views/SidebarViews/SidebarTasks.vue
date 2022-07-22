@@ -17,7 +17,7 @@
           :sortOptions="getSortOptions"
           :searchOptions="getSearchOptions"
         ></app-search>
-        <app-table v-if="tasks != null">
+        <app-table v-if="tasks != null" :disabled="isPending">
           <thead>
             <tr>
               <th class="col-checkbox center">

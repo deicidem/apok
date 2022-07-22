@@ -11,6 +11,7 @@
       :groups="getGroups"
       @select="setActiveGroup"
       :activeGroup="getActiveGroup"
+      :pending="isPending"
     ></admin-groups-content-table>
     <app-pagination
       :page-count="getPagination.last"

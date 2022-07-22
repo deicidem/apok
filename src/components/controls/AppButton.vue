@@ -48,7 +48,7 @@ export default {
 <style lang="scss" scoped>
 .button {
   position: relative;
-  z-index: 1;
+  z-index: 0;
 
   display: flex;
   align-items: center;

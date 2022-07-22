@@ -1,63 +1,66 @@
 <template>
   <div class="component">
     <form class="component-form" @submit.prevent>
-
       <div class="component-form__item" v-if="sortOptions != null">
-          <app-select
-            ref="sort-select"
-            label="Сортировать:"
-            type="small"
-            class="component-form__input"
-            @change="onSortSelect"
-            :options="sortOptions"
-          ></app-select>
-          <app-button
+        <app-select
+          ref="sort-select"
+          label="Сортировать:"
+          size="small"
           class="component-form__input"
-          type="button-small-svg button-svg-white"
+          @change="onSortSelect"
+          :options="sortOptions"
+        ></app-select>
+
+        <app-button
+          class="component-form__input"
+          size="small"
+          type="button-svg button-svg-white"
           @click="onDescChange"
         >
-            <i
-              v-if="desc"
-              class="icon icon-ic_fluent_arrow_sort_down_20_regular"
-            ></i>
-            <i v-else class="icon icon-ic_fluent_arrow_sort_up_20_regular"></i>
-          </app-button>
+          <i
+            v-if="desc"
+            class="icon icon-ic_fluent_arrow_sort_down_20_regular"
+          ></i>
+          <i v-else class="icon icon-ic_fluent_arrow_sort_up_20_regular"></i>
+        </app-button>
       </div>
 
       <div class="component-form__item" v-if="searchOptions != null">
-          <app-select
-            ref="search-select"
-            label="Поиск:"
-            class="component-form__input"
-            @change="searchField = $event"
-            type="small"
-            :options="searchOptions"
-          ></app-select>
-          <app-input
-            class="component-form__input"
-            :value="searchValue"
-             type="c-input-small" 
-            @input="searchValue = $event"
-          ></app-input>
-          <app-button
-            class="component-form__input"
-            type="button-small-svg button-svg-white"
-            @click="$emit('search', {field: searchField, value: searchValue})"
-            >
-            <i class="icon icon-ic_fluent_search_20_regular"></i>
-          </app-button>
+        <app-select
+          ref="search-select"
+          label="Поиск:"
+          class="component-form__input"
+          @change="searchField = $event"
+          size="small"
+          :options="searchOptions"
+        ></app-select>
 
+        <app-input
+          class="component-form__input"
+          :value="searchValue"
+          size="small"
+          @input="searchValue = $event"
+        ></app-input>
+
+        <app-button
+          class="component-form__input"
+          type="buttonl-svg button-svg-white"
+          size="small"
+          @click="$emit('search', { field: searchField, value: searchValue })"
+        >
+          <i class="icon icon-ic_fluent_search_20_regular"></i>
+        </app-button>
       </div>
     </form>
 
     <app-button
-    v-if="searchOptions != null"
+      v-if="searchOptions != null"
       class="component-button component-button__clear"
-      type="button-small-white"
+      type="button-white"
+      size="small"
       @click="onClear()"
       >Сбросить
     </app-button>
-
   </div>
 </template>
 
@@ -94,10 +97,12 @@ export default {
     },
 
     onClear() {
-      this.$refs['search-select'].clear();
-      this.$refs['sort-select'].clear();
-      this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
-      this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
+      this.$refs["search-select"].clear();
+      this.$refs["sort-select"].clear();
+      this.searchField =
+        this.searchOptions == null ? null : this.searchOptions[0].value;
+      this.sortField =
+        this.sortOptions == null ? null : this.sortOptions[0].value;
 
       this.desc = false;
       this.searchValue = null;
@@ -106,10 +111,11 @@ export default {
   },
 
   mounted() {
-    this.searchField = this.searchOptions == null ? null : this.searchOptions[0].value;
-    this.sortField = this.sortOptions == null ? null : this.sortOptions[0].value;
-  }
-
+    this.searchField =
+      this.searchOptions == null ? null : this.searchOptions[0].value;
+    this.sortField =
+      this.sortOptions == null ? null : this.sortOptions[0].value;
+  },
 };
 </script>
 
@@ -143,8 +149,6 @@ export default {
     }
 
     &__input {
-      height: 28px;
-      min-width: 20px;
       margin-right: 10px;
 
       &:last-child {

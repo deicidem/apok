@@ -1,11 +1,10 @@
 <template>
   <div class="c-block">
-    <label class="c-input-wrapper" :class="classes">
+    <label class="c-input-wrapper" :class="size">
       <input
         placeholder=" "
         class="c-input"
         v-model="localValue"
-        :type="type"
         :class="{
           'c-invalid': invalid,
           'c-input-with-icon': icon != null,
@@ -31,10 +30,7 @@ export default {
     invalid: Boolean,
     error: String,
     inputClass: String,
-    type: {
-      type: String,
-      default: "text",
-    },
+    size: String,
     icon: {
       type: String,
       default: null,
@@ -57,11 +53,6 @@ export default {
         }
       }
       return res;
-    },
-
-    classes() {
-      let result = this.type;
-      return result;
     },
   },
 
@@ -111,13 +102,6 @@ export default {
     color: $color-main;
     font-size: 13px;
     top: -25%;
-  }
-
-  &-small {
-    input {
-      padding: 4px 15px;
-      font-size: 12px;
-    }
   }
 
   &-img {
@@ -205,5 +189,12 @@ export default {
 
 .c-input-wrapper:focus-within svg path {
   fill: $color-main;
+}
+
+.small {
+  input {
+    padding: 4px 15px;
+    font-size: 12px;
+  }
 }
 </style>

@@ -1,14 +1,7 @@
 <template>
-  <div class="c-select">
-    <div
-      class="c-selected"
-      :class="{ 'c-selected-small': type == 'small' }"
-      @click="showSelect = !showSelect"
-    >
-      <div
-        class="c-select__icon"
-        :class="{ 'c-select__icon-small': type == 'small' }"
-      >
+  <div class="c-select" :class="classes">
+    <div class="c-selected" @click="showSelect = !showSelect">
+      <div class="c-select__icon">
         <i class="icon icon-ic_fluent_triangle_down_20_filled"></i>
       </div>
 
@@ -21,7 +14,6 @@
         @click="onSelect(i)"
         v-for="(option, i) in options"
         :key="option.id"
-        :class="{ 'c-select__option-small': type == 'small' }"
       >
         {{ option.text }}
       </div>
@@ -31,7 +23,7 @@
 
 <script>
 export default {
-  props: ["options", "label", "type"],
+  props: ["options", "label", 'type'],
 
   data: () => ({
     showSelect: false,
@@ -44,6 +36,11 @@ export default {
         return this.options[this.selectedOptionIndex];
       }
       return null;
+    },
+
+    classes() {
+      let result = this.type;
+      return result;
     },
   },
 

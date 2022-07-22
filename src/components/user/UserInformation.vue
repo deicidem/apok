@@ -219,5 +219,7 @@ export default {
   margin-left: 30px;
   padding-left: 8px;
   line-height: 32px;
+  border: 1px solid transparent;
+  overflow: hidden;
 }
 </style>

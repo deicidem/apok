@@ -124,7 +124,7 @@
 
       <app-button
         v-show="title == 'Регистрация'"
-        type="button-g "
+        type="button-big-g "
         class="c-form__item"
         :disabled="pending"
       >
@@ -133,7 +133,7 @@
 
       <app-button
         v-show="title == 'Создание пользователя'"
-        type="button-g "
+        type="button-big-g "
         class="c-form__item"
         :disabled="pending"
       >
@@ -146,7 +146,7 @@
         v-slot="{ navigate }"
       >
         <app-button
-          type="button-white"
+          type="button-big-white"
           @click="navigate"
           :disabled="pending"
           class="c-form__item"
@@ -178,7 +178,9 @@ export default {
     AppButton,
     AppCheckbox,
   },
+
   props: ["title", "pending"],
+
 
   data() {
     return {
@@ -295,6 +297,7 @@ export default {
       transform: translate(-50%, -50%);
       text-align: center;
       margin: 0;
+
       i {
         font-size: 30px;
       }

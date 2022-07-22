@@ -36,24 +36,16 @@
         </div>
 
         <div class="header-menu__buttons">
-          <div
-            class="button__wrapper header-menu__button-wrapper"
-            v-if="isAuth"
-          >
-            <app-button
-              type="button-svg"
-              class="header-menu__button"
-              @click="onLogout"
-              tooltip="Выйти"
+          <div class="header-menu-button" v-if="isAuth">
+            <app-button type="button-big-svg" @click="onLogout" tooltip="Выйти"
               ><i class="icon icon-ic_fluent_sign_out_20_regular"></i
             ></app-button>
           </div>
 
-          <div class="button__wrapper header-menu__button-wrapper" v-else>
+          <div class="header-menu-button" v-else>
             <router-link to="/login" custom v-slot="{ navigate }">
               <app-button
-                type="button-svg"
-                class="header-menu__button"
+                type="button-big-svg"
                 tooltip="Авторизоваться"
                 @click="navigate"
               >
@@ -62,11 +54,10 @@
             </router-link>
           </div>
 
-          <div class="button__wrapper header-menu__button-wrapper" v-if="isAuth">
+          <div class="header-menu-button" v-if="isAuth">
             <router-link to="/admin" custom v-slot="{ navigate }">
               <app-button
-                type="button-svg"
-                class="header-menu__button"
+                type="button-big-svg"
                 button-class="header-menu__button_custom"
                 tooltip="Панель администратора"
                 @click="navigate"
@@ -188,6 +179,7 @@ export default {
       }
     }
   }
+
   &-menu {
     display: flex;
     align-items: center;
@@ -202,14 +194,10 @@ export default {
       display: flex;
     }
 
-    &__button {
-      padding: 0;
-      background: $white;
+    &-button {
       margin-left: 10px;
-      width: 40px;
-      height: 40px;
-      i {
-        font-size: 30px;
+      &:first-child {
+        margin-left: 0;
       }
     }
   }

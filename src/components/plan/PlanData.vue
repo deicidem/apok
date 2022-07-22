@@ -51,6 +51,7 @@
               >
               </plan-data-input-textarea>
             </template>
+            
             <template v-else>
               <plan-data-input-text
                 :title="data.title"

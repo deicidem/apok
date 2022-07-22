@@ -1,6 +1,6 @@
 <template>
   <div class="c-block">
-    <label class="c-input-wrapper">
+    <label class="c-input-wrapper" :class="classes">
       <input
         placeholder=" "
         class="c-input"
@@ -16,6 +16,7 @@
 
       <i v-if="icon != null" class="c-input-img" :class="iconClass"></i>
     </label>
+
     <div v-if="error != null && invalid" class="c-error-tooltip">
       {{ error }}
     </div>
@@ -39,11 +40,13 @@ export default {
       default: null,
     },
   },
+
   data() {
     return {
       localValue: null,
     };
   },
+
   computed: {
     iconClass() {
       let res = "";
@@ -55,14 +58,22 @@ export default {
       }
       return res;
     },
+
+    classes() {
+      let result = this.type;
+      return result;
+    },
   },
+
   mounted() {
     this.localValue = this.value;
   },
+
   watch: {
     localValue: function () {
       this.$emit("input", this.localValue);
     },
+
     value: function () {
       this.localValue = this.value;
     },
@@ -85,6 +96,7 @@ export default {
   box-shadow: $shadow-small;
   color: $color-main;
   line-height: 18px;
+
   &[type="password"] {
     font-family: Verdana, sans-serif;
   }
@@ -99,6 +111,13 @@ export default {
     color: $color-main;
     font-size: 13px;
     top: -25%;
+  }
+
+  &-small {
+    input {
+      padding: 4px 15px;
+      font-size: 12px;
+    }
   }
 
   &-img {

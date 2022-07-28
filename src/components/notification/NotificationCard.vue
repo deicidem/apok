@@ -1,38 +1,38 @@
 <template>
-  <div class="alert-item">
+  <div class="notification-item" :class="{disabled}">
     <div
-      class="alert-item__unread unread"
-      :class="[theme]"
-      v-show="!seen"
+      class="notification-item__unread unread"
+      :class="[type]"
+      v-show="!read"
     ></div>
 
-    <div class="alert-item__content">
-      <div class="icon" @click="getTheme(theme)">
-        <div class="icon__child" :class="'icon__' + [theme]">
+    <div class="notification-item__content">
+      <div class="icon" @click="getTheme(type)">
+        <div class="icon__child" :class="'icon__' + [type]">
           <i
-            v-if="[theme] == 'task'"
-            class="icon icon-ic_fluent_clipboard_task_20_regular"
+            v-if="[type] == 'task'"
+            class="icon icon-ic_fluent_clipboard_bullet_list_ltr_20_regular"
           ></i>
 
           <i
-            v-if="[theme] == 'access'"
-            class="icon icon-ic_fluent_lock_open_20_regular"
+            v-if="[type] == 'group'"
+            class="icon icon-ic_fluent_people_team_20_regular"
           ></i>
 
           <i
-            v-if="[theme] == 'data'"
-            class="icon icon-ic_fluent_arrow_download_20_regular"
+            v-if="[type] == 'request'"
+            class="icon icon-ic_fluent_image_20_regular"
           ></i>
         </div>
       </div>
-      <div class="alert-item__info">
-        <h2>{{ text }}</h2>
+      <div class="notification-item__info">
+        <h2>{{ message }}</h2>
 
-        <!-- <p :class="'alert-item__' + [theme]">Посмотреть результат</p> -->
+        <!-- <p :class="'notification-item__' + [type]">Посмотреть результат</p> -->
       </div>
     </div>
 
-    <div class="alert-delete">
+    <div class="notification-delete">
       <app-button
         @click="$emit('delete')"
         type="button-svg  button-svg-r"
@@ -52,16 +52,15 @@ export default {
   },
 
   props: {
-    text: String,
-    icon: String,
-    seen: Boolean,
-    result: String,
-    theme: String,
+    message: String,
+    read: Boolean,
+    type: String,
+    disabled: Boolean
   },
 
   methods: {
-    getTheme(theme) {
-      console.log(theme);
+    getTheme(type) {
+      console.log(type);
     },
   },
 };
@@ -83,16 +82,16 @@ export default {
     background: $text-green;
   }
 
-  &__access {
+  &__group {
     background: $text-plum;
   }
 
-  &__data {
+  &__request {
     background: $text-blue;
   }
 }
 
-.alert {
+.notification {
   &-item {
     position: relative;
 
@@ -105,16 +104,28 @@ export default {
     border-radius: 10px;
     background: $white;
     box-shadow: $shadow-big;
+    &.disabled {
+      &::after {
+        content: '';
+        border-radius: 10px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(#eee, 0.65);
+        top: 0;
+        left: 0;
+      }
+    }
 
     &__task {
       color: $text-green;
     }
 
-    &__access {
+    &__group {
       color: $text-plum;
     }
 
-    &__data {
+    &__request {
       color: $text-blue;
     }
 
@@ -126,6 +137,7 @@ export default {
       position: absolute;
       top: -4px;
       left: -4px;
+      z-index: 10;
     }
 
     &__img {
@@ -179,7 +191,6 @@ export default {
 .unread {
   width: 12px;
   height: 12px;
-
   background: $gradient;
   border-radius: 50%;
 }
@@ -188,16 +199,16 @@ export default {
   background: $text-green;
 }
 
-.access {
+.group {
   background: $text-plum;
 }
 
-.data {
+.request {
   background: $text-blue;
 }
 
 @media screen and (max-width: 1440px) {
-  .alert {
+  .notification {
     &-item {
       margin-bottom: 16px;
       padding: 8px;

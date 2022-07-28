@@ -16,7 +16,14 @@
   border-radius: 10px;
   border: none;
   box-shadow: $shadow-big;
-
+  &-link {
+    font-size: 12px;
+    margin-left: 15px;
+    margin-top: 5px;
+    color: $color-main;
+    appearance: none;
+    
+  }
   &-title {
     text-align: center;
     font-size: 20px;

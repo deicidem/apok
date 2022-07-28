@@ -5,11 +5,10 @@
 
       <router-link to="/main/results" custom v-slot="{ navigate }">
         <div class="back search-result" @click="navigate">
+          <span class="back-subtitle-w">Результат</span>
           <div class="back-arrow-w">
             <i class="icon icon-ic_fluent_arrow_right_20_regular"></i>
           </div>
-
-          <span class="back-subtitle-w">Результат</span>
         </div>
       </router-link>
     </template>
@@ -92,6 +91,9 @@ export default {
     display: flex;
     transform: translateY(-50%);
     cursor: pointer;
+    .back-arrow-w {
+      margin-left: 10px;
+    }
   }
 
   &-title {

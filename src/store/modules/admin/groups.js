@@ -271,19 +271,18 @@ export default {
     
     
 
-    async addUsers({commit}, payload) {
-      let res = await groupsApi.addUsers({
-        users: payload.users.map(e => e.id),
+    async addUsers(store, payload) {
+      await groupsApi.addUsers({
+        users: payload.users.map(e => {
+          console.log(e);
+          return e.id;
+        }),
         groupId: payload.groupId
       });
-      let group = res.data.data;
-      commit('addGroup', group)
+      // return await dispatch('fetchGroups',getters.getPagination.currentPage);
+      // let group = res.data.data;
+      // commit('addGroup', group)
     },
-
-    async loadTypes({commit}) {
-      let res = await groupsApi.getTypes();
-      commit('setTypes', res)
-    }
   },
 }
 

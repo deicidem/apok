@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import tasks from './modules/tasks'
 import users from './modules/users'
 import plans from './modules/plans'
+import notifications from './modules/notifications'
 import alerts from './modules/alerts'
 import map from './modules/map'
 import search from './modules/search'
@@ -79,10 +80,11 @@ export default new Vuex.Store({
     tasks,
     users,
     plans,
-    alerts,
+    notifications,
     map,
     search,
     results,
+    alerts,
     files,
     admin,
     groups,

@@ -1,6 +1,15 @@
 import server from "@/api/http";
 
-export async function all({page, startDate, endDate, startCloudiness, endCloudiness, months, satelites, polygon}, params) {
+export async function all({
+  page,
+  startDate,
+  endDate,
+  startCloudiness,
+  endCloudiness,
+  months,
+  satelites,
+  polygon
+}, params) {
   let globalSearch = {
     page: page,
     startDate: startDate.toJSON(),
@@ -10,11 +19,16 @@ export async function all({page, startDate, endDate, startCloudiness, endCloudin
     polygon
   }
   for (let i = 0; i < months.length; i++) {
-    globalSearch[`months[${i}]`] = months[i].cnt;    
+    globalSearch[`months[${i}]`] = months[i].cnt;
     // params[`months[${i}]`] = months[i];    
   }
   for (let i = 0; i < satelites.length; i++) {
-    globalSearch[`satelites[${i}]`] = satelites[i];    
+    globalSearch[`satelites[${i}]`] = satelites[i];
   }
-  return await server.get('dzzs', {params: {...params, ...globalSearch}});
+  return await server.get('dzzs', {
+    params: {
+      ...params,
+      ...globalSearch
+    },
+  }, {errorTitle: "Ошибка при поиске снимков"});
 }

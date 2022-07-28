@@ -7,19 +7,17 @@
     <template v-slot:popups>
       <app-delete-confirmation ref="deleteConfirm"></app-delete-confirmation>
       <groups-sidebar-form
-        v-show="showPopup"
-        @close="showPopup = false"
+        v-show="showCreateGroupForm"
+        @close="showCreateGroupForm = false"
       ></groups-sidebar-form>
     </template>
-
-    
 
     <template v-slot:content>
       <div class="groups-wrapper">
         <portal to="group-popup">
-      <groups-popup>
-      </groups-popup>
-    </portal>
+          <groups-popup v-if="showGroupPopup" @close="showGroupPopup = false">
+          </groups-popup>
+        </portal>
         <div class="groups-content">
           <app-search
             @search="filterBySearch($event)"
@@ -34,8 +32,9 @@
             :pending="isPending"
             @delete="onDelete"
             @select="selectGroup"
+            @open="openGroup"
+            @quit="onQuit"
           ></groups-information>
-
 
           <app-pagination
             :page-count="getPagination.last"
@@ -47,7 +46,9 @@
             <app-button
               class="groups-button"
               type="button-r"
-              :disabled="noItemsSelected || notDeletableItemSelected || isPending"
+              :disabled="
+                noItemsSelected || notDeletableItemSelected || isPending
+              "
               @click="onDeleteBanch"
             >
               Удалить выбранное
@@ -55,7 +56,7 @@
             <app-button
               class="groups-button"
               type="button-g"
-              @click="showPopup = true"
+              @click="showCreateGroupForm = true"
             >
               Добавить новую группу
             </app-button>
@@ -87,12 +88,13 @@ export default {
     AppSearch,
     AppPagination,
     AppDeleteConfirmation,
-      GroupsPopup,
+    GroupsPopup,
   },
 
   data: () => ({
     loaded: false,
-    showPopup: false,
+    showCreateGroupForm: false,
+    showGroupPopup: false,
   }),
 
   async mounted() {
@@ -120,18 +122,17 @@ export default {
       }
       return res;
     },
-     notDeletableItemSelected() {
+    notDeletableItemSelected() {
       let groups = this.getGroups;
       let res = false;
       for (let i = 0; i < groups?.length; i++) {
-        if (groups[i]?.selected && !groups[i]?.deletable) {
+        if (groups[i]?.selected && !groups[i]?.isOwner) {
           res = true;
           break;
         }
       }
       return res;
     },
-
   },
 
   methods: {
@@ -140,11 +141,30 @@ export default {
       "fetchAll",
       "sortBy",
       "filterBySearch",
-
+      "setActiveGroup",
       "deleteGroups",
       "selectGroup",
       "deleteGroup",
+      "quitGroup",
     ]),
+    openGroup(id) {
+      this.setActiveGroup(id);
+      this.showGroupPopup = true;
+    },
+    async onQuit(id) {
+      const ok = await this.$refs.deleteConfirm.show({
+        title: "Вы уверены, что хотите покинуть эту группу?",
+        message:
+          "Выход из этой группы приведет к потере всех связанных с ней данных.",
+        actionMessage: "Покинуть",
+      });
+      if (ok) {
+        this.pending = true;
+        await this.quitGroup(id);
+        this.pending = false;
+      }
+    },
+
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эту группу?",
@@ -172,7 +192,6 @@ export default {
         this.pending = false;
       }
     },
-
   },
 };
 </script>
@@ -195,7 +214,7 @@ export default {
     align-items: center;
     justify-content: center;
   }
-  
+
   &-button {
     flex: 1 1 auto;
     margin-right: 20px;
@@ -204,5 +223,4 @@ export default {
     }
   }
 }
-
 </style>

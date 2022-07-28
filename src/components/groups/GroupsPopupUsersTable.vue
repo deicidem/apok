@@ -22,6 +22,7 @@
       <tr v-for="(item, i) in users" :key="i">
         <td class="col-checkbox center">
           <app-checkbox
+            v-if="owner != item.id"
             :mini="true"
             :model-value="item.selected"
             @change="$emit('select', { index: i, value: $event })"
@@ -34,18 +35,31 @@
         <td>
           {{ item.lastName }}
         </td>
-        <td>
+        <!-- <td>
           {{ item.organisation }}
-        </td>
+        </td> -->
 
         <td>
-          <app-button
-            type="button-svg button-svg-r"
-            tooltip="Удалить"
-            @click="$emit('delete', item.id)"
-          >
-            <i class="icon icon-ic_fluent_delete_20_regular"></i
-          ></app-button>
+          <div class="groups-buttons">
+            <app-button
+              v-if="isRequests && owner != item.id"
+              type="button-svg button-svg-w"
+              class="groups-button"
+              tooltip="Подтвердить"
+              @click="$emit('verify', item.id)"
+            >
+              <i class="icon icon-ic_fluent_checkmark_20_regular"></i
+            ></app-button>
+            <app-button
+              v-if="owner != item.id"
+              type="button-svg button-svg-r"
+              class="groups-button"
+              tooltip="Удалить"
+              @click="$emit('delete', item.id)"
+            >
+              <i class="icon icon-ic_fluent_delete_20_regular"></i
+            ></app-button>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -64,7 +78,7 @@ export default {
     AppButton,
   },
 
-  props: ["users", "pending"],
+  props: ["users", "pending", "owner", "isRequests"],
 
   data: () => ({
     headers: [
@@ -78,11 +92,11 @@ export default {
         key: "lastName",
         active: false,
       },
-      {
-        title: "Организация",
-        key: "organisation",
-        active: false,
-      },
+      // {
+      //   title: "Организация",
+      //   key: "organisation",
+      //   active: false,
+      // },
     ],
   }),
   computed: {
@@ -108,4 +122,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.groups-admin {
+  color: $color-main;
+  font-size: 20px;
+  display: inline;
+}
+.groups-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.groups-button {
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
 </style>

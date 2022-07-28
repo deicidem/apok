@@ -11,7 +11,7 @@
         <i class="icon icon-ic_fluent_chevron_double_left_20_regular"></i>
       </app-button>
     </li>
-    <li class="pagination-page">
+    <li class="pagination-page pagination-page__prev">
       <app-button
         type="button-svg button-svg-white"
         size="small"
@@ -23,7 +23,7 @@
       </app-button>
     </li>
     <li
-      class="pagination-page"
+      class="pagination-page "
       v-for="i in pages"
       :key="i"
     >
@@ -34,7 +34,7 @@
         {{ i }}
       </app-button>
     </li>
-    <li class="pagination-page">
+    <li class="pagination-page pagination-page__next">
       <app-button
         type="button-svg button-svg-white"
         size="small"
@@ -107,8 +107,13 @@ export default {
   list-style: none;
 
   &-page {
-    margin: 0 5px;
-
+    margin: 0 3px;
+    &__prev {
+      margin-right: 15px;
+    }
+    &__next {
+      margin-left: 15px;
+    }
     &__link{
       .button{
         font-size: 16px !important;

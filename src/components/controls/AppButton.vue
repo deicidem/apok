@@ -66,7 +66,7 @@ export default {
   box-shadow: $shadow_small;
   cursor: pointer;
   overflow: hidden;
-  transition-delay: 0.2s;
+  // transition-delay: 0.2s;
   transition: all 0.2s ease-out;
 
   &__wrapper {
@@ -75,11 +75,41 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    &:hover {
+      .tooltiptext {
+        display: block;
+      }
+      .button {
+        &:not(:disabled) {
+          // &:hover {
+          // transition-delay: 0s;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 6px rgba($black, 0.2);
+          // }
+
+          &:after {
+            left: 100%;
+          }
+        }
+      }
+    }
+    &:active {
+      .button {
+        &:not(:disabled) {
+          transition: all 0.1s ease-out;
+          transform: translateY(1px);
+          box-shadow: 0 0px 2px rgba($black, 0.1);
+          &:after {
+            left: 0%;
+          }
+        }
+      }
+    }
   }
 
-  &:hover + .tooltiptext {
-    display: block;
-  }
+  // &:hover + .tooltiptext {
+  //   display: block;
+  // }
 
   &:disabled {
     cursor: no-drop;
@@ -109,27 +139,27 @@ export default {
     z-index: -1;
   }
 
-  &:not(:disabled) {
-    &:hover {
-      transition-delay: 0s;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 6px rgba($black, 0.2);
-    }
+  // &:not(:disabled) {
+  //   &:hover {
+  //     transition-delay: 0s;
+  //     transform: translateY(-1px);
+  //     box-shadow: 0 2px 6px rgba($black, 0.2);
+  //   }
 
-    &:active {
-      transition: all 0.1s ease-out;
-      transform: translateY(1px);
-      box-shadow: 0 0px 2px rgba($black, 0.1);
-    }
+  //   &:active {
+  //     transition: all 0.1s ease-out;
+  //     transform: translateY(1px);
+  //     box-shadow: 0 0px 2px rgba($black, 0.1);
+  //   }
 
-    &:hover:after {
-      left: 100%;
-    }
+  //   &:hover:after {
+  //     left: 100%;
+  //   }
 
-    &:active:after {
-      left: 0%;
-    }
-  }
+  //   &:active:after {
+  //     left: 0%;
+  //   }
+  // }
 
   &-g {
     .button {
@@ -182,18 +212,22 @@ export default {
       &::after {
         background: $gradient-w;
       }
-
-      &:hover {
+    }
+     &:hover {
+      .button:not(:disabled) {
+        // &:hover {
         box-shadow: 0 2px 6px rgba(#000, 0.2);
+        // }
       }
-
-      &:active {
+    }
+    &:active {
+      .button:not(:disabled) {
         transition: all 0.1s ease-out;
         transform: translateY(1px);
         box-shadow: 0 0px 2px rgba($black, 0.1);
       }
     }
-
+   
     &-white {
       .button {
         color: $color-main;
@@ -218,7 +252,13 @@ export default {
     .button {
       color: $color-red;
       font-size: 20px;
-      &:hover + .tooltiptext {
+      // &:hover + .tooltiptext {
+      //   display: block;
+      //   color: $color-red;
+      // }
+    }
+    &:hover {
+      .tooltiptext {
         display: block;
         color: $color-red;
       }

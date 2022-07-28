@@ -1,4 +1,4 @@
-import * as userApi from "@/api/user";
+import * as userFilesApi from "@/api/userFiles";
   
 export default {
   namespaced: true,
@@ -116,7 +116,7 @@ export default {
       commit('setPending', true);
       let searchField = getters.getSearchBy?.field;
       let searchValue = getters.getSearchBy?.value;
-      let res = await userApi.getFiles({
+      let res = await userFilesApi.getFiles({
         page,
         [searchField]: searchValue,
         desc: getters.getSort?.desc,
@@ -176,12 +176,12 @@ export default {
           ids.push(getters.getFiles[i].id);
         } 
       }
-      await userApi.deleteFiles(ids);
+      await userFilesApi.deleteFiles(ids);
       return await dispatch('fetchFiles',getters.getPagination.currentPage);
     },
     async deleteFile({dispatch, getters}, i) {
       let id = getters.getFiles[i].id;
-      let {status} = await userApi.deleteFile(id);
+      let {status} = await userFilesApi.deleteFile(id);
       if (status == 200) {
         return await dispatch('fetchFiles',getters.getPagination.currentPage);
       }

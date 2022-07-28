@@ -35,8 +35,8 @@
           >
             <i class="icon" :class="route.icon"></i>
 
-            <div class="notification" v-if="route.name == 'Мои уведомления'">
-              <div class="notification-number">{{ alerts.length }}</div>
+            <div class="notification" v-if="route.name == 'Мои уведомления'" v-show="getUnreadCount > 0">
+              <div class="notification-number">{{ getUnreadCount }}</div>
             </div>
           </div>
         </router-link>
@@ -84,7 +84,7 @@ export default {
         {
           name: "Мои уведомления",
           needAuth: true,
-          path: "/main/alerts",
+          path: "/main/notifications",
           icon: "icon-ic_fluent_alert_20_regular",
         },
         {
@@ -111,9 +111,7 @@ export default {
 
   computed: {
     ...mapGetters({ active: "getSidebarState" }),
-    ...mapGetters("alerts", {
-      alerts: "getAlerts",
-    }),
+    ...mapGetters("notifications", ["getUnreadCount"]),
     ...mapGetters("users", ["isAuth"]),
   },
 

@@ -1,77 +1,39 @@
 export default {
   namespaced: true,
   state: {
-    alerts: setAlerts(),
+    alerts: [],
+    counter: 0,
   },
   getters: {
     getAlerts(state) {
       return state.alerts;
     },
-  },
+    getCounter(state) {
+      return state.counter;
+    }
+  }, 
   mutations: {
-    deleteAlert(state, i) {
-      state.alerts.splice(i, 1);
+    addAlert(state, payload) {
+      return state.alerts.push(payload);
+    },
+    removeAlert(state, id) {
+      state.alerts = state.alerts.filter(e => e.id !== id)
+    },
+    increaseCounter(state) {
+      state.counter += 1;
     }
   },
   actions: {
-    deleteAlert(store, i) {
-      store.commit('deleteAlert', i)
+    addAlert({commit, dispatch, getters}, payload) {
+      payload.id = getters.counter;
+      commit('increaseCounter')
+      commit('addAlert', payload);
+      setTimeout(() => {
+        dispatch('deleteAlert', payload.id)
+      }, 10000)
+    },
+    deleteAlert({commit}, payload) {
+      commit('removeAlert', payload);
     }
   }
-}
-
- function setAlerts() {
-  
-
-  return [
-    {
-      id: 1,
-      text: 'Задача №1 “Выявление изменений” выполнена',
-      seen: false,
-      result: 'https://gptl.ru/',
-      theme: 'task',
-    },
-    {
-      id: 2,
-      text: 'Задача №2 “Выявление изменений” выполнена',
-      seen: true,
-      result: 'https://gptl.ru/',
-      theme: 'task',
-    },
-    {
-      id: 3,
-      text: 'Задача №3 “Выявление изменений” выполнена',
-      seen: false,
-      result: 'https://gptl.ru/',
-      theme: 'task',
-    },
-    {
-      id: 4,
-      text: 'Загрузка данных выполнена',
-      seen: false,
-      result: 'https://gptl.ru/',
-      theme: 'data',
-    },
-    // {
-    //   id: 5,
-    //   text: 'Доступ  ...  предоставлен',
-    //   seen: false,
-    //   result: 'https://gptl.ru/',
-    //   theme: 'access',
-    // },
-    {
-      id: 6,
-      text: 'Загрузка данных выполнена',
-      seen: false,
-      result: 'https://gptl.ru/',
-      theme: 'data',
-    },
-    // {
-    //   id: 7,
-    //   text: 'Доступ  ...  предоставлен',
-    //   seen: false,
-    //   result: 'https://gptl.ru/',
-    //   theme: 'access',
-    // },
-  ]
 }

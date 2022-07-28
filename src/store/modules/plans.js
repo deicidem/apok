@@ -1,5 +1,5 @@
 import * as plansApi from '@/api/plans';
-import * as userApi from '@/api/user';
+import * as userTasksApi from '@/api/userTasks';
 
 export default {
   namespaced: true,
@@ -130,7 +130,7 @@ export default {
         links,
         note
       });
-      userApi.createTask({
+      userTasksApi.createTask({
         dzzs,
         params,
         vectors,

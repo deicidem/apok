@@ -99,7 +99,7 @@ export default {
           value: "8987654321",
           editable: true,
         },
-        organization: {
+        organisation: {
           title: "Организация",
           value: "Центр инновационных технологий",
           editable: true,
@@ -119,6 +119,8 @@ export default {
     this.user.firstName.value = this.getUser.firstName;
     this.user.lastName.value = this.getUser.lastName;
     this.user.email.value = this.getUser.email;
+    this.user.phone.value = this.getUser.phoneNumber;
+    this.user.organisation.value = this.getUser.organisation;
   },
 
   methods: {
@@ -130,6 +132,8 @@ export default {
         firstName: this.user.firstName.value,
         lastName: this.user.lastName.value,
         email: this.user.email.value,
+        phoneNumber: this.user.phone.value,
+        organisation: this.user.organisation.value
       });
     },
 

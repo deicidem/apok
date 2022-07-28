@@ -14,6 +14,7 @@
         <th>Фамилия</th>
         <th>Почта</th>
         <th>Дата регистрации</th>
+        <th>Заблокирован</th>
       </tr>
     </thead>
 
@@ -37,6 +38,7 @@
         <td>{{ user.lastName }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.date }}</td>
+        <td>{{ user.blocked ? 'Заблокирован' : 'Не заблокирован' }}</td>
       </tr>
     </tbody>
   </admin-content-table>

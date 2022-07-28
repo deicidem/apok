@@ -9,6 +9,12 @@
               <div class="check">{{ group.title }}</div>
             </div>
           </div>
+           <div class="content-info__editable">
+            <p class="content-info__title">Описание</p>
+            <div class="content-edit">
+              <div class="check">{{ group.description}}</div>
+            </div>
+          </div>
           <div class="content-info__editable">
             <p class="content-info__title">Тип группы</p>
             <div class="content-edit">

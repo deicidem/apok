@@ -121,7 +121,7 @@ export default {
 
 <style lang="scss" scoped>
 .component {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -138,7 +138,7 @@ export default {
     }
 
     &__item {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       margin-right: 30px;
       display: flex;
       align-items: center;
@@ -149,7 +149,7 @@ export default {
     }
 
     &__input {
-      margin-right: 10px;
+      margin-right: 7px;
 
       &:last-child {
         margin-right: 0;

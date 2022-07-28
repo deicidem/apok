@@ -1,6 +1,6 @@
 <template>
   <form-base >
-    <div class="c-title">Авторизация</div>
+    <div class="c-title">Восстановление пароля</div>
 
     <form class="c-form" @submit.prevent>
       <app-input
@@ -19,35 +19,6 @@
         "
       ></app-input>
 
-      <app-input
-        class="c-form__input"
-        :value="password"
-        type="password"
-        @input="$v.password.$model = $event"
-        :invalid="
-          (!$v.password.minLength || !$v.password.required) && formInvalid
-        "
-        icon="icon icon-ic_fluent_lock_closed_20_regular"
-        label="Пароль"
-        :error="
-          !$v.password.required
-            ? 'Введите значение'
-            : !$v.password.minLength
-            ? 'Пароль должен содержать не менее 8 символов'
-            : null
-        "
-      ></app-input>
-
-        <router-link class="c-link" to="forgot-password">Забыли пароль?</router-link>
-
-      <div class="c-remember">
-        <app-checkbox
-          :model-value="remember"
-          @change="remember = $event"
-        ></app-checkbox>
-        <span class="c-remember__text">Запомнить меня</span>
-      </div>
-
       <app-button
         type="button-g"
         size="big"
@@ -57,26 +28,13 @@
       >
         Войти
       </app-button>
-
-      <router-link to="/registration" custom v-slot="{ navigate }">
-        <app-button
-          type="button-white"
-          size="big"
-          class="c-form__item"
-          @click="navigate"
-          :disabled="pending"
-        >
-          Зарегистироваться
-        </app-button>
-      </router-link>
     </form>
   </form-base>
 </template>
 
 <script>
 
-import { required, minLength,email } from "vuelidate/lib/validators";
-import AppCheckbox from "@/components/controls/AppCheckbox.vue";
+import { required, email } from "vuelidate/lib/validators";
 import AppInput from "@/components/controls/AppInput.vue";
 import AppButton from "@/components/controls/AppButton.vue";
 import FormBase from "@/components/auth/FormBase.vue";
@@ -84,7 +42,6 @@ import FormBase from "@/components/auth/FormBase.vue";
 export default {
   props: ['pending'],
   components: {
-    AppCheckbox,
     AppInput,
     AppButton,
     FormBase,
@@ -92,8 +49,6 @@ export default {
   data() {
     return {
       login: null,
-      password: null,
-      remember: false,
       submitStatus: null,
     };
   },
@@ -101,10 +56,6 @@ export default {
     login: {
       required,
       email,
-    },
-    password: {
-      required,
-      minLength: minLength(8),
     },
   },
   computed: {
@@ -118,8 +69,6 @@ export default {
         this.submitStatus = "SUBMIT";
         this.$emit('submit', {
             email: this.login,
-            password: this.password,
-            remember: this.remember,
           });
       } else {
         this.submitStatus = "FORM_INVALID";

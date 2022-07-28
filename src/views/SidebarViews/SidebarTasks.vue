@@ -118,7 +118,7 @@
               v-if="item.note != null"
             >
               <td td colspan="6">
-                <task-note :note="item.note" @close="showNote = false"></task-note>
+                <task-note :note="item.note" @close="showNote = false" @edit="updateTask({id: item.id, note: $event})"></task-note>
               </td>
             </tr>
 
@@ -281,7 +281,8 @@ export default {
       "deleteTask",
       "fetchAll", 
       "sortBy",
-      "filterBySearch"
+      "filterBySearch",
+      "updateTask"
     ]),
 
     selectAll(val) {

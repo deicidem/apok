@@ -37,21 +37,22 @@
 import AppButton from "@/components/controls/AppButton";
 
 export default {
-  data() {
-    return {
-      editable: false,
-    };
-  },
-
+  data: () => ({
+    editable: false,
+    value: null
+  }),
   props: ["note"],
 
   components: {
     AppButton,
   },
-
+  mounted() {
+    this.value = this.note;
+  },
   methods: {
     onEditDone() {
       this.editable = false;
+      this.$emit('edit', this.value);
     },
 
     onEdit(evt) {
@@ -87,7 +88,7 @@ export default {
     padding: 20px;
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: $shadow-small;
   }
 
   &-button {

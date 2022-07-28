@@ -1,19 +1,18 @@
 import server from "@/api/http";
 
-function fixTask(task) {
-  task.date = new Date(task.date);
-}
-
 export async function all(params) {
-  let res = await server.get('tasks', {params});
-  res.data.data.forEach(el => {
-    fixTask(el);
+  let res = await server.get('tasks', {
+    params,
+
+  }, {
+    errorTitle: "Ошибка при получении списка задач"
   });
   return res;
 }
 export async function one(id) {
-  let res = await server.get('tasks/' + id);
-  fixTask(res.data.data);
+  let res = await server.get('tasks/' + id, {
+    errorTitle: "Ошибка при получении задачи"
+  });
   return res;
 }
 
@@ -22,13 +21,18 @@ export async function deleteTasks(ids) {
   for (let i = 0; i < ids.length; i++) {
     params[`ids[${i}]`] = ids[i];
   }
-  return await server.delete('tasks', {
-    params
-  })
+  return await server.delete('tasks',
+    params,
+
+    {
+      errorTitle: "Ошибка при удалении задач"
+    })
 }
 
 export async function deleteTask(id) {
-  return await server.delete('tasks/' + id);
+  return await server.delete('tasks/' + id, {
+    errorTitle: "Ошибка при удалении задачи"
+  });
 }
 
 export async function add({
@@ -61,6 +65,8 @@ export async function add({
 
   formData.append('links', JSON.stringify(links));
   console.log(formData.getAll());
-  let data = await server.post('tasks', formData);
+  let data = await server.post('tasks', formData, {
+    errorTitle: "Ошибка при создании задачи"
+  });
   return data.data;
 }

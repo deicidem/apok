@@ -113,7 +113,7 @@ export default {
     padding: 20px;
     background: $white;
     border-radius: 20px;
-    box-shadow: $shadow-big;
+    box-shadow: $shadow-small;
 
     &__cross {
       position: absolute;

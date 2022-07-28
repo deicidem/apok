@@ -7,20 +7,8 @@ const instance = axios.create({
   withCredentials: true
 });
 
-instance.interceptors.response.use(
-  request => request,
-  error => {
-    // check network error
-    if(error.response === undefined){
-      error.response = { status: 0  }; // add new field networkErr
-    }
-
-    return Promise.reject(error);
-  }
-);
-
 export function addErrorHandler(fn) {
-  instance.interceptors.response.use(response => response,fn);
+  instance.interceptors.response.use(response => response, fn);
 }
 
 export default instance;

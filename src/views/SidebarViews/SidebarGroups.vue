@@ -201,6 +201,31 @@ export default {
 .groups {
   &-wrapper {
     padding: 30px;
+    .links {
+      font-size: 16px;
+      margin-bottom: 10px;
+      ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        list-style: none;
+      }
+      li {
+        margin: 0 10px;
+        padding: 0;
+        cursor: pointer;
+        &.active {
+          color: $color-main;
+        }
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   &-content {

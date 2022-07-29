@@ -26,17 +26,26 @@
         </div>
       </div>
       <div class="notification-item__info">
-        <h2>{{ message }}</h2>
-
+        {{ message }}
         <!-- <p :class="'notification-item__' + [type]">Посмотреть результат</p> -->
       </div>
     </div>
 
-    <div class="notification-delete">
+    <div class="notification-buttons">
+      <app-button
+        @click="$emit('read')"
+        type="button-svg  button-svg-w"
+        tooltip="Отметить как прочитанное"
+        class="notification-button"
+        v-if="!read"
+      >
+        <i class="icon icon-ic_fluent_checkmark_20_regular"></i>
+      </app-button>
       <app-button
         @click="$emit('delete')"
         type="button-svg  button-svg-r"
         tooltip="Удалить"
+        class="notification-button"
       >
         <i class="icon icon-ic_fluent_delete_20_regular"></i>
       </app-button>
@@ -154,20 +163,12 @@ export default {
     }
 
     &__info {
-      margin-left: 16px;
-
-      h2 {
-        margin: 0;
-        color: $text-grey;
-        font-weight: 400;
-        font-size: 14px;
-      }
-
-      p {
-        margin: 0;
-        font-weight: 400;
-        font-size: 12px;
-      }
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: $text-grey;
+      font-weight: 400;
+      margin: 0 15px;
     }
 
     &__trash {
@@ -181,10 +182,16 @@ export default {
     }
   }
 
-  &-delete {
-    position: relative;
+  &-buttons{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &-button {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 

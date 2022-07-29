@@ -56,6 +56,6 @@ export async function quit(id) {
 }
 export async function update(id, params) {
   return await server.put('user/groups/' + id, params, {
-    errorTitle: "Ошибка обновлении информации о группе"
+    errorTitle: "Ошибка при обновлении информации о группе"
   });
 }

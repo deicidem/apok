@@ -1,7 +1,54 @@
 <template>
   <admin-aside-block title="Информация о группе">
     <div class="content-info">
-      <div class="content-info__text">
+      <table class="content-info__table">
+          <tbody>
+            <tr>
+              <td>Название</td>
+              <td>
+                <span
+                  @blur="updateData.title = $event.target.innerText"
+                  :contenteditable="editable"
+                  :class="{ editable }"
+                >
+                  {{ group.title }}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Описание</td>
+              <td>
+                <span
+                  @blur="updateData.description = $event.target.innerText"
+                  :contenteditable="editable"
+                  :class="{ editable }"
+                >
+                  {{ group.description }}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>Тип</td>
+              <td>
+                <keep-alive>
+                <app-select v-if="editable" @change="updateData.type = $event" :options="groupTypesOptions" class="content-info__select" ></app-select>
+                <span v-else>{{ group.type }}</span>
+                </keep-alive>
+              </td>
+            </tr>
+            <tr>
+              <td>Владелец</td>
+              <td>
+                <router-link class="check link"
+                :to="{ path: '/admin/users', query: { userId: group.owner.id } }"
+              >
+                {{ group.owner.firstName }} {{ group.owner.lastName }}
+              </router-link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <!-- <div class="content-info__text">
         <div class="content-info__information">
           <div class="content-info__editable">
             <p class="content-info__title">Название</p>
@@ -32,9 +79,25 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="content-info__buttons">
+        <app-button
+            type="button-g"
+            class="content-info__button"
+            v-if="editable"
+            @click="onEditDone"
+          >
+            Готово
+          </app-button>
+          <app-button
+            type="button-white-gr"
+            class="content-info__button"
+            v-else
+            @click="editable = true"
+          >
+            Редактировать
+          </app-button>
         <app-button
           type="button-r"
           @click="$emit('delete', group.id)"
@@ -78,13 +141,44 @@
 <script>
 import AdminAsideBlock from "@/components/admin/AdminAsideBlock";
 import AppButton from "@/components/controls/AppButton";
-
+import AppSelect from "@/components/controls/AppSelect";
+import {mapGetters} from "vuex";
 export default {
   components: {
     AdminAsideBlock,
     AppButton,
+    AppSelect,
   },
   props: ["group"],
+  data: () => ({
+    updateData: {
+      title: null,
+      description: null,
+      type: 1,
+    },
+    editable: false
+  }),
+  computed: {
+    ...mapGetters("groupTypes", ["getGroupTypes"]),
+    groupTypesOptions() {
+      return this.getGroupTypes.map(el => ({text: el.title, value: el.id}))
+    }
+  },
+  mounted() {
+    this.updateData.title = this.group.title;
+    this.updateData.description = this.group.description;
+    this.updateData.type = this.group.typeId;
+  },
+  methods: {
+    onEditDone() {
+      this.editable = false;
+      this.$emit('update', {
+        title: this.updateData.title,
+        description: this.updateData.description,
+        type: this.updateData.type,
+      });
+    },
+  }
   // data() {
   //   return {
   //     info: {
@@ -153,12 +247,45 @@ export default {
   }
 
   &-info {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    &__text {
+    &__table {
+      font-size: 14px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      td {
+        padding: 7px;
+        vertical-align: top;
+        &:first-child {
+          color: $color-main;
+          padding-left: 0;
+        }
+        & span {
+          border-radius: 7px;
+          padding: 3px;
+          display: inline-block;
+          min-width: 100px;
+          max-width: 100%;
+        }
+        & .editable {
+          outline: 1px solid $color-main;
+          &:focus-visible {
+            outline: 1px solid $color-main;
+          }
+        }
+      }
+      margin-bottom: 10px;
+    }
+    &__select {
+      max-width: 200px;
+    }
+    &__buttons {
       display: flex;
-      flex-direction: column;
+    }
+    &__button {
+      flex: 1 1 auto;
+      margin-right: 15px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
 
     &__title {
@@ -179,18 +306,18 @@ export default {
       }
     }
 
-    &__buttons {
-      margin-top: 20px;
-      display: flex;
-    }
+    // &__buttons {
+    //   margin-top: 20px;
+    //   display: flex;
+    // }
 
-    &__button {
-      margin-right: 20px;
-      flex: 1 1 auto;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+    // &__button {
+    //   margin-right: 20px;
+    //   flex: 1 1 auto;
+    //   &:last-child {
+    //     margin-right: 0;
+    //   }
+    // }
 
     &__editable {
       display: flex;
@@ -202,13 +329,6 @@ export default {
       }
     }
   }
-}
-
-.check {
-  color: $text-grey;
-  font-size: 14px;
-  padding-left: 20px;
-  line-height: 20px;
 }
 
 .link{

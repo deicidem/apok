@@ -107,7 +107,7 @@ export default {
       addСoordinate(state, {
         coordinate
       }) {
-        state.areaPolygon.geometry.push(coordinate);
+        state.areaPolygon.geometry.push(L.latLng(coordinate.lat, coordinate.lng).wrap());
       },
       deleteCoordinate(state, {
         index
@@ -173,6 +173,13 @@ export default {
           };
         }
         state.circlePolygon.geometry.center = coordinate;
+        // if (state.circlePolygon.geometry == null) {
+        //   state.circlePolygon.geometry = {
+        //     center: L.latLng(coordinate.lat, coordinate.lng).wrap(),
+        //     radius: null
+        //   };
+        // }
+        // state.circlePolygon.geometry.center = L.latLng(coordinate.lat, coordinate.lng).wrap();
       },
       setFilePolygon(state, file) {
         state.filePolygon.geometry = file
@@ -452,6 +459,7 @@ export default {
           return;
         }
         let bounds = L.geoJSON(geoJson).getBounds();
+        console.log(L.geoJSON(geoJson));
         commit('setBounds', {
           bounds
         });

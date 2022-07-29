@@ -39,21 +39,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/users', ['fetchUsers', 'filterByGroup', 'setActiveUser', 'reloadUsers', 'fetchAll'])
+    ...mapActions('admin/users', ['fetchUsers', 'filterByGroup', 'setActiveUser', 'reloadUsers', 'filterBySearch', 'fetchAll'])
   },
   async mounted() {
     
     if (this.$route.query?.groupId) {
       await this.filterByGroup(this.$route.query?.groupId);
-    } else {
+    } else if (this.$route.query?.userId) {
+      let userId = this.$route.query?.userId;
+      await this.filterBySearch({field: 'id', value: userId});
+      this.setActiveUser(userId)
+      } else {
       if (this.getUsers != null) {
         await this.reloadUsers();
       } else {
         await this.fetchAll();
       }
-    }
-    if (this.$route.query?.userId) {
-      this.setActiveUser(this.$route.query?.userId)
     }
     this.loading = false;
   },

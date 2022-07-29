@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('admin/groups', ['fetchGroups', 'filterByUser', 'filterByOwner', 'loadTypes', 'fetchAll'])
+    ...mapActions('admin/groups', ['fetchGroups', 'filterByUser', 'filterByOwner', 'fetchAll'])
   },
   async mounted() {
     if (this.$route.query?.userId) {
@@ -52,7 +52,6 @@ export default {
     } else {
       await this.fetchAll();
     }
-    await this.loadTypes();
     this.loading = false;
   },
 };

@@ -28,7 +28,8 @@ export async function all({
   return await server.get('dzzs', {
     params: {
       ...params,
-      ...globalSearch
+      ...globalSearch,
     },
-  }, {errorTitle: "Ошибка при поиске снимков"});
+    errorTitle: "Ошибка при поиске снимков"
+  });
 }

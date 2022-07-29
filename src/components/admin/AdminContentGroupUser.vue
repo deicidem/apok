@@ -4,7 +4,7 @@
       <div class="group-user__text">Группа: {{getActiveGroup != null ? getActiveGroup.title : "Не выбрана"}}</div>
       <div class="group-user__text">Выбрано пользователей: {{getSelectedUsers.length}}</div>
     </div>
-    <app-button type="button-g" @click="addUsers({groupId: getActiveGroup.id, users: getSelectedUsers})">Добавить в группу</app-button>
+    <app-button type="button-g" :disabled="getActiveGroup == null || this.getSelectedUsers.length == 0" @click="addUsers({groupId: getActiveGroup.id, users: getSelectedUsers})">Добавить в группу</app-button>
   </div>  
 </template>
 

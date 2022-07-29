@@ -110,7 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 .links {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 10px;
   ul {
     margin: 0;

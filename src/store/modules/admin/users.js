@@ -361,7 +361,9 @@ export default {
         lastName: payload.lastName,
         email: payload.email,
         password: payload.password.password,
-        password_confirmation: payload.password.confirm
+        password_confirmation: payload.password.confirm,
+        phoneNubmer: payload.phoneNubmer,
+        organisation: payload.organisation
       });
       return await dispatch('fetchUsers', getters.getPagination.currentPage);
     },
@@ -376,7 +378,12 @@ export default {
         index,
         logs: res.data.data
       })
-    }
+    },
+    async exclude({dispatch, commit, getters}, payload) {
+      commit('setPending', true);
+      await groupsApi.exclude(getters.getUsersGroup.id, payload);
+      return await dispatch('fetchUsers', getters.getPagination.currentPage);
+    },
   },
 }
 

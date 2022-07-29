@@ -2,28 +2,8 @@
   <admin-aside-block title="Связанные объекты">
     <nav class="admin-aside-links">
       <ul>
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/tasks"
-            >Задачи</router-link
-          >
-        </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/files"
-            >Файлы</router-link
-          >
-        </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/dzzs"
-            >Снимки</router-link
-          >
-        </li>
-
-        <li>
-          <router-link class="admin-aside-links-item" to="/admin/groups"
-            >Группы</router-link
-          >
+         <li @click="$emit('filterByUser')">
+          <a>Все файлы этого пользователя</a>
         </li>
       </ul>
     </nav>
@@ -50,12 +30,13 @@ export default {
     li {
       font-size: 14px;
       margin-right: 20px;
+      text-decoration: underline;
+      a {
+        color: $text-grey;
+        cursor: pointer;
+      }
     }
   }
 
-  &-item {
-    color: $color-main-dark;
-    text-decoration: underline;
-  }
 }
 </style>

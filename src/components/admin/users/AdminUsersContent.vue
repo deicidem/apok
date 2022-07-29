@@ -10,9 +10,11 @@
     <admin-users-content-table
       :users="getUsers"
       @select="setActiveUser"
+      @exclude="exclude"
       :activeUser="getActiveUser"
       @check="selectUser"
       :pending="isPending"
+      :isGroupUsers="getUsersGroup != null"
     ></admin-users-content-table>
 
     <app-pagination
@@ -47,6 +49,7 @@ export default {
       "isPending",
       "getSearchOptions",
       "getSortOptions",
+      "getUsersGroup"
     ]),
   },
 
@@ -58,6 +61,7 @@ export default {
       "selectUser",
       "fetchAll",
       "sortBy",
+      "exclude"
     ]),
   },
 };

@@ -223,7 +223,7 @@ export default {
       color: $color-main;
       line-height: 30px;
       font-size: 14px;
-      width: 90px;
+      width: 140px;
     }
 
     &__info {

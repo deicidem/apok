@@ -17,127 +17,33 @@
           :sortOptions="getSortOptions"
           :searchOptions="getSearchOptions"
         ></app-search>
-        <app-table v-if="tasks != null" :disabled="isPending">
-          <thead>
-            <tr>
-              <th class="col-checkbox center">
-                <app-checkbox
-                  :modelValue="allSelected"
-                  @change="selectAll($event)"
-                />
-              </th>
 
-              <th
-                v-for="(header, i) in headers"
-                :key="i"
-                @click="sortBy(header.key, i)"
-                class="tasks-header"
-              >
-                <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'" class="tasks-sort">
-                    <i class="fa-solid fa-arrow-down-short-wide"></i>
-                  </span>
-
-                  <span v-else class="tasks-sort">
-                    <i class="fa-solid fa-arrow-down-wide-short"></i>
-                  </span>
-                </template>
-                {{ header.title }}
-              </th>
-
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody v-for="(item, i) in tasks" :key="item.id">
-            <tr>
-              <td class="col-checkbox center">
-                <app-checkbox
-                  :mini="true"
-                  :model-value="item.selected"
-                  @change="selectTask({ index: i, value: $event })"
-                />
-              </td>
-
-              <td class="col-id center">{{ item.id }}</td>
-
-              <td>{{ item.title }}</td>
-
-              <td>{{ item.date }}</td>
-
-              <td v-if="!isNaN(+item.status)">
-                Выполняется: {{ item.status }}%
-                <app-progress :value="+item.status"></app-progress>
-              </td>
-
-              <td v-else>{{ item.status }}</td>
-
-              <td>
-                <div class="tasks-table__buttons">
-                  <div class="button__wrapper">
-                    <app-button
-                      v-if="item.result != null"
-                      @click="showResult(i, item)"
-                      tooltip="Результат"
-                      type="button-svg"
-                      class="tasks-table__button"
-                    >
-                      <i class="icon icon-ic_fluent_open_20_regular"></i>
-                    </app-button>
-                  </div>
-
-                  <div class="button__wrapper">
-                    <app-button
-                      v-if="item.note != null"
-                      @click="toggleNote()"
-                      tooltip="Заметки"
-                      type="button-svg"
-                      class="tasks-table__button"
-                    >
-                      <i class="icon icon-ic_fluent_pen_20_regular"></i>
-                    </app-button>
-                  </div>
-
-                  <div class="button__wrapper">
-                    <app-button
-                      type="button-svg button-svg-r"
-                      :disabled="!item.deletable || pending"
-                      tooltip="Удалить"
-                      @click="onDelete(i)"
-                    >
-                      <i class="icon icon-ic_fluent_delete_20_regular"></i>
-                    </app-button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr
-              class="tr_note tr_preview"
-              v-show="showNote"
-              v-if="item.note != null"
+        <tasks-table
+          :tasks="tasks"
+          :pending="isPending"
+          @select="selectTask"
+          @show-result="showResult($event.index, $event.task)"
+          @show-note="setTaskNoteActive($event)"
+          @delete="onDelete"
+        >
+          <template v-slot:result="{ task, index }">
+            <task-result
+              :views="task.result.views"
+              :files="task.result.files"
+              :taskIndex="index"
+              @close="showResult(index, task)"
+            ></task-result>
+          </template>
+          <template v-slot:note="{ task, index }">
+            <task-note
+              :note="task.note"
+              :noteIndex="index"
+              @close="setTaskNoteActive({index, value: false})"
+              @edit="updateTask({id: task.id, note: $event})"
             >
-              <td td colspan="6">
-                <task-note :note="item.note" @close="showNote = false" @edit="updateTask({id: item.id, note: $event})"></task-note>
-              </td>
-            </tr>
-
-            <tr
-              class="tr_preview"
-              v-show="item.result.active"
-              v-if="item.result != null"
-            >
-              <td colspan="6">
-                <task-result
-                  :views="item.result.views"
-                  :files="item.result.files"
-                  :taskIndex="i"
-                  @close="showResult(i, item)"
-                ></task-result>
-              </td>
-            </tr>
-          </tbody>
-        </app-table>
+            </task-note>
+          </template>
+        </tasks-table>
 
         <app-pagination
           :page-count="getPagination.last"
@@ -161,30 +67,25 @@
 </template>
 
 <script>
-import AppTable from "@/components/table/AppTable.vue";
-import TaskResult from "@/components/tasks/TaskResult.vue";
-import TaskNote from "@/components/tasks/TaskNote.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation.vue";
 import { mapGetters, mapActions } from "vuex";
-import AppCheckbox from "@/components/controls/AppCheckbox.vue";
+import TaskResult from "@/components/tasks/TaskResult.vue";
+import TaskNote from "@/components/tasks/TaskNote.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppButton from "@/components/controls/AppButton.vue";
-import AppProgress from "@/components/controls/AppProgress.vue";
 import AppPagination from "@/components/controls/AppPagination.vue";
 import AppSearch from "@/components/AppSearch.vue";
-
+import TasksTable from "@/components/tasks/TasksTable.vue";
 export default {
   name: "SidebarTasks",
 
   components: {
-    AppCheckbox,
-    AppTable,
     AppDeleteConfirmation,
-    TaskResult,
-    TaskNote,
+    TasksTable,
     SidebarBase,
     AppButton,
-    AppProgress,
+    TaskResult,
+    TaskNote,
     AppPagination,
     AppSearch,
   },
@@ -213,11 +114,8 @@ export default {
           active: false,
         },
       ],
-      reportType: false,
-      pictureType: false,
       pending: false,
       loaded: false,
-      showNote: false,
     };
   },
 
@@ -228,7 +126,7 @@ export default {
       getPagination: "getPagination",
       isPending: "isPending",
       getSearchOptions: "getSearchOptions",
-      getSortOptions: "getSortOptions"
+      getSortOptions: "getSortOptions",
     }),
 
     allSelected() {
@@ -279,10 +177,11 @@ export default {
       "selectTask",
       "deleteTasks",
       "deleteTask",
-      "fetchAll", 
+      "fetchAll",
       "sortBy",
       "filterBySearch",
-      "updateTask"
+      "updateTask",
+      "setTaskNoteActive"
     ]),
 
     selectAll(val) {
@@ -292,6 +191,7 @@ export default {
     },
 
     showResult(i, task) {
+      console.log(1);
       if (task.result != null) {
         this.setTaskActive({ index: i, val: !task.result.active });
       }
@@ -366,10 +266,6 @@ export default {
     &:last-child {
       margin-right: 0;
     }
-  }
-
-  .tr_preview {
-    border: none;
   }
 
   &-header {

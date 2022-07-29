@@ -6,12 +6,14 @@
     <template v-slot:content>
       <div class="c-wrapper">
         <notification-card
-          v-for="(item, i) in getNotifications"
+          v-for="item in getNotifications"
           :key="item.id"
           :message="item.message"
           :type="item.type"
           :disabled="isPending"
-          @delete="deleteNotification(i)"
+          :read="item.read"
+          @read="markAsRead(item.id)"
+          @delete="deleteNotification(item.id)"
         ></notification-card>
         <app-pagination
             :page-count="getPagination.last"
@@ -46,7 +48,7 @@ export default {
     ...mapGetters("notifications", ["getNotifications", "getPagination", "isPending"]),
   },
   methods: {
-    ...mapActions("notifications", ["deleteNotification", "fetchNotifications"]),
+    ...mapActions("notifications", ["deleteNotification", "fetchNotifications", "markAsRead"]),
   },
 };
 </script>

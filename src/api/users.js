@@ -19,36 +19,12 @@ export async function getLogs(id) {
   });
 }
 
-export async function update({
-  id,
-  firstName,
-  lastName,
-  email
-}) {
-  return await server.put('user/profile-information', {
-    id,
-    firstName,
-    lastName,
-    email,
-    
-  }, {errorTitle: "Ошибка при обновлении данных пользователя"});
+export async function update(params) {
+  return await server.put('user/profile-information', params, {errorTitle: "Ошибка при обновлении данных пользователя"});
 }
 
-export async function create({
-  firstName,
-  lastName,
-  email,
-  password,
-  password_confirmation
-}) {
-  return await server.post('users', {
-    firstName,
-    lastName,
-    email,
-    password,
-    password_confirmation,
-    
-  }, {errorTitle: "Ошибка при создании пользователя"});
+export async function create(params) {
+  return await server.post('users', params, {errorTitle: "Ошибка при создании пользователя"});
 }
 
 

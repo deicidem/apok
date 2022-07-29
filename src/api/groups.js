@@ -24,6 +24,12 @@ export async function deleteGroups(ids) {
     })
 }
 
+export async function update(id, params) {
+  return await server.put('groups/' + id, params, {
+    errorTitle: "Ошибка при обновлении информации о группе"
+  });
+}
+
 export async function deleteGroup(id) {
   return await server.delete('groups/' + id, {
     errorTitle: "Ошибка при удалении группы"
@@ -48,5 +54,11 @@ export async function addUsers({
   }
   return await server.post(`groups/${groupId}/users`, formData, {
     errorTitle: "Ошибка при добавлении пользователей в группу"
+  });
+}
+
+export async function exclude(id, userId) {
+  return await server.delete('groups/' + id + '/users/' + userId, {
+    errorTitle: "Ошибка при попытке исключить пользователя"
   });
 }

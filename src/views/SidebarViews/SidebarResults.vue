@@ -37,119 +37,34 @@
 
         <div class="results-wrapper">
           <app-search
-          @sort="sortBy($event)"
-          :sortOptions="getSortOptions"
-        ></app-search>
-          <app-table class="results-table" :disabled="isPending">
-            <thead>
-              <tr>
-                <th></th>
+            @sort="sortBy($event)"
+            :sortOptions="getSortOptions"
+          ></app-search>
 
-                <th
-                  v-for="(header, i) in headers"
-                  :key="i"
-                  @click="sortBy(header.key, i)"
-                  class="results-table__header"
-                >
-                  {{ header.title }}
-                  <template v-if="header.active">
-                    <span v-if="sortDir == 'asc'" class="results-table__sort">
-                      <i class="fa-solid fa-arrow-down-short-wide"></i>
-                    </span>
+          <results-table
+            :results="results"
+            :pending="isPending"
+            :selectable="selectable"
+            @select="selectResult"
+            @show-polygon="
+              onPolygonButtonClick($event.index, $event.id, $event.geography)
+            "
+            @show-image="
+              onImageButtonClick(
+                $event.index,
+                $event.id,
+                $event.preview,
+                $event.geography
+              )
+            "
+            @show-card="onCardButtonClick($event)"
+          ></results-table>
 
-                    <span v-else class="results-table__sort">
-                      <i class="fa-solid fa-arrow-down-wide-short"></i>
-                    </span>
-                  </template>
-                </th>
-
-                <th></th>
-              </tr>
-            </thead>
-
-            <tbody v-if="loaded">
-              <tr
-                v-for="(item, i) in results"
-                :key="i"
-                :class="{
-                  selectable:
-                    selectable.value &&
-                    !(
-                      item.selected.value == selectable.value &&
-                      item.selected.type != selectable.type
-                    ),
-                  [`selected-${item.selected.type + 1}`]: item.selected.value,
-                }"
-                @click="select(i, item.selected.value)"
-              >
-                <td class="results-table__buttons">
-                  <div class="results-circle"></div>
-
-                  <div class="button__wrapper results-table__button">
-                    <app-button
-                      class="results-button"
-                      type="button-svg"
-                      tooltip="Границы"
-                      :active="results[i].polygonActive"
-                      @click="onPolygonButtonClick(i, item.id, item.geography)"
-                    >
-                      <i
-                        class="icon icon-ic_fluent_select_object_20_regular"
-                      ></i>
-                    </app-button>
-                  </div>
-
-                  <div class="button__header results-table__button">
-                    <app-button
-                      class="results-button"
-                      type="button-svg"
-                      tooltip="Изображение"
-                      :active="results[i].imageActive"
-                      @click="
-                        onImageButtonClick(
-                          i,
-                          item.id,
-                          item.previewPath,
-                          item.geography == null ? null : item.geography.bbox
-                        )
-                      "
-                    >
-                      <i class="icon icon-ic_fluent_image_20_regular"></i>
-                    </app-button>
-                  </div>
-                </td>
-
-                <td class="dzz-name">{{ item.name }}</td>
-
-                <td>{{ item.satelite }}</td>
-
-                <td>{{ item.date }}</td>
-
-                <td>{{ item.cloudiness }}%</td>
-
-                <td class="results-table__buttons">
-                  <div class="button__wrapper results-table__button">
-                    <app-button
-                      type="button-svg"
-                      class="results-button"
-                      tooltip="Подробнее"
-                      :active="results[i].cardActive"
-                      @click="onCardButtonClick(i)"
-                    >
-                      <i
-                        class="icon icon-ic_fluent_textbox_more_20_regular"
-                      ></i>
-                    </app-button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </app-table>
           <app-pagination
-          :page-count="getPagination.last"
-          @changePage="fetchResults($event)"
-          :current-page="getPagination.currentPage"
-        ></app-pagination>
+            :page-count="getPagination.last"
+            @changePage="fetchResults($event)"
+            :current-page="getPagination.currentPage"
+          ></app-pagination>
         </div>
       </div>
     </template>
@@ -158,23 +73,19 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import AppTable from "@/components/table/AppTable";
 import ResultInfo from "@/components/results/ResultInfo.vue";
 import SidebarBase from "@/components/SidebarBase.vue";
-import AppButton from "@/components/controls/AppButton";
 import AppPagination from "@/components/controls/AppPagination";
 import AppSearch from "@/components/AppSearch.vue";
-// import VsPagination from "@vuesimple/vs-pagination";
+import ResultsTable from "@/components/results/ResultsTable.vue";
 
 export default {
   components: {
-    AppTable,
     ResultInfo,
-    // VsPagination,
     SidebarBase,
-    AppButton,
     AppPagination,
     AppSearch,
+    ResultsTable,
   },
 
   data() {
@@ -232,7 +143,7 @@ export default {
       getPagination: "getPagination",
       isPending: "isPending",
       getSearchOptions: "getSearchOptions",
-      getSortOptions: "getSortOptions"
+      getSortOptions: "getSortOptions",
     }),
 
     cardData() {
@@ -257,9 +168,9 @@ export default {
       "selectResult",
       "sortResultsBy",
       "fetchResults",
-      "fetchAll", 
+      "fetchAll",
       "sortBy",
-      "filterBySearch"
+      "filterBySearch",
     ]),
 
     // sortBy(key, ind) {
@@ -288,7 +199,6 @@ export default {
     },
 
     select(i, selected) {
-      console.log(selected);
       if (this.selectable.value) {
         this.selectResult({
           index: i,
@@ -300,6 +210,7 @@ export default {
     },
 
     onImageButtonClick(ind, id, img, bounds) {
+      console.log(1);
       if (this.results[ind].imageActive) {
         this.removeImage({ id });
         this.setResultProperty({
@@ -363,8 +274,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .results {
   &-back {
     position: absolute;

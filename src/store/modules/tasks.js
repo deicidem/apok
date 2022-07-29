@@ -72,6 +72,7 @@ export default {
         if (el.result != null) {
           el.result.active = false;
         }
+        el.noteActive = false;
       })
       state.tasks = items;
     },
@@ -81,6 +82,7 @@ export default {
       if (item.result != null) {
         item.result.active = false;
       }
+      item.noteActive = false;
       state.tasks.forEach((el, i) => {
         if (el.id == item.id) {
           state.tasks.splice(i, 1, item);
@@ -103,6 +105,9 @@ export default {
     },
     setTaskActive(state, data) {
       state.tasks[data.index].result.active = data.val;
+    },
+    setTaskNoteActive(state, payload) {
+      state.tasks[payload.index].noteActive = payload.value;
     },
     setTaskViewActive(state, data) {
       state.tasks[data.taskIndex].result.views[data.viewIndex].active = data.val;
@@ -164,6 +169,9 @@ export default {
     },
     sortTasksBy(store, key) {
       store.commit('sortTasksBy', key)
+    },
+    setTaskNoteActive({commit}, payload) {
+      commit('setTaskNoteActive', payload);
     },
     async fetchTasks({
       commit,

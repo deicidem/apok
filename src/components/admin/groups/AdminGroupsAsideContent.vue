@@ -14,6 +14,7 @@
     <admin-groups-aside-content-links
       v-if="getActiveGroup != null"
       :group="getActiveGroup"
+      @filterByOwner="filterByOwner(getActiveGroup.owner.id)"
     ></admin-groups-aside-content-links>
   </admin-aside-content>
 </template>
@@ -42,7 +43,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("admin/groups", ["updateGroup", "deleteGroup"]),
+    ...mapActions("admin/groups", ["updateGroup", "deleteGroup", "filterByOwner"]),
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эту группу файл?",

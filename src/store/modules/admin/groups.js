@@ -208,7 +208,6 @@ export default {
       commit('setPending', true);
       let res = await usersApi.one(payload);
       let user = res.data.data;
-
       commit('setGroupsOwner', {
         id: user.id,
         name: user.firstName + ' ' + user.lastName
@@ -264,12 +263,17 @@ export default {
     async createGroup({dispatch, getters}, payload) {
       await groupsApi.create({
         title: payload.title,
+        description: payload.description,
         type: payload.type,
       });
       return await dispatch('fetchGroups',getters.getPagination.currentPage);
     },
     
-    
+    async updateGroup({dispatch, commit, getters}, payload) {
+      commit('setPending', true);
+      await groupsApi.update(getters.getActiveGroup.id, payload);
+      return await dispatch('fetchGroups', getters.getPagination.currentPage);
+    },
 
     async addUsers(store, payload) {
       await groupsApi.addUsers({

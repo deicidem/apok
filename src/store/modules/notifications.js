@@ -59,12 +59,12 @@ export default {
     },
     setUnreadCount(state, payload) {
       state.unreadCount = payload;
-    }
+    },
+    markAsRead(state, payload) {
+      state.notifications[payload].read = true;
+    } 
   },
   actions: {
-    deleteNotification(store, i) {
-      store.commit('deleteNotification', i)
-    },
     async fetchNotifications({
       commit,
       dispatch,
@@ -89,13 +89,23 @@ export default {
 
       commit('setNotifications', notifications);
       commit('setPending', false);
-      dispatch('fetchUnreadCount');
+      await dispatch('fetchUnreadCount');
       return notifications;
     },
     async fetchUnreadCount({commit}) {
       let res = await userNotificationsApi.unreadCount();
       let cnt = res.data;
       commit('setUnreadCount', cnt);
+    },
+    async markAsRead({commit, getters}, payload) {
+      await userNotificationsApi.markAsRead(payload);
+      commit('markAsRead', getters.getNotificationsMap[payload].index);
+      commit('setUnreadCount', getters.getUnreadCount - 1);
+    },
+    async deleteNotification({commit, getters, dispatch}, payload) {
+      commit('setPending', true);
+      await userNotificationsApi.deleteNotification(payload);
+      await dispatch('fetchNotifications', getters.getPagination.currentPage);
     }
   }
 }

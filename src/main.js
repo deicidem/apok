@@ -101,5 +101,5 @@ function setErrorHandler(error) {
     alert.message = error.response.data.message;
   }
   store.dispatch('alerts/addAlert', alert);
-  return new Promise.reject(error);
+  return Promise.reject(error);
 }

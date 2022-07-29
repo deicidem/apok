@@ -1,9 +1,9 @@
 <template>
   <div class="error">
     <div class="error-wrapper">
-      <h5 class="error-title">Ошибка 404</h5>
-      <div class="error-text">Страница не найдена</div>
-      <div class="error-cross">
+      <h5 class="error-title">{{title}}</h5>
+      <div class="error-text">{{message}}</div>
+      <div class="error-cross" @click="$emit('close')">
         <i class="icon icon-ic_fluent_dismiss_20_regular"></i>
       </div>
     </div>
@@ -11,24 +11,26 @@
 </template>
 
 <script>
+export default {
+  props: ['title', 'message']
+}
 </script>
 
 <style scoped lang="scss">
 .error {
-  display: none;
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  z-index: 10;
+  // display: none;
+  position: relative;
   min-width: 420px;
-  padding: 10px 20px;
-  background: $gradient-w;
+  padding: 5px 30px 5px 10px;
+  background: $white;
   border-radius: 10px;
-  border: 2px solid #d84949;
+  border: 1px solid #d84949;
   box-shadow: $shadow-big;
-
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
   &-wrapper {
-    position: relative;
     display: flex;
     flex-direction: column;
   }
@@ -38,25 +40,25 @@
     line-height: 1.5;
     color: $black;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   &-text {
     color: $text-grey;
     font-weight: 400;
-    font-size: 14px;
-    margin: 10px auto 10px 0;
+    font-size: 12px;
   }
 
   &-cross {
+    display: flex;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 5px;
     color: $color-red;
     font-size: 20px;
-
+      cursor: pointer;
     &:hover {
-      color: $color-main-dark;
+      color: lighten($color-red, 10);
     }
   }
 }

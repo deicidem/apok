@@ -46,7 +46,9 @@
       <search-area-circle
         v-show="searchZoneType == 2"
         @submit="createCircle($event)"
+        @mark="onMark($event)"
         @remove="removeCircle()"
+        :center="getCirclePolygon.geometry != null ? getCirclePolygon.geometry.center : null"
       ></search-area-circle>
 
       <search-area-file
@@ -114,7 +116,12 @@ export default {
       "setFilePolygon",
       "setFilePolygonActive",
       "removeFilePolygon",
+      "setCirclePolygonDrawable",
+      "setCircleCenter"
     ]),
+    onMark(val) {
+      this.setCirclePolygonDrawable({value: val});
+    },
     parseCoords(coord) {
       let str = coord;
       let deg = "";
@@ -176,9 +183,10 @@ export default {
     },
 
     createCircle({ lng, lat, rad }) {
-      let parsedLat = this.parseCoords(lat);
-      let parsedLng = this.parseCoords(lng);
+      let parsedLat = lat;
+      let parsedLng = lng;
       let parsedRadius = +rad * 1000;
+      this.setCircleCenter({coordinate: {lng: parsedLng, lat: parsedLat}});
       this.setCirclePolygon({
         radius: parsedRadius,
         center: { lng: parsedLng, lat: parsedLat },

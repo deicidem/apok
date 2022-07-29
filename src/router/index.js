@@ -31,8 +31,8 @@ const routes = [
         component: () => import('@/views/SidebarViews/SidebarSearch')
       },
       {
-        path: 'alerts',
-        component: () => import('@/views/SidebarViews/SidebarAlerts'),
+        path: 'notifications',
+        component: () => import('@/views/SidebarViews/SidebarNotifications'),
         meta: { requiresAuth: true }
       },
       {
@@ -69,6 +69,16 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: () => import('@/views/RegistrationView.vue')
+  },
+  {
+    path: '/reset-password',
+    name: 'reset-password',
+    component: () => import('@/views/ResetPasswordView.vue')
+  },
+  {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: () => import('@/views/ForgotPasswordView.vue')
   },
   {
     path: '/tutorial',

@@ -1,4 +1,4 @@
-import * as userApi from "@/api/user"
+import * as userGroupsApi from "@/api/userGroups"
 
 export default {
   namespaced: true,
@@ -12,12 +12,14 @@ export default {
       prev: null,
       next: null,
     },
+    activeGroupId: null,
     paginationSize: 8,
     searchBy: null,
     pending: false,
     sort: null,
     sortOptions: setSortOptions(),
-    searchOptions: setSearchOptions()
+    searchOptions: setSearchOptions(),
+    inviteLink: null
   },
   getters: {
     getGroups(state) {
@@ -43,6 +45,26 @@ export default {
     },
     getPaginationSize(state) {
       return state.paginationSize;
+    },
+    getGroupsMap(state) {
+      let map = {};
+      for (let i = 0; i < state.groups.length; i++) {
+        let group = state.groups[i];
+        map[group.id] = {
+          data: group,
+          index: i
+        }
+      }
+      return map;
+    },
+    getActiveGroup(state, getters) {
+      if (getters.getGroupsMap == null || state.activeGroupId == null) {
+        return null;
+      }
+      return getters.getGroupsMap[state.activeGroupId].data;
+    },
+    getInviteLink(state) {
+      return state.inviteLink;
     }
   },
   mutations: {
@@ -69,11 +91,20 @@ export default {
     },
     setSort(state, payload) {
       state.sort = payload;
+    },
+    setActiveGroup(state, payload) {
+      state.activeGroupId = payload;
+    },
+    setInviteLink(state, payload) {
+      state.inviteLink = payload;
     }
   },
   actions: {
     selectGroup(store, data) {
       store.commit('selectGroup', data);
+    },
+    setActiveGroup(store, payload) {
+      store.commit('setActiveGroup', payload);
     },
     async fetchGroups({
       commit,
@@ -82,7 +113,7 @@ export default {
       commit('setPending', true);
       let searchField = getters.getSearchBy?.field;
       let searchValue = getters.getSearchBy?.value;
-      let res = await userApi.getGroups({
+      let res = await userGroupsApi.getGroups({
         page,
         [searchField]: searchValue,
         desc: getters.getSort?.desc,
@@ -137,8 +168,9 @@ export default {
 
     async createGroup({commit, dispatch}, payload) {
       commit('setPending', true);
-      await userApi.createGroup({
+      await userGroupsApi.createGroup({
         title: payload.title,
+        description: payload.description,
         type: payload.type,
       });
       // let group = res.data.data;
@@ -151,15 +183,29 @@ export default {
           ids.push(getters.getGroups[i].id);
         } 
       }
-      await userApi.deleteGroups(ids);
+      await userGroupsApi.deleteGroups(ids);
       return await dispatch('fetchGroups',getters.getPagination.currentPage);
     },
     async deleteGroup({dispatch, getters}, payload) {
-      let {status} = await userApi.deleteGroup(payload);
+      let {status} = await userGroupsApi.deleteGroup(payload);
       if (status == 200) {
         return await dispatch('fetchGroups',getters.getPagination.currentPage);
       }
     },
+    async generateInviteLink({commit, getters}, payload) {
+      let res = await userGroupsApi.getInviteLink(getters.getActiveGroup.id, payload);
+      commit('setInviteLink', res.data.data)      
+    },
+    async quitGroup({dispatch, commit, getters}, payload) {
+      commit('setPending', true);
+      await userGroupsApi.quit(payload);
+      return await dispatch('fetchGroups', getters.getPagination.currentPage);
+    },
+    async updateGroup({dispatch, commit, getters}, payload) {
+      commit('setPending', true);
+      await userGroupsApi.update(getters.getActiveGroup.id, payload);
+      return await dispatch('fetchGroups', getters.getPagination.currentPage);
+    }
   }
 }
 function setSearchOptions() {

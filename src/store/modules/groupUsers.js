@@ -1,4 +1,4 @@
-import * as userApi from "@/api/user"
+import * as userGroupsApi from "@/api/userGroups"
 
 export default {
   namespaced: true,
@@ -15,17 +15,14 @@ export default {
     paginationSize: 10,
     searchBy: null,
     pending: false,
+    showRequests: false,
     sort: null,
-    activeGroupId: 1,
     sortOptions: setSortOptions(),
     searchOptions: setSearchOptions(),
   },
   getters: {
     getUsers(state) {
       return state.users;
-    },
-    getActiveGroupId(state) {
-      return state.activeGroupId;
     },
     getUsersMap(state) {
       let map = {};
@@ -58,6 +55,9 @@ export default {
     },
     getPaginationSize(state) {
       return state.paginationSize;
+    },
+    getShowRequests(state) {
+      return state.showRequests;
     }
   },
   mutations: {
@@ -80,21 +80,23 @@ export default {
     setSort(state, payload) {
       state.sort = payload;
     },
-    setActiveGroupId(state, payload) {
-      state.activeGroupId = payload;
-    }
+    setShowRequests(state, payload) {
+      state.showRequests = payload;
+    },
   },
   actions: {
     async fetchUsers({
       commit,
-      getters
+      getters,
+      rootGetters
     }, page = 1) {
       commit('setPending', true);
       let searchField = getters.getSearchBy?.field;
       let searchValue = getters.getSearchBy?.value;
-      let res = await userApi.getUsersByGroup(getters.getActiveGroupId, {
+      let res = await userGroupsApi.getUsersByGroup(rootGetters['groups/getActiveGroup'].id, {
         page,
         [searchField]: searchValue,
+        requests: getters.getShowRequests,
         desc: getters.getSort?.desc,
         sortBy: getters.getSort?.field,
         size: getters.getPaginationSize
@@ -134,12 +136,27 @@ export default {
 
     async sortBy({
       commit,
-      dispatch
+      dispatch,
     }, payload) {
       commit('setPending', true);
       commit('setSort', payload);
       return await dispatch('fetchUsers');
     },
+    async exclude({dispatch, commit, getters, rootGetters}, payload) {
+      commit('setPending', true);
+      await userGroupsApi.exclude(rootGetters['groups/getActiveGroup'].id, payload);
+      return await dispatch('fetchUsers', getters.getPagination.currentPage);
+    },
+    async verify({dispatch, commit, getters, rootGetters}, payload) {
+      commit('setPending', true);
+      await userGroupsApi.verify(rootGetters['groups/getActiveGroup'].id, payload);
+      return await dispatch('fetchUsers', getters.getPagination.currentPage);
+    },
+    async changeShowRequests({dispatch, commit}, payload) {
+      commit('setPending', true);
+      commit('setShowRequests', payload);
+      return await dispatch('fetchUsers');
+    }
   }
 }
 function setSearchOptions() {

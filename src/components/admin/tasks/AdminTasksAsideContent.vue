@@ -10,14 +10,15 @@
       @update="updateTask"
       @delete="onDelete"
     ></admin-tasks-aside-content-info>
-    <!-- <admin-tasks-aside-content-links v-if="getActiveTask != null" ></admin-tasks-aside-content-links> -->
+    <admin-tasks-aside-content-links v-if="getActiveTask != null" 
+    @filterByUser="filterByUser(getActiveTask.user.id)"></admin-tasks-aside-content-links>
   </admin-aside-content>
 </template>
 
 <script>
 import AdminAsideContent from "@/components/admin/AdminAsideContent.vue";
 import AdminTasksAsideContentInfo from "@/components/admin/tasks/AdminTasksAsideContentInfo.vue";
-// import AdminTasksAsideContentLinks from "@/components/admin/tasks/AdminTasksAsideContentLinks.vue";
+import AdminTasksAsideContentLinks from "@/components/admin/tasks/AdminTasksAsideContentLinks.vue";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
 
@@ -25,7 +26,7 @@ export default {
   components: {
     AdminAsideContent,
     AdminTasksAsideContentInfo,
-    // AdminTasksAsideContentLinks,
+    AdminTasksAsideContentLinks,
     AppDeleteConfirmation,
   },
 
@@ -40,7 +41,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("admin/tasks", ["updateTask", "deleteTask"]),
+    ...mapActions("admin/tasks", ["updateTask", "deleteTask", "filterByUser"]),
     async onDelete(id) {
       const ok = await this.$refs.deleteConfirm.show({
         title: "Вы уверены, что хотите удалить эту задачу?",

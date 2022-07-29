@@ -37,7 +37,9 @@ export default {
         lastName: user.lastName,
         email: user.email,
         password: user.password.password,
-        password_confirmation: user.password.confirm
+        password_confirmation: user.password.confirm,
+        organisation: user.organisation,
+        phoneNumber: user.phoneNumber
       });
       
       return await store.dispatch('auth');
@@ -55,6 +57,14 @@ export default {
     async updatePassword(store, data) {
       await userApi.updatePassword({email: store.getters.getUser.email, ...data});
       return await store.dispatch('auth');
+    },
+    async forgotPassword(store, payload) {
+      await userApi.forgotPassword(payload);
+      // return await store.dispatch('auth');
+    },
+    async resetPassword(store, payload) {
+      await userApi.resetPassword(payload);
+      // return await store.dispatch('auth');
     },
     async logout(store) {
       await userApi.logout();

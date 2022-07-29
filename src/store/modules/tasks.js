@@ -1,4 +1,4 @@
-import * as userApi from "@/api/user";
+import * as userTasksApi from "@/api/userTasks";
 
 export default {
   namespaced: true,
@@ -72,6 +72,7 @@ export default {
         if (el.result != null) {
           el.result.active = false;
         }
+        el.noteActive = false;
       })
       state.tasks = items;
     },
@@ -81,6 +82,7 @@ export default {
       if (item.result != null) {
         item.result.active = false;
       }
+      item.noteActive = false;
       state.tasks.forEach((el, i) => {
         if (el.id == item.id) {
           state.tasks.splice(i, 1, item);
@@ -103,6 +105,9 @@ export default {
     },
     setTaskActive(state, data) {
       state.tasks[data.index].result.active = data.val;
+    },
+    setTaskNoteActive(state, payload) {
+      state.tasks[payload.index].noteActive = payload.value;
     },
     setTaskViewActive(state, data) {
       state.tasks[data.taskIndex].result.views[data.viewIndex].active = data.val;
@@ -165,6 +170,9 @@ export default {
     sortTasksBy(store, key) {
       store.commit('sortTasksBy', key)
     },
+    setTaskNoteActive({commit}, payload) {
+      commit('setTaskNoteActive', payload);
+    },
     async fetchTasks({
       commit,
       dispatch,
@@ -173,7 +181,7 @@ export default {
       commit('setPending', true);
       let searchField = getters.getSearchBy?.field;
       let searchValue = getters.getSearchBy?.value;
-      let res = await userApi.getTasks({
+      let res = await userTasksApi.getTasks({
         page,
         [searchField]: searchValue,
         desc: getters.getSort?.desc,
@@ -238,7 +246,7 @@ export default {
       dispatch,
       getters
     }) {
-      let res = await userApi.getTasks({
+      let res = await userTasksApi.getTasks({
         page: getters.getPagination.getCurrentPage,
         search: getters.getSearchBy,
       });
@@ -281,7 +289,7 @@ export default {
     async update({
       commit
     }, id) {
-      let res = await userApi.getTask(id);
+      let res = await userTasksApi.getTask(id);
       commit('setTask', res.data.data);
       return res;
     },
@@ -310,7 +318,7 @@ export default {
           ids.push(getters.getTasks[i].id);
         }
       }
-      await userApi.deleteTasks(ids);
+      await userTasksApi.deleteTasks(ids);
       return await dispatch('fetchTasks', getters.getPagination.currentPage);
     },
 
@@ -321,12 +329,17 @@ export default {
       let id = getters.getTasks[i].id;
       let {
         status
-      } = await userApi.deleteTask(id);
+      } = await userTasksApi.deleteTask(id);
       if (status == 200) {
         return await dispatch('fetchTasks', getters.getPagination.currentPage);
       }
     },
-
+    async updateTask(store, payload) {
+       await userTasksApi.update(payload.id, {note: payload.note});
+      // if (status == 200) {
+      //   return await dispatch('fetchTasks', getters.getPagination.currentPage);
+      // }
+    },
   }
 }
 

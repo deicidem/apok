@@ -86,6 +86,11 @@ export default {
   data() {
     return {
       info: {
+        id: {
+          title: "ID",
+          value: null,
+          editable: false,
+        },
         firstName: {
           title: "Имя",
           value: null,
@@ -101,6 +106,36 @@ export default {
           value: null,
           editable: true,
         },
+        verified: {
+          title: "Верифицирован",
+          value: null,
+          editable: false,
+        },
+        phone: {
+          title: "Номер телефона",
+          value: null,
+          editable: true,
+        },
+        organisation: {
+          title: "Организация",
+          value: null,
+          editable: true,
+        },
+        blocked: {
+          title: "Заблокирован",
+          value: null,
+          editable: false,
+        },
+        date: {
+          title: "Дата регистрации",
+          value: null,
+          editable: false,
+        },
+        role: {
+          title: "Роль",
+          value: null,
+          editable: false,
+        },
       },
 
       editable: false,
@@ -111,6 +146,13 @@ export default {
     this.info.firstName.value = this.user.firstName;
     this.info.lastName.value = this.user.lastName;
     this.info.email.value = this.user.email;
+    this.info.id.value = this.user.id;
+    this.info.verified.value = this.user.verified ? "Да" : "Нет";
+    this.info.phone.value = this.user.phoneNumber;
+    this.info.organisation.value = this.user.organisation;
+    this.info.date.value = this.user.date;
+    this.info.role.value = this.user.role;
+    this.info.blocked.value = this.user.blocked ? "Да" : "Нет";
   },
   methods: {
     onEditDone() {
@@ -120,6 +162,8 @@ export default {
         firstName: this.info.firstName.value,
         lastName: this.info.lastName.value,
         email: this.info.email.value,
+        phoneNumber: this.info.phone.value,
+        organisation: this.info.organisation.value,
       });
     },
     onEdit(evt, key) {
@@ -131,6 +175,13 @@ export default {
       this.info.firstName.value = this.user.firstName;
       this.info.lastName.value = this.user.lastName;
       this.info.email.value = this.user.email;
+      this.info.id.value = this.user.id;
+      this.info.verified.value = this.user.verified ? "Да" : "Нет";
+      this.info.phone.value = this.user.phoneNumber;
+      this.info.organisation.value = this.user.organisation;
+      this.info.date.value = this.user.date;
+      this.info.role.value = this.user.role;
+      this.info.blocked.value = this.user.blocked ? "Да" : "Нет";
     },
   },
 };
@@ -172,7 +223,7 @@ export default {
       color: $color-main;
       line-height: 30px;
       font-size: 14px;
-      width: 90px;
+      width: 140px;
     }
 
     &__info {

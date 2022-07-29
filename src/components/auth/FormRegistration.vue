@@ -248,6 +248,8 @@ export default {
             lastName: this.lastName,
             email: this.mail,
             password: this.password,
+            organisation: this.organisation,
+            phoneNumber: this.phone
           });
       } else {
         this.submitStatus = "FORM_INVALID";

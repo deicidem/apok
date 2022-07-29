@@ -8,6 +8,7 @@
     @ready="$emit('ready', $refs.map)"
     @mousemove="onMouseMove($event)"
     :options="{ zoomControl: false }"
+    :maxBoundsViscosity="1"
     style="height: 100%"
     :zoom="zoom"
     :center="center"
@@ -16,13 +17,13 @@
     <l-control-zoom position="bottomleft"></l-control-zoom>
 
     <l-control
-        :position="'bottomright'"
-        class="cursor-position"
-        v-if="cursorPosition != null"
-      >
-        <span class="lat">Широта: {{cursorPosition.lat}}</span>
-        <span class="lng">Долгота: {{cursorPosition.lng}}</span>
-      </l-control>
+      :position="'bottomright'"
+      class="cursor-position"
+      v-if="cursorPosition != null"
+    >
+      <span class="lat">Широта: {{ cursorPosition.lat }}</span>
+      <span class="lng">Долгота: {{ cursorPosition.lng }}</span>
+    </l-control>
 
     <template v-if="polygon.active">
       <l-marker
@@ -56,12 +57,29 @@
     ></l-geo-json>
 
     <l-circle
-      v-if="circle.active && circle.geometry != null"
+      v-if="
+        circle.active &&
+        circle.geometry != null &&
+        circle.geometry.center != null &&
+        circle.geometry.radius != null
+      "
       :lat-lng="circle.geometry.center"
       :radius="circle.geometry.radius"
       color="red"
     />
-
+    <l-marker
+      data-number="id"
+      v-if="
+        circle.active &&
+        circle.geometry != null &&
+        circle.geometry.center != null
+      "
+      :lat-lng="circle.geometry.center"
+    >
+      <l-icon :icon-size="[40, 40]" :icon-anchor="[20, 40]" :icon-url="icon">
+        <img style="pointer-events: none" :src="icon" alt="" />
+      </l-icon>
+    </l-marker>
     <template>
       <l-geo-json
         :options="{ fill: false }"
@@ -109,7 +127,7 @@ import {
   LGeoJson,
   LCircle,
   LControlZoom,
-  LControl
+  LControl,
 } from "vue2-leaflet";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -139,7 +157,7 @@ export default {
     LGeoJson,
     LCircle,
     LControlZoom,
-    LControl
+    LControl,
   },
   data() {
     return {
@@ -172,6 +190,12 @@ export default {
     icon() {
       return require("@/assets/img/map-icons/geo_marker.svg");
     },
+    maxBounds() {
+      return L.latLngBounds([
+        [-90, -180],
+        [90, 180],
+      ]);
+    },
   },
   methods: {
     ...mapActions("map", [
@@ -181,6 +205,7 @@ export default {
       "setZoom",
       "setBounds",
       "setNeedUpdateBounds",
+      "setCircleCenter",
     ]),
     onDrag() {
       console.log(1);
@@ -193,7 +218,7 @@ export default {
     onMouseMove(e) {
       let lat = e.latlng.lat.toFixed(2);
       let lng = e.latlng.lng.toFixed(2);
-      return {lat, lng};
+      return { lat, lng };
       // console.log(lat, lng);
       // if (this.cursorUpdate == null)  {
       //   this.cursorPosition = {lat, lng}
@@ -212,17 +237,18 @@ export default {
 
     // Добавление маркеров
     onClick($event) {
-      if (
-        this.drawable &&
-        $event.originalEvent.target.classList.contains("vue2leaflet-map")
-      ) {
-        this.addCoordinate({ coordinate: $event.latlng });
+      if (this.$refs.map.$el.isEqualNode($event.originalEvent.target)) {
+        if (this.drawable) {
+          this.addCoordinate({ coordinate: $event.latlng });
+        } 
+      }
+      if (this.circle.drawable) {
+        this.setCircleCenter({ coordinate: $event.latlng });
       }
     },
 
     // Изменение размеров полигона
     handleMarkerDragEnd($event, id) {
-      console.log(1);
       if (this.drawable) {
         this.changeCoordinate({ id, latlng: $event.target._latlng });
       }
@@ -267,9 +293,9 @@ export default {
         console.log();
         this.$refs.map.mapObject.flyToBounds(this.bounds, {
           duration: 1.5,
-          maxZoom: this.$refs.map.mapObject.getBoundsZoom(this.bounds) - 1
+          maxZoom: this.$refs.map.mapObject.getBoundsZoom(this.bounds) - 1,
         });
-        this.setNeedUpdateBounds({value: false})
+        this.setNeedUpdateBounds({ value: false });
       }
       return a;
     },
@@ -293,7 +319,8 @@ export default {
   border-radius: 7px;
   padding: 10px;
   display: flex;
-  .lat, .lng {
+  .lat,
+  .lng {
     font-family: monospace;
     display: inline-block;
   }

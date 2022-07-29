@@ -17,62 +17,13 @@
           :sortOptions="getSortOptions"
           :searchOptions="getSearchOptions"
         ></app-search>
-        <app-table :disabled="isPending">
-          <thead>
-            <tr>
-              <th class="col-checkbox center">
-                <app-checkbox
-                  :model-value="allSelected"
-                  class="checkbox-big"
-                  @change="selectAll"
-                />
-              </th>
-              <th
-                v-for="(header, i) in headers"
-                :key="i"
-                @click="sortBy(header.key, i)"
-                class="files-header"
-              >
-                <template v-if="header.active">
-                  <span v-if="sortDir == 'asc'" class="files-sort">
-                    <i class="fa-solid fa-arrow-down-short-wide"></i>
-                  </span>
-                  <span v-else class="files-sort">
-                    <i class="fa-solid fa-arrow-down-wide-short"></i>
-                  </span>
-                </template>
-                {{ header.title }}
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="(item, i) in files" :key="item.id">
-              <td class="col-checkbox center">
-                <app-checkbox
-                  :mini="true"
-                  :model-value="item.selected"
-                  @change="selectFile({ index: i, value: $event })"
-                />
-              </td>
-              <td>{{ item.id }}</td>
-              <td class="dzz-name">{{ item.name }}</td>
-              <td>{{ item.type }}</td>
-              <td>{{ item.date }}</td>
-              <td>
-                <app-button
-                  type="button-svg button-svg-r"
-                  :disabled="!item.deletable || pending"
-                  @click="onDelete(i)"
-                  :tooltip="item.deletable ? 'Удалить' : 'Файл используется'"
-                >
-                  <i class="icon icon-ic_fluent_delete_20_regular"></i>
-                </app-button>
-              </td>
-            </tr>
-          </tbody>
-        </app-table>
+        <files-table
+          :files="files"
+          :pending="isPending"
+          @select="selectFile"
+          @delete="onDelete"
+        >
+        </files-table>
         <app-pagination
           :page-count="getPagination.last"
           @changePage="fetchFiles"
@@ -95,25 +46,23 @@
 
 <script>
 // import VsPagination from "@vuesimple/vs-pagination";
-import AppTable from "@/components/table/AppTable";
 import AppDeleteConfirmation from "@/components/AppDeleteConfirmation";
 import { mapGetters, mapActions } from "vuex";
-import AppCheckbox from "@/components/controls/AppCheckbox";
 import AppButton from "@/components/controls/AppButton";
 import SidebarBase from "@/components/SidebarBase.vue";
 import AppPagination from "@/components/controls/AppPagination";
 import AppSearch from "@/components/AppSearch.vue";
+import FilesTable from "@/components/files/FilesTable.vue";
 export default {
   name: "SidebarFiles",
   components: {
-    AppCheckbox,
-    AppTable,
     AppButton,
     AppDeleteConfirmation,
     // VsPagination,
     SidebarBase,
     AppPagination,
     AppSearch,
+    FilesTable,
   },
   data() {
     return {
@@ -150,7 +99,7 @@ export default {
       getPagination: "getPagination",
       isPending: "isPending",
       getSearchOptions: "getSearchOptions",
-      getSortOptions: "getSortOptions"
+      getSortOptions: "getSortOptions",
     }),
 
     allSelected() {
@@ -199,9 +148,9 @@ export default {
       "deleteFiles",
       "selectFile",
       "deleteFile",
-      "fetchAll", 
+      "fetchAll",
       "sortBy",
-      "filterBySearch"
+      "filterBySearch",
     ]),
 
     async onDelete(i) {

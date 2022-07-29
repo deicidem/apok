@@ -9,10 +9,11 @@ export async function all() {
   //     password: "password"
   //   });
   //   console.log(data);
-    let res = await server.get('plans');
-    console.log(res);
-    return res.data.data;
+  let res = await server.get('plans', {
+    errorTitle: "Ошибка при получении списка доступных задач"
+  });
+  return res.data.data;
   // })
-  
+
   // return plans;
 }

@@ -27,27 +27,45 @@
             @change="$emit('select', { index: i, value: $event })"
           />
         </td>
-
         <td class="group-wrapper-value">
           {{ item.title }}
         </td>
         <td class="group-wrapper-value">
           {{ item.type }}
         </td>
-
         <td class="group-wrapper-value">
           {{ item.owner.firstName }} {{ item.owner.lastName }}
         </td>
-
         <td>
-          <app-button
-            type="button-svg button-svg-r"
-            tooltip="Удалить"
-            :disabled="!item.deletable"
-            @click="$emit('delete', item.id)"
-          >
-            <i class="icon icon-ic_fluent_delete_20_regular"></i
-          ></app-button>
+          <div class="groups-buttons">
+            <app-button
+              v-if="item.isOwner"
+              class="groups-button"
+              type="button-svg button-svg-w"
+              tooltip="Подробнее"
+              @click="$emit('open', item.id)"
+            >
+              <i class="icon icon-ic_fluent_open_20_regular"></i
+            ></app-button>
+            <app-button
+              v-if="item.isOwner"
+              class="groups-button"
+              type="button-svg button-svg-r"
+              tooltip="Удалить"
+              @click="$emit('delete', item.id)"
+            >
+              <i class="icon icon-ic_fluent_delete_20_regular"></i
+            ></app-button>
+            <app-button
+              v-else
+              class="groups-button"
+              type="button-svg button-svg-r"
+              tooltip="Выйти"
+              @click="$emit('quit', item.id)"
+            >
+              <i class="icon icon-ic_fluent_sign_out_20_regular"></i
+            ></app-button>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -110,4 +128,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.groups-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.groups-button {
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
 </style>

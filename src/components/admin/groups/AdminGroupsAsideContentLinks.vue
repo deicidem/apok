@@ -4,8 +4,11 @@
       <ul>
         <li>
           <router-link class="admin-aside-links-item" :to="{path: '/admin/users', query: {groupId: group.id}}"
-            >Пользователи</router-link
+            >Пользователи группы</router-link
           >
+        </li>
+        <li @click="$emit('filterByOwner')">
+          <a>Все группы владельца этой группы</a>
         </li>
       </ul>
     </nav>
@@ -36,7 +39,7 @@ export default {
       text-decoration: underline;
       a {
         color: $text-grey;
-
+        cursor: pointer;
       }
     }
   }

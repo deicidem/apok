@@ -208,7 +208,6 @@ export default {
       commit('setPending', true);
       let res = await usersApi.one(payload);
       let user = res.data.data;
-
       commit('setGroupsOwner', {
         id: user.id,
         name: user.firstName + ' ' + user.lastName
@@ -264,26 +263,30 @@ export default {
     async createGroup({dispatch, getters}, payload) {
       await groupsApi.create({
         title: payload.title,
+        description: payload.description,
         type: payload.type,
       });
       return await dispatch('fetchGroups',getters.getPagination.currentPage);
     },
     
-    
-
-    async addUsers({commit}, payload) {
-      let res = await groupsApi.addUsers({
-        users: payload.users.map(e => e.id),
-        groupId: payload.groupId
-      });
-      let group = res.data.data;
-      commit('addGroup', group)
+    async updateGroup({dispatch, commit, getters}, payload) {
+      commit('setPending', true);
+      await groupsApi.update(getters.getActiveGroup.id, payload);
+      return await dispatch('fetchGroups', getters.getPagination.currentPage);
     },
 
-    async loadTypes({commit}) {
-      let res = await groupsApi.getTypes();
-      commit('setTypes', res)
-    }
+    async addUsers(store, payload) {
+      await groupsApi.addUsers({
+        users: payload.users.map(e => {
+          console.log(e);
+          return e.id;
+        }),
+        groupId: payload.groupId
+      });
+      // return await dispatch('fetchGroups',getters.getPagination.currentPage);
+      // let group = res.data.data;
+      // commit('addGroup', group)
+    },
   },
 }
 

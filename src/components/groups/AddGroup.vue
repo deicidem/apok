@@ -2,7 +2,6 @@
   <form class="c-form" @submit.prevent="submitForm()">
     <div class="c-title">Создать группу</div>
 
-
     <app-input
       class="c-form__input"
       :value="title"
@@ -13,7 +12,16 @@
       :error="!$v.title.required ? 'Введите значение' : null"
     >
     </app-input>
-
+    <app-input
+      class="c-form__input"
+      :value="description"
+      @input="$v.description.$model = $event"
+      :invalid="!$v.description.required && formInvalid"
+      icon="icon icon-ic_fluent_person_20_regular"
+      label="Описание"
+      :error="!$v.description.required ? 'Введите значение' : null"
+    >
+    </app-input>
     <app-select
       class="c-select"
       label="Тип группы:"
@@ -21,11 +29,7 @@
       @change="selectedOption = $event"
     ></app-select>
 
-    <app-button
-      type="button-g"
-      class="c-form__item"
-      :disabled="pending"
-    >
+    <app-button type="button-g" class="c-form__item" :disabled="pending">
       Создать
     </app-button>
   </form>
@@ -39,7 +43,7 @@ import { required } from "vuelidate/lib/validators";
 import { mapGetters } from "vuex";
 
 export default {
-  props: ['pending'],
+  props: ["pending"],
   components: {
     AppInput,
     AppButton,
@@ -49,6 +53,7 @@ export default {
   data() {
     return {
       title: null,
+      description: null,
       type: null,
       submitStatus: null,
       selectedOption: null,
@@ -58,6 +63,9 @@ export default {
   validations() {
     return {
       title: {
+        required,
+      },
+      description: {
         required,
       },
     };
@@ -78,17 +86,17 @@ export default {
   },
 
   methods: {
-
     submitForm() {
       this.showMessage = false;
 
       if (!this.$v.$invalid) {
         this.submitStatus = "PENDING";
         try {
-          this.$emit('submit', {
+          this.$emit("submit", {
             title: this.title,
-            type: this.selectedOption
-          })
+            type: this.selectedOption,
+            description: this.description
+          });
           // await this.createGroup({
           //   title: this.title,
           //   type: this.selectedOption

@@ -1,17 +1,31 @@
 <template>
   <div class="wrapper">
     <router-view></router-view>
-    <app-error></app-error>
+    <div class="errors-wrapper">
+      <app-error
+      v-for="item in getAlerts"
+      :key="item.id"
+      :title="item.title"
+      :message="item.message"
+      @close="deleteAlert(item.id)"
+    ></app-error>
+    </div>
   </div>
 </template>
 
 <script>
 import AppError from "@/components/AppError.vue";
-
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     AppError,
   },
+  computed: {
+    ...mapGetters("alerts", ["getAlerts"]),
+  },
+  methods: {
+    ...mapActions("alerts", ["deleteAlert"])
+  }
 };
 </script>
 
@@ -384,6 +398,16 @@ svg:focus {
 
 .__bar-is-vertical {
   background: $color-main !important;
+}
+
+.errors-wrapper {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 /*___________________1440___________________*/

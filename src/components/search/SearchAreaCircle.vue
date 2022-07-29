@@ -23,8 +23,9 @@
               (!$v.lat.minLength || !$v.lat.required) &&
               submitStatus === 'ERROR',
           }"
+          @click="north = !north"
         >
-          Ю
+          {{ north ? "С" : "Ю" }}
         </p>
 
         <div
@@ -62,8 +63,9 @@
               (!$v.lng.minLength || !$v.lng.required) &&
               submitStatus === 'ERROR',
           }"
+          @click="east = !east"
         >
-          В
+          {{ east ? "В" : "З" }}
         </p>
 
         <div
@@ -101,10 +103,12 @@
       </div>
     </form>
     <div class="c-wrapper">
+      <app-button :type="drawable ? 'button-white-gr' : 'button-g'"  @click="onMark()" class="c-button">
+        {{ drawable ? "Сохранить" : "Указать на карте" }}
+      </app-button>
       <app-button type="button-g" @click="submitForm" class="c-button">
         Загрузить на карту
       </app-button>
-
       <app-button type="button-r" class="c-button" @click="$emit('remove')">
         Убрать с карты
       </app-button>
@@ -125,9 +129,9 @@ export default {
     AppInput,
     AppButton,
   },
+  props: ["center"],
   data: () => ({
     submitStatus: null,
-
     inputMaskLat: {
       pattern: `111°11'11"`,
       formatCharacters: {
@@ -148,10 +152,12 @@ export default {
       },
     },
     placeholderLng: "000°00'00\"",
-
     lng: "",
     lat: "",
     rad: "",
+    north: true,
+    east: true,
+    drawable: false,
   }),
   validations() {
     return {
@@ -172,10 +178,72 @@ export default {
   methods: {
     submitForm() {
       if (!this.$v.$invalid) {
-        this.$emit("submit", { lng: this.lng, lat: this.lat, rad: this.rad });
+        this.$emit("submit", {
+          lng: this.east ? this.parseCoords(this.lng) : -this.parseCoords(this.lng),
+          lat: this.north ? this.parseCoords(this.lat) : -this.parseCoords(this.lat),
+          rad: this.rad,
+        });
       } else {
         this.submitStatus = "ERROR";
         return;
+      }
+    },
+    onMark() {
+      this.drawable = !this.drawable;
+      this.$emit('mark', this.drawable)
+    },
+    parseCoords(coord) {
+      let str = coord;
+      let deg = "";
+      let degEnd = false;
+      let min = "";
+      let minEnd = false;
+      let sec = "";
+      let secEnd = false;
+      for (let i = 0; i < str.length; i++) {
+        if (!degEnd) {
+          if (str[i] == "°") {
+            degEnd = true;
+            continue;
+          }
+          deg += str[i];
+        } else if (!minEnd) {
+          if (str[i] == "'") {
+            minEnd = true;
+            continue;
+          }
+          min += str[i];
+        } else if (!secEnd) {
+          if (str[i] == '"') {
+            secEnd = true;
+            continue;
+          }
+          sec += str[i];
+        }
+      }
+      sec = +sec / 3600;
+      min = +min / 60;
+      deg = +deg + min + sec;
+      return deg;
+    },
+  },
+  watch: {
+    center() {
+      let el = this.center;
+      if (el == null) {
+        this.lat = "";
+        this.lng = "";
+      } else {
+        this.lat = `${Math.trunc(Math.abs(el.lat))}°${Math.trunc(
+          (Math.abs(el.lat) % 1) * 60
+        )}'${Math.round((((Math.abs(el.lat) % 1) * 60) % 1) * 60)}"`;
+        this.lng = `${Math.trunc(Math.abs(el.lng))}°${Math.trunc(
+          (Math.abs(el.lng) % 1) * 60
+        )}'${Math.round((((Math.abs(el.lng) % 1) * 60) % 1) * 60)}"`;
+
+          this.north = el.lat >= 0;
+          this.east = el.lng >= 0;
+
       }
     },
   },
@@ -191,9 +259,9 @@ export default {
     margin-left: auto;
     max-width: 200px;
     width: 190px;
-
+    margin-bottom: 10px;
     &:last-child {
-      margin-top: 20px;
+      margin-bottom: 0;
     }
   }
 
@@ -276,6 +344,7 @@ export default {
       background: $gradient;
       width: 30px;
       height: 35px;
+      cursor: pointer;
     }
   }
 
